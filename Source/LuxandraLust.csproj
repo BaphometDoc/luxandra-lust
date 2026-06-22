@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patches\JobPatches.cs" />
+    <Compile Include="Patches\IncidentPatches.cs" />
     <Compile Include="LuxandraLust.cs" />
     <Compile Include="LuxandraNarrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
