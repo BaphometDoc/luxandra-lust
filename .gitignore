@@ -1,0 +1,11 @@
+# Visual Studio
+bin/
+obj/
+.vs/
+
+# Build output (we don't commit compiled DLLs unless you want to)
+Assemblies/*.dll
+
+# OS junk
+.DS_Store
+Thumbs.db
