@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <StorytellerDef ParentName="BaseStoryteller">
+    <defName>LuxandraLust</defName>
+    <label>Luxandra Lust</label>
+	<portraitLarge>UI/Storyteller/LuxandraLust</portraitLarge>
+    <portraitTiny>UI/Storyteller/LuxTiny</portraitTiny>
+
+    <description>A storyteller based on Cassandra Classic that interacts with RJW.</description>
+
+    <listOrder>200</listOrder>
+
+  </StorytellerDef>
+</Defs>

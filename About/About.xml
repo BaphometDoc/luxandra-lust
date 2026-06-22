@@ -8,9 +8,7 @@
         <li>1.6</li>
     </supportedVersions>
 
-    <description>
-        A RimJobWorld based narrator
-    </description>
+    <description>A RimJobWorld based narrator</description>
 
     <modDependencies>
         <li>
