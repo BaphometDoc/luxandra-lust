@@ -3,6 +3,7 @@ using rjw;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using Verse.Sound;
 
 namespace LuxandraLust
 {
@@ -29,6 +30,7 @@ namespace LuxandraLust
             ThoughtDef moodDef = ThoughtDef.Named("Luxandra_HornyRush_Mood");
             HediffDef buffDef = HediffDef.Named("Luxandra_HornyRush_Buff");
 
+            SoundDefOf.PsychicSootheGlobal.PlayOneShotOnCamera(null);
             foreach (Pawn pawn in femalePawns)
             {
                 // Drop the target 'Sex' need to 0%
@@ -85,6 +87,7 @@ namespace LuxandraLust
             ThoughtDef moodDef = ThoughtDef.Named("Luxandra_HornyRush_Mood");
             HediffDef buffDef = HediffDef.Named("Luxandra_HornyRush_Buff");
 
+            SoundDefOf.PsychicSootheGlobal.PlayOneShotOnCamera(null);
             foreach (Pawn pawn in malePawns)
             {
                 // Drop the target 'Sex' need to 0%
