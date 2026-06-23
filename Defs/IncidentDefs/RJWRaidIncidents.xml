@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- HORNY TRIBAL RAIDS -->
+	<IncidentDef>
+		<defName>Luxandra_Inc_HornyTribalRaid</defName>
+		<label>Horny tribe raid</label>
+		<workerClass>LuxandraLust.IncidentWorker_HornyTribalRaid</workerClass>
+		<category>ThreatBig</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>true</pointsScaleable>
+		<letterLabel>Horny Raid</letterLabel>
+		<letterText>Attackers from {0} have arrived! Their gods demand your blood... and your buttholes, if possible! Their war cries were so unsettling and yet somehow made all your colonists feel horny, prepare for defense!</letterText>
+		<letterDef>ThreatBig</letterDef>
+	</IncidentDef>
+
+	<!-- UGLY BASTARDS -->
+	<IncidentDef MayRequire="archersaiter.rjw.unleashed.bastard">
+		<defName>Luxandra_Inc_UnleashedBastardsRaid</defName>
+		<label>Rapist raid</label>
+		<workerClass>LuxandraLust.IncidentWorker_BastardRaid</workerClass>
+		<category>ThreatBig</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>true</pointsScaleable>
+		<letterLabel>Rapist Raid</letterLabel>
+		<letterText>Attackers from {0} have arrived! They're not here to kill... they're here to rape and kidnap as many pawns as possible. Be ready...</letterText>
+		<letterDef>ThreatBig</letterDef>
+	</IncidentDef>
+
+</Defs>

@@ -49,6 +49,8 @@ namespace LuxandraLust
     {
         public static IncidentDef Luxandra_Inc_HornyRushFemale;
         public static IncidentDef Luxandra_Inc_HornyRushMale;
+        public static IncidentDef Luxandra_Inc_HornyTribalRaid;
+        public static IncidentDef Luxandra_Inc_UnleashedBastardsRaid;
 
         static LuxandraIncidentDefOf()
         {
@@ -91,8 +93,14 @@ namespace LuxandraLust
             cachedSexRelatedIncidents = new List<IncidentDef>
             {
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
-                LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale
+                LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
             };
+
+            // If these mods are present, those won't be null so can be added
+            if (LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid != null)
+                cachedSexRelatedIncidents.Add(LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid);
+            if (LuxandraIncidentDefOf.Luxandra_Inc_UnleashedBastardsRaid != null)
+                cachedSexRelatedIncidents.Add(LuxandraIncidentDefOf.Luxandra_Inc_UnleashedBastardsRaid);
 
             // Other events from other mods
             var sexDefNames = new List<string>

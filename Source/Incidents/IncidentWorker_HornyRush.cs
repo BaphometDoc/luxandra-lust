@@ -15,7 +15,7 @@ namespace LuxandraLust
             if (map == null) return false;
 
             // Incident can fire only if there is at least one living, free female colonist
-            return map.mapPawns.FreeColonists.Any(p => p.gender == Gender.Female && p.DevelopmentalStage.Adult() && !p.Dead);
+            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Female && !p.Dead);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -72,7 +72,7 @@ namespace LuxandraLust
             if (map == null) return false;
 
             // Incident can fire only if there is at least one living, free male colonist
-            return map.mapPawns.FreeColonists.Any(p => p.gender == Gender.Male && p.DevelopmentalStage.Adult() && !p.Dead);
+            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Male && !p.Dead);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)

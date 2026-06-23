@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThoughtDef>
+    <defName>Luxandra_WarCry_Panic</defName>
+    <durationDays>0.0833</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>Unsettling war cry</label>
+        <description>That war cry unsettled me, and made me feel horny too!</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>
