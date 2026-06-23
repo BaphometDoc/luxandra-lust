@@ -68,7 +68,10 @@ namespace LuxandraLust
                 int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
                     .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
 
-                int totalThreshold = adultColonistCount * 2 + adultSlavesCount;
+                // Apply the threshold multiplier from settings
+                float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;
+
+                int totalThreshold = (int)((adultColonistCount * 2 + adultSlavesCount) * settingsMultiplier);
                 Log.Message("[Luxandra DEBUG] Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
 
                 if (isNegative && n.sexActionCounter > totalThreshold)

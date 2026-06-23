@@ -19,8 +19,10 @@ namespace LuxandraLust
 
             Map targetMap = Find.CurrentMap;
             int totalThreshold = 0;
+            int thresholdAfterSettings = 0;
             int adultColonistCount = 0;
             int adultSlavesCount = 0;
+            float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;
 
             if (targetMap != null)
             {
@@ -29,7 +31,10 @@ namespace LuxandraLust
                 adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
                     .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
 
-                totalThreshold = System.Math.Max(1, (adultColonistCount * 2) + adultSlavesCount);
+
+                totalThreshold = adultColonistCount * 2 + adultSlavesCount;
+
+                thresholdAfterSettings = (int)(totalThreshold * settingsMultiplier);
             }
 
             // Print the current persistent values beautifully formatted to the debug log console
@@ -42,7 +47,8 @@ namespace LuxandraLust
             if (targetMap != null)
             {
                 Log.Message($" -> Colony Metric: Adults ({adultColonistCount}) * 2 + Slaves ({adultSlavesCount}) = Threshold: {totalThreshold}");
-                Log.Message($" -> Dynamic Target Met? {(component.sexActionCounter > totalThreshold ? "YES (Will convert negative events)" : "NO")}");
+                Log.Message($" -> Settings multiplier: {settingsMultiplier} = Effective threshold: {thresholdAfterSettings}");
+                Log.Message($" -> Dynamic Target Met? {(component.sexActionCounter > thresholdAfterSettings ? "YES (Will convert negative events)" : "NO")}");
             }
             else
             {
