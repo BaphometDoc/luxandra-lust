@@ -8,9 +8,9 @@ namespace LuxandraLust
 {
     public class GameComponent_WeeklyEventCycle : GameComponent
     {
-        private const int TicksPerWeek = 420000;
+        private int TicksPerCycle => LuxandraModSettings.weeklyCycleDays > 0 ? (LuxandraModSettings.weeklyCycleDays * 60000) : 420000;
 
-        public int ticksUntilEvent = TicksPerWeek;
+        public int ticksUntilEvent = 420000;
 
         public GameComponent_WeeklyEventCycle(Game game)
         {
@@ -23,12 +23,23 @@ namespace LuxandraLust
             if (!LuxandraStorytellerCheck.IsActive())
                 return;
 
+            // Fix the timer if it was edited outside of the save file
+            if (ticksUntilEvent > TicksPerCycle)
+            {
+                ticksUntilEvent = TicksPerCycle;
+
+                if (LuxandraModSettings.enableLogging)
+                {
+                    DebugActions_Luxandra.DebugLogMessage($"Loaded save timer was higher than global settings. Dropped ticksUntilEvent down to {ticksUntilEvent} ticks.");
+                }
+            }
+
             ticksUntilEvent--;
 
             if (ticksUntilEvent <= 0)
             {
                 TriggerWeeklyEvent();
-                ticksUntilEvent = TicksPerWeek; // Reset the 7-day countdown clock
+                ticksUntilEvent = TicksPerCycle; // Reset the 7-day countdown clock
             }
         }
 
@@ -150,7 +161,7 @@ namespace LuxandraLust
         {
             base.ExposeData();
             // Saves the remaining ticks directly into the player's .rws save files
-            Scribe_Values.Look(ref ticksUntilEvent, "ticksUntilEvent", TicksPerWeek);
+            Scribe_Values.Look(ref ticksUntilEvent, "ticksUntilEvent", TicksPerCycle);
         }
     }
 }
