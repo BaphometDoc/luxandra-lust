@@ -22,29 +22,31 @@ namespace LuxandraLust
             public static bool InLuxandraExecution = false;
         }
 
-        // Intercept the storyteller event, and re-evaluate it based on how much
-        // fucking has been going on
+        // Intercept the storyteller event, and re-evaluate it based on how much fucking has been going on
         [HarmonyPatch(typeof(IncidentWorker), "TryExecute")]
         public static class Patch_IncidentExecute
         {
             [HarmonyPrefix]
             public static bool Prefix(IncidentWorker __instance, IncidentParms parms)
             {
+                if (!LuxandraStorytellerCheck.IsActive())
+                    return true;
+
                 DebugActions_Luxandra.DebugLogMessage("TryExecute intercepted correctly");
-                DebugActions_Luxandra.DebugLogMessage($"Incident about to fire: {__instance.def?.defName}");
+                DebugActions_Luxandra.DebugLogMessage($"Incident about to happen: {__instance.def?.defName}");
                 // FAILSAFE: recursion guard
                 if (LuxandraExecutionGuard.InLuxandraExecution)
                     return true;
 
-                // Ignore quest threats
+                // Ignore quest threats as well as the weekly cycle from Luxandra herself
                 bool isFromQuest = parms.quest != null || parms.forced;
                 if (isFromQuest)
+                {
+                    DebugActions_Luxandra.DebugLogMessage("Event is from quest or forced, skipping the reroll.");
                     return true;
+                }
 
                 var def = __instance.def;
-                if (!LuxandraStorytellerCheck.IsActive())
-                    return true;
-
 
                 // Failsafe if I fucked up something somewhere
                 var n = GameComponent_LuxandraLust.Instance;

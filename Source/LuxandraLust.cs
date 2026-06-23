@@ -57,6 +57,8 @@ namespace LuxandraLust
             sexActionCounter = 0;
             impureSexActionCounter = 0;
             rapeSexActionCounter = 0;
+
+            DebugActions_Luxandra.DebugLogMessage("Sex counters reset.");
         }
     }
 }

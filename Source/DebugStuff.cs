@@ -1,5 +1,7 @@
 ﻿using LudeonTK;
 using RimWorld;
+using System.Collections.Generic;
+using System.Text;
 using Verse;
 
 namespace LuxandraLust
@@ -100,6 +102,87 @@ namespace LuxandraLust
             Messages.Message("All Luxandra Lust counters have been reset to 0.", MessageTypeDefOf.CautionInput, false);
         }
 
+        [DebugAction("Luxandra Lust", "Trigger Weekly Event (1 Tick)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void ForceWeeklyEventNextTick()
+        {
+            var cycleComponent = Current.Game.GetComponent<GameComponent_WeeklyEventCycle>();
+
+            if (cycleComponent != null)
+            {
+                cycleComponent.ticksUntilEvent = 1;
+
+                // Safety check in case one's trying to use this without Luxandra
+                string activeStoryteller = Find.Storyteller?.def?.defName ?? "None";
+
+                Messages.Message($"[Luxandra] Weekly event timer forced to 1 tick. Active Storyteller: {activeStoryteller}", MessageTypeDefOf.TaskCompletion, false);
+                Log.Message($"[Luxandra Debug] Set ticksUntilEvent to 1. Weekly event will fire soon. Current Storyteller: {activeStoryteller}.");
+            }
+            else
+            {
+                Log.Error("[Luxandra Debug] Failed to force event: GameComponent_WeeklyEventCycle instance was not found active in this save profile database!");
+            }
+        }
+
+        [DebugAction("Luxandra Lust", "Print Sexual Event Pool", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void AuditEventPoolClassification()
+        {
+            List<IncidentDef> totalPool = LuxandraEventPool.GetSexRelatedIncidents();
+
+            if (totalPool == null || totalPool.Count == 0)
+            {
+                Log.Error("[Luxandra Debug] Audit failed: The event pool returned by GetSexRelatedIncidents is empty or null!");
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("==================================================");
+            sb.AppendLine($"   LUXANDRA STORYTELLER EVENT POOL AUDIT ({totalPool.Count} Total)");
+            sb.AppendLine("==================================================");
+
+            int positiveCount = 0;
+            int negativeCount = 0;
+            int neutralCount = 0;
+
+            foreach (IncidentDef incident in totalPool)
+            {
+                if (incident == null)
+                {
+                    sb.AppendLine("-> [NULL ENTRY] (A definition failed to load correctly from XML!)");
+                    continue;
+                }
+
+                string classification = "NEUTRAL / MISC";
+                string letterDefName = incident.letterDef?.defName ?? "None";
+
+                if (letterDefName == "PositiveEvent")
+                {
+                    classification = "POSITIVE";
+                    positiveCount++;
+                }
+                else if (letterDefName == "NegativeEvent")
+                {
+                    classification = "NEGATIVE";
+                    negativeCount++;
+                }
+                else
+                {
+                    neutralCount++;
+                }
+
+                sb.AppendLine($"-> defName: {incident.defName,-30} | Category: {classification,-14} | letterDef: {letterDefName}");
+            }
+
+            sb.AppendLine("==================================================");
+            sb.AppendLine($" SUMMARY: Positive: {positiveCount} | Negative: {negativeCount} | Neutral/Misc: {neutralCount}");
+            sb.AppendLine("==================================================");
+
+            Log.Message(sb.ToString());
+
+            // Send a quick toast message on screen so you know the audit finished successfully
+            Messages.Message($"[Luxandra] Audited {totalPool.Count} events. Open the debug console to view the full list breakdown!", MessageTypeDefOf.TaskCompletion, false);
+        }
+
+        #region Log stuff
         // Fallback logging method for when the GameComponent_LuxandraLust is not found for whatever reason
         private static void LogNullError()
         {
@@ -115,5 +198,6 @@ namespace LuxandraLust
             if (LuxandraModSettings.enableLogging)
                 Log.Message($"[Luxandra Debug] {message}");
         }
+        #endregion
     }
 }

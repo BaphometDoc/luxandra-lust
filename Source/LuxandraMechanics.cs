@@ -40,6 +40,9 @@ namespace LuxandraLust
         private static List<IncidentDef> cachedPositiveIncidents = null;
         private static List<IncidentDef> cachedSexRelatedIncidents = null;
 
+        /// <summary>
+        /// This is used as failsafe for the event reroll system, if it can't find a sexual event, it tries to roll a positive one
+        /// </summary>
         public static List<IncidentDef> GetPositiveIncidents()
         {
             if (cachedPositiveIncidents != null)
@@ -58,6 +61,9 @@ namespace LuxandraLust
             return cachedPositiveIncidents;
         }
 
+        /// <summary>
+        /// Gets the list of events that are either from this mod or from RJW related mods
+        /// </summary>
         public static List<IncidentDef> GetSexRelatedIncidents()
         {
             if (cachedSexRelatedIncidents != null)

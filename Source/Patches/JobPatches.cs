@@ -34,7 +34,7 @@ namespace LuxandraLust
                 if (!isPlayerControlled)
                     return;
 
-                // Fapping won't count, sorry. Nor will touching each other.
+                // Fapping won't count, sorry. Nor will touching each other. Get those dicks out already
                 bool isMasturbation = props.sexType == xxx.rjwSextype.Masturbation || props.sexType == xxx.rjwSextype.MutualMasturbation;
                 if (isMasturbation)
                 {
@@ -45,6 +45,7 @@ namespace LuxandraLust
                 GameComponent_LuxandraLust.Instance?.RegisterSexAction();
                 DebugActions_Luxandra.DebugLogMessage($"Sex action detected for {actor.NameShortColored}");
 
+                // Only proper vaginal sex is pure... right... right? I mean, anal is fun too, but it's not pure. And oral is just gross.
                 bool isImpureSex = props.sexType != xxx.rjwSextype.Vaginal;
                 if (isImpureSex)
                 {
