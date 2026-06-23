@@ -1,7 +1,5 @@
 ﻿using RimWorld;
-using rjw;
 using rjw.Modules.Interactions;
-using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -60,9 +58,9 @@ namespace LuxandraLust
             // And not only that, but they're about to get thiccer. If they can.
             var sexParts = targetNoble.GetLewdParts();
             if (sexParts.Breasts != null && targetNoble.gender != Gender.Male && !sexParts.Breasts.EnumerableNullOrEmpty())
-                EnlargeSexPart(targetNoble, sexParts.Breasts);
+                LuxandraLustUtilities.EnlargeSexPart(targetNoble, sexParts.Breasts);
             if (sexParts.Penises != null && !sexParts.Penises.EnumerableNullOrEmpty())
-                EnlargeSexPart(targetNoble, sexParts.Penises);
+                LuxandraLustUtilities.EnlargeSexPart(targetNoble, sexParts.Penises);
 
             ThoughtDef luxuryThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_RoyalLuxuryMoodlet", errorOnFail: false);
             if (luxuryThought != null && targetNoble.needs?.mood?.thoughts?.memories != null)
@@ -75,38 +73,6 @@ namespace LuxandraLust
 
             Find.LetterStack.ReceiveLetter(titleText, descText, LetterDefOf.PositiveEvent, targetNoble);
             return true;
-        }
-
-        private bool EnlargeSexPart(Pawn pawn, List<RJWLewdablePart> sexParts)
-        {
-            if (pawn == null || pawn.Dead || sexParts.EnumerableNullOrEmpty()) return false;
-
-            bool anyChanged = false;
-
-            foreach (var part in sexParts)
-            {
-                if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
-                {
-                    float currentSeverity = naturalPart.Severity;
-                    float changeAmount = 0.5f;
-
-                    // Calculates adjustments trying to not exceed the severity limits
-                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + changeAmount, 3.0f);
-
-                    if (newSeverity != currentSeverity)
-                    {
-                        naturalPart.Severity = newSeverity;
-
-                        var comp = part.SexPart.GetPartComp();
-                        comp?.SetSeverity(newSeverity, sync: false);
-
-                        anyChanged = true;
-                        DebugActions_Luxandra.DebugLogMessage($"Increased {part.SexPart.Def.defName} size for {pawn.NameShortColored}.");
-                    }
-                }
-            }
-
-            return anyChanged;
         }
     }
 }

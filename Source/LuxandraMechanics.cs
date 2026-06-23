@@ -99,6 +99,18 @@ namespace LuxandraLust
                     cachedSexRelatedIncidents.Add(royalDepravity);
             }
 
+            // Add the Ideology events
+            if (ModsConfig.IdeologyActive)
+            {
+                IncidentDef ideoLeaderBlessing = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_IdeoLeaderBlessing", false);
+                if (ideoLeaderBlessing != null)
+                    cachedSexRelatedIncidents.Add(ideoLeaderBlessing);
+
+                IncidentDef ideoLeaderDepravity = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_IdeoLeaderDepravity", false);
+                if (ideoLeaderDepravity != null)
+                    cachedSexRelatedIncidents.Add(ideoLeaderDepravity);
+            }
+
             // If these mods are present, those won't be null so can be added
             // Unleashed Bastards
             IncidentDef unleashedBastardsRaid = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_UnleashedBastardsRaid", false);

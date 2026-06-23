@@ -56,6 +56,9 @@ namespace LuxandraLust
                 targetNoble.needs.mood.thoughts.memories.TryGainMemory(depravityThought);
             }
 
+            // Also send them raping. They earned it (kinda)
+            LuxandraLustUtilities.ForceRapistBreak(targetNoble, "Royal Depravity", true);
+
             string titleText = "Royal Depravity";
             string descText = $"Luxandra tests the limits of your nobility. {targetNoble.LabelShort} bends under the cosmic weight of their high station, twisting their personality into something much more abusive.";
 
