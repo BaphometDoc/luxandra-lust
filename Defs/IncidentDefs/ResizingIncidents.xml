@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!-- ========================================== -->
+	<!-- MALE EVENTS                                -->
+	<!-- ========================================== -->
+
+	<!-- 1. Male Expansion -->
+	<IncidentDef>
+		<defName>Luxandra_MaleExpansion</defName>
+		<label>Masculine growth</label>
+		<workerClass>LuxandraLust.IncidentWorker_MaleExpansion</workerClass>
+		<category>Misc</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>false</pointsScaleable>
+		<letterLabel>Masculine Growth</letterLabel>
+		<letterText>A strange, warm atmospheric wave passes over the area. Every adult male on the map feels an intense throbbing sensation as their anatomy suddenly expands!</letterText>
+		<letterDef>PositiveEvent</letterDef>
+	</IncidentDef>
+
+	<!-- 2. Male Reduction -->
+	<IncidentDef>
+		<defName>Luxandra_MaleReduction</defName>
+		<label>Masculine shrinkage</label>
+		<workerClass>LuxandraLust.IncidentWorker_MaleReduction</workerClass>
+		<category>Misc</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>false</pointsScaleable>
+		<letterLabel>Masculine Shrinkage</letterLabel>
+		<letterText>A chilling breeze sweeps through the settlement. To their utter horror, every adult male on the map experiences a sudden, permanent shrinkage down below!</letterText>
+		<letterDef>NegativeEvent</letterDef>
+	</IncidentDef>
+
+	<!-- ========================================== -->
+	<!-- FEMALE EVENTS                               -->
+	<!-- ========================================== -->
+
+	<!-- 3. Female Expansion -->
+	<IncidentDef>
+		<defName>Luxandra_FemaleExpansion</defName>
+		<label>Feminine growth</label>
+		<workerClass>LuxandraLust.IncidentWorker_FemaleExpansion</workerClass>
+		<category>Misc</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>false</pointsScaleable>
+		<letterLabel>Feminine Growth</letterLabel>
+		<letterText>An exciting aura blankets the region. Every adult female present feels their clothes tighten uncomfortably as their bust size suddenly swells!</letterText>
+		<letterDef>PositiveEvent</letterDef>
+	</IncidentDef>
+
+	<!-- 4. Female Reduction -->
+	<IncidentDef>
+		<defName>Luxandra_FemaleReduction</defName>
+		<label>Feminine shrinkage</label>
+		<workerClass>LuxandraLust.IncidentWorker_FemaleReduction</workerClass>
+		<category>Misc</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>false</pointsScaleable>
+		<letterLabel>Feminine Shrinkage</letterLabel>
+		<letterText>A sudden wave of exhaustion ripples through the colony. Every adult female notes a bizarre physical change as their curves visibly diminish.</letterText>
+		<letterDef>NegativeEvent</letterDef>
+	</IncidentDef>
+
+</Defs>

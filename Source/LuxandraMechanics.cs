@@ -23,6 +23,11 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_RapistBreak;
 
+        public static IncidentDef Luxandra_MaleExpansion;
+        public static IncidentDef Luxandra_FemaleExpansion;
+        public static IncidentDef Luxandra_MaleReduction;
+        public static IncidentDef Luxandra_FemaleReduction;
+
         static LuxandraIncidentDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(LuxandraIncidentDefOf));
@@ -67,6 +72,10 @@ namespace LuxandraLust
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
+                LuxandraIncidentDefOf.Luxandra_MaleExpansion,
+                LuxandraIncidentDefOf.Luxandra_FemaleExpansion,
+                LuxandraIncidentDefOf.Luxandra_MaleReduction,
+                LuxandraIncidentDefOf.Luxandra_FemaleReduction
             };
 
             // If these mods are present, those won't be null so can be added
@@ -75,7 +84,7 @@ namespace LuxandraLust
             if (unleashedBastardsRaid != null)
                 cachedSexRelatedIncidents.Add(unleashedBastardsRaid);
 
-            // Other events from other mods
+            // Other events from other RJW based mods
             var sexDefNames = new List<string>
             {
                 // Base RJW

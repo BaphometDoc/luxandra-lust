@@ -11,4 +11,54 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+	
+	<!-- ========================================== -->
+	<!-- Moodlets for the resizing events           -->
+	<!-- ========================================== -->
+	<ThoughtDef>
+		<defName>Luxandra_MaleExpandedMood</defName>
+		<durationDays>3.0</durationDays>
+		<stages>
+			<li>
+				<label>Masculine growth</label>
+				<description>I feel an incredible surge of presence and raw power down below. It's magnificent.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_FemaleExpandedMood</defName>
+		<durationDays>3.0</durationDays>
+		<stages>
+			<li>
+				<label>Feminine growth</label>
+				<description>My body feels much more voluptuous and heavy... I feel deeply desirable.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	<ThoughtDef>
+		<defName>Luxandra_MaleReducedMood</defName>
+		<durationDays>3.0</durationDays>
+		<stages>
+			<li>
+				<label>Masculine shrinkage</label>
+				<description>Where did it go?! I feel diminished... exposed... smaller.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_FemaleReducedMood</defName>
+		<durationDays>3.0</durationDays>
+		<stages>
+			<li>
+				<label>Feminine shrinkage</label>
+				<description>I feel so flat and light... My natural curves have wasted away.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>
