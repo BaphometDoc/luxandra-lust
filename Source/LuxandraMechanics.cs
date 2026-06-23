@@ -28,6 +28,8 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_MaleReduction;
         public static IncidentDef Luxandra_Inc_FemaleReduction;
 
+        public static IncidentDef Luxandra_Inc_LustfulSupplies;
+
         static LuxandraIncidentDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(LuxandraIncidentDefOf));
@@ -81,7 +83,8 @@ namespace LuxandraLust
                 LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
                 LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
                 LuxandraIncidentDefOf.Luxandra_Inc_MaleReduction,
-                LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction
+                LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction,
+                LuxandraIncidentDefOf.Luxandra_Inc_LustfulSupplies
             };
 
             // Add the Royalty events

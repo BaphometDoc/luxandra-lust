@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using rjw;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -50,7 +49,7 @@ namespace LuxandraLust
             if (targetMap == null) return;
 
             // How horny have we been this week?
-            float averageSexNeed = GetAverageColonySexNeed(targetMap);
+            float averageSexNeed = LuxandraLustUtilities.GetAverageColonySexNeed(targetMap);
             DebugActions_Luxandra.DebugLogMessage($"Colony Average Sex Need: {averageSexNeed * 100f}%");
 
             List<IncidentDef> totalPool = LuxandraEventPool.GetSexRelatedIncidents();
@@ -127,33 +126,6 @@ namespace LuxandraLust
             parms.forced = true;
 
             Find.Storyteller.incidentQueue.Add(chosenIncident, Find.TickManager.TicksGame, parms);
-        }
-
-        public static float GetAverageColonySexNeed(Map map)
-        {
-            if (map == null) return 0.5f; // Safe fallback
-
-            var eligiblePawns = map.mapPawns.AllPawnsSpawned.Where(p =>
-                p.RaceProps != null && p.RaceProps.Humanlike && !p.Dead &&
-                (p.IsColonist || p.IsSlave) &&
-                p.DevelopmentalStage == DevelopmentalStage.Adult
-            );
-
-            float totalSexNeed = 0f;
-            int countWithNeed = 0;
-
-            foreach (Pawn pawn in eligiblePawns)
-            {
-                var sexNeed = pawn.needs.TryGetNeed<Need_Sex>();
-                if (sexNeed != null)
-                {
-                    totalSexNeed += sexNeed.CurLevelPercentage;
-                    countWithNeed++;
-                }
-            }
-
-            // Divide by countwithneed rather than actual total of pawns to avoid pawns with no sex need (es, Androids)
-            return countWithNeed > 0 ? (totalSexNeed / countWithNeed) : 0.5f;
         }
 
 

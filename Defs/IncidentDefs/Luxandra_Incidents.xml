@@ -41,6 +41,20 @@
 		<letterDef>NegativeEvent</letterDef>
 	</IncidentDef>
 	
+	<IncidentDef>
+		<defName>Luxandra_Inc_LustfulSupplies</defName>
+		<label>Lustful supplies</label>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_LustfulSupplies</workerClass>
+		<baseChance>0.7</baseChance>
+		<letterLabel>Lustful Supplies</letterLabel>
+		<letterText>A cluster of orbital cargo pods has punched through the atmosphere! Luxandra has looked over your colony's specific desires and seen fit to bless your colonists with a specialized resource cache tailored to their current... recreational requirements.</letterText>
+		<letterDef>PositiveEvent</letterDef>
+	</IncidentDef>
+	
 	<IncidentDef MayRequire="Ludeon.RimWorld.Royalty">
 		<defName>Luxandra_Inc_RoyalLuxury</defName>
 		<label>Royal luxury</label>
