@@ -107,7 +107,7 @@ namespace LuxandraLust
 
                 // All raiders become rapists
                 List<Pawn> incomingRaiders = map.mapPawns.AllPawnsSpawned
-                    .Where(p => p.Faction == parms.faction && !p.Dead && p.DevelopmentalStage.Adult())
+                    .Where(p => p.Faction == parms.faction && !p.Dead && LuxandraLustUtilities.IsAdult(p))
                     .ToList();
                 TraitDef targetTrait = TraitDef.Named("Rapist");
 

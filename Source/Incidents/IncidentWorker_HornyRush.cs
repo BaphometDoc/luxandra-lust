@@ -22,7 +22,7 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
             List<Pawn> femalePawns = map.mapPawns.AllPawnsSpawned
-                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Female && !p.Dead && p.DevelopmentalStage.Adult())
+                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Female && !p.Dead && LuxandraLustUtilities.IsAdult(p))
                             .ToList();
 
             if (femalePawns.Count == 0) return false;
@@ -79,7 +79,7 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
             List<Pawn> malePawns = map.mapPawns.AllPawnsSpawned
-                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Male && !p.Dead && p.DevelopmentalStage.Adult())
+                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Male && !p.Dead && LuxandraLustUtilities.IsAdult(p))
                             .ToList();
 
             if (malePawns.Count == 0) return false;

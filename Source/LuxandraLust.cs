@@ -73,7 +73,7 @@ namespace LuxandraLust
             var eligiblePawns = map.mapPawns.AllPawnsSpawned.Where(p =>
                 p.RaceProps != null && p.RaceProps.Humanlike && !p.Dead &&
                 (p.IsColonist || p.IsSlave) &&
-                p.DevelopmentalStage == DevelopmentalStage.Adult
+                LuxandraLustUtilities.IsAdult(p)
             );
 
             float totalSexNeed = 0f;
@@ -91,6 +91,26 @@ namespace LuxandraLust
 
             // Divide by countwithneed rather than actual total of pawns to avoid pawns with no sex need (es, Androids)
             return countWithNeed > 0 ? (totalSexNeed / countWithNeed) : 0.5f;
+        }
+
+        /// <summary>
+        /// Determines if the pawn is adult (or youth if RJW has the check enabled)
+        /// </summary>
+        public static bool IsAdult(Pawn pawn)
+        {
+            if (pawn == null)
+                return false;
+
+            var allowYouth = rjw.RJWSettings.AllowYouthSex;
+
+            AgeCategory ageCategory = pawn.GetAgeCategory();
+
+            if (ageCategory == AgeCategory.Adult)
+                return true;
+            else if (ageCategory == AgeCategory.Youth && allowYouth)
+                return true;
+            else
+                return false;
         }
     }
 }

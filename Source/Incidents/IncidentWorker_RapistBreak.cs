@@ -34,14 +34,14 @@ namespace LuxandraLust
 
             HediffDef customHediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_PerverseCalling_Hediff", errorOnFail: false);
 
-            int adultColonists = map.mapPawns.FreeColonistsSpawned.Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
-            int adultSlaves = map.mapPawns.SlavesOfColonySpawned.Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+            int adultColonists = map.mapPawns.FreeColonistsSpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
+            int adultSlaves = map.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
 
             int totalWorkforce = adultColonists + adultSlaves;
             int targetsToSelect = System.Math.Max(1, totalWorkforce / 4);
 
             List<Pawn> candidates = map.mapPawns.FreeColonistsSpawned
-                .Where(p => !p.Downed && !p.Dead && p.DevelopmentalStage == DevelopmentalStage.Adult && p.skills != null && !p.InMentalState)
+                .Where(p => !p.Downed && !p.Dead && LuxandraLustUtilities.IsAdult(p) && p.skills != null && !p.InMentalState)
                 .OrderByDescending(p => p.skills.GetSkill(SkillDefOf.Melee).Level) // Sort by highest Melee
                 .ToList();
 

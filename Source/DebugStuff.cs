@@ -29,9 +29,9 @@ namespace LuxandraLust
             if (targetMap != null)
             {
                 adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned
-                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                    .Count(p => LuxandraLustUtilities.IsAdult(p));
                 adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
-                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                    .Count(p => LuxandraLustUtilities.IsAdult(p));
 
 
                 totalThreshold = adultColonistCount * 2 + adultSlavesCount;

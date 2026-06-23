@@ -95,9 +95,9 @@ namespace LuxandraLust
                     try
                     {
                         int adultColonists = Find.CurrentMap.mapPawns.FreeColonistsSpawned
-                            .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                            .Count(p => LuxandraLustUtilities.IsAdult(p));
                         int adultSlaves = Find.CurrentMap.mapPawns.SlavesOfColonySpawned
-                            .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                            .Count(p => LuxandraLustUtilities.IsAdult(p));
 
                         int baseThreshold = (adultColonists * 2) + adultSlaves;
                         int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold * eventThresholdMultiplier));

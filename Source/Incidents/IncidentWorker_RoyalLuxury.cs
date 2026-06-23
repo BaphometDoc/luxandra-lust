@@ -16,7 +16,7 @@ namespace LuxandraLust
             Map map = parms.target as Map ?? Find.CurrentMap;
 
             return map.mapPawns.FreeColonistsSpawned.Any(p =>
-                p.DevelopmentalStage == DevelopmentalStage.Adult && !p.Dead &&
+                LuxandraLustUtilities.IsAdult(p) && !p.Dead &&
                 p.royalty != null && p.royalty.AllTitlesInEffectForReading.Count > 0
             );
         }
@@ -26,7 +26,7 @@ namespace LuxandraLust
             Map map = (Map)parms.target;
 
             Pawn targetNoble = map.mapPawns.FreeColonistsSpawned
-                .Where(p => p.DevelopmentalStage == DevelopmentalStage.Adult && !p.Dead && p.royalty?.MostSeniorTitle != null)
+                .Where(p => LuxandraLustUtilities.IsAdult(p) && !p.Dead && p.royalty?.MostSeniorTitle != null)
                 .OrderByDescending(p => p.royalty.MostSeniorTitle.def.seniority)
                 .FirstOrDefault();
 

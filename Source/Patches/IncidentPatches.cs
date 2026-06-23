@@ -63,9 +63,9 @@ namespace LuxandraLust
                 // Determine the threshold for the event conversion
                 Map targetMap = parms.target as Map ?? Find.CurrentMap;
                 int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned
-                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                    .Count(p => LuxandraLustUtilities.IsAdult(p));
                 int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
-                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                    .Count(p => LuxandraLustUtilities.IsAdult(p));
 
                 // Apply the threshold multiplier from settings
                 float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;

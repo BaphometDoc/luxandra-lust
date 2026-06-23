@@ -111,7 +111,7 @@ namespace LuxandraLust
                    && !p.Dead
                    && p.RaceProps != null
                    && p.RaceProps.Humanlike
-                   && p.DevelopmentalStage == DevelopmentalStage.Adult
+                   && LuxandraLustUtilities.IsAdult(p)
                    && p.gender == TargetGender;
         }
 
