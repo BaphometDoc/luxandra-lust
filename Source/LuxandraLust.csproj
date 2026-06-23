@@ -66,6 +66,8 @@
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_Raids.cs" />
     <Compile Include="Incidents\IncidentWorker_RapistBreak.cs" />
+    <Compile Include="Incidents\IncidentWorker_RoyalDepravity.cs" />
+    <Compile Include="Incidents\IncidentWorker_RoyalLuxury.cs" />
     <Compile Include="LuxandraModConfigs.cs" />
     <Compile Include="Patches\JobPatches.cs" />
     <Compile Include="Patches\IncidentPatches.cs" />

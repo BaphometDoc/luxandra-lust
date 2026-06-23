@@ -23,10 +23,10 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_RapistBreak;
 
-        public static IncidentDef Luxandra_MaleExpansion;
-        public static IncidentDef Luxandra_FemaleExpansion;
-        public static IncidentDef Luxandra_MaleReduction;
-        public static IncidentDef Luxandra_FemaleReduction;
+        public static IncidentDef Luxandra_Inc_MaleExpansion;
+        public static IncidentDef Luxandra_Inc_FemaleExpansion;
+        public static IncidentDef Luxandra_Inc_MaleReduction;
+        public static IncidentDef Luxandra_Inc_FemaleReduction;
 
         static LuxandraIncidentDefOf()
         {
@@ -78,11 +78,23 @@ namespace LuxandraLust
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
-                LuxandraIncidentDefOf.Luxandra_MaleExpansion,
-                LuxandraIncidentDefOf.Luxandra_FemaleExpansion,
-                LuxandraIncidentDefOf.Luxandra_MaleReduction,
-                LuxandraIncidentDefOf.Luxandra_FemaleReduction
+                LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
+                LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
+                LuxandraIncidentDefOf.Luxandra_Inc_MaleReduction,
+                LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction
             };
+
+            // Add the Royalty events
+            if (ModsConfig.RoyaltyActive)
+            {
+                IncidentDef royalLuxury = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_RoyalLuxury", false);
+                if (royalLuxury != null)
+                    cachedSexRelatedIncidents.Add(royalLuxury);
+
+                IncidentDef royalDepravity = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_RoyalDepravity", false);
+                if (royalDepravity != null)
+                    cachedSexRelatedIncidents.Add(royalDepravity);
+            }
 
             // If these mods are present, those won't be null so can be added
             // Unleashed Bastards

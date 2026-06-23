@@ -41,7 +41,7 @@ namespace LuxandraLust
             int targetsToSelect = System.Math.Max(1, totalWorkforce / 4);
 
             List<Pawn> candidates = map.mapPawns.FreeColonistsSpawned
-                .Where(p => !p.Downed && !p.Dead && p.skills != null && !p.InMentalState)
+                .Where(p => !p.Downed && !p.Dead && p.DevelopmentalStage == DevelopmentalStage.Adult && p.skills != null && !p.InMentalState)
                 .OrderByDescending(p => p.skills.GetSkill(SkillDefOf.Melee).Level) // Sort by highest Melee
                 .ToList();
 

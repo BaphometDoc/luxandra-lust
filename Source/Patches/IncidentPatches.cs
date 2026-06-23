@@ -22,7 +22,7 @@ namespace LuxandraLust
             public static bool InLuxandraExecution = false;
         }
 
-        // Intercept the storyteller event, and re-evaluate it based on how much fucking has been going on
+        // Intercept the storyteller event, and re-evaluate it based on how much sex has been going on
         [HarmonyPatch(typeof(IncidentWorker), "TryExecute")]
         public static class Patch_IncidentExecute
         {
@@ -96,7 +96,7 @@ namespace LuxandraLust
                             DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                             Find.LetterStack.ReceiveLetter(
-                                "Luxandra Intervention",
+                                "Luxandra's Intervention",
                                 "A hostile event was turned into a sexual event by Luxandra’s influence.",
                                 LetterDefOf.PositiveEvent
                             );
@@ -105,7 +105,7 @@ namespace LuxandraLust
                         }
                         else
                         {
-                            DebugActions_Luxandra.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive event.");
+                            DebugActions_Luxandra.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive or neutral event.");
                             IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
                             List<IncidentDef> positiveEvents = LuxandraEventPool.GetPositiveIncidents();
                             bool foundValid = positiveEvents
@@ -117,7 +117,7 @@ namespace LuxandraLust
                                 DebugActions_Luxandra.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
-                                    "Luxandra Intervention",
+                                    "Luxandra's Intervention",
                                     "A hostile event was suppressed by Luxandra’s influence.",
                                     LetterDefOf.PositiveEvent
                                 );
@@ -126,8 +126,8 @@ namespace LuxandraLust
                             }
                             else
                             {
-                                // If no valid sexual nor positive event is found, log a warning and suppress the raid anyway
-                                Log.Warning("[Luxandra Debug] Could not find a valid event to fire. Suppressing raid anyway.");
+                                // If no valid sexual nor positive event is found, log a warning and suppress the negative event anyway
+                                Log.Warning("[Luxandra Debug] Could not find a valid event to fire. Suppressing the negative event anyway.");
                             }
                         }
                     }

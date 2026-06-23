@@ -38,5 +38,30 @@
 			<li>Map_PlayerHome</li>
 		</targetTags>
 		<pointsScaleable>false</pointsScaleable>
+		<letterDef>NegativeEvent</letterDef>
+	</IncidentDef>
+	
+	<IncidentDef MayRequire="Ludeon.RimWorld.Royalty">
+		<defName>Luxandra_Inc_RoyalLuxury</defName>
+		<label>Royal luxury</label>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_RoyalLuxury</workerClass>
+		<baseChance>0.6</baseChance>
+		<letterDef>PositiveEvent</letterDef>
+	</IncidentDef>
+  
+	<IncidentDef MayRequire="Ludeon.RimWorld.Royalty">
+		<defName>Luxandra_Inc_RoyalDepravity</defName>
+		<label>Royal depravity</label>
+		<category>ThreatSmall</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_RoyalDepravity</workerClass>
+		<baseChance>0.6</baseChance>
+		<letterDef>NegativeEvent</letterDef>
 	</IncidentDef>
 </Defs>

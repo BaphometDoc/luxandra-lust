@@ -16,6 +16,35 @@
 		</stages>
 	</ThoughtDef>
 	
+	<ThoughtDef>
+		<defName>Luxandra_RoyalLuxuryMoodlet</defName>
+		<thoughtClass>Thought_Memory</thoughtClass>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Royal luxury</label>
+				<description>The goddess has chosen me as her canvas of desire. I feel fundamentally superior, beautifully elevated, and absolutely immaculate.</description>
+				<baseMoodEffect>15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_RoyalDepravityMoodlet</defName>
+		<thoughtClass>Thought_Memory</thoughtClass>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Royal depravity</label>
+				<description>My subjects are mocking my status! They will have to pay for this.</description>
+				<baseMoodEffect>-15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	
 	<!-- ========================================== -->
 	<!-- Moodlets for the weekly cycle              -->
 	<!-- ========================================== -->

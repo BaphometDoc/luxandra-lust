@@ -65,7 +65,7 @@ namespace LuxandraLust
 
             if (averageSexNeed > 0.75f)
             {
-                filteredPool = totalPool.Where(e => e.letterDef?.defName == "PositiveEvent").ToList();
+                filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.PositiveEvent).ToList();
 
                 // Flavor text and moodlet for high satisfaction
                 letterLabel = "Pleasure & Favor";
@@ -74,7 +74,7 @@ namespace LuxandraLust
             }
             else if (averageSexNeed < 0.25f)
             {
-                filteredPool = totalPool.Where(e => e.letterDef?.defName == "NegativeEvent").ToList();
+                filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.NegativeEvent || e.letterDef == LetterDefOf.ThreatBig).ToList();
 
                 // Flavor text and moodlet for low satisfaction
                 letterLabel = "Boredom & Spite";

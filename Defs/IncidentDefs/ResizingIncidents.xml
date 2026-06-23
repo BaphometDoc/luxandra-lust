@@ -7,7 +7,7 @@
 
 	<!-- 1. Male Expansion -->
 	<IncidentDef>
-		<defName>Luxandra_MaleExpansion</defName>
+		<defName>Luxandra_Inc_MaleExpansion</defName>
 		<label>Masculine growth</label>
 		<workerClass>LuxandraLust.IncidentWorker_MaleExpansion</workerClass>
 		<category>Misc</category>
@@ -23,7 +23,7 @@
 
 	<!-- 2. Male Reduction -->
 	<IncidentDef>
-		<defName>Luxandra_MaleReduction</defName>
+		<defName>Luxandra_Inc_MaleReduction</defName>
 		<label>Masculine shrinkage</label>
 		<workerClass>LuxandraLust.IncidentWorker_MaleReduction</workerClass>
 		<category>Misc</category>
@@ -43,7 +43,7 @@
 
 	<!-- 3. Female Expansion -->
 	<IncidentDef>
-		<defName>Luxandra_FemaleExpansion</defName>
+		<defName>Luxandra_Inc_FemaleExpansion</defName>
 		<label>Feminine growth</label>
 		<workerClass>LuxandraLust.IncidentWorker_FemaleExpansion</workerClass>
 		<category>Misc</category>
@@ -59,7 +59,7 @@
 
 	<!-- 4. Female Reduction -->
 	<IncidentDef>
-		<defName>Luxandra_FemaleReduction</defName>
+		<defName>Luxandra_Inc_FemaleReduction</defName>
 		<label>Feminine shrinkage</label>
 		<workerClass>LuxandraLust.IncidentWorker_FemaleReduction</workerClass>
 		<category>Misc</category>
