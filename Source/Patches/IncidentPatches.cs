@@ -38,6 +38,11 @@ namespace LuxandraLust
             if (LuxandraExecutionGuard.InLuxandraExecution)
                 return true;
 
+            // Ignore quest threats
+            bool isFromQuest = parms.quest != null || parms.forced;
+            if (isFromQuest)
+                return true; 
+
             var def = __instance.def;
             if (!LuxandraStorytellerCheck.IsActive())
                 return true;
@@ -51,6 +56,7 @@ namespace LuxandraLust
 
             var eventType = def.category;
             Log.Message($"[Luxandra DEBUG] Event type: {eventType}");
+
             bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
 
             Log.Message("[Luxandra DEBUG] number of sex events detected: " + n.sexActionCounter);
@@ -59,29 +65,44 @@ namespace LuxandraLust
             {
                 try
                 {
-                    LuxandraExecutionGuard.InLuxandraExecution = true; 
-                    Log.Message("[Luxandra] Rerolling in a POSITIVE event");
+                    LuxandraExecutionGuard.InLuxandraExecution = true;
+                    Log.Message($"[Luxandra] Attempting to suppress hostile event: {def.defName}");
 
-                    Find.LetterStack.ReceiveLetter(
-                        "Luxandra Intervention",
-                        "A hostile event was suppressed by Luxandra’s influence.",
-                        LetterDefOf.PositiveEvent
-                    );
+                    // replace with a positive event if there is a valid one
+                    IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
+                    IncidentDef replacement;
+                    bool foundValid = DefDatabase<IncidentDef>.AllDefs
+                        .Where(x => x.category == IncidentCategoryDefOf.Misc && x.letterDef == LetterDefOf.PositiveEvent && x.Worker.CanFireNow(safeParms))
+                        .TryRandomElement(out replacement);
 
-                    // replace with a positive event
-                    IncidentDef replacement =
-                        DefDatabase<IncidentDef>.AllDefs
-                            .Where(x => x.category == IncidentCategoryDefOf.Misc)
-                            .RandomElement();
+                    if (foundValid)
+                    {
+                        Log.Message($"[Luxandra] Reroll successful: {replacement.defName}");
 
-                    replacement.Worker.TryExecute(parms);
+                        Find.LetterStack.ReceiveLetter(
+                            "Luxandra Intervention",
+                            "A hostile event was suppressed by Luxandra’s influence.",
+                            LetterDefOf.PositiveEvent
+                        );
+
+                        replacement.Worker.TryExecute(safeParms);
+                    }
+                    else
+                    {
+                        // If no valid positive event is found, log a warning and suppress the raid anyway
+                        Log.Warning("[Luxandra] Could not find a valid positive event to fire. Suppressing raid anyway.");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    Log.Error($"[Luxandra] Error during reroll: {ex}");
                 }
                 finally
                 { 
-                    LuxandraExecutionGuard.InLuxandraExecution = false; 
+                    LuxandraExecutionGuard.InLuxandraExecution = false;
+                    n.ResetSexCounters();
                 }
 
-                n.ResetSexCounters();
                 // block original event
                 return false;
             }
