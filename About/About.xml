@@ -7,7 +7,12 @@
 	<supportedVersions>
 		<li>1.6</li>
 	</supportedVersions>
-	<description>A RimJobWorld based narrator</description>
+	<description>A RimJobWorld based narrator.
+	Every time a Major threat would fire, if your colony has been regularly been having sex, the raid will be replaced with a sex-related event.
+	Adds:
+	- two new raid types: horny tribals (preferring Fantasy Races if detected) and rapists (if Ugly bastards is loaded)
+	- a horny pulse event: your colonists will be way hornier than usual
+	</description>
 	<modDependencies>
 		<li>
 			<packageId>rim.job.world</packageId>

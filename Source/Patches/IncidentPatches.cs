@@ -50,7 +50,7 @@ namespace LuxandraLust
                 Log.Message("[Luxandra DEBUG] TryExecute intercepted correctly");
 
                 // Failsafe if I fucked up something somewhere
-                var n = GameComponent_LuxandraLust.Instance?.narrator;
+                var n = GameComponent_LuxandraLust.Instance;
                 if (n == null)
                     return true;
 
@@ -91,6 +91,7 @@ namespace LuxandraLust
                         }
                         else
                         {
+                            Log.Message($"[Luxandra] Sexual reroll failed, attempting to reroll in a positive event.");
                             IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
                             List<IncidentDef> positiveEvents = LuxandraEventPool.GetPositiveIncidents();
                             bool foundValid = positiveEvents

@@ -1,47 +1,60 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using rjw;
+using rjw; // Make sure rjw.dll is referenced!
+using System;
 using Verse;
-using Verse.AI;
 
 namespace LuxandraLust
 {
-    [HarmonyPatch(typeof(JobDriver), "EndJobWith")]
-    public static class Patch_JobDriver_EndJobWith
+    [HarmonyPatch(typeof(SexUtility), nameof(SexUtility.Aftersex))]
+    public static class Patch_SexUtility_Aftersex
     {
-        public static void Prefix(JobDriver __instance, JobCondition condition)
+        [HarmonyPostfix]
+        public static void Postfix(SexProps props)
         {
-            if (!LuxandraStorytellerCheck.IsActive())
-                return;
-
-            if (condition != JobCondition.Succeeded)
-                return;
-
-            Pawn pawn = __instance.pawn;
-
-            if (pawn == null || pawn.Faction != Faction.OfPlayer || !pawn.RaceProps.Humanlike)
-                return;
-
-            JobDriver driver = __instance.pawn?.jobs?.curDriver;
-
-            if (driver == null)
-                return;
-
-            bool isSex = driver is JobDriver_Sex;
-
-            // If the sex act was completed, add it to the counter
-            if (isSex)
+            try
             {
-                GameComponent_LuxandraLust.Instance?.RegisterSexAction();
-                Log.Message("[Luxandra] Sex action counted");
+                if (!LuxandraStorytellerCheck.IsActive())
+                    return;
 
-                JobDriver_Sex jobDriverSex = (JobDriver_Sex)driver;
-                bool isRape = jobDriverSex is JobDriver_Rape || jobDriverSex.Partner?.jobs?.curDriver is JobDriver_SexBaseRecieverRaped;
-                if(isRape)
+                // Validate that the properties packet isn't corrupted
+                if (props == null || props.pawn == null)
+                    return;
+
+                Pawn actor = props.pawn;
+
+                if (!actor.RaceProps.Humanlike)
+                    return;
+
+                bool isPlayerControlled = actor.Faction == Faction.OfPlayer ||    // Colonists & Mechs
+                                          actor.IsPrisonerOfColony ||             // Prisoners
+                                          actor.IsSlaveOfColony ||                // Slaves
+                                          actor.IsQuestLodger();                  // Quest Guests / Refugees
+
+                if (!isPlayerControlled)
+                    return;
+
+                GameComponent_LuxandraLust.Instance?.RegisterSexAction();
+                Log.Message($"[Luxandra] Sex action counted via Aftersex for {actor.NameShortColored}");
+
+                bool isImpureSex = props.sexType != xxx.rjwSextype.Vaginal;
+                if (isImpureSex)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterImpureSexAction();
-                    Log.Message("[Luxandra] Rape action counted");
+                    Log.Message($"[Luxandra] Impure action counted via Aftersex for {actor.NameShortColored}");
                 }
+
+                bool isRapeAct = props.isRape;
+
+                if (isRapeAct)
+                {
+                    GameComponent_LuxandraLust.Instance?.RegisterRapeSexAction();
+                    Log.Message($"[Luxandra] Rape action counted via Aftersex involving {actor.NameShortColored}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[Luxandra] Critical exception tracking inside SexUtility.Aftersex Postfix: {ex}");
             }
         }
     }

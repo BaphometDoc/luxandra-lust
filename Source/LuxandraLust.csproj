@@ -61,12 +61,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugStuff.cs" />
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_Raids.cs" />
     <Compile Include="Patches\JobPatches.cs" />
     <Compile Include="Patches\IncidentPatches.cs" />
     <Compile Include="LuxandraLust.cs" />
-    <Compile Include="LuxandraNarrator.cs" />
+    <Compile Include="LuxandraMechanics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

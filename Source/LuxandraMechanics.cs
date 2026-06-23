@@ -14,35 +14,6 @@ namespace LuxandraLust
         }
     }
 
-    // This class tracks the important events and cycles for the storyteller
-    public class LuxandraNarrator
-    {
-        // Sex counters
-        public int sexActionCounter = 0;
-        public int impureSexActionCounter = 0;
-        public int rapeSexActionCounter = 0;
-
-        public void RegisterSexAction()
-        {
-            sexActionCounter++;
-        }
-        public void RegisterImpureSexAction()
-        {
-            impureSexActionCounter++;
-        }
-        public void RegisterRapeSexAction()
-        {
-            rapeSexActionCounter++;
-        }
-
-        public void ResetSexCounters()
-        {
-            sexActionCounter = 0;
-            impureSexActionCounter = 0;
-            rapeSexActionCounter = 0;
-        }
-    }
-
     // Defs for incidents so they can be referenced in code without hardcoding strings everywhere
     [DefOf]
     public static class LuxandraIncidentDefOf
@@ -50,7 +21,6 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyRushFemale;
         public static IncidentDef Luxandra_Inc_HornyRushMale;
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
-        public static IncidentDef Luxandra_Inc_UnleashedBastardsRaid;
 
         static LuxandraIncidentDefOf()
         {
@@ -94,13 +64,14 @@ namespace LuxandraLust
             {
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
+                LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid
             };
 
             // If these mods are present, those won't be null so can be added
-            if (LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid != null)
-                cachedSexRelatedIncidents.Add(LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid);
-            if (LuxandraIncidentDefOf.Luxandra_Inc_UnleashedBastardsRaid != null)
-                cachedSexRelatedIncidents.Add(LuxandraIncidentDefOf.Luxandra_Inc_UnleashedBastardsRaid);
+            // Unleashed Bastards
+            IncidentDef unleashedBastardsRaid = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_UnleashedBastardsRaid", false);
+            if (unleashedBastardsRaid != null)
+                cachedSexRelatedIncidents.Add(unleashedBastardsRaid);
 
             // Other events from other mods
             var sexDefNames = new List<string>

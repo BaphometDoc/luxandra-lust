@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using HarmonyLib;
 using Verse;
 
 
@@ -12,29 +11,52 @@ namespace LuxandraLust
 
     public class GameComponent_LuxandraLust : GameComponent
     {
-        public LuxandraNarrator narrator = new LuxandraNarrator(); 
-        public static GameComponent_LuxandraLust Instance;
-
-        public GameComponent_LuxandraLust(Game game)
+        public static GameComponent_LuxandraLust Instance
         {
-            Instance = this;
+            get
+            {
+                if (Current.Game == null) return null;
+                return Current.Game.GetComponent<GameComponent_LuxandraLust>();
+            }
         }
 
-        #region iteration methods
+        public GameComponent_LuxandraLust(Game game) : base()
+        {
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            Scribe_Values.Look(ref sexActionCounter, "sexActionCounter", 0);
+            Scribe_Values.Look(ref impureSexActionCounter, "impureSexActionCounter", 0);
+            Scribe_Values.Look(ref rapeSexActionCounter, "rapeSexActionCounter", 0);
+        }
+
+
+        // Sex counters
+        public int sexActionCounter = 0;
+        public int impureSexActionCounter = 0;
+        public int rapeSexActionCounter = 0;
+
         public void RegisterSexAction()
         {
-            narrator.RegisterSexAction();
+            sexActionCounter++;
         }
-
         public void RegisterImpureSexAction()
         {
-            narrator.RegisterImpureSexAction();
+            impureSexActionCounter++;
         }
-
         public void RegisterRapeSexAction()
         {
-            narrator.RegisterRapeSexAction();
+            rapeSexActionCounter++;
         }
-        #endregion
+
+        public void ResetSexCounters()
+        {
+            sexActionCounter = 0;
+            impureSexActionCounter = 0;
+            rapeSexActionCounter = 0;
+        }
     }
 }
