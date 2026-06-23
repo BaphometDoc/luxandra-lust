@@ -11,7 +11,8 @@
 	Every time a Major threat would fire, if your colony has been regularly been having sex, the raid will be replaced with a sex-related event.
 	Adds:
 	- two new raid types: horny tribals (preferring Fantasy Races if detected) and rapists (if Ugly bastards is loaded)
-	- a horny pulse event: your colonists will be way hornier than usual
+	- horny pulse event: your colonists will be way hornier than usual
+	- rapist pulse event: one or more of your colonists will not take no for an answer
 	</description>
 	<modDependencies>
 		<li>

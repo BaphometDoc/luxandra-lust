@@ -21,6 +21,7 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyRushFemale;
         public static IncidentDef Luxandra_Inc_HornyRushMale;
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
+        public static IncidentDef Luxandra_Inc_RapistBreak;
 
         static LuxandraIncidentDefOf()
         {
@@ -64,7 +65,8 @@ namespace LuxandraLust
             {
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
-                LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid
+                LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
             };
 
             // If these mods are present, those won't be null so can be added

@@ -3,14 +3,15 @@
 	<HediffDef>
 		<defName>Luxandra_HornyRush_Buff</defName>
 		<label>Lustful ecstasy</label>
-		<description>That feeling, I crave it again... Must... Mate...</description>
+		<description>"That feeling, I crave it again... Must... Mate..."</description>
 		<hediffClass>HediffWithComps</hediffClass>
 		<isBad>false</isBad>
 		<comps>
 			<li Class="HediffCompProperties_Disappears">
-				<disappearsAfterTicks>60000</disappearsAfterTicks>
+				<disappearsAfterTicks>6000</disappearsAfterTicks>
 				<showRemainingTime>true</showRemainingTime>
 			</li>
+			<li Class="HediffCompProperties_DisappearsOnDeath"/>
 		</comps>
 		<stages>
 			<li>
@@ -27,6 +28,43 @@
 				<statFactors>
 					<SexFrequency>1.50</SexFrequency>
 					<SexSatisfaction>1.5</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>
+	</HediffDef>
+	
+	<HediffDef>
+		<defName>Luxandra_PerverseCalling_Hediff</defName>
+		<label>Perverse calling</label>
+		<description>A dark, surging energy fills this individual's mind, accelerating their physical movements as they seek to satisfy their primal desires.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<isBad>false</isBad>
+		<defaultLabelColor>(0.85, 0.2, 0.2)</defaultLabelColor>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>5000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+			<li Class="HediffCompProperties_DisappearsOnDeath"/>
+		</comps>
+		
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.1</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>0.25</offset>
+					</li>
+				</capMods>
+				<statOffsets>
+					<Vulnerability>0.25</Vulnerability>
+				</statOffsets>
+				<statFactors>
+					<SexSatisfaction>2</SexSatisfaction>
 				</statFactors>
 			</li>
 		</stages>

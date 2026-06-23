@@ -27,4 +27,16 @@
 		<letterText>A surge of raw, untamed sexual energy has struck the male colonists! Their desires have peaked instantly, compelling them to look for mates...</letterText>
 		<letterDef>PositiveEvent</letterDef>
 	</IncidentDef>
+	
+	<IncidentDef>
+		<defName>Luxandra_Inc_RapistBreak</defName>
+		<label>Rapist calling</label>
+		<workerClass>LuxandraLust.IncidentWorker_RapistBreak</workerClass>
+		<category>ThreatSmall</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>false</pointsScaleable>
+	</IncidentDef>
 </Defs>
