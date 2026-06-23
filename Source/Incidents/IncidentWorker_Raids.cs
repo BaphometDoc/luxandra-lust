@@ -59,12 +59,12 @@ namespace LuxandraLust
                 if (fallbackFaction != null)
                 {
                     parms.faction = fallbackFaction;
-                    Log.Message("[LuxandraLust] 'EFR_FantasyTribeHostile' not found. Falling back to active hostile low tech faction: " + fallbackFaction.Name);
+                    DebugActions_Luxandra.DebugLogMessage("'EFR_FantasyTribeHostile' not found. Falling back to active hostile low tech faction: " + fallbackFaction.Name);
                 }
                 else
                 {
                     // If absolutely no hostile tribals exist, let vanilla pick a random hostile faction so the raid doesn't break
-                    Log.Warning("[LuxandraLust] Could not find 'EFR_FantasyTribeHostile' or any fallback hostile low tech faction. Allowing vanilla faction assignment.");
+                    Log.Warning("[Luxandra Debug] Could not find 'EFR_FantasyTribeHostile' or any fallback hostile low tech faction. Allowing vanilla faction assignment.");
                 }
             }
 

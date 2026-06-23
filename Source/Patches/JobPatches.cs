@@ -38,18 +38,18 @@ namespace LuxandraLust
                 bool isMasturbation = props.sexType == xxx.rjwSextype.Masturbation || props.sexType == xxx.rjwSextype.MutualMasturbation;
                 if (isMasturbation)
                 {
-                    Log.Message($"[Luxandra] Masturbation does not count as sex action.");
+                    DebugActions_Luxandra.DebugLogMessage($"Masturbation detected for {actor.NameShortColored}: does not count as sex action.");
                     return;
                 }
 
                 GameComponent_LuxandraLust.Instance?.RegisterSexAction();
-                Log.Message($"[Luxandra] Sex action counted via Aftersex for {actor.NameShortColored}");
+                DebugActions_Luxandra.DebugLogMessage($"Sex action detected for {actor.NameShortColored}");
 
                 bool isImpureSex = props.sexType != xxx.rjwSextype.Vaginal;
                 if (isImpureSex)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterImpureSexAction();
-                    Log.Message($"[Luxandra] Impure action counted via Aftersex for {actor.NameShortColored}");
+                    DebugActions_Luxandra.DebugLogMessage($"Impure sex action detected for {actor.NameShortColored}");
                 }
 
                 bool isRapeAct = props.isRape;
@@ -57,7 +57,7 @@ namespace LuxandraLust
                 if (isRapeAct)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterRapeSexAction();
-                    Log.Message($"[Luxandra] Rape action counted via Aftersex involving {actor.NameShortColored}");
+                    DebugActions_Luxandra.DebugLogMessage($"Rape action detected involving {actor.NameShortColored}");
                 }
             }
             catch (Exception ex)

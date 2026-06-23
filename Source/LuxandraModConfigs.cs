@@ -30,6 +30,7 @@ namespace LuxandraLust
     {
         // Multiplier for the event conversion threshold
         public static float eventThresholdMultiplier = 1.0f;
+        public static bool enableLogging = false;
 
         public static void DoWindowContents(Rect inRect)
         {
@@ -38,6 +39,9 @@ namespace LuxandraLust
 
             listingStandard.Begin(inRect);
             listingStandard.Gap(12f);
+
+            listingStandard.CheckboxLabeled("Enable Debug Logging", ref enableLogging, "Shows most actions in the log. Very spammy, only for debugging.");
+            listingStandard.Gap(16f);
 
             listingStandard.Label($"Event sexualization threshold multiplier: {eventThresholdMultiplier:F1}x");
 
@@ -64,7 +68,7 @@ namespace LuxandraLust
                     listingStandard.Label($"  • Spawned Adult Colonists: {adultColonists} (x2 weight)");
                     listingStandard.Label($"  • Spawned Adult Slaves: {adultSlaves} (x1 weight)");
                     listingStandard.Label($"  • Base Formula Metric: {baseThreshold}");
-                    listingStandard.Label($"  • <b>Final Active Target Threshold: {finalThreshold}");
+                    listingStandard.Label($"  • Final Active Target Threshold: {finalThreshold}");
                 }
                 catch (System.Exception ex)
                 {
@@ -83,6 +87,7 @@ namespace LuxandraLust
             if (listingStandard.ButtonText("Reset to Default"))
             {
                 eventThresholdMultiplier = 1.0f;
+                enableLogging = false;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
             }
@@ -94,6 +99,7 @@ namespace LuxandraLust
         {
             base.ExposeData();
 
+            Scribe_Values.Look(ref enableLogging, "enableLogging", true);
             Scribe_Values.Look(ref eventThresholdMultiplier, "eventThresholdMultiplier", 1.0f);
         }
     }

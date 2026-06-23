@@ -14,9 +14,6 @@ namespace LuxandraLust
         {
             if (!LuxandraStorytellerCheck.IsActive())
                 return;
-
-            // Debug trigger BEFORE the incident fires
-            Log.Message("[Luxandra] Event fired");
         }
 
         // Necessary to prevent a recursive call
@@ -33,7 +30,8 @@ namespace LuxandraLust
             [HarmonyPrefix]
             public static bool Prefix(IncidentWorker __instance, IncidentParms parms)
             {
-                Log.Message($"[Luxandra DEBUG] Incident firing: {__instance.def?.defName}");
+                DebugActions_Luxandra.DebugLogMessage("TryExecute intercepted correctly");
+                DebugActions_Luxandra.DebugLogMessage($"Incident about to fire: {__instance.def?.defName}");
                 // FAILSAFE: recursion guard
                 if (LuxandraExecutionGuard.InLuxandraExecution)
                     return true;
@@ -47,7 +45,6 @@ namespace LuxandraLust
                 if (!LuxandraStorytellerCheck.IsActive())
                     return true;
 
-                Log.Message("[Luxandra DEBUG] TryExecute intercepted correctly");
 
                 // Failsafe if I fucked up something somewhere
                 var n = GameComponent_LuxandraLust.Instance;
@@ -55,11 +52,11 @@ namespace LuxandraLust
                     return true;
 
                 var eventType = def.category;
-                Log.Message($"[Luxandra DEBUG] Event type: {eventType}");
+                DebugActions_Luxandra.DebugLogMessage($"Event type: {eventType}");
 
                 bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
 
-                Log.Message("[Luxandra DEBUG] number of sex events detected: " + n.sexActionCounter);
+                DebugActions_Luxandra.DebugLogMessage("Number of sex events detected before the event: " + n.sexActionCounter);
 
                 // Determine the threshold for the event conversion
                 Map targetMap = parms.target as Map ?? Find.CurrentMap;
@@ -72,12 +69,12 @@ namespace LuxandraLust
                 float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;
 
                 int totalThreshold = (int)((adultColonistCount * 2 + adultSlavesCount) * settingsMultiplier);
-                Log.Message("[Luxandra DEBUG] Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
+                DebugActions_Luxandra.DebugLogMessage("Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
 
                 if (isNegative && n.sexActionCounter > totalThreshold)
                 {
-                    Log.Message($"[Luxandra] Threshold was passed!");
-                    Log.Message($"[Luxandra] Attempting to suppress hostile event: {def.defName}");
+                    DebugActions_Luxandra.DebugLogMessage($"Threshold was passed!");
+                    DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
 
                     try
                     {
@@ -94,7 +91,7 @@ namespace LuxandraLust
 
                         if (foundValidSex)
                         {
-                            Log.Message($"[Luxandra] Sexual reroll successful: {replacement.defName}");
+                            DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                             Find.LetterStack.ReceiveLetter(
                                 "Luxandra Intervention",
@@ -106,7 +103,7 @@ namespace LuxandraLust
                         }
                         else
                         {
-                            Log.Message($"[Luxandra] Sexual reroll failed, attempting to reroll in a positive event.");
+                            DebugActions_Luxandra.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive event.");
                             IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
                             List<IncidentDef> positiveEvents = LuxandraEventPool.GetPositiveIncidents();
                             bool foundValid = positiveEvents
@@ -115,7 +112,7 @@ namespace LuxandraLust
 
                             if (foundValid)
                             {
-                                Log.Message($"[Luxandra] Reroll successful: {replacement.defName}");
+                                DebugActions_Luxandra.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
                                     "Luxandra Intervention",
@@ -128,13 +125,13 @@ namespace LuxandraLust
                             else
                             {
                                 // If no valid sexual nor positive event is found, log a warning and suppress the raid anyway
-                                Log.Warning("[Luxandra] Could not find a valid event to fire. Suppressing raid anyway.");
+                                Log.Warning("[Luxandra Debug] Could not find a valid event to fire. Suppressing raid anyway.");
                             }
                         }
                     }
                     catch (System.Exception ex)
                     {
-                        Log.Error($"[Luxandra] Error during reroll: {ex}");
+                        Log.Error($"[Luxandra Debug] Error during reroll: {ex}");
                     }
                     finally
                     {

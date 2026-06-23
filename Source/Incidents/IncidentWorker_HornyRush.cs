@@ -59,7 +59,7 @@ namespace LuxandraLust
             // Fire standard UI alert notification letter targeting the first affected unit
             SendStandardLetter(def.letterLabel, def.letterText, def.letterDef, parms, femalePawns.First());
 
-            Log.Message($"[LuxandraLust] Horny Rush (female) successfully processed for {femalePawns.Count} targets.");
+            DebugActions_Luxandra.DebugLogMessage($"Horny Rush (female) successfully processed for {femalePawns.Count} targets.");
             return true;
         }
     }
@@ -116,7 +116,7 @@ namespace LuxandraLust
             // Fire standard UI alert notification letter targeting the first affected unit
             SendStandardLetter(def.letterLabel, def.letterText, def.letterDef, parms, malePawns.First());
 
-            Log.Message($"[LuxandraLust] Horny Rush (male) successfully processed for {malePawns.Count} targets.");
+            DebugActions_Luxandra.DebugLogMessage($"Horny Rush (male) successfully processed for {malePawns.Count} targets.");
             return true;
         }
     }

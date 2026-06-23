@@ -105,5 +105,15 @@ namespace LuxandraLust
         {
             Log.Error("[Luxandra] Dev command failed: GameComponent_LuxandraLust was not found in the active game session.");
         }
+
+        /// <summary>
+        /// Prints a debug log message with the [Luxandra Debug] prefix if logging is enabled in the mod settings.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void DebugLogMessage(string message)
+        {
+            if (LuxandraModSettings.enableLogging)
+                Log.Message($"[Luxandra Debug] {message}");
+        }
     }
 }

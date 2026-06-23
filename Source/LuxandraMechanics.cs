@@ -48,7 +48,7 @@ namespace LuxandraLust
                                      x.letterDef == LetterDefOf.PositiveEvent)
                          .ToList();
 
-            Log.Message($"[LuxannaLust] Cached {cachedPositiveIncidents.Count} valid positive incidents for rerolls.");
+            DebugActions_Luxandra.DebugLogMessage($"Cached {cachedPositiveIncidents.Count} valid positive incidents for rerolls.");
             return cachedPositiveIncidents;
         }
 
@@ -105,7 +105,7 @@ namespace LuxandraLust
                 }
             }
 
-            Log.Message($"[LuxannaLust] Cached {cachedSexRelatedIncidents.Count} valid sex incidents.");
+            DebugActions_Luxandra.DebugLogMessage($"Cached {cachedSexRelatedIncidents.Count} valid sex incidents.");
             return cachedSexRelatedIncidents;
         }
 
