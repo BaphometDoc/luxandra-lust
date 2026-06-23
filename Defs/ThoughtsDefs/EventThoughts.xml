@@ -43,6 +43,32 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>Luxandra_IdeologyBlessingMoodlet</defName>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Blessed spiritual clarity</label>
+				<description>Luxandra's touch has opened my eyes. My sacred role feels empowered, and a wave of pure, absolute pleasure radiates through my thoughts whenever I guide our flock.</description>
+				<baseMoodEffect>12</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>Luxandra_IdeologyDepravityMoodlet</defName>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Corrupted spiritual focus</label>
+				<description>The quiet promptings in my mind are overwhelming. My sacred duties feel hollow compared to the grand, dark desires the goddess has laid out for me...</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 
 	
 	<!-- ========================================== -->

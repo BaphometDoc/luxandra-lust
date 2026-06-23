@@ -12,3 +12,4 @@ Also adds:<br>
 	- rapist pulse event: one or more of your colonists will not take no for an answer<br>
 	- a special drop pod for your most degenerate needs<br>
 	- Royalty: 2 events that specifically target your highest standing noble<br>
+	- Ideology: 2 events that specifically target your faction leader<br>
