@@ -43,6 +43,19 @@ namespace LuxandraLust
         }
     }
 
+    // Defs for incidents so they can be referenced in code without hardcoding strings everywhere
+    [DefOf]
+    public static class LuxandraIncidentDefOf
+    {
+        public static IncidentDef Luxandra_Inc_HornyRushFemale;
+        public static IncidentDef Luxandra_Inc_HornyRushMale;
+
+        static LuxandraIncidentDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(LuxandraIncidentDefOf));
+        }
+    }
+
     // This class manages the pool of events that Luxandra should consider for her triggers
     public static class LuxandraEventPool
     {
@@ -74,8 +87,14 @@ namespace LuxandraLust
                 return cachedSexRelatedIncidents;
             }
 
-            cachedSexRelatedIncidents = new List<IncidentDef>();
+            // Add events managed by this mod
+            cachedSexRelatedIncidents = new List<IncidentDef>
+            {
+                LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
+                LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale
+            };
 
+            // Other events from other mods
             var sexDefNames = new List<string>
             {
                 // Base RJW
@@ -96,7 +115,7 @@ namespace LuxandraLust
             };
 
             // Cycle through the list and add the ones it finds
-            // This should on paper not hard-require the mods
+            // This should on paper not hard-require the mods and not break if they get updated/removed
             foreach (string defName in sexDefNames)
             {
                 IncidentDef def = DefDatabase<IncidentDef>.GetNamed(defName, false);

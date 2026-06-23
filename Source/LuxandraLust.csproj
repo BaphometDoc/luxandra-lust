@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Patches\JobPatches.cs" />
     <Compile Include="Patches\IncidentPatches.cs" />
     <Compile Include="LuxandraLust.cs" />

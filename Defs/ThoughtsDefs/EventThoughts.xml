@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThoughtDef>
+		<defName>Luxandra_HornyRush_Mood</defName>
+		<durationDays>1.0</durationDays>
+		<stages>
+			<li>
+				<label>Horny rush</label>
+				<description>I felt something incredible, as if the entire world had sex with me. Such bliss... But now I crave more...</description>
+				<baseMoodEffect>15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

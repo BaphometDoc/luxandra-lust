@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<IncidentDef>
+		<defName>Luxandra_Inc_HornyRushFemale</defName>
+		<label>Horny rush (female)</label>
+		<workerClass>LuxandraLust.IncidentWorker_HornyRushFemale</workerClass>
+		<category>Misc</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<letterLabel>Horny Rush</letterLabel>
+		<letterText>A surge of raw, untamed energy has struck the female colonists! Their desires have peaked instantly, compelling them to look for mates...</letterText>
+		<letterDef>PositiveEvent</letterDef>
+	</IncidentDef>
+	
+	<IncidentDef>
+		<defName>Luxandra_Inc_HornyRushMale</defName>
+		<label>Horny rush (male)</label>
+		<workerClass>LuxandraLust.IncidentWorker_HornyRushMale</workerClass>
+		<category>Misc</category>
+		<baseChance>1.0</baseChance>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<letterLabel>Horny Rush</letterLabel>
+		<letterText>A surge of raw, untamed energy has struck the male colonists! Their desires have peaked instantly, compelling them to look for mates...</letterText>
+		<letterDef>PositiveEvent</letterDef>
+	</IncidentDef>
+</Defs>
