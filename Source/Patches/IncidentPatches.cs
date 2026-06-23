@@ -1,10 +1,11 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using System.Linq;
 using Verse;
 
 namespace LuxandraLust
 {
-    // Detect if the active narrator is in fact Luxandra
+    // Detect if the active storyteller is in fact Luxandra
     [HarmonyPatch(typeof(IncidentWorker), "TryExecute")]
     public static class Patch_IncidentWorker_TryExecute
     {
@@ -15,6 +16,79 @@ namespace LuxandraLust
 
             // Debug trigger BEFORE the incident fires
             Log.Message("[Luxandra] Event fired");
+        }
+    }
+
+    // Necessary to prevent a recursive call
+    public static class LuxandraExecutionGuard
+    {
+        public static bool InLuxandraExecution = false;
+    }
+
+    // Intercept the storyteller event, and re-evaluate it based on how much
+    // fucking has been going on
+    [HarmonyPatch(typeof(IncidentWorker), "TryExecute")]
+    public static class Patch_IncidentExecute
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(IncidentWorker __instance, IncidentParms parms)
+        {
+            Log.Message($"[Luxandra DEBUG] Incident firing: {__instance.def?.defName}");
+            // FAILSAFE: recursion guard
+            if (LuxandraExecutionGuard.InLuxandraExecution)
+                return true;
+
+            var def = __instance.def;
+            if (!LuxandraStorytellerCheck.IsActive())
+                return true;
+
+            Log.Message("[Luxandra DEBUG] TryExecute intercepted correctly");
+
+            // Failsafe if I fucked up something somewhere
+            var n = GameComponent_LuxandraLust.Instance?.narrator;
+            if (n == null)
+                return true;
+
+            var eventType = def.category;
+            Log.Message($"[Luxandra DEBUG] Event type: {eventType}");
+            bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
+
+            Log.Message("[Luxandra DEBUG] number of sex events detected: " + n.sexActionCounter);
+
+            if (isNegative && n.sexActionCounter > 1)
+            {
+                try
+                {
+                    LuxandraExecutionGuard.InLuxandraExecution = true; 
+                    Log.Message("[Luxandra] Rerolling in a POSITIVE event");
+
+                    Find.LetterStack.ReceiveLetter(
+                        "Luxandra Intervention",
+                        "A hostile event was suppressed by Luxandra’s influence.",
+                        LetterDefOf.PositiveEvent
+                    );
+
+                    // replace with a positive event
+                    IncidentDef replacement =
+                        DefDatabase<IncidentDef>.AllDefs
+                            .Where(x => x.category == IncidentCategoryDefOf.Misc)
+                            .RandomElement();
+
+                    replacement.Worker.TryExecute(parms);
+                }
+                finally
+                { 
+                    LuxandraExecutionGuard.InLuxandraExecution = false; 
+                }
+
+                n.ResetSexCounters();
+                // block original event
+                return false;
+            }
+
+            // Otherwise continue as expected
+            n.ResetSexCounters();
+            return true;
         }
     }
 }

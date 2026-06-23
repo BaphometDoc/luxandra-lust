@@ -16,13 +16,10 @@ namespace LuxandraLust
     // This class tracks the important events and cycles for the storyteller
     public class LuxandraNarrator
     {
-        // Cycle counter
-        private int cycleCounter = 0;
-
-        // Sex act counters
-        private int sexActionCounter = 0;
-        private int impureSexActionCounter = 0;
-        private int rapeSexActionCounter = 0;
+        // Sex counters
+        public int sexActionCounter = 0;
+        public int impureSexActionCounter = 0;
+        public int rapeSexActionCounter = 0;
 
         public void RegisterSexAction()
         {
@@ -42,16 +39,6 @@ namespace LuxandraLust
             sexActionCounter = 0;
             impureSexActionCounter = 0;
             rapeSexActionCounter = 0;
-        }
-
-        public void TickDaily()
-        {
-            cycleCounter++;
-        }
-
-        public int GetCycle()
-        {
-            return cycleCounter;
         }
     }
 }
