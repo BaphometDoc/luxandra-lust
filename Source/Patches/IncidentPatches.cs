@@ -61,12 +61,24 @@ namespace LuxandraLust
 
                 Log.Message("[Luxandra DEBUG] number of sex events detected: " + n.sexActionCounter);
 
-                if (isNegative && n.sexActionCounter > 1)
+                // Determine the threshold for the event conversion
+                Map targetMap = parms.target as Map ?? Find.CurrentMap;
+                int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned
+                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
+                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+
+                int totalThreshold = adultColonistCount * 2 + adultSlavesCount;
+                Log.Message("[Luxandra DEBUG] Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
+
+                if (isNegative && n.sexActionCounter > totalThreshold)
                 {
+                    Log.Message($"[Luxandra] Threshold was passed!");
+                    Log.Message($"[Luxandra] Attempting to suppress hostile event: {def.defName}");
+
                     try
                     {
                         LuxandraExecutionGuard.InLuxandraExecution = true;
-                        Log.Message($"[Luxandra] Attempting to suppress hostile event: {def.defName}");
 
                         // Replace with a sex-related event if there is a valid one, otherwise a positive one if there is a valid one
                         // otherwise just suppress it cause something broke but the sex must go on
@@ -132,7 +144,6 @@ namespace LuxandraLust
                 }
 
                 // Otherwise continue as expected
-                n.ResetSexCounters();
                 return true;
             }
         }

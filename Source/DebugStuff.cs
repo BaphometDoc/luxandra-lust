@@ -17,6 +17,21 @@ namespace LuxandraLust
                 return;
             }
 
+            Map targetMap = Find.CurrentMap;
+            int totalThreshold = 0;
+            int adultColonistCount = 0;
+            int adultSlavesCount = 0;
+
+            if (targetMap != null)
+            {
+                adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned
+                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+                adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
+                    .Count(p => p.DevelopmentalStage == DevelopmentalStage.Adult);
+
+                totalThreshold = System.Math.Max(1, (adultColonistCount * 2) + adultSlavesCount);
+            }
+
             // Print the current persistent values beautifully formatted to the debug log console
             Log.Message("==================================================");
             Log.Message($"[Luxandra Debug] Current Sex Actions Tracked:");
@@ -24,8 +39,18 @@ namespace LuxandraLust
             Log.Message($" -> Impure Sex Actions: {component.impureSexActionCounter}");
             Log.Message($" -> Rape Sex Actions: {component.rapeSexActionCounter}");
             Log.Message("==================================================");
+            if (targetMap != null)
+            {
+                Log.Message($" -> Colony Metric: Adults ({adultColonistCount}) * 2 + Slaves ({adultSlavesCount}) = Threshold: {totalThreshold}");
+                Log.Message($" -> Dynamic Target Met? {(component.sexActionCounter > totalThreshold ? "YES (Will convert negative events)" : "NO")}");
+            }
+            else
+            {
+                Log.Message(" -> Colony Metric: [No active map found]");
+            }
+            Log.Message("==================================================");
 
-            // Optional: Send a quick message to the top left of the screen so you know it ran successfully
+            // Send a quick message to the top left of the screen
             Messages.Message("Counters printed to debug log console.", MessageTypeDefOf.TaskCompletion, false);
         }
 
