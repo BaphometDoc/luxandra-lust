@@ -41,6 +41,7 @@ namespace LuxandraLust
     {
         private static List<IncidentDef> cachedPositiveIncidents = null;
         private static List<IncidentDef> cachedSexRelatedIncidents = null;
+        private static List<IncidentDef> cachedSexRelatedPunishingEvents = null;
 
         /// <summary>
         /// This is used as failsafe for the event reroll system, if it can't find a sexual event, it tries to roll a positive one
@@ -151,6 +152,50 @@ namespace LuxandraLust
 
             DebugActions_Luxandra.DebugLogMessage($"Cached {cachedSexRelatedIncidents.Count} valid sex incidents.");
             return cachedSexRelatedIncidents;
+        }
+
+        /// <summary>
+        /// Gets the list of events that are either from this mod or from RJW related mods that are considered punishing events
+        /// </summary>
+        public static List<IncidentDef> GetSexRelatedPunishingEvents()
+        {
+            if (cachedSexRelatedPunishingEvents != null)
+            {
+                return cachedSexRelatedPunishingEvents;
+            }
+
+            cachedSexRelatedPunishingEvents = new List<IncidentDef>();
+
+            cachedSexRelatedPunishingEvents = new List<IncidentDef>
+            {
+                LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
+            };
+
+            // Add the Royalty events
+            if (ModsConfig.RoyaltyActive)
+            {
+                IncidentDef royalDepravity = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_RoyalDepravity", false);
+                if (royalDepravity != null)
+                    cachedSexRelatedPunishingEvents.Add(royalDepravity);
+            }
+
+            // Add the Ideology events
+            if (ModsConfig.IdeologyActive)
+            {
+                IncidentDef ideoLeaderDepravity = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_IdeoLeaderDepravity", false);
+                if (ideoLeaderDepravity != null)
+                    cachedSexRelatedPunishingEvents.Add(ideoLeaderDepravity);
+            }
+
+            // If these mods are present, those won't be null so can be added
+            // Unleashed Bastards
+            IncidentDef unleashedBastardsRaid = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_UnleashedBastardsRaid", false);
+            if (unleashedBastardsRaid != null)
+                cachedSexRelatedPunishingEvents.Add(unleashedBastardsRaid);
+
+            DebugActions_Luxandra.DebugLogMessage($"Cached {cachedSexRelatedPunishingEvents.Count} valid punishing sex incidents.");
+            return cachedSexRelatedPunishingEvents;
         }
 
         // Debug cleaning method in case i need it

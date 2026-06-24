@@ -34,6 +34,7 @@ namespace LuxandraLust
 
                 DebugActions_Luxandra.DebugLogMessage("TryExecute intercepted correctly");
                 DebugActions_Luxandra.DebugLogMessage($"Incident about to happen: {__instance.def?.defName}");
+
                 // FAILSAFE: recursion guard
                 if (LuxandraExecutionGuard.InLuxandraExecution)
                     return true;
@@ -62,10 +63,8 @@ namespace LuxandraLust
 
                 // Determine the threshold for the event conversion
                 Map targetMap = parms.target as Map ?? Find.CurrentMap;
-                int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned
-                    .Count(p => LuxandraLustUtilities.IsAdult(p));
-                int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned
-                    .Count(p => LuxandraLustUtilities.IsAdult(p));
+                int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
+                int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
 
                 // Apply the threshold multiplier from settings
                 float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;
@@ -73,79 +72,138 @@ namespace LuxandraLust
                 int totalThreshold = (int)((adultColonistCount * 2 + adultSlavesCount) * settingsMultiplier);
                 DebugActions_Luxandra.DebugLogMessage("Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
 
-                if (isNegative && n.sexActionCounter > totalThreshold)
+                // Luxandra will only suppress negative events for her gimmick
+                if (isNegative)
                 {
-                    DebugActions_Luxandra.DebugLogMessage($"Threshold was passed!");
-                    DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
-
-                    try
+                    // 0 Sexual Activity Detected - force a negative sexual event to punish the player
+                    if (n.sexActionCounter == 0)
                     {
-                        LuxandraExecutionGuard.InLuxandraExecution = true;
+                        DebugActions_Luxandra.DebugLogMessage($"0 Sexual activity detected");
+                        DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
 
-                        // Replace with a sex-related event if there is a valid one, otherwise a positive one if there is a valid one
-                        // otherwise just suppress it cause something broke but the sex must go on
-                        IncidentDef replacement;
-
-                        List<IncidentDef> sexEvents = LuxandraEventPool.GetSexRelatedIncidents();
-                        bool foundValidSex = sexEvents
-                            .Where(x => x.Worker.CanFireNow(parms))
-                            .TryRandomElement(out replacement);
-
-                        if (foundValidSex)
+                        bool successfullyRerolled = false;
+                        try
                         {
-                            DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
+                            LuxandraExecutionGuard.InLuxandraExecution = true;
 
-                            Find.LetterStack.ReceiveLetter(
-                                "Luxandra's Intervention",
-                                "A hostile event was turned into a sexual event by Luxandra’s influence.",
-                                LetterDefOf.PositiveEvent
-                            );
+                            List<IncidentDef> sexEvents = LuxandraEventPool.GetSexRelatedPunishingEvents();
+                            bool foundValidSex = sexEvents
+                                .Where(x => x.Worker.CanFireNow(parms))
+                                .TryRandomElement(out IncidentDef replacement);
 
-                            replacement.Worker.TryExecute(parms);
-                        }
-                        else
-                        {
-                            DebugActions_Luxandra.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive or neutral event.");
-                            IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
-                            List<IncidentDef> positiveEvents = LuxandraEventPool.GetPositiveIncidents();
-                            bool foundValid = positiveEvents
-                                .Where(x => x.Worker.CanFireNow(safeParms))
-                                .TryRandomElement(out replacement);
-
-                            if (foundValid)
+                            if (foundValidSex)
                             {
-                                DebugActions_Luxandra.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
+                                DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
                                     "Luxandra's Intervention",
-                                    "A hostile event was suppressed by Luxandra’s influence.",
-                                    LetterDefOf.PositiveEvent
+                                    "Luxandra is disappointed at your lack of activity. She chose to punish you.",
+                                    LetterDefOf.NegativeEvent
                                 );
 
-                                replacement.Worker.TryExecute(safeParms);
+                                replacement.Worker.TryExecute(parms);
+                                successfullyRerolled = true;
                             }
                             else
                             {
-                                // If no valid sexual nor positive event is found, log a warning and suppress the negative event anyway
-                                Log.Warning("[Luxandra Debug] Could not find a valid event to fire. Suppressing the negative event anyway.");
+                                Log.Warning("[Luxandra Debug] Could not find a valid event to fire. Letting the negative event play.");
                             }
                         }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Log.Error($"[Luxandra Debug] Error during reroll: {ex}");
-                    }
-                    finally
-                    {
-                        LuxandraExecutionGuard.InLuxandraExecution = false;
-                        n.ResetSexCounters();
+                        catch (System.Exception ex)
+                        {
+                            Log.Error($"[Luxandra Debug] Error during reroll: {ex}");
+                        }
+                        finally
+                        {
+                            LuxandraExecutionGuard.InLuxandraExecution = false;
+                            if (successfullyRerolled)
+                            {
+                                // Only reset if the event actually successfully swapped!
+                                n.ResetSexCounters();
+                            }
+                        }
+
+                        // If we rerolled, return false to block vanilla. If we failed, return true to let vanilla play out.
+                        return !successfullyRerolled;
                     }
 
-                    // block original event
-                    return false;
+                    // High Sexual Activity Passed Threshold - reroll to a sexual event or a positive/neutral event to suppress the negative one
+                    else if (n.sexActionCounter > totalThreshold)
+                    {
+                        DebugActions_Luxandra.DebugLogMessage($"Threshold was passed!");
+                        DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
+
+                        try
+                        {
+                            LuxandraExecutionGuard.InLuxandraExecution = true;
+
+                            List<IncidentDef> sexEvents = LuxandraEventPool.GetSexRelatedIncidents();
+                            bool foundValidSex = sexEvents
+                                .Where(x => x.Worker.CanFireNow(parms))
+                                .TryRandomElement(out IncidentDef replacement);
+
+                            if (foundValidSex)
+                            {
+                                DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
+
+                                Find.LetterStack.ReceiveLetter(
+                                    "Luxandra's Intervention",
+                                    "A hostile event was turned into a sexual event by Luxandra’s influence.",
+                                    LetterDefOf.PositiveEvent
+                                );
+
+                                replacement.Worker.TryExecute(parms);
+                            }
+                            else
+                            {
+                                DebugActions_Luxandra.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive or neutral event.");
+                                IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
+                                List<IncidentDef> positiveEvents = LuxandraEventPool.GetPositiveIncidents();
+                                bool foundValid = positiveEvents
+                                    .Where(x => x.Worker.CanFireNow(safeParms))
+                                    .TryRandomElement(out replacement);
+
+                                if (foundValid)
+                                {
+                                    DebugActions_Luxandra.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
+
+                                    Find.LetterStack.ReceiveLetter(
+                                        "Luxandra's Intervention",
+                                        "A hostile event was suppressed by Luxandra’s influence.",
+                                        LetterDefOf.PositiveEvent
+                                    );
+
+                                    replacement.Worker.TryExecute(safeParms);
+                                }
+                                else
+                                {
+                                    Log.Warning("[Luxandra Debug] Could not find a valid event to fire. Suppressing the negative event anyway.");
+                                }
+                            }
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Log.Error($"[Luxandra Debug] Error during reroll: {ex}");
+                        }
+                        finally
+                        {
+                            LuxandraExecutionGuard.InLuxandraExecution = false;
+                            n.ResetSexCounters();
+                        }
+
+                        // Block the original event
+                        return false;
+                    }
+
+                    // Threshold was not passed - continue
+                    else
+                    {
+                        DebugActions_Luxandra.DebugLogMessage($"Threshold was not passed, event continues as usual.");
+                        return true;
+                    }
                 }
 
-                // Otherwise continue as expected
+                DebugActions_Luxandra.DebugLogMessage($"Event was not considered negative, continue as usual.");
                 return true;
             }
         }
