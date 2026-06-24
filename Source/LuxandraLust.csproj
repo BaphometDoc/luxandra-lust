@@ -59,9 +59,14 @@
       <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugStuff.cs" />
+    <Compile Include="Ideology\LuxandraRituals.cs" />
     <Compile Include="Incidents\IncidentWorker_GenitalSizeEvents.cs" />
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderBlessing.cs" />
