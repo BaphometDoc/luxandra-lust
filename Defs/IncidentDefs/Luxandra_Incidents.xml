@@ -54,53 +54,5 @@
 		<letterText>A cluster of orbital cargo pods has punched through the atmosphere! Luxandra has looked over your colony's specific desires and seen fit to bless your colonists with a specialized resource cache tailored to their current... recreational requirements.</letterText>
 		<letterDef>PositiveEvent</letterDef>
 	</IncidentDef>
-	
-	<IncidentDef MayRequire="Ludeon.RimWorld.Royalty">
-		<defName>Luxandra_Inc_RoyalLuxury</defName>
-		<label>Royal luxury</label>
-		<category>Misc</category>
-		<targetTags>
-			<li>Map_PlayerHome</li>
-		</targetTags>
-		<workerClass>LuxandraLust.IncidentWorker_RoyalLuxury</workerClass>
-		<baseChance>0.6</baseChance>
-		<letterDef>PositiveEvent</letterDef>
-	</IncidentDef>
-  
-	<IncidentDef MayRequire="Ludeon.RimWorld.Royalty">
-		<defName>Luxandra_Inc_RoyalDepravity</defName>
-		<label>Royal depravity</label>
-		<category>ThreatSmall</category>
-		<targetTags>
-			<li>Map_PlayerHome</li>
-		</targetTags>
-		<workerClass>LuxandraLust.IncidentWorker_RoyalDepravity</workerClass>
-		<baseChance>0.6</baseChance>
-		<letterDef>NegativeEvent</letterDef>
-	</IncidentDef>
-	
-  <IncidentDef MayRequire="Ludeon.RimWorld.Ideology">
-    <defName>Luxandra_Inc_IdeoLeaderDepravity</defName>
-    <label>Spiritual depravity</label>
-    <category>ThreatSmall</category>
-    <workerClass>LuxandraLust.IncidentWorker_IdeologyLeaderDepravity</workerClass>
-    <targetTags>
-      <li>Map_PlayerHome</li>
-    </targetTags>
-    <baseChance>0.6</baseChance>
-   <letterDef>NegativeEvent</letterDef>
-  </IncidentDef>
-  
-  <IncidentDef MayRequire="Ludeon.RimWorld.Ideology">
-    <defName>Luxandra_Inc_IdeoLeaderBlessing</defName>
-    <label>Spiritual Radiance</label>
-    <category>Misc</category>
-    <workerClass>LuxandraLust.IncidentWorker_IdeologyLeaderBlessing</workerClass>
-    <targetTags>
-      <li>Map_PlayerHome</li>
-    </targetTags>
-    <baseChance>0.6</baseChance>    
-    <letterDef>PositiveEvent</letterDef>
-  </IncidentDef>
 
 </Defs>

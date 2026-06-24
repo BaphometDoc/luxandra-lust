@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IncidentDef MayRequire="Ludeon.RimWorld.Ideology">
+    <defName>Luxandra_Inc_IdeoLeaderDepravity</defName>
+    <label>Spiritual depravity</label>
+    <category>ThreatSmall</category>
+    <workerClass>LuxandraLust.IncidentWorker_IdeologyLeaderDepravity</workerClass>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <baseChance>0.6</baseChance>
+   <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+  
+  <IncidentDef MayRequire="Ludeon.RimWorld.Ideology">
+    <defName>Luxandra_Inc_IdeoLeaderBlessing</defName>
+    <label>Spiritual Radiance</label>
+    <category>Misc</category>
+    <workerClass>LuxandraLust.IncidentWorker_IdeologyLeaderBlessing</workerClass>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <baseChance>0.6</baseChance>    
+    <letterDef>PositiveEvent</letterDef>
+  </IncidentDef>
+
+</Defs>
