@@ -109,7 +109,8 @@ namespace LuxandraLust
 
                                 Find.LetterStack.ReceiveLetter(
                                     "Luxandra's Lustful Gaze",
-                                    "Luxandra is disappointed at your lack of activity. She chose to punish you.",
+                                    "Luxandra is disappointed at your lack of activity. She chose to punish you.\n\n" +
+                                    "Maybe it would be time to find more partners so her opinion of your colony improves...",
                                     LetterDefOf.NegativeEvent
                                 );
 
@@ -160,7 +161,9 @@ namespace LuxandraLust
 
                                 Find.LetterStack.ReceiveLetter(
                                     "Luxandra's Lustful Gaze",
-                                    "A hostile event was turned into a sexual event by Luxandra’s influence.",
+                                    "Luxandra is pleased by your colony!\n" +
+                                    "To repay the joy she felt watching you, she has turned the wheels of fate, and turned a dangerous event into something more...interesting.\n" +
+                                    "Though her concept of 'interesting' isn't always devoid of danger...",
                                     LetterDefOf.PositiveEvent
                                 );
 
@@ -181,7 +184,8 @@ namespace LuxandraLust
 
                                     Find.LetterStack.ReceiveLetter(
                                         "Luxandra's Lustful Gaze",
-                                        "A hostile event was suppressed by Luxandra’s influence.",
+                                        "Luxandra is pleased by your colony!\n" +
+                                        "To repay the joy she felt watching you, she has turned the wheels of fate, and turned a dangerous event into something helpful.",
                                         LetterDefOf.PositiveEvent
                                     );
 
