@@ -59,7 +59,7 @@ namespace LuxandraLust
 
                 bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
 
-                DebugActions_Luxandra.DebugLogMessage("Number of sex events detected before the event: " + n.sexActionCounter);
+                DebugActions_Luxandra.DebugLogMessage("Number of sex events detected before the event: " + n.sexActionCounterForRerolls);
 
                 // Determine the threshold for the event conversion
                 Map targetMap = parms.target as Map ?? Find.CurrentMap;
@@ -76,7 +76,7 @@ namespace LuxandraLust
                 if (isNegative)
                 {
                     // 0 Sexual Activity Detected - force a negative sexual event to punish the player
-                    if (n.sexActionCounter == 0)
+                    if (n.sexActionCounterForRerolls == 0)
                     {
                         DebugActions_Luxandra.DebugLogMessage($"0 Sexual activity detected");
                         DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
@@ -119,7 +119,7 @@ namespace LuxandraLust
                             if (successfullyRerolled)
                             {
                                 // Only reset if the event actually successfully swapped!
-                                n.ResetSexCounters();
+                                n.ResetSexCountersForRerolls();
                             }
                         }
 
@@ -128,7 +128,7 @@ namespace LuxandraLust
                     }
 
                     // High Sexual Activity Passed Threshold - reroll to a sexual event or a positive/neutral event to suppress the negative one
-                    else if (n.sexActionCounter > totalThreshold)
+                    else if (n.sexActionCounterForRerolls > totalThreshold)
                     {
                         DebugActions_Luxandra.DebugLogMessage($"Threshold was passed!");
                         DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
@@ -188,7 +188,7 @@ namespace LuxandraLust
                         finally
                         {
                             LuxandraExecutionGuard.InLuxandraExecution = false;
-                            n.ResetSexCounters();
+                            n.ResetSexCountersForRerolls();
                         }
 
                         // Block the original event

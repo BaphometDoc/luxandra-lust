@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using rjw; // Make sure rjw.dll is referenced!
+using rjw;
 using System;
 using Verse;
 
@@ -42,23 +42,42 @@ namespace LuxandraLust
                     return;
                 }
 
+                // Will always register the sex action happening regardless of the type
                 GameComponent_LuxandraLust.Instance?.RegisterSexAction();
-                DebugActions_Luxandra.DebugLogMessage($"Sex action detected for {actor.NameShortColored}");
+                DebugActions_Luxandra.DebugLogMessage($"Sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+
+                // If necrophilia is detected I won't register the type. I don't care which hole you're using, it's moist all the same.
+                bool isNecrophilia = props.partner != null && props.partner.Dead;
+                if (isNecrophilia)
+                {
+                    GameComponent_LuxandraLust.Instance?.RegisterNecrophiliaSexAction();
+                    DebugActions_Luxandra.DebugLogMessage($"Necrophilia detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+                    return;
+                }
+
+                // Mechs aren't animals, sorry.
+                bool isBestialityAct = props.partner != null && props.partner.RaceProps.Humanlike == false && !props.partner.IsColonyMech;
+                if (isBestialityAct)
+                {
+                    GameComponent_LuxandraLust.Instance?.RegisterBestialitySexAction();
+                    DebugActions_Luxandra.DebugLogMessage($"Bestiality sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+                    return;
+                }
 
                 // Only proper vaginal sex is pure... right... right? I mean, anal is fun too, but it's not pure. And oral is just gross.
                 bool isImpureSex = props.sexType != xxx.rjwSextype.Vaginal;
                 if (isImpureSex)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterImpureSexAction();
-                    DebugActions_Luxandra.DebugLogMessage($"Impure sex action detected for {actor.NameShortColored}");
+                    DebugActions_Luxandra.DebugLogMessage($"Impure sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
                 }
 
+                // Shouldn't be counting animals and corpses. It's only rape if they can't actually say no.
                 bool isRapeAct = props.isRape;
-
                 if (isRapeAct)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterRapeSexAction();
-                    DebugActions_Luxandra.DebugLogMessage($"Rape action detected involving {actor.NameShortColored}");
+                    DebugActions_Luxandra.DebugLogMessage($"Rape action detected involving {actor.NameShortColored} forcing themvelves on {props.partner?.NameShortColored}");
                 }
             }
             catch (Exception ex)

@@ -32,37 +32,80 @@ namespace LuxandraLust
         {
             base.ExposeData();
 
-            Scribe_Values.Look(ref sexActionCounter, "sexActionCounter", 0);
-            Scribe_Values.Look(ref impureSexActionCounter, "impureSexActionCounter", 0);
-            Scribe_Values.Look(ref rapeSexActionCounter, "rapeSexActionCounter", 0);
+            // --- REROLL COUNTERS ---
+            Scribe_Values.Look(ref sexActionCounterForRerolls, "sexActionCounterForRerolls", 0);
+            Scribe_Values.Look(ref impureSexActionCounterForRerolls, "impureSexActionCounterForRerolls", 0);
+            Scribe_Values.Look(ref rapeSexActionCounterForRerolls, "rapeSexActionCounterForRerolls", 0);
+            Scribe_Values.Look(ref bestialitySexActionCounterForRerolls, "bestialitySexActionCounterForRerolls", 0);
+            Scribe_Values.Look(ref necrophiliaSexActionCounterForRerolls, "necrophiliaSexActionCounterForRerolls", 0);
+
+            // --- CYCLE COUNTERS ---
+            Scribe_Values.Look(ref sexActionCounterForCycle, "sexActionCounterForCycle", 0);
+            Scribe_Values.Look(ref impureSexActionCounterForCycle, "impureSexActionCounterForCycle", 0);
+            Scribe_Values.Look(ref rapeSexActionCounterForCycle, "rapeSexActionCounterForCycle", 0);
+            Scribe_Values.Look(ref bestialitySexActionCounterForCycle, "bestialitySexActionCounterForCycle", 0);
+            Scribe_Values.Look(ref necrophiliaSexActionCounterForCycle, "necrophiliaSexActionCounterForCycle", 0);
         }
 
 
         // Sex counters
-        public int sexActionCounter = 0;
-        public int impureSexActionCounter = 0;
-        public int rapeSexActionCounter = 0;
+        public int sexActionCounterForRerolls = 0;
+        public int sexActionCounterForCycle = 0;
+        public int impureSexActionCounterForRerolls = 0;
+        public int impureSexActionCounterForCycle = 0;
+        public int rapeSexActionCounterForRerolls = 0;
+        public int rapeSexActionCounterForCycle = 0;
+        public int bestialitySexActionCounterForRerolls = 0;
+        public int bestialitySexActionCounterForCycle = 0;
+        public int necrophiliaSexActionCounterForRerolls = 0;
+        public int necrophiliaSexActionCounterForCycle = 0;
 
         public void RegisterSexAction()
         {
-            sexActionCounter++;
+            sexActionCounterForRerolls++;
+            sexActionCounterForCycle++;
         }
         public void RegisterImpureSexAction()
         {
-            impureSexActionCounter++;
+            impureSexActionCounterForRerolls++;
+            impureSexActionCounterForCycle++;
         }
         public void RegisterRapeSexAction()
         {
-            rapeSexActionCounter++;
+            rapeSexActionCounterForRerolls++;
+            rapeSexActionCounterForCycle++;
+        }
+        public void RegisterBestialitySexAction()
+        {
+            bestialitySexActionCounterForRerolls++;
+            bestialitySexActionCounterForCycle++;
+        }
+        public void RegisterNecrophiliaSexAction()
+        {
+            necrophiliaSexActionCounterForRerolls++;
+            necrophiliaSexActionCounterForCycle++;
         }
 
-        public void ResetSexCounters()
+        public void ResetSexCountersForRerolls()
         {
-            sexActionCounter = 0;
-            impureSexActionCounter = 0;
-            rapeSexActionCounter = 0;
+            sexActionCounterForRerolls = 0;
+            impureSexActionCounterForRerolls = 0;
+            rapeSexActionCounterForRerolls = 0;
+            bestialitySexActionCounterForRerolls = 0;
+            necrophiliaSexActionCounterForRerolls = 0;
 
-            DebugActions_Luxandra.DebugLogMessage("Sex counters reset.");
+            DebugActions_Luxandra.DebugLogMessage("Sex counters for event rerolls reset.");
+        }
+
+        public void ResetSexCountersForCycle()
+        {
+            sexActionCounterForCycle = 0;
+            impureSexActionCounterForCycle = 0;
+            rapeSexActionCounterForCycle = 0;
+            bestialitySexActionCounterForCycle = 0;
+            necrophiliaSexActionCounterForCycle = 0;
+
+            DebugActions_Luxandra.DebugLogMessage("Sex counters for storyteller cycle reset.");
         }
     }
 
