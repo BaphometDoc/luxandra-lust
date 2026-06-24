@@ -61,7 +61,7 @@
 					</li>
 				</capMods>
 				<statOffsets>
-					<Vulnerability>0.25</Vulnerability>
+					<Vulnerability>-1</Vulnerability>
 				</statOffsets>
 				<statFactors>
 					<SexSatisfaction>2</SexSatisfaction>
