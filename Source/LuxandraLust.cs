@@ -142,6 +142,26 @@ namespace LuxandraLust
         }
 
         /// <summary>
+        /// Determines if there's at least 2 player controlled conscious adults on the map
+        /// </summary>
+        public static bool HasMultipleAdultColonists(Map map)
+        {
+            if (map == null) return false;
+
+            int freeAdultCount = map.mapPawns.FreeColonistsSpawned.Count(pawn =>
+                !pawn.Dead &&
+                IsAdult(pawn)
+            );
+
+            int slaveAdultCount = map.mapPawns.SlavesOfColonySpawned.Count(pawn =>
+                !pawn.Dead &&
+                IsAdult(pawn)
+            );
+
+            return freeAdultCount + slaveAdultCount > 1;
+        }
+
+        /// <summary>
         /// Enlarges a sex part, within a certain limit
         /// </summary>
         public static bool EnlargeSexPart(Pawn pawn, List<RJWLewdablePart> sexParts)

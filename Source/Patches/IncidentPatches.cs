@@ -75,8 +75,20 @@ namespace LuxandraLust
                 // Luxandra will only suppress negative events for her gimmick
                 if (isNegative)
                 {
+                    var multipleColonistsPresent = LuxandraLustUtilities.HasMultipleAdultColonists(targetMap);
+                    if (n.sexActionCounterForRerolls == 0 && !multipleColonistsPresent)
+                    {
+                        Find.LetterStack.ReceiveLetter(
+                                    "Luxandra's Lustful Gaze",
+                                    "Luxandra is disappointed at your lack of activity. However, seeing you're alone, she chose to show mercy and won't punish you. For now.\n\n " +
+                                    "You should look for more people before she changes her mind...",
+                                    LetterDefOf.NeutralEvent
+                                );
+                        DebugActions_Luxandra.DebugLogMessage($"0 Sexual activity detected but only one colonist. Skipping the punishment.");
+                    }
+
                     // 0 Sexual Activity Detected - force a negative sexual event to punish the player
-                    if (n.sexActionCounterForRerolls == 0)
+                    if (n.sexActionCounterForRerolls == 0 && multipleColonistsPresent)
                     {
                         DebugActions_Luxandra.DebugLogMessage($"0 Sexual activity detected");
                         DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
@@ -96,7 +108,7 @@ namespace LuxandraLust
                                 DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
-                                    "Luxandra's Intervention",
+                                    "Luxandra's Lustful Gaze",
                                     "Luxandra is disappointed at your lack of activity. She chose to punish you.",
                                     LetterDefOf.NegativeEvent
                                 );
@@ -147,7 +159,7 @@ namespace LuxandraLust
                                 DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
-                                    "Luxandra's Intervention",
+                                    "Luxandra's Lustful Gaze",
                                     "A hostile event was turned into a sexual event by Luxandra’s influence.",
                                     LetterDefOf.PositiveEvent
                                 );
@@ -168,7 +180,7 @@ namespace LuxandraLust
                                     DebugActions_Luxandra.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
 
                                     Find.LetterStack.ReceiveLetter(
-                                        "Luxandra's Intervention",
+                                        "Luxandra's Lustful Gaze",
                                         "A hostile event was suppressed by Luxandra’s influence.",
                                         LetterDefOf.PositiveEvent
                                     );
