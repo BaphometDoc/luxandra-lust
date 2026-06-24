@@ -3,8 +3,8 @@ bin/
 obj/
 .vs/
 
-# Build output (we don't commit compiled DLLs unless you want to)
-Assemblies/*.dll
+# Stop ignoring DLLs specifically inside the RimWorld mod folders
+!**/Assemblies/*.dll
 
 # OS junk
 .DS_Store
