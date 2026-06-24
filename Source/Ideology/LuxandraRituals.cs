@@ -19,7 +19,7 @@ namespace LuxandraLust
             foreach (Gizmo gizmo in __result) yield return gizmo;
 
             // Requirements: Storyteller active AND Player has Ideology
-            if (!LuxandraStorytellerCheck.IsActive() || !ModsConfig.IdeologyActive)
+            if (!LuxandraStorytellerCheck.IsActive() || !ModsConfig.IdeologyActive || true)
                 yield break;
 
             // Building Check (Ritual spot + altar are valid targets)
