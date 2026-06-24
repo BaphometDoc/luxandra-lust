@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<IncidentDef>
+		<defName>Luxandra_Inc_WhiteRain</defName>
+		<label>White rain</label>
+		<category>ThreatBig</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_WhiteRain</workerClass>
+		<letterLabel>The Milky Rain</letterLabel>
+		<letterText>A bizarre, sticky, milk-white rain has started to fall. Any adult who steps outside into it seems to quickly succumb to a raw, animalistic urge. Keep them indoors, if you value their dignity.</letterText>
+		<letterDef>ThreatBig</letterDef>
+		<baseChance>0.2</baseChance>
+	</IncidentDef>
+
+	<GameConditionDef>
+		<defName>Luxandra_WhiteRain</defName>
+		<conditionClass>LuxandraLust.GameCondition_WhiteRain</conditionClass>
+		<label>It's raining cum!</label>
+		<description>A bizarre, sticky, milk-white rain falls over the area. Any adult standing outdoors will quickly build up a raw, animalistic urge until they finally snap.</description>
+		<weatherDef>Luxandra_Rain_White</weatherDef>
+	</GameConditionDef>
+  
+	<!-- We needed a thicker cum so the rain doesn't wash it! -->
+	<ThingDef ParentName="BaseCumFilth">
+		<defName>Luxandra_FilthCumRain</defName>
+		<label>Sticky cum puddle</label>
+		<filth>
+			<rainWashes>false</rainWashes>
+		</filth>
+	</ThingDef>
+
+	<!-- The Visual Weather -->
+	<WeatherDef>
+		<defName>Luxandra_Rain_White</defName>
+		<label>White rain</label>
+		<isBad>true</isBad>
+		<canOccurAsRandomForcedEvent>false</canOccurAsRandomForcedEvent>
+		<description>Thick, sticky, milky-white rain.</description>
+		<favorability>Neutral</favorability>
+		<perceivePriority>3</perceivePriority>
+		<rainRate>1.0</rainRate>
+		<accuracyMultiplier>0.8</accuracyMultiplier>
+		<moveSpeedMultiplier>0.9</moveSpeedMultiplier>
+    
+		<overlayClasses>
+			<li>WeatherOverlay_Rain</li></overlayClasses>
+    
+		<ambientSounds>
+			<li>Ambient_Wind_Fog</li>
+			<li>Ambient_Rain</li>
+		</ambientSounds>
+
+		<skyColorsDay>
+			<sky>(0.50, 0.50, 0.50)</sky>
+			<shadow>(0.65, 0.65, 0.65)</shadow>
+			<overlay>(1.0, 1.0, 1.0, 0.8)</overlay>
+			<saturation>0.3</saturation></skyColorsDay>
+		<skyColorsDusk>
+			<sky>(0.55, 0.55, 0.55)</sky>
+			<shadow>(0.65, 0.65, 0.65)</shadow>
+			<overlay>(1.0, 1.0, 1.0, 0.8)</overlay>
+			<saturation>0.3</saturation>
+		</skyColorsDusk>
+		<skyColorsNightEdge>
+			<sky>(0.25, 0.28, 0.32)</sky>
+			<shadow>(0.50, 0.50, 0.50)</shadow>
+			<overlay>(0.8, 0.8, 0.8, 0.6)</overlay>
+			<saturation>0.4</saturation>
+		</skyColorsNightEdge>
+		<skyColorsNightMid>
+			<sky>(0.20, 0.22, 0.25)</sky>
+			<shadow>(0.50, 0.50, 0.50)</shadow>
+			<overlay>(0.8, 0.8, 0.8, 0.6)</overlay>
+			<saturation>0.4</saturation>
+		</skyColorsNightMid>
+	</WeatherDef>
+
+	<HediffDef>
+		<defName>Luxandra_WhiteRainBuildup</defName>
+		<hediffClass>LuxandraLust.Hediff_WhiteRainBuildup</hediffClass>
+		<label>Aphrodisiac buildup</label>
+		<description>Exposure to the bizarre milky rain is causing a dangerous effect on this person's mind.</description>
+		<initialSeverity>0.01</initialSeverity>
+		<maxSeverity>1.0</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-0.5</severityPerDay><!-- Slow decay naturally -->
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>minor</label>
+			</li>
+			<li>
+				<minSeverity>0.4</minSeverity>
+				<label>serious</label>
+			</li>
+			<li>
+				<minSeverity>0.8</minSeverity>
+				<label>extreme</label>
+			</li>
+		</stages>
+	</HediffDef>
+  
+	<ThoughtDef>
+		<defName>Luxandra_WhiteRainMood</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_WhiteRainBuildup</hediff>
+		<validWhileDespawned>false</validWhileDespawned>
+		<stages>
+			<li>
+				<label>Strange warmth</label>
+				<description>The rain outside feels oddly warm... and sticky?. It's a bit unsettling.</description>
+				<baseMoodEffect>-2</baseMoodEffect>
+			</li>
+			<li>
+				<label>Intense urge</label>
+				<description>This rain is doing something to my head. I can't stop thinking about... things. It's becoming overwhelming.</description>
+				<baseMoodEffect>-8</baseMoodEffect>
+			</li>
+			<li>
+				<label>consuming lust</label>
+				<description>I can't take this anymore! Every single inch of my skin craves pleasure. I need someone, right now!</description>
+				<baseMoodEffect>-18</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

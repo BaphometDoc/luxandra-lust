@@ -75,6 +75,7 @@
     <Compile Include="Incidents\IncidentWorker_RoyalDepravity.cs" />
     <Compile Include="Incidents\IncidentWorker_RoyalLuxury.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderDepravity.cs" />
+    <Compile Include="Incidents\WhiteRainIncident.cs" />
     <Compile Include="LuxandraModConfigs.cs" />
     <Compile Include="Patches\JobPatches.cs" />
     <Compile Include="Patches\IncidentPatches.cs" />
