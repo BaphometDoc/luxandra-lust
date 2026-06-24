@@ -63,6 +63,8 @@ namespace LuxandraLust
                 ritualInstance.ideo = Faction.OfPlayer.ideos.PrimaryIdeo;
             }
 
+            // Kind of a bad way to set the name but it's the only way I found
+            HarmonyLib.AccessTools.Field(typeof(Precept), "name").SetValue(ritualInstance, def.label);
             ritualInstance.behavior = DefDatabase<RitualBehaviorDef>.GetNamed("LeaderSpeech").GetInstance();
             ritualInstance.outcomeEffect = DefDatabase<RitualOutcomeEffectDef>.GetNamed("AttendedFuneralNoCorpse").GetInstance();
 
