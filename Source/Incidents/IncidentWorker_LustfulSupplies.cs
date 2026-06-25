@@ -90,7 +90,18 @@ namespace LuxandraLust
                 ThingDef foundDef = DefDatabase<ThingDef>.GetNamed(validSelection.defName, errorOnFail: false);
                 if (foundDef != null)
                 {
-                    Thing itemInstance = ThingMaker.MakeThing(foundDef);
+                    Thing itemInstance;
+
+                    // Check if the item requires a material to be made out of
+                    if (foundDef.MadeFromStuff)
+                    {
+                        ThingDef defaultStuff = GenStuff.DefaultStuffFor(foundDef);
+                        itemInstance = ThingMaker.MakeThing(foundDef, defaultStuff);
+                    }
+                    else
+                    {
+                        itemInstance = ThingMaker.MakeThing(foundDef);
+                    }
 
                     int maxAffordable = Mathf.FloorToInt((totalMarketValueBudget - spentBudget) / validSelection.marketValue);
                     int stackCount = Rand.RangeInclusive(1, Mathf.Min(maxAffordable, foundDef.stackLimit));
