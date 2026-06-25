@@ -7,7 +7,7 @@ namespace LuxandraLust
 {
     public class GameCondition_FertilityPulse : GameCondition
     {
-        private const int ScanInterval = 1000;
+        private const int ScanInterval = 2500;
 
         public override void GameConditionTick()
         {
