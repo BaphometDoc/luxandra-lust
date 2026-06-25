@@ -71,7 +71,9 @@
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderBlessing.cs" />
     <Compile Include="Incidents\IncidentWorker_LustfulSupplies.cs" />
-    <Compile Include="Raids\IncidentWorker_Raids.cs" />
+    <Compile Include="Raids\IncidentWorker_HornyTribalRaid.cs" />
+    <Compile Include="Raids\IncidentWorker_DeviantHordeRaid.cs" />
+    <Compile Include="Raids\IncidentWorker_BastardRaid.cs" />
     <Compile Include="Incidents\IncidentWorker_RapistBreak.cs" />
     <Compile Include="Incidents\IncidentWorker_RoyalDepravity.cs" />
     <Compile Include="Incidents\IncidentWorker_RoyalLuxury.cs" />

@@ -70,6 +70,37 @@
 			</subNodes>
 		</thinkNode>
 	</DutyDef>
+	
+	<!-- TOTALLY NOT NYMPHS RAID -->
+	<IncidentDef>
+		<defName>Luxandra_Inc_DeviantHordeRaid</defName>
+		<label>carnal horde</label>
+		<category>ThreatBig</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_DeviantHordeRaid</workerClass>
+		<baseChance>1.0</baseChance>
+		<minRefireDays>15</minRefireDays>
+		<pointsScaleable>true</pointsScaleable>
+		<tale>Raid</tale>
+	</IncidentDef>
+  
+	<RaidStrategyDef>
+		<defName>LL_DeviantHordeAssault</defName>
+		<workerClass>LuxandraLust.RaidStrategyWorker_RapeAssault</workerClass>
+		<label>carnal horde</label>
+		<letterLabelEnemy>Raid (Deviant Horde)</letterLabelEnemy>
+		<arrivalTextEnemy>A massive gathering of carnal deviants has detected your colony. They are unarmed, naked, and driven entirely by an inescapable carnal frenzy...</arrivalTextEnemy>
+		<pointsFactorCurve>
+			<points>
+				<li>(0, 1)</li>
+			</points>
+		</pointsFactorCurve>
+		<arriveModes>
+			<li>EdgeWalkIn</li>
+		</arriveModes>
+	</RaidStrategyDef>
   
 	<!-- This hediff tanks the sex drive of the pawn, combined with
 		rapist trait they'll go on a turbo rape frenzy-->
@@ -83,7 +114,7 @@
 		<maxSeverity>1.0</maxSeverity>
 		<comps>
 			<li Class="HediffCompProperties_Disappears">
-				<disappearsAfterTicks>15000</disappearsAfterTicks>
+				<disappearsAfterTicks>60000</disappearsAfterTicks>
 				<showRemainingTime>true</showRemainingTime>
 			</li>
 		</comps>

@@ -6,6 +6,7 @@ Already existing mechanics updates to do
 - the event reroll should reroll to same gravity type (es, threat with threat, gift with gift)
 - option for the reroll to always reroll into positive event
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
+- actually bring back nymph raids
 
 Various potential events
 - unexpected pregnancy (jesus was only a setback - bestiality too?)
@@ -16,6 +17,7 @@ Various potential events
 - sexuality alteration (add kinks permanently/temporarly?)
 - sex related diseases (no, not STDs, diseases that impact sexuality stats)
 - cause incestous relationships
+- breast growth! everyone gets tits!
 
 Ideology integration
 - dedicated ideology

@@ -24,6 +24,8 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_LustfulFertilityPulse;
 
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
+        public static IncidentDef Luxandra_Inc_DeviantHordeRaid;
+
         public static IncidentDef Luxandra_Inc_RapistBreak;
 
         public static IncidentDef Luxandra_Inc_MaleExpansion;
@@ -85,6 +87,7 @@ namespace LuxandraLust
                 LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
                 LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
                 LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
                 LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
@@ -129,7 +132,6 @@ namespace LuxandraLust
                 // Base RJW
                 "NymphJoins",
                 "NymphVisitor",
-                "NymphVisitorGroupEasy", // Not adding the hard one as these are tribals on steroids
 
                 // Brothel colony quests
                 "RJWBCQ_GiveQuest_BrothelCustomer",
@@ -174,7 +176,9 @@ namespace LuxandraLust
             cachedSexRelatedPunishingEvents = new List<IncidentDef>
             {
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
+                LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
             };
 
             // Add the Royalty events
