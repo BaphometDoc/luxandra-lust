@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<IncidentDef>
+		<defName>Luxandra_Inc_LustfulFertilityPulse</defName>
+		<label>Lustful fertility pulse</label>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>IncidentWorker_MakeGameCondition</workerClass>
+		<gameCondition>Luxandra_LustfulFertilityPulse</gameCondition>
+		<baseChance>0.3</baseChance><!-- Rare-ish neutral event -->
+		<minRefireDays>30</minRefireDays>
+		<durationDays>
+			<min>4.5</min>
+			<max>7.0</max>
+		</durationDays>
+		<letterLabel>Lustful Fertility Pulse</letterLabel>
+		<letterText>A strange psychic pulse has washed over the region. Children are merely confused by the shifting atmosphere, but all the adults are feeling an overwhelming biological pressure to procreate. Men feel rejuvenated, while women feel the calling of motherhood. Even their bodies reject infertility!</letterText>
+		<letterDef>NeutralEvent</letterDef>
+	</IncidentDef>
+
+	<!-- Game condition -->
+	<GameConditionDef>
+		<defName>Luxandra_LustfulFertilityPulse</defName>
+		<conditionClass>LuxandraLust.GameCondition_FertilityPulse</conditionClass>
+		<label>lustful fertility pulse</label>
+		<description>A localized psychic ripple is overloading the reproductive instincts of all adult humans on the map.</description>
+		<letterText>A strange psychic pulse has washed over the region. Adults are feeling an overwhelming pressure to procreate.</letterText>
+		<letterDef>NeutralEvent</letterDef>
+		<canBePermanent>false</canBePermanent>
+	</GameConditionDef>
+  
+	<!-- Child Confusion Hediff -->
+	<HediffDef>
+		<defName>Luxandra_PulseChildConfusion</defName>
+		<label>Psychic confusion</label>
+		<description>Confused by the strange behavior of the adults around them.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<stages>
+			<li>
+				<!-- No actual effect, Mood is handled via a ThoughtDef below -->
+			</li>
+		</stages>
+	</HediffDef>
+
+	<!-- Adult Male Hediff -->
+	<HediffDef>
+		<defName>Luxandra_PulseAdultMale</defName>
+		<label>Lustful vigor</label>
+		<description>An intense psychic surge driving up reproductive capabilities and energy.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.20</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>0.20</offset>
+					</li>
+				</capMods>
+				<statOffsets>
+					<Fertility>5.0</Fertility>
+					<SexFrequency>0.2</SexFrequency>
+					<Vulnerability>-0.5</Vulnerability>
+				</statOffsets>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<!-- Adult Female Hediff -->
+	<HediffDef>
+		<defName>Luxandra_PulseAdultFemale</defName>
+		<label>Mating pressure</label>
+		<description>An overwhelming psychic biological pull sending ovulation in overdrive and skyrocketing the maternal instinct.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.20</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>-0.10</offset>
+					</li>
+				</capMods>
+				<statOffsets>
+					<Fertility>10.0</Fertility><!-- since it's a offset, it should override infertile due to age too -->
+					<SexFrequency>1.0</SexFrequency>
+					<Vulnerability>1.0</Vulnerability>
+				</statOffsets>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<!-- 1. Child Thought -->
+	<ThoughtDef>
+		<defName>Luxandra_PulseChildThought</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_PulseChildConfusion</hediff>
+		<stages>
+			<li>
+				<label>Confused by the adults</label>
+				<description>The adults are acting so weird and funny today... I wonder what's going on.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<!-- 2. Adult Male Thought -->
+	<ThoughtDef>
+		<defName>Luxandra_PulseMaleThought</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_PulseAdultMale</hediff>
+		<stages>
+			<li>
+				<label>Feeling vigorous</label>
+				<description>I feel an incredible surge of primal energy flowing through me. All the women belong to me.</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<!-- 3. Adult Female Thought -->
+	<ThoughtDef>
+		<defName>Luxandra_PulseFemaleThought</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_PulseAdultFemale</hediff>
+		<stages>
+			<li>
+				<label>Reproductive pressure</label>
+				<description>I feel compelled to find a partner. My clock is ticking. I MUST FIND A MATE. NOW.</description>
+				<baseMoodEffect>-5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+</Defs>

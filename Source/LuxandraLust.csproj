@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebugStuff.cs" />
+    <Compile Include="Incidents\FertilityPulse.cs" />
     <Compile Include="Incidents\IncidentWorker_GenitalSizeEvents.cs" />
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderBlessing.cs" />

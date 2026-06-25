@@ -21,6 +21,7 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyRushFemale;
         public static IncidentDef Luxandra_Inc_HornyRushMale;
         public static IncidentDef Luxandra_Inc_WhiteRain;
+        public static IncidentDef Luxandra_Inc_LustfulFertilityPulse;
 
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_RapistBreak;
@@ -82,6 +83,7 @@ namespace LuxandraLust
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
                 LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
+                LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse,
                 LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
                 LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
