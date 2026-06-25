@@ -75,7 +75,7 @@ namespace LuxandraLust
                     // Check to avoid duplicate stacking if duties update multiple times
                     if (!raider.health.hediffSet.HasHediff(rapistRageHediff))
                     {
-                        DebugActions_Luxandra.DebugLogMessage($"Added rapist frenzy to {raider.NameShortColored}.");
+                        LuxandraDebugActions.DebugLogMessage($"Added rapist frenzy to {raider.NameShortColored}.");
                         raider.health.AddHediff(rapistRageHediff, null, null, null);
                     }
                 }

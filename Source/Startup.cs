@@ -1,5 +1,5 @@
-﻿using RimWorld;
-using HarmonyLib;
+﻿using HarmonyLib;
+using System.Linq;
 using Verse;
 
 namespace LuxandraLust
@@ -13,6 +13,15 @@ namespace LuxandraLust
             harmony.PatchAll();
 
             Log.Message("[Luxandra Lust] loaded successfully");
+
+            LuxandraDefsCollections.InizializeLuxandraIncidents();
+            var incidentsInitialized = LuxandraDefsCollections.AllIncidents;
+
+            Log.Message($"[Luxandra Lust] found {incidentsInitialized.Count} lustful events.");
+
+            LuxandraDebugActions.DebugLogMessage($"Positive incidents: {LuxandraDefsCollections.PositiveIncidents.Count()}");
+            LuxandraDebugActions.DebugLogMessage($"Negative incidents: {LuxandraDefsCollections.NegativeIncidents.Count()}");
+            LuxandraDebugActions.DebugLogMessage($"Raids: {LuxandraDefsCollections.Raids.Count()}");
         }
     }
 }

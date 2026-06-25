@@ -77,8 +77,8 @@ namespace LuxandraLust
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            DebugActions_Luxandra.DebugLogMessage("Attempted to launch a genitalia resize event.");
-            DebugActions_Luxandra.DebugLogMessage("Specific incident: " + EventLogName);
+            LuxandraDebugActions.DebugLogMessage("Attempted to launch a genitalia resize event.");
+            LuxandraDebugActions.DebugLogMessage("Specific incident: " + EventLogName);
             Map map = parms.target as Map ?? Find.CurrentMap;
             if (map == null) return false;
 
@@ -88,7 +88,7 @@ namespace LuxandraLust
                 .ToList();
 
 
-            DebugActions_Luxandra.DebugLogMessage("Candidates found: " + candidates.Count);
+            LuxandraDebugActions.DebugLogMessage("Candidates found: " + candidates.Count);
 
             if (candidates.Count == 0) return false;
 
@@ -99,7 +99,7 @@ namespace LuxandraLust
             {
                 this.SendStandardLetter(this.def.letterLabel, this.def.letterText, this.def.letterDef, parms, null);
 
-                DebugActions_Luxandra.DebugLogMessage("Resizing event successful.");
+                LuxandraDebugActions.DebugLogMessage("Resizing event successful.");
             }
 
             return success;
@@ -111,7 +111,7 @@ namespace LuxandraLust
                    && !p.Dead
                    && p.RaceProps != null
                    && p.RaceProps.Humanlike
-                   && LuxandraLustUtilities.IsAdult(p)
+                   && LuxandraUtilities.IsAdult(p)
                    && p.gender == TargetGender;
         }
 

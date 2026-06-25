@@ -14,7 +14,7 @@ namespace LuxandraLust
             if (__result < 1f && pawn?.health?.hediffSet != null)
             {
                 // Ensure they are at least adults (ignoring age-brackets for children)
-                if (LuxandraLustUtilities.IsAdult(pawn))
+                if (LuxandraUtilities.IsAdult(pawn))
                 {
                     // Check if they have ANY of our custom Luxandra pulse hediffs active
                     if (pawn.health.hediffSet.HasHediff(HediffDef.Named("Luxandra_PulseAdultMale")) ||

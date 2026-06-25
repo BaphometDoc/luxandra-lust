@@ -13,7 +13,7 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
 
-            DebugActions_Luxandra.DebugLogMessage("Attempting to generate a Carnal Deviant raid.");
+            LuxandraDebugActions.DebugLogMessage("Attempting to generate a Carnal Deviant raid.");
             Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(DefDatabase<FactionDef>.GetNamed("LL_DeviantHordeFaction", false));
 
             // Failsafe 1: Fallback to a hostile tribal faction

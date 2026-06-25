@@ -27,7 +27,7 @@ namespace LuxandraLust
                    !leaderPawn.Dead &&
                    leaderPawn.Spawned &&
                    leaderPawn.Map == map &&
-                   LuxandraLustUtilities.IsAdult(leaderPawn);
+                   LuxandraUtilities.IsAdult(leaderPawn);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -43,7 +43,7 @@ namespace LuxandraLust
 
             Pawn leaderPawn = leaderPrecept?.ChosenPawns()?.FirstOrDefault();
 
-            DebugActions_Luxandra.DebugLogMessage($"Attempted to execute Spiritual Radiance for {leaderPawn.NameShortColored}.");
+            LuxandraDebugActions.DebugLogMessage($"Attempted to execute Spiritual Radiance for {leaderPawn.NameShortColored}.");
 
             // Fallback
             if (leaderPawn == null || leaderPawn.Map != map || leaderPawn.Dead) return false;
@@ -83,9 +83,9 @@ namespace LuxandraLust
             // And not only that, but they're about to get thiccer. If they can.
             var sexParts = leaderPawn.GetLewdParts();
             if (sexParts.Breasts != null && leaderPawn.gender != Gender.Male && !sexParts.Breasts.EnumerableNullOrEmpty())
-                LuxandraLustUtilities.EnlargeSexPart(leaderPawn, sexParts.Breasts);
+                LuxandraUtilities.EnlargeSexPart(leaderPawn, sexParts.Breasts);
             if (sexParts.Penises != null && !sexParts.Penises.EnumerableNullOrEmpty())
-                LuxandraLustUtilities.EnlargeSexPart(leaderPawn, sexParts.Penises);
+                LuxandraUtilities.EnlargeSexPart(leaderPawn, sexParts.Penises);
 
             string label = "Spiritual Radiance";
             string text = $"Luxandra has reached out to touch the mind (and not only that!) of your guide! {leaderPawn.LabelShort} has experienced a surge of euphoric clarity, transforming their vision of the faith into a passionate beacon of bliss and devotion.";

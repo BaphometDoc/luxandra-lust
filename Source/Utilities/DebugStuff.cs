@@ -1,12 +1,13 @@
 ﻿using LudeonTK;
 using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Verse;
 
 namespace LuxandraLust
 {
-    public static class DebugActions_Luxandra
+    public static class LuxandraDebugActions
     {
         [DebugAction("Luxandra Lust", "Log Sex Counters (Rerolls)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void LogSexCountersRerolls()
@@ -28,8 +29,8 @@ namespace LuxandraLust
 
             if (targetMap != null)
             {
-                adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
-                adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
+                adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
+                adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
                 totalThreshold = adultColonistCount * 2 + adultSlavesCount;
                 thresholdAfterSettings = (int)(totalThreshold * settingsMultiplier);
             }
@@ -207,63 +208,39 @@ namespace LuxandraLust
             }
         }
 
-        [DebugAction("Luxandra Lust", "Print Sexual Event Pool", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction("Luxandra Lust", "Print Sexual Event Pool Audit", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void AuditEventPoolClassification()
         {
-            List<IncidentDef> totalPool = LuxandraEventPool.GetSexRelatedIncidents();
-
-            if (totalPool == null || totalPool.Count == 0)
-            {
-                Log.Error("[Luxandra Debug] Audit failed: The event pool returned by GetSexRelatedIncidents is empty or null!");
-                return;
-            }
+            var positiveEvents = LuxandraDefsCollections.PositiveIncidents;
+            var negativeEvents = LuxandraDefsCollections.NegativeIncidents;
+            var neutralEvents = LuxandraDefsCollections.NeutralIncidents;
+            var raidEvents = LuxandraDefsCollections.Raids;
+            var questEvents = LuxandraDefsCollections.Quests; ;
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("==================================================");
-            sb.AppendLine($"   LUXANDRA STORYTELLER EVENT POOL AUDIT ({totalPool.Count} Total)");
+            sb.AppendLine("   LUXANDRA STORYTELLER EVENT POOL AUDIT");
             sb.AppendLine("==================================================");
 
-            int positiveCount = 0;
-            int negativeCount = 0;
-            int neutralCount = 0;
-
-            foreach (IncidentDef incident in totalPool)
+            void LogCategory(string label, IEnumerable<LuxandraIncidentDefs> collection)
             {
-                if (incident == null)
+                sb.AppendLine($"{label} ({collection.Count()}):");
+                foreach (var item in collection)
                 {
-                    sb.AppendLine("-> [NULL ENTRY] (A definition failed to load correctly from XML!)");
-                    continue;
+                    sb.AppendLine($"  -> {item.IncidentDef.defName}");
                 }
-
-                string classification = "NEUTRAL / MISC";
-                string letterDefName = incident.letterDef?.defName ?? "None";
-
-                if (letterDefName == "PositiveEvent")
-                {
-                    classification = "POSITIVE";
-                    positiveCount++;
-                }
-                else if (letterDefName == "NegativeEvent")
-                {
-                    classification = "NEGATIVE";
-                    negativeCount++;
-                }
-                else
-                {
-                    neutralCount++;
-                }
-
-                sb.AppendLine($"-> defName: {incident.defName,-30} | Category: {classification,-14} | letterDef: {letterDefName}");
             }
 
-            sb.AppendLine("==================================================");
-            sb.AppendLine($" SUMMARY: Positive: {positiveCount} | Negative: {negativeCount} | Neutral/Misc: {neutralCount}");
-            sb.AppendLine("==================================================");
+            LogCategory("POSITIVE EVENTS", positiveEvents);
+            LogCategory("NEGATIVE EVENTS", negativeEvents);
+            LogCategory("NEUTRAL EVENTS", neutralEvents);
+            LogCategory("RAID EVENTS", raidEvents);
+            LogCategory("QUEST EVENTS", questEvents);
 
+            sb.AppendLine("==================================================");
             Log.Message(sb.ToString());
 
-            // Send a quick toast message on screen so you know the audit finished successfully
-            Messages.Message($"[Luxandra] Audited {totalPool.Count} events. Open the debug console to view the full list breakdown!", MessageTypeDefOf.TaskCompletion, false);
+            Messages.Message("[Luxandra] Audit complete. Check console for breakdown.", MessageTypeDefOf.TaskCompletion, false);
         }
 
         #region Log stuff

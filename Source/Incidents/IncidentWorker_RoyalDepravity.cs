@@ -13,7 +13,7 @@ namespace LuxandraLust
             Map map = parms.target as Map ?? Find.CurrentMap;
 
             return map.mapPawns.FreeColonistsSpawned.Any(p =>
-                LuxandraLustUtilities.IsAdult(p) && !p.Dead &&
+                LuxandraUtilities.IsAdult(p) && !p.Dead &&
                 p.royalty != null && p.royalty.AllTitlesInEffectForReading.Count > 0
             );
         }
@@ -24,13 +24,13 @@ namespace LuxandraLust
 
             // Locate the adult player pawn with the highest structural title seniority score
             Pawn targetNoble = map.mapPawns.FreeColonistsSpawned
-                .Where(p => LuxandraLustUtilities.IsAdult(p) && !p.Dead && p.royalty?.MostSeniorTitle != null)
+                .Where(p => LuxandraUtilities.IsAdult(p) && !p.Dead && p.royalty?.MostSeniorTitle != null)
                 .OrderByDescending(p => p.royalty.MostSeniorTitle.def.seniority)
                 .FirstOrDefault();
 
             if (targetNoble == null) return false;
 
-            DebugActions_Luxandra.DebugLogMessage($"Attempted to execute Royal Depravity for  {targetNoble.NameShortColored}.");
+            LuxandraDebugActions.DebugLogMessage($"Attempted to execute Royal Depravity for  {targetNoble.NameShortColored}.");
 
             // Welp, now they're a nymphomaniac rapist. Unfortunate. Maybe they already were...
             if (targetNoble.story?.traits != null)
@@ -57,7 +57,7 @@ namespace LuxandraLust
             }
 
             // Also send them raping. They earned it (kinda)
-            LuxandraLustUtilities.ForceRapistBreak(targetNoble, "Royal Depravity", true);
+            LuxandraUtilities.ForceRapistBreak(targetNoble, "Royal Depravity", true);
 
             string titleText = "Royal Depravity";
             string descText = $"Luxandra tests the limits of your nobility. {targetNoble.LabelShort} bends under the cosmic weight of their high station, twisting their personality into something much more abusive.";

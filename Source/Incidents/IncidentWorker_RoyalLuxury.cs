@@ -14,7 +14,7 @@ namespace LuxandraLust
             Map map = parms.target as Map ?? Find.CurrentMap;
 
             return map.mapPawns.FreeColonistsSpawned.Any(p =>
-                LuxandraLustUtilities.IsAdult(p) && !p.Dead &&
+                LuxandraUtilities.IsAdult(p) && !p.Dead &&
                 p.royalty != null && p.royalty.AllTitlesInEffectForReading.Count > 0
             );
         }
@@ -24,11 +24,11 @@ namespace LuxandraLust
             Map map = (Map)parms.target;
 
             Pawn targetNoble = map.mapPawns.FreeColonistsSpawned
-                .Where(p => LuxandraLustUtilities.IsAdult(p) && !p.Dead && p.royalty?.MostSeniorTitle != null)
+                .Where(p => LuxandraUtilities.IsAdult(p) && !p.Dead && p.royalty?.MostSeniorTitle != null)
                 .OrderByDescending(p => p.royalty.MostSeniorTitle.def.seniority)
                 .FirstOrDefault();
 
-            DebugActions_Luxandra.DebugLogMessage($"Attempted to execute Royal Luxury for  {targetNoble.NameShortColored}.");
+            LuxandraDebugActions.DebugLogMessage($"Attempted to execute Royal Luxury for  {targetNoble.NameShortColored}.");
 
             if (targetNoble == null) return false;
 
@@ -58,9 +58,9 @@ namespace LuxandraLust
             // And not only that, but they're about to get thiccer. If they can.
             var sexParts = targetNoble.GetLewdParts();
             if (sexParts.Breasts != null && targetNoble.gender != Gender.Male && !sexParts.Breasts.EnumerableNullOrEmpty())
-                LuxandraLustUtilities.EnlargeSexPart(targetNoble, sexParts.Breasts);
+                LuxandraUtilities.EnlargeSexPart(targetNoble, sexParts.Breasts);
             if (sexParts.Penises != null && !sexParts.Penises.EnumerableNullOrEmpty())
-                LuxandraLustUtilities.EnlargeSexPart(targetNoble, sexParts.Penises);
+                LuxandraUtilities.EnlargeSexPart(targetNoble, sexParts.Penises);
 
             ThoughtDef luxuryThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_RoyalLuxuryMoodlet", errorOnFail: false);
             if (luxuryThought != null && targetNoble.needs?.mood?.thoughts?.memories != null)

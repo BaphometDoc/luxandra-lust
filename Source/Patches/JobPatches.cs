@@ -38,20 +38,20 @@ namespace LuxandraLust
                 bool isMasturbation = props.sexType == xxx.rjwSextype.Masturbation || props.sexType == xxx.rjwSextype.MutualMasturbation;
                 if (isMasturbation)
                 {
-                    DebugActions_Luxandra.DebugLogMessage($"Masturbation detected for {actor.NameShortColored}: does not count as sex action.");
+                    LuxandraDebugActions.DebugLogMessage($"Masturbation detected for {actor.NameShortColored}: does not count as sex action.");
                     return;
                 }
 
                 // Will always register the sex action happening regardless of the type
                 GameComponent_LuxandraLust.Instance?.RegisterSexAction();
-                DebugActions_Luxandra.DebugLogMessage($"Sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+                LuxandraDebugActions.DebugLogMessage($"Sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
 
                 // If necrophilia is detected I won't register the type. I don't care which hole you're using, it's moist all the same.
                 bool isNecrophilia = props.partner != null && props.partner.Dead;
                 if (isNecrophilia)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterNecrophiliaSexAction();
-                    DebugActions_Luxandra.DebugLogMessage($"Necrophilia detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+                    LuxandraDebugActions.DebugLogMessage($"Necrophilia detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
                     return;
                 }
 
@@ -60,7 +60,7 @@ namespace LuxandraLust
                 if (isBestialityAct)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterBestialitySexAction();
-                    DebugActions_Luxandra.DebugLogMessage($"Bestiality sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+                    LuxandraDebugActions.DebugLogMessage($"Bestiality sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
                     return;
                 }
 
@@ -69,7 +69,7 @@ namespace LuxandraLust
                 if (isImpureSex)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterImpureSexAction();
-                    DebugActions_Luxandra.DebugLogMessage($"Impure sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
+                    LuxandraDebugActions.DebugLogMessage($"Impure sex action detected for {actor.NameShortColored} with {props.partner?.NameShortColored}");
                 }
 
                 // Shouldn't be counting animals and corpses. It's only rape if they can't actually say no.
@@ -77,7 +77,7 @@ namespace LuxandraLust
                 if (isRapeAct)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterRapeSexAction();
-                    DebugActions_Luxandra.DebugLogMessage($"Rape action detected involving {actor.NameShortColored} forcing themvelves on {props.partner?.NameShortColored}");
+                    LuxandraDebugActions.DebugLogMessage($"Rape action detected involving {actor.NameShortColored} forcing themvelves on {props.partner?.NameShortColored}");
                 }
             }
             catch (Exception ex)

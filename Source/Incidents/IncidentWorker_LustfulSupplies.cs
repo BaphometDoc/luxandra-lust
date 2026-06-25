@@ -28,7 +28,7 @@ namespace LuxandraLust
             Map map = (Map)parms.target;
 
             float rawColonyWealth = map.wealthWatcher.WealthTotal;
-            float currentAverageSexNeed = LuxandraLustUtilities.GetAverageColonySexNeed(map);
+            float currentAverageSexNeed = LuxandraUtilities.GetAverageColonySexNeed(map);
 
             // This scales up the budget if they are satisfied, or tanks it down if they are horny
             float hornyMultiplier = 1;
@@ -39,7 +39,7 @@ namespace LuxandraLust
             float modifiedWealth = rawColonyWealth * hornyMultiplier;
 
             float totalMarketValueBudget = WealthToBudgetCurve.Evaluate(modifiedWealth);
-            DebugActions_Luxandra.DebugLogMessage($"Attempted to create a lustful drop pod for wealth equal to {rawColonyWealth}. (Horny modifier: {hornyMultiplier})");
+            LuxandraDebugActions.DebugLogMessage($"Attempted to create a lustful drop pod for wealth equal to {rawColonyWealth}. (Horny modifier: {hornyMultiplier})");
 
             // Possible drops and their values
             List<ThingCountDef> possibleDrops = new List<ThingCountDef>();
@@ -122,7 +122,7 @@ namespace LuxandraLust
             }
 
             DropPodUtility.DropThingsNear(dropSpot, map, finalDropList, canRoofPunch: true, forbid: false);
-            DebugActions_Luxandra.DebugLogMessage($"Drop pod created and sent!");
+            LuxandraDebugActions.DebugLogMessage($"Drop pod created and sent!");
 
             string label = this.def.letterLabel;
             string text = this.def.letterText;

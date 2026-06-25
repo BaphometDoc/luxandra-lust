@@ -21,7 +21,7 @@ namespace LuxandraLust
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            DebugActions_Luxandra.DebugLogMessage("Attempting to trigger Rapist Break incident.");
+            LuxandraDebugActions.DebugLogMessage("Attempting to trigger Rapist Break incident.");
             Map map = parms.target as Map ?? Find.CurrentMap;
             if (map == null) return false;
 
@@ -34,14 +34,14 @@ namespace LuxandraLust
 
             HediffDef customHediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_PerverseCalling_Hediff", errorOnFail: false);
 
-            int adultColonists = map.mapPawns.FreeColonistsSpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
-            int adultSlaves = map.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
+            int adultColonists = map.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
+            int adultSlaves = map.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
 
             int totalWorkforce = adultColonists + adultSlaves;
             int targetsToSelect = System.Math.Max(1, totalWorkforce / 4);
 
             List<Pawn> candidates = map.mapPawns.FreeColonistsSpawned
-                .Where(p => !p.Downed && !p.Dead && LuxandraLustUtilities.IsAdult(p) && p.skills != null && !p.InMentalState)
+                .Where(p => !p.Downed && !p.Dead && LuxandraUtilities.IsAdult(p) && p.skills != null && !p.InMentalState)
                 .OrderByDescending(p => p.skills.GetSkill(SkillDefOf.Melee).Level) // Sort by highest Melee
                 .ToList();
 
@@ -52,7 +52,7 @@ namespace LuxandraLust
 
             bool anySucceeded = false;
             List<Pawn> affectedPawns = new List<Pawn>();
-            DebugActions_Luxandra.DebugLogMessage($"{candidates.Count} valid candidates found.");
+            LuxandraDebugActions.DebugLogMessage($"{candidates.Count} valid candidates found.");
 
             foreach (Pawn targetPawn in candidates)
             {

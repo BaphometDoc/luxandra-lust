@@ -51,7 +51,7 @@ namespace LuxandraLust
                 if (pawn == null || pawn.Dead || !pawn.RaceProps.Humanlike) continue;
 
                 // Ensure they have the correct hediff depending on age/gender
-                if (!LuxandraLustUtilities.IsAdult(pawn))
+                if (!LuxandraUtilities.IsAdult(pawn))
                 {
                     EnsureHediff(pawn, childDef);
                 }
@@ -62,7 +62,7 @@ namespace LuxandraLust
                 }
                 else if (pawn.gender == Gender.Female)
                 {
-                    if (LuxandraLustUtilities.IsPregnant(pawn))
+                    if (LuxandraUtilities.IsPregnant(pawn))
                     {
                         EnsureHediff(pawn, pregnantDef);
 

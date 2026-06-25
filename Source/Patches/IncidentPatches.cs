@@ -32,8 +32,8 @@ namespace LuxandraLust
                 if (!LuxandraStorytellerCheck.IsActive())
                     return true;
 
-                DebugActions_Luxandra.DebugLogMessage("TryExecute intercepted correctly");
-                DebugActions_Luxandra.DebugLogMessage($"Incident about to happen: {__instance.def?.defName}");
+                LuxandraDebugActions.DebugLogMessage("TryExecute intercepted correctly");
+                LuxandraDebugActions.DebugLogMessage($"Incident about to happen: {__instance.def?.defName}");
 
                 // FAILSAFE: recursion guard
                 if (LuxandraExecutionGuard.InLuxandraExecution)
@@ -43,7 +43,7 @@ namespace LuxandraLust
                 bool isFromQuest = parms.quest != null || parms.forced;
                 if (isFromQuest)
                 {
-                    DebugActions_Luxandra.DebugLogMessage("Event is from quest or forced, skipping the reroll.");
+                    LuxandraDebugActions.DebugLogMessage("Event is from quest or forced, skipping the reroll.");
                     return true;
                 }
 
@@ -55,27 +55,27 @@ namespace LuxandraLust
                     return true;
 
                 var eventType = def.category;
-                DebugActions_Luxandra.DebugLogMessage($"Event type: {eventType}");
+                LuxandraDebugActions.DebugLogMessage($"Event type: {eventType}");
 
                 bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
 
-                DebugActions_Luxandra.DebugLogMessage("Number of sex events detected before the event: " + n.sexActionCounterForRerolls);
+                LuxandraDebugActions.DebugLogMessage("Number of sex events detected before the event: " + n.sexActionCounterForRerolls);
 
                 // Determine the threshold for the event conversion
                 Map targetMap = parms.target as Map ?? Find.CurrentMap;
-                int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
-                int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraLustUtilities.IsAdult(p));
+                int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
+                int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
 
                 // Apply the threshold multiplier from settings
                 float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;
 
                 int totalThreshold = (int)((adultColonistCount * 2 + adultSlavesCount) * settingsMultiplier);
-                DebugActions_Luxandra.DebugLogMessage("Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
+                LuxandraDebugActions.DebugLogMessage("Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
 
                 // Luxandra will only suppress negative events for her gimmick
                 if (isNegative)
                 {
-                    var multipleColonistsPresent = LuxandraLustUtilities.HasMultipleAdultColonists(targetMap);
+                    var multipleColonistsPresent = LuxandraUtilities.HasMultipleAdultColonists(targetMap);
                     if (n.sexActionCounterForRerolls == 0 && !multipleColonistsPresent)
                     {
                         Find.LetterStack.ReceiveLetter(
@@ -84,28 +84,28 @@ namespace LuxandraLust
                                     "You should look for more people before she changes her mind...",
                                     LetterDefOf.NeutralEvent
                                 );
-                        DebugActions_Luxandra.DebugLogMessage($"0 Sexual activity detected but only one colonist. Skipping the punishment.");
+                        LuxandraDebugActions.DebugLogMessage($"0 Sexual activity detected but only one colonist. Skipping the punishment.");
                     }
 
                     // 0 Sexual Activity Detected - force a negative sexual event to punish the player
                     if (n.sexActionCounterForRerolls == 0 && multipleColonistsPresent)
                     {
-                        DebugActions_Luxandra.DebugLogMessage($"0 Sexual activity detected");
-                        DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
+                        LuxandraDebugActions.DebugLogMessage($"0 Sexual activity detected");
+                        LuxandraDebugActions.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
 
                         bool successfullyRerolled = false;
                         try
                         {
                             LuxandraExecutionGuard.InLuxandraExecution = true;
 
-                            List<IncidentDef> sexEvents = LuxandraEventPool.GetSexRelatedPunishingEvents();
+                            List<IncidentDef> sexEvents = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.NegativeIncidents);
                             bool foundValidSex = sexEvents
                                 .Where(x => x.Worker.CanFireNow(parms))
                                 .TryRandomElement(out IncidentDef replacement);
 
                             if (foundValidSex)
                             {
-                                DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
+                                LuxandraDebugActions.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
                                     "Luxandra's Lustful Gaze",
@@ -143,21 +143,21 @@ namespace LuxandraLust
                     // High Sexual Activity Passed Threshold - reroll to a sexual event or a positive/neutral event to suppress the negative one
                     else if (n.sexActionCounterForRerolls > totalThreshold)
                     {
-                        DebugActions_Luxandra.DebugLogMessage($"Threshold was passed!");
-                        DebugActions_Luxandra.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
+                        LuxandraDebugActions.DebugLogMessage($"Threshold was passed!");
+                        LuxandraDebugActions.DebugLogMessage($"Attempting to suppress hostile event: {def.defName}");
 
                         try
                         {
                             LuxandraExecutionGuard.InLuxandraExecution = true;
 
-                            List<IncidentDef> sexEvents = LuxandraEventPool.GetSexRelatedIncidents();
+                            List<IncidentDef> sexEvents = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.AllIncidents);
                             bool foundValidSex = sexEvents
                                 .Where(x => x.Worker.CanFireNow(parms))
                                 .TryRandomElement(out IncidentDef replacement);
 
                             if (foundValidSex)
                             {
-                                DebugActions_Luxandra.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
+                                LuxandraDebugActions.DebugLogMessage($"Sexual reroll successful, replacement found: {replacement.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
                                     "Luxandra's Lustful Gaze",
@@ -171,16 +171,16 @@ namespace LuxandraLust
                             }
                             else
                             {
-                                DebugActions_Luxandra.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive or neutral event.");
+                                LuxandraDebugActions.DebugLogMessage($"Sexual reroll failed, attempting to reroll in a positive or neutral event.");
                                 IncidentParms safeParms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, parms.target);
-                                List<IncidentDef> positiveEvents = LuxandraEventPool.GetPositiveIncidents();
+                                List<IncidentDef> positiveEvents = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.PositiveIncidents);
                                 bool foundValid = positiveEvents
                                     .Where(x => x.Worker.CanFireNow(safeParms))
                                     .TryRandomElement(out replacement);
 
                                 if (foundValid)
                                 {
-                                    DebugActions_Luxandra.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
+                                    LuxandraDebugActions.DebugLogMessage($"Reroll successful, replacement found: {replacement.defName}");
 
                                     Find.LetterStack.ReceiveLetter(
                                         "Luxandra's Lustful Gaze",
@@ -214,12 +214,12 @@ namespace LuxandraLust
                     // Threshold was not passed - continue
                     else
                     {
-                        DebugActions_Luxandra.DebugLogMessage($"Threshold was not passed, event continues as usual.");
+                        LuxandraDebugActions.DebugLogMessage($"Threshold was not passed, event continues as usual.");
                         return true;
                     }
                 }
 
-                DebugActions_Luxandra.DebugLogMessage($"Event was not considered negative, continue as usual.");
+                LuxandraDebugActions.DebugLogMessage($"Event was not considered negative, continue as usual.");
                 return true;
             }
         }

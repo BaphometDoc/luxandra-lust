@@ -29,7 +29,7 @@ namespace LuxandraLust
 
                 if (LuxandraModSettings.enableLogging)
                 {
-                    DebugActions_Luxandra.DebugLogMessage($"Loaded save timer was higher than global settings. Dropped ticksUntilEvent down to {ticksUntilEvent} ticks.");
+                    LuxandraDebugActions.DebugLogMessage($"Loaded save timer was higher than global settings. Dropped ticksUntilEvent down to {ticksUntilEvent} ticks.");
                 }
             }
 
@@ -44,15 +44,15 @@ namespace LuxandraLust
 
         private void TriggerWeeklyEvent()
         {
-            DebugActions_Luxandra.DebugLogMessage("Weekly event reached! Attempting to launch a sexual event...");
+            LuxandraDebugActions.DebugLogMessage("Weekly event reached! Attempting to launch a sexual event...");
             Map targetMap = Find.CurrentMap;
             if (targetMap == null) return;
 
             // How horny have we been this week?
-            float averageSexNeed = LuxandraLustUtilities.GetAverageColonySexNeed(targetMap);
-            DebugActions_Luxandra.DebugLogMessage($"Colony Average Sex Need: {averageSexNeed * 100f}%");
+            float averageSexNeed = LuxandraUtilities.GetAverageColonySexNeed(targetMap);
+            LuxandraDebugActions.DebugLogMessage($"Colony Average Sex Need: {averageSexNeed * 100f}%");
 
-            List<IncidentDef> totalPool = LuxandraEventPool.GetSexRelatedIncidents();
+            List<IncidentDef> totalPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.AllIncidents);
             totalPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
             if (totalPool.Count == 0) return;
 
@@ -91,7 +91,7 @@ namespace LuxandraLust
 
             if (filteredPool.Count == 0)
             {
-                DebugActions_Luxandra.DebugLogMessage("No event found in the selected pool, swapping to global sexual pool.");
+                LuxandraDebugActions.DebugLogMessage("No event found in the selected pool, swapping to global sexual pool.");
                 filteredPool = totalPool;
             }
             IncidentDef chosenIncident = filteredPool.RandomElement();
@@ -121,7 +121,7 @@ namespace LuxandraLust
             }
 
             // Queue up the incident
-            DebugActions_Luxandra.DebugLogMessage($"Event chosen: {chosenIncident.defName}");
+            LuxandraDebugActions.DebugLogMessage($"Event chosen: {chosenIncident.defName}");
             IncidentParms parms = StorytellerUtility.DefaultParmsNow(chosenIncident.category, targetMap);
             parms.forced = true;
 

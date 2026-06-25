@@ -137,7 +137,7 @@ namespace LuxandraLust
         private void TriggerMentalBreak(Pawn pawn, Hediff hediff)
         {
             // Only adults should actually trigger the primary target break
-            if (LuxandraLustUtilities.IsAdult(pawn))
+            if (LuxandraUtilities.IsAdult(pawn))
             {
                 MentalStateDef rapistBreak = DefDatabase<MentalStateDef>.GetNamed("RandomRape", false);
                 if (rapistBreak != null && pawn.mindState.mentalStateHandler.TryStartMentalState(rapistBreak, null, true))

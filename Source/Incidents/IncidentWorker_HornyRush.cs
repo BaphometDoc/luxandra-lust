@@ -22,7 +22,7 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
             List<Pawn> femalePawns = map.mapPawns.AllPawnsSpawned
-                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Female && !p.Dead && LuxandraLustUtilities.IsAdult(p))
+                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Female && !p.Dead && LuxandraUtilities.IsAdult(p))
                             .ToList();
 
             if (femalePawns.Count == 0) return false;
@@ -59,7 +59,7 @@ namespace LuxandraLust
             // Fire standard UI alert notification letter targeting the first affected unit
             SendStandardLetter(def.letterLabel, def.letterText, def.letterDef, parms, femalePawns.First());
 
-            DebugActions_Luxandra.DebugLogMessage($"Horny Rush (female) successfully processed for {femalePawns.Count} targets.");
+            LuxandraDebugActions.DebugLogMessage($"Horny Rush (female) successfully processed for {femalePawns.Count} targets.");
             return true;
         }
     }
@@ -79,7 +79,7 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
             List<Pawn> malePawns = map.mapPawns.AllPawnsSpawned
-                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Male && !p.Dead && LuxandraLustUtilities.IsAdult(p))
+                            .Where(p => p.RaceProps.Humanlike && p.gender == Gender.Male && !p.Dead && LuxandraUtilities.IsAdult(p))
                             .ToList();
 
             if (malePawns.Count == 0) return false;
@@ -116,7 +116,7 @@ namespace LuxandraLust
             // Fire standard UI alert notification letter targeting the first affected unit
             SendStandardLetter(def.letterLabel, def.letterText, def.letterDef, parms, malePawns.First());
 
-            DebugActions_Luxandra.DebugLogMessage($"Horny Rush (male) successfully processed for {malePawns.Count} targets.");
+            LuxandraDebugActions.DebugLogMessage($"Horny Rush (male) successfully processed for {malePawns.Count} targets.");
             return true;
         }
     }

@@ -67,7 +67,7 @@ namespace LuxandraLust
                     if (cycleComponent.ticksUntilEvent > currentMaxTicks)
                     {
                         cycleComponent.ticksUntilEvent = currentMaxTicks;
-                        DebugActions_Luxandra.DebugLogMessage($"Timer was higher than global settings. Dropped ticksUntilEvent down to {currentMaxTicks} ticks.");
+                        LuxandraDebugActions.DebugLogMessage($"Timer was higher than global settings. Dropped ticksUntilEvent down to {currentMaxTicks} ticks.");
                     }
                     else if (Prefs.DevMode)
                     {
@@ -95,9 +95,9 @@ namespace LuxandraLust
                     try
                     {
                         int adultColonists = Find.CurrentMap.mapPawns.FreeColonistsSpawned
-                            .Count(p => LuxandraLustUtilities.IsAdult(p));
+                            .Count(p => LuxandraUtilities.IsAdult(p));
                         int adultSlaves = Find.CurrentMap.mapPawns.SlavesOfColonySpawned
-                            .Count(p => LuxandraLustUtilities.IsAdult(p));
+                            .Count(p => LuxandraUtilities.IsAdult(p));
 
                         int baseThreshold = (adultColonists * 2) + adultSlaves;
                         int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold * eventThresholdMultiplier));

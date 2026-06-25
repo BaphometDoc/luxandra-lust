@@ -58,7 +58,7 @@ namespace LuxandraLust
                 if (fallbackFaction != null)
                 {
                     parms.faction = fallbackFaction;
-                    DebugActions_Luxandra.DebugLogMessage("'EFR_FantasyTribeHostile' not found. Falling back to active hostile low tech faction: " + fallbackFaction.Name);
+                    LuxandraDebugActions.DebugLogMessage("'EFR_FantasyTribeHostile' not found. Falling back to active hostile low tech faction: " + fallbackFaction.Name);
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace LuxandraLust
 
                 // All raiders become rapists
                 List<Pawn> incomingRaiders = map.mapPawns.AllPawnsSpawned
-                    .Where(p => p.Faction == parms.faction && !p.Dead && LuxandraLustUtilities.IsAdult(p))
+                    .Where(p => p.Faction == parms.faction && !p.Dead && LuxandraUtilities.IsAdult(p))
                     .ToList();
                 TraitDef targetTrait = TraitDef.Named("Rapist");
 

@@ -26,7 +26,7 @@ namespace LuxandraLust
                    !leaderPawn.Dead &&
                    leaderPawn.Spawned &&
                    leaderPawn.Map == map &&
-                   LuxandraLustUtilities.IsAdult(leaderPawn);
+                   LuxandraUtilities.IsAdult(leaderPawn);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -42,7 +42,7 @@ namespace LuxandraLust
 
             Pawn leaderPawn = leaderPrecept?.ChosenPawns()?.FirstOrDefault();
 
-            DebugActions_Luxandra.DebugLogMessage($"Attempted to execute Spiritual Depravity for {leaderPawn.NameShortColored}.");
+            LuxandraDebugActions.DebugLogMessage($"Attempted to execute Spiritual Depravity for {leaderPawn.NameShortColored}.");
 
             // Fallback check
             if (leaderPawn == null || leaderPawn.Map != map || leaderPawn.Dead) return false;
@@ -79,7 +79,7 @@ namespace LuxandraLust
             }
 
             // Also send them raping. They earned it (kinda)
-            LuxandraLustUtilities.ForceRapistBreak(leaderPawn, "Spiritual Depravity", true);
+            LuxandraUtilities.ForceRapistBreak(leaderPawn, "Spiritual Depravity", true);
 
             string label = "Spiritual Depravity";
             string text = $"{leaderPawn.LabelShort}, the ultimate guide of your belief system has cracked. Under the quiet whispers of Luxandra, they have warped their moral compass, collapsing into an unhinged state of obsession.";
