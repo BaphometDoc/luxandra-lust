@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using Verse.AI;
 
 namespace LuxandraLust
 {
@@ -124,12 +123,12 @@ namespace LuxandraLust
                 }
                 else
                 {
-                    Log.Warning("[LuxandraLust] Could not find the specified TraitDef to apply to raiders.");
+                    Log.Warning("[LuxandraLust] Could not find the specified Rapist TraitDef to apply to raiders.");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error($"[LuxandraLust] Error executing custom raid condition: {ex}");
+                Log.Error($"[LuxandraLust] Error executing rapist raid condition: {ex}");
             }
 
             // Return true because the raid successfully happened
@@ -180,123 +179,20 @@ namespace LuxandraLust
             }
             else
             {
-                Log.Warning("[LuxandraLust] IncidentWorker_BastardRaid could not find an active faction with defName 'RJW_Unleashed_BastardFaction' in this save file. Defaulting to standard enemy faction routing.");
+                Log.Warning("[LuxandraLust] IncidentWorker_BastardRaid could not find active faction. Defaulting routing.");
             }
 
-            parms.raidStrategy = RaidStrategyDefOf.ImmediateAttack;
-
-            bool raidSuccessful = base.TryExecuteWorker(parms);
-            if (!raidSuccessful) return false;
-
-            try
+            RaidStrategyDef customStrategy = DefDatabase<RaidStrategyDef>.GetNamed("LL_RapeAndPillageAssault", false);
+            if (customStrategy != null)
             {
-                Map map = (Map)parms.target;
-                if (map == null) return true;
-
-                // Grab the newly spawned raiders
-                List<Pawn> bastards = map.mapPawns.AllPawnsSpawned
-                    .Where(p => p.Faction == parms.faction && !p.Dead && p.RaceProps.Humanlike)
-                    .ToList();
-
-                // Set their starting duty directly to assault colony so they go knock people out
-                foreach (Pawn bastard in bastards)
-                {
-                    if (bastard.mindState != null)
-                    {
-                        bastard.mindState.duty = new PawnDuty(DutyDefOf.AssaultColony);
-                    }
-                }
-
-                // Spawn our global invisible map watcher to coordinate the kidnapping lines
-                UnityEngine.GameObject mapWatcher = new UnityEngine.GameObject("BastardRaidWatcher");
-                var script = mapWatcher.AddComponent<BastardRaidMapWatcher>();
-                script.Initialize(map, parms.faction);
+                parms.raidStrategy = customStrategy;
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error($"[LuxandraLust] Error initializing Bastard Raid behaviors: {ex}");
+                parms.raidStrategy = RaidStrategyDefOf.ImmediateAttack;
             }
 
-            return true;
-        }
-    }
-
-    // A small runtime engine that watches the map for downed pawns and forces kidnapping. Save your poopers...
-    public class BastardRaidMapWatcher : UnityEngine.MonoBehaviour
-    {
-        private Map map;
-        private Faction raidFaction;
-        private int tickInterval = 60; // Check the battlefield once every second (60 ticks)
-
-        public void Initialize(Map targetMap, Faction faction)
-        {
-            this.map = targetMap;
-            this.raidFaction = faction;
-        }
-
-        void FixedUpdate()
-        {
-            if (Current.ProgramState != ProgramState.Playing || map == null || raidFaction == null)
-            {
-                UnityEngine.Object.Destroy(this.gameObject);
-                return;
-            }
-
-            if (Find.TickManager.TicksGame % tickInterval == 0)
-            {
-                ManageKidnappingLogic();
-            }
-        }
-
-        private void ManageKidnappingLogic()
-        {
-            List<Pawn> activeRaiders = map.mapPawns.AllPawnsSpawned
-                .Where(p => p.Faction == raidFaction && !p.Dead && p.health.capacities.CapableOf(PawnCapacityDefOf.Moving))
-                .ToList();
-
-            // If all raiders are dead, incapacitated, or left the map, kill the watcher script
-            if (!activeRaiders.Any())
-            {
-                UnityEngine.Object.Destroy(this.gameObject);
-                return;
-            }
-
-            // Find any downed player-controlled pawns left exposed on the floor and kidnap them
-            List<Pawn> downedTargets = map.mapPawns.FreeAdultColonistsSpawned
-                .Where(p => p.Downed && !p.Dead && !IsBeingKidnapped(p))
-                .ToList();
-
-            foreach (Pawn raider in activeRaiders)
-            {
-                if (raider.mindState.duty?.def == DutyDefOf.Kidnap)
-                {
-                    continue;
-                }
-
-                if (downedTargets.Any())
-                {
-                    // Snatch an available downed target and switch duty immediately
-                    Pawn target = downedTargets.First();
-                    downedTargets.Remove(target);
-
-                    raider.mindState.duty = new PawnDuty(DutyDefOf.Kidnap);
-                    raider.jobs?.EndCurrentJob(Verse.AI.JobCondition.InterruptForced);
-                }
-                else
-                {
-                    // No downed targets available? Keep hunting and downing active colonists!
-                    if (raider.mindState.duty?.def != DutyDefOf.AssaultColony)
-                    {
-                        raider.mindState.duty = new PawnDuty(DutyDefOf.AssaultColony);
-                    }
-                }
-            }
-        }
-
-        private bool IsBeingKidnapped(Pawn pawn)
-        {
-            return map.mapPawns.AllPawnsSpawned
-                .Any(p => p.Faction == raidFaction && p.CurJob != null && p.CurJob.targetA.Thing == pawn && p.CurJob.def == JobDefOf.Kidnap);
+            return base.TryExecuteWorker(parms);
         }
     }
 }
