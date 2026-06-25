@@ -1,0 +1,11 @@
+This is a more in depth explanation of the available events.
+
+	- two new raid types: horny tribals (preferring Fantasy Races factions if detected) and rapists (if Ugly bastards is loaded)
+	- horny pulse event: your colonists will be way hornier than usual for a bit
+	- genitals resize events: the wind of fortune decided you deserved a different size...
+	- rapist pulse event: one or more of your colonists will not take no for an answer
+	- a powerful fertility pulse: your pawns will get pregnant, and they will like it
+	- a special drop pod for your most degenerate needs
+	- white rain: it's warm and sticky. Maybe you shouldn't stand outside today
+	- Royalty: 2 events that specifically target your highest standing noble
+	- Ideology: 2 events that specifically target your faction leader
