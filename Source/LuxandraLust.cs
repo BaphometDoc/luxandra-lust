@@ -259,5 +259,26 @@ namespace LuxandraLust
             else
                 return false;
         }
+
+        /// <summary>
+        /// Checks if the pawn is pregnant. Should catch modded pregnancies too
+        /// </summary>
+        public static bool IsPregnant(Pawn pawn)
+        {
+            if (pawn.health?.hediffSet == null) return false;
+
+            foreach (Hediff h in pawn.health.hediffSet.hediffs)
+            {
+                if (h?.def == null) continue;
+
+                string name = h.def.defName.ToLower();
+                // Catches Vanilla, Biotech, RJW, and most common pregnancy mod variants
+                if (name.Contains("pregnant") || name.Contains("pregnancy"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

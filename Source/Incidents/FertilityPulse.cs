@@ -44,6 +44,7 @@ namespace LuxandraLust
             HediffDef childDef = HediffDef.Named("Luxandra_PulseChildConfusion");
             HediffDef maleDef = HediffDef.Named("Luxandra_PulseAdultMale");
             HediffDef femaleDef = HediffDef.Named("Luxandra_PulseAdultFemale");
+            HediffDef pregnantDef = HediffDef.Named("Luxandra_PulsePregnantMaternal");
 
             foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
             {
@@ -61,8 +62,29 @@ namespace LuxandraLust
                 }
                 else if (pawn.gender == Gender.Female)
                 {
-                    EnsureHediff(pawn, femaleDef);
-                    if (pawn.IsColonist || pawn.IsSlave || pawn.IsPrisoner) ClearFertilitySuppressants(pawn);
+                    if (LuxandraLustUtilities.IsPregnant(pawn))
+                    {
+                        EnsureHediff(pawn, pregnantDef);
+
+                        // Remove the previous hediff if they get pregnant during the pulse
+                        if (pawn.health.hediffSet.HasHediff(femaleDef))
+                        {
+                            Hediff oldHediff = pawn.health.hediffSet.GetFirstHediffOfDef(femaleDef);
+                            pawn.health.RemoveHediff(oldHediff);
+                        }
+                    }
+                    else
+                    {
+                        EnsureHediff(pawn, femaleDef);
+                        if (pawn.IsColonist || pawn.IsSlave || pawn.IsPrisoner) ClearFertilitySuppressants(pawn);
+
+                        // Clean up the pregnant hediff if a pregnancy somehow ended while the pulse is active
+                        if (pawn.health.hediffSet.HasHediff(pregnantDef))
+                        {
+                            Hediff oldPregnantHediff = pawn.health.hediffSet.GetFirstHediffOfDef(pregnantDef);
+                            pawn.health.RemoveHediff(oldPregnantHediff);
+                        }
+                    }
                 }
             }
         }
@@ -86,6 +108,14 @@ namespace LuxandraLust
 
                 // Skip surgeries, implants, or permanent injuries
                 if (h is Hediff_AddedPart || h is Hediff_Implant || h.def.isBad) continue;
+
+                // Don't remove the biotech lactating hediff either as that one does tank fertility
+                // but we don't want the babies to starve. Modded ones usually do not interfere
+                if (ModsConfig.BiotechActive)
+                {
+                    if (HediffDefOf.Lactating != null && h.def == HediffDefOf.Lactating)
+                        continue;
+                }
 
                 bool suppressesFertility = false;
 

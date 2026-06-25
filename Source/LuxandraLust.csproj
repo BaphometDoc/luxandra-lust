@@ -82,6 +82,7 @@
     <Compile Include="Patches\IncidentPatches.cs" />
     <Compile Include="LuxandraLust.cs" />
     <Compile Include="LuxandraMechanics.cs" />
+    <Compile Include="Patches\StatPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WeeklyEventCycle.cs" />
