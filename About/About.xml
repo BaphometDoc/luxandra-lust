@@ -7,13 +7,10 @@
 	<supportedVersions>
 		<li>1.6</li>
 	</supportedVersions>
-	<modVersion IgnoreIfNoMatchingField="True">0.1</modVersion>
+	<modVersion IgnoreIfNoMatchingField="True">0.3</modVersion>
 	<description>A RimJobWorld based storyteller.
 
-
-Every time a Major threat would fire, if your colony has been regularly been having sex, the raid will be replaced with a sex-related event.
-
-Every few days, she will check on how horny your pawns are. If they have been satisfied, she will reward you, and punish you if you're being prude.
+Has several special gimmicks to reward your approach to sexuality. Have you been a good boy?
 
 Also adds several new sex related events that do not specifically require to use her as storyteller.
 	</description>

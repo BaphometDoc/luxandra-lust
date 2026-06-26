@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<!-- ========================================================================= -->
+	<!--   PLEASURE BLESSING (GLOBAL COLONY MOOD BOOST)                            -->
+	<!-- ========================================================================= -->
+	<HediffDef>
+		<defName>Luxandra_ColonyPleasureBlessing</defName>
+		<label>Luxanna's Ecstasy</label>
+		<description>Your actions have brought joy to Luxanna. Her divine favor manifests as a mental bliss across the entire colony.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.85, 0.45, 0.85)</defaultLabelColor>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>180000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>Blessed Ecstasy</label>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_M_PleasureBlessing</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_ColonyPleasureBlessing</hediff>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>Luxanna's Ecstasy</label>
+				<description>Our actions are in harmony with our nature, and Her divine approval echoes in our minds.</description>
+				<baseMoodEffect>15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+
+	<!-- ========================================================================= -->
+	<!--    PARENTAL FERTILITY & FOCUSED MOOD BLESSING                             -->
+	<!-- ========================================================================= -->
+	<HediffDef>
+		<defName>Luxandra_ParentalFertilityBlessing</defName>
+		<label>Divine Proliferator</label>
+		<description>Having birthed a child directly in accordance with her alignment, this parent has been touched with supreme fertility and wisdom.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.9, 0.3, 0.7)</defaultLabelColor>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>180000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>Divine proliferator</label>
+				<capMods>
+					<li>
+						<capacity>Metabolism</capacity>
+						<offset>0.10</offset>
+					</li>
+				</capMods>
+				<statOffsets>
+					<Fertility>1.50</Fertility>
+					<GlobalLearningFactor>0.20</GlobalLearningFactor>
+				</statOffsets>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_M_ParentalBlessing</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_ParentalFertilityBlessing</hediff>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>Luxanna's Chosen Vessel</label>
+				<description>I have brought life into this world exactly as she desired. The physical and mental pleasure of her acknowledgment is overwhelming.</description>
+				<baseMoodEffect>30</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+
+	<!-- ========================================================================= -->
+	<!--     BESTIAL DEGRADATION PUNISHMENT (CONSCIOUSNESS CAP & DEBUFF)           -->
+	<!-- ========================================================================= -->
+	<HediffDef>
+		<defName>Luxandra_BestialDegradation</defName>
+		<label>Bestial Degradation</label>
+		<description>A horrific, uncivilized birth occurred within your colony boundaries. A thick fog wraps your minds, dragging human cognition down into basic animal limits.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.4, 0.4, 0.4)</defaultLabelColor>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>true</isBad>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>180000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>Primitive fog</label>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.70</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_M_BestialDegradation</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_BestialDegradation</hediff>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>Degraded to Beasts</label>
+				<description>We committed an abominable act and defiled a beast. My brain feels muddy, stupid, and raw... like an animal left out in the mud.</description>
+				<baseMoodEffect>-20</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+</Defs>

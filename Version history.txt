@@ -1,5 +1,8 @@
-0.3 - in progress
+0.4 - In development...
+
+0.3 - 26/06/2026
 - Added quest site version of the Fertility pulse
+- Added Childbirth gimmick
 
 0.2 - 26/06/2026
 - A new raid type, totally-not-nymph raid, except these ones actually fight back

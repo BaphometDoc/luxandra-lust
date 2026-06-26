@@ -3,6 +3,7 @@ A RimJobWorld based storyteller.<br>
 Gimmicks:<br>
 	Every time a Major threat would fire, if your colony has been regularly been having sex (configurable), the raid will be replaced with a sex-related event.<br>
 	Every 7 (configurable) days, she will check on how horny your pawns are. If they have been satisfied, she will reward you, and punish you if you're being prude.<br>
+	Every time your colonists give birth, Luxanna will punish or reward you based on how the child was conceived<br>
 <br>
 <br>
 Also adds:<br>

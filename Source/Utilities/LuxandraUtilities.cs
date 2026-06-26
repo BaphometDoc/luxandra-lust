@@ -10,6 +10,9 @@ namespace LuxandraLust
     // Various utilities
     public static class LuxandraUtilities
     {
+        /// <summary>
+        /// Extracts all incident defs from a the sexual incident collections
+        /// </summary>
         public static List<IncidentDef> ExtractIncidentsFromCollection(IEnumerable<LuxandraIncidentDefs> incidentCollection)
         {
             if (incidentCollection == null || incidentCollection.Count() == 0)
@@ -187,11 +190,96 @@ namespace LuxandraLust
             }
             return false;
         }
+
+        /// <summary>
+        /// Counts how many living free colonists on the specified map possess a specific Trait.
+        /// </summary>
+        public static int CountColonistsWithTraitOnMap(Map map, TraitDef traitDef)
+        {
+            if (map == null || traitDef == null) return 0;
+
+            int count = 0;
+            var localColonists = map.mapPawns.FreeColonists;
+
+            for (int i = 0; i < localColonists.Count; i++)
+            {
+                Pawn pawn = localColonists[i];
+                if (pawn != null && !pawn.Dead && pawn.story?.traits?.HasTrait(traitDef) == true)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Counts how many living free colonists on the specified map possess a specific Gene.
+        /// Returns 0 if the Biotech DLC is not active.
+        /// </summary>
+        public static int CountColonistsWithGeneOnMap(Map map, GeneDef geneDef)
+        {
+            if (!ModsConfig.BiotechActive || map == null || geneDef == null) return 0;
+
+            int count = 0;
+            var localColonists = map.mapPawns.FreeColonists;
+
+            for (int i = 0; i < localColonists.Count; i++)
+            {
+                Pawn pawn = localColonists[i];
+                if (pawn != null && !pawn.Dead && pawn.genes?.HasActiveGene(geneDef) == true)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Checks if the player's primary Ideology possesses a specific Precept.
+        /// Returns false if the Ideology DLC is not active.
+        /// </summary>
+        public static bool PlayerFactionHasPrecept(PreceptDef preceptDef)
+        {
+            if (!ModsConfig.IdeologyActive || preceptDef == null) return false;
+
+            Ideo playerIdeo = Faction.OfPlayer?.ideos?.PrimaryIdeo;
+            if (playerIdeo == null) return false;
+
+            var precepts = playerIdeo.PreceptsListForReading;
+            for (int i = 0; i < precepts.Count; i++)
+            {
+                if (precepts[i].def == preceptDef)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if the player's primary Ideology possesses a specific Meme.
+        /// Returns false if the Ideology DLC is not active.
+        /// </summary>
+        public static bool PlayerFactionHasMeme(MemeDef memeDef)
+        {
+            // Guard clause: If Ideology isn't active or def is null, bypass completely
+            if (!ModsConfig.IdeologyActive || memeDef == null) return false;
+
+            // Get the primary ideology of the player faction
+            Ideo playerIdeo = Faction.OfPlayer?.ideos?.PrimaryIdeo;
+            if (playerIdeo == null) return false;
+
+            // Use RimWorld's built-in rapid list tracker method to check for the meme
+            return playerIdeo.HasMeme(memeDef);
+        }
     }
 
     // This class tracks the selected storyteller
     public static class LuxandraStorytellerCheck
     {
+        /// <summary>
+        /// Verifies that Luxandra is active
+        /// </summary>
         public static bool IsActive()
         {
             return Find.Storyteller?.def.defName == "LuxandraLust";

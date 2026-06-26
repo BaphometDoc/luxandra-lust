@@ -3,8 +3,6 @@ List of features proposed
 
 Already existing mechanics updates to do
 - (menstruation) fertility pulse will replenish ovary count and force pawns into ovulation
-- the event reroll should reroll to same gravity type (es, threat with threat, gift with gift)
-- option for the reroll to always reroll into positive event
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
 
 Various potential events
@@ -34,3 +32,8 @@ Menstruation integration
 
 RJW Insect integration
 - Insect eggs event
+
+Brothel Colony integration
+- Add whoring to the childbirth event
+- Traitor customer
+- Whore joiner (also traitor)
