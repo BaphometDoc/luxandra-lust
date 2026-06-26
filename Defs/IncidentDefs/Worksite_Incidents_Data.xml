@@ -4,12 +4,12 @@
 	<IncidentDef>
 		<defName>Luxandra_Inc_FertilityPulseSite</defName>
 		<label>fertility pulse transmitter detected</label>
-		<category>ThreatBig</category> 
+		<category>ThreatBig</category>
 		<workerClass>LuxandraLust.IncidentWorker_FertilityPulseSite</workerClass>
 		<targetTags>
 			<li>Map_PlayerHome</li>
 		</targetTags>
-		<baseChance>0.3</baseChance> 
+		<baseChance>0.3</baseChance>
 		<minThreatPoints>150</minThreatPoints>
 		<letterDef>NegativeEvent</letterDef>
 		<minRefireDays>15</minRefireDays>
@@ -24,15 +24,15 @@
 		<tags>
 			<li>ConditionCauser</li>
 		</tags>
-		<siteTexture>World/WorldObjects/Sites/GenericSitePart</siteTexture>
-		<expandingIconTexture>World/WorldObjects/Expanding/Sites/StandardSite</expandingIconTexture>
+		<siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+		<expandingIconTexture>World/WorldObjects/Expanding/Sites/Ambush</expandingIconTexture>
 	</SitePartDef>
 
 	<GenStepDef>
 		<defName>Luxandra_FertilityPulseGenStep</defName>
 		<order>450</order>
 		<linkWithSite>Luxandra_FertilityPulseSitePart</linkWithSite>
-		<genStep Class="GenStep_ConditionCauser" />
+		<genStep Class="GenStep_ConditionCauser"/>
 	</GenStepDef>
 	
 	<ThingDef ParentName="BuildingBase">
@@ -45,8 +45,8 @@
 			<texPath>Things/Buildings/Luxandra_Transmitter</texPath>
 			<graphicClass>Graphic_Single</graphicClass>
 			<drawSize>(3.2, 3.2)</drawSize>
-			<drawOffset>(0,0,-0.15)</drawOffset> 
-			<shaderType>Cutout</shaderType> 
+			<drawOffset>(0,0,-0.15)</drawOffset>
+			<shaderType>Cutout</shaderType>
 			<shadowData>
 				<volume>(2.8, 1.0, 2.8)</volume>
 			</shadowData>
@@ -54,6 +54,7 @@
 		<altitudeLayer>Building</altitudeLayer>
 		<selectable>true</selectable>
 		<fillPercent>1.0</fillPercent>
+		<size>(3,3)</size>
 		<tickerType>Normal</tickerType>
 		<rotatable>false</rotatable>
 		<statBases>

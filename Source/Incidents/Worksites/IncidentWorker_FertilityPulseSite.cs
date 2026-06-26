@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
+using System.Collections.Generic;
 using Verse;
 
 namespace LuxandraLust
@@ -31,10 +32,38 @@ namespace LuxandraLust
                 return false;
             }
 
-            SitePartDef customPart = DefDatabase<SitePartDef>.GetNamed("Luxandra_FertilityPulseSitePart", false);
-            if (customPart == null) return false;
+            var sitePartList = new List<SitePartDef>();
 
-            Site site = SiteMaker.MakeSite(customPart, targetTile, parms.faction);
+            SitePartDef pulseBuildingGen = DefDatabase<SitePartDef>.GetNamed("Luxandra_FertilityPulseSitePart", false);
+            if (pulseBuildingGen == null) return false;
+            sitePartList.Add(pulseBuildingGen);
+
+            // Roll a random threat
+            int threatType = Rand.RangeInclusive(1, 3);
+            switch (threatType)
+            {
+                case 1:
+                    SitePartDef manhuntersGen = DefDatabase<SitePartDef>.GetNamed("Manhunters", false);
+                    LuxandraDebugActions.DebugLogMessage($"Threat added to the pulse site: {manhuntersGen.defName}.");
+                    sitePartList.Add(manhuntersGen);
+                    break;
+                case 2:
+                    SitePartDef sleepingMechsGen = DefDatabase<SitePartDef>.GetNamed("SleepingMechanoids", false);
+                    LuxandraDebugActions.DebugLogMessage($"Threat added to the pulse site: {sleepingMechsGen.defName}.");
+                    sitePartList.Add(sleepingMechsGen);
+                    break;
+                case 3:
+                    SitePartDef turretsGen = DefDatabase<SitePartDef>.GetNamed("Turrets", false);
+                    LuxandraDebugActions.DebugLogMessage($"Threat added to the pulse site: {turretsGen.defName}.");
+                    sitePartList.Add(turretsGen);
+                    break;
+                default:
+                    LuxandraDebugActions.DebugLogMessage($"Something broke and no threat was rolled for the pulse site.");
+                    break;
+            }
+
+
+            Site site = SiteMaker.MakeSite(sitePartList, targetTile, parms.faction);
             if (site == null) return false;
 
             int durationDays = Rand.RangeInclusive(15, 30);
@@ -47,7 +76,8 @@ namespace LuxandraLust
             Find.WorldObjects.Add(site);
 
             string letterLabel = "Fertility Overload Transmitter Activated";
-            string letterText = $"Long-range sensors have detected an active mechanical transmitter nearby. It has begun broadcasting an intense localized psychic ripple, overloading the reproductive instincts of all adults in the area.\n\nIt will continue to plague your colony until you send a caravan to destroy it. According to energy signatures, its internal power matrix will deplete and shut down naturally in {durationDays} days if left alone.";
+            string letterText = $"Long-range sensors have detected an active mechanical transmitter nearby. It has begun broadcasting an intense localized psychic ripple, overloading the reproductive instincts of all adults in the area.\n\nIt will continue to plague your colony until you send a caravan to destroy it.\n According to energy signatures, its internal power matrix will deplete and shut down naturally in {durationDays} days if left alone.\n\n" +
+                $"There may be something or someone defending it...";
 
             Find.LetterStack.ReceiveLetter(letterLabel, letterText, LetterDefOf.NegativeEvent, site);
 
