@@ -15,6 +15,7 @@ namespace LuxandraLust
 
             PlanetTile playerPlanetTile = new PlanetTile(map.Tile);
 
+            // Tightened distance check for the radar finder sub-routine
             return TileFinder.TryFindNewSiteTile(out _, playerPlanetTile, 3, 8, false, null, 0.5f, true, TileFinderMode.Near);
         }
 
@@ -25,24 +26,17 @@ namespace LuxandraLust
 
             PlanetTile playerPlanetTile = new PlanetTile(map.Tile);
 
-            // 1. Find the target location
             if (!TileFinder.TryFindNewSiteTile(out PlanetTile targetTile, playerPlanetTile, 3, 8, false, null, 0.5f, true, TileFinderMode.Near))
             {
                 return false;
             }
 
-            int tileIndex = targetTile.tileId;
+            SitePartDef customPart = DefDatabase<SitePartDef>.GetNamed("Luxandra_FertilityPulseSitePart", false);
+            if (customPart == null) return false;
 
-            // 2. Grab the vanilla Psychic Droner SitePartDef
-            // Note: If SitePartDefOf.PsychicDroner isn't in your framework, use DefDatabase<SitePartDef>.GetNamed("PsychicDroner")
-            SitePartDef vanillaDronePart = DefDatabase<SitePartDef>.GetNamed("PsychicDroner");
-            if (vanillaDronePart == null) return false;
-
-            // 3. Make the site using the vanilla standard maker signature
-            Site site = SiteMaker.MakeSite(vanillaDronePart, targetTile, parms.faction);
+            Site site = SiteMaker.MakeSite(customPart, targetTile, parms.faction);
             if (site == null) return false;
 
-            // 4. Add the standard expiration timer
             int durationDays = Rand.RangeInclusive(15, 30);
             TimeoutComp timeoutComp = site.GetComponent<TimeoutComp>();
             if (timeoutComp != null)
@@ -50,12 +44,10 @@ namespace LuxandraLust
                 timeoutComp.StartTimeout(durationDays * 60000);
             }
 
-            // 5. Spawn it on the World Map
             Find.WorldObjects.Add(site);
 
-            // 6. Send the Letter
-            string letterLabel = "TEST Psychic Drone Site Detected";
-            string letterText = $"TEST Long-range sensors have detected a vanilla psychic droner nearby. It will plague your colony for {durationDays} days or until destroyed.";
+            string letterLabel = "Fertility Overload Transmitter Activated";
+            string letterText = $"Long-range sensors have detected an active mechanical transmitter nearby. It has begun broadcasting an intense localized psychic ripple, overloading the reproductive instincts of all adults in the area.\n\nIt will continue to plague your colony until you send a caravan to destroy it. According to energy signatures, its internal power matrix will deplete and shut down naturally in {durationDays} days if left alone.";
 
             Find.LetterStack.ReceiveLetter(letterLabel, letterText, LetterDefOf.NegativeEvent, site);
 
