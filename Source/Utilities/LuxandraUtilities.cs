@@ -17,6 +17,7 @@ namespace LuxandraLust
 
             return incidentCollection.Select(i => i.IncidentDef).ToList();
         }
+
         /// <summary>
         /// Determines the average sex need of all the adult colonists and slaves in the colony
         /// </summary>

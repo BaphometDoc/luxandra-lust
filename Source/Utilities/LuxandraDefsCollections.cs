@@ -205,24 +205,26 @@ namespace LuxandraLust
             #endregion
 
             #region RimJobWorld
-            // RJW is a hard dependancy, if this breaks something really went wrong
-            IncidentDef nymphJoins = DefDatabase<IncidentDef>.GetNamed("NymphJoins", false);
-            _allIncidents.Add(new LuxandraIncidentDefs(
-                incidentDef: nymphJoins,
-                isRaid: false,
-                isNegative: false,
-                isPositive: true,
-                requiresMod: true
-            ));
+            if (ModsConfig.IsActive("rim.job.world"))
+            {
+                IncidentDef nymphJoins = DefDatabase<IncidentDef>.GetNamed("NymphJoins", false);
+                _allIncidents.Add(new LuxandraIncidentDefs(
+                    incidentDef: nymphJoins,
+                    isRaid: false,
+                    isNegative: false,
+                    isPositive: true,
+                    requiresMod: true
+                ));
 
-            IncidentDef nymphVisitor = DefDatabase<IncidentDef>.GetNamed("NymphVisitor", false);
-            _allIncidents.Add(new LuxandraIncidentDefs(
-                incidentDef: nymphVisitor,
-                isRaid: false,
-                isNegative: false,
-                isPositive: false,
-                requiresMod: true
-            ));
+                IncidentDef nymphVisitor = DefDatabase<IncidentDef>.GetNamed("NymphVisitor", false);
+                _allIncidents.Add(new LuxandraIncidentDefs(
+                    incidentDef: nymphVisitor,
+                    isRaid: false,
+                    isNegative: false,
+                    isPositive: false,
+                    requiresMod: true
+                ));
+            }
             #endregion
 
             #region Brothel Colony Quests
@@ -303,7 +305,7 @@ namespace LuxandraLust
             #endregion 
 
             // A final cleanup, just in case any def was wrong or corrupted
-            var modsWithMissingDefs = _allIncidents.Where(i => i.IncidentDef == null);
+            var modsWithMissingDefs = _allIncidents.Where(i => i.IncidentDef == null || i.IncidentDef.defName == "");
             if (modsWithMissingDefs.Count() > 0)
             {
                 Log.Warning($"[Luxandra Lust] Warning: {modsWithMissingDefs.Count()} events had missing defs. If this shown in your game, please contact the dev. He probably messed up.");
@@ -311,10 +313,6 @@ namespace LuxandraLust
                     _allIncidents.Remove(mod);
             }
         }
-
-        // Helper: Easy access for filtering
-        public static IEnumerable<IncidentDef> GetRaids() =>
-            _allIncidents.Where(i => i.IsRaid).Select(i => i.IncidentDef);
     }
 
     public class LuxandraIncidentDefs
