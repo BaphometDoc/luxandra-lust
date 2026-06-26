@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LoadFolders>
+  <v1.6>
+    <!-- Always load the core components of your mod first -->
+    <li>Common</li>
+
+    <!-- If the target mod is active, load the integration folder as well -->
+    <li IfModActive="PackageId.Of.The.Other.Mod">Source_OtherMod</li>
+  </v1.6>
+</LoadFolders>
