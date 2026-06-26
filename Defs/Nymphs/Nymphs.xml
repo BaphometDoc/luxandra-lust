@@ -30,9 +30,8 @@
 			<li>
 				<def>Bisexual</def>
 			</li>
-			<li>
-				<def>Zoophile</def>
-			</li>
+			<!-- This used to have Zoophile too but apparently they kept 
+			raping animals ignoring colonists ooops -->
 		</forcedTraits>
 		<initialWillRange>0~1</initialWillRange>
 		<initialResistanceRange>1~3</initialResistanceRange>
@@ -43,7 +42,7 @@
 		<defName>LL_PrimalLustDeviant</defName>
 		<title>Lustful Deviant</title>
 		<titleShort>deviant</titleShort>
-		<baseDesc>[PAWN_nameDef] remains completely conscious and intellectually lucid, yet [PAWN_possessive] mind is gripped by an absolute, unyielding primal desire. While [PAWN_pronoun] can apparently converse normally, all interest in traditional work has completely evaporated due to their obsessive lust.</baseDesc>
+		<baseDesc>[PAWN_nameDef] is conscious and intellectually lucid, yet [PAWN_possessive] mind is gripped by an absolute, unyielding primal desire. While [PAWN_pronoun] can apparently converse normally, all interest in traditional work has completely evaporated due to their obsessive lust.</baseDesc>
 		<slot>Adulthood</slot>
 		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
 		<spawnCategories>
@@ -71,7 +70,6 @@
 			<Nymphomaniac>0</Nymphomaniac>
 			<Rapist>0</Rapist>
 			<Bisexual>0</Bisexual>
-			<Zoophile>0</Zoophile>
 		</forcedTraits>
 		<bodyTypeGlobal>Thin</bodyTypeGlobal>
 		<bodyTypeFemale>Thin</bodyTypeFemale>
@@ -138,4 +136,121 @@
 			</points>
 		</raidCommonalityFromPointsCurve>
 	</FactionDef>
+
+	<!-- DEBUFF APPLIED TO THE VICTIMS -->
+	<HediffDef>
+		<defName>Luxandra_DeviantStupor</defName>
+		<label>lustful stupor</label>
+		<description>A psychic fog clouding the mind. Stacks until the victim collapses into a total, helpless coma.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.8, 0.4, 0.7)</defaultLabelColor>
+		<maxSeverity>1.0</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-0.5</severityPerDay>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>hazed</label>
+				<minSeverity>0.01</minSeverity>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.10</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>clouded</label>
+				<minSeverity>0.40</minSeverity>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.30</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>-0.15</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>anesthetized stupor</label>
+				<minSeverity>0.80</minSeverity>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.1</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<!-- The "weapon" and all -->
+	<ToolCapacityDef>
+		<defName>Luxandra_StuporTouchCapacity</defName>
+		<label>sedative touch</label>
+	</ToolCapacityDef>
+
+	<ManeuverDef>
+		<defName>Luxandra_StuporTouchManeuver</defName>
+		<requiredCapacity>Luxandra_StuporTouchCapacity</requiredCapacity>
+		<verb>
+			<verbClass>Verb_MeleeAttackDamage</verbClass>
+		</verb>
+		<logEntryDef>MeleeAttack</logEntryDef>
+	</ManeuverDef>
+
+	<HediffDef ParentName="ImplantHediffBase">
+		<defName>Luxandra_EnthrallingTouch</defName>
+		<label>sensual touch</label>
+		<description>A poisonous touch evolved to weaken the preys, in order to use them while they're still alive.</description>
+		<hediffClass>Hediff_Implant</hediffClass>
+		<defaultLabelColor>(0.8, 0.4, 0.7)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<statFactors>
+					<!-- Reduces all outbound melee damage by 95% -->
+					<MeleeDamageFactor>0.05</MeleeDamageFactor>
+				</statFactors>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_VerbGiver">
+				<tools>
+					<li>
+						<label>flesh stroke</label>
+						<capacities>
+							<li>Blunt</li>
+						</capacities>
+						<power>2</power>
+						<cooldownTime>1.5</cooldownTime>
+						<extraMeleeDamages>
+							<li>
+								<def>Luxandra_StuporTouchDamage</def>
+								<amount>1</amount>
+								<chance>1.0</chance>
+							</li>
+						</extraMeleeDamages>
+					</li>
+				</tools>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<DamageDef ParentName="BluntBase">
+		<defName>Luxandra_StuporTouchDamage</defName>
+		<label>sedative contact</label>
+		<additionalHediffs>
+			<li>
+				<hediff>Luxandra_DeviantStupor</hediff>
+				<severityPerDamageDealt>0.1</severityPerDamageDealt>
+				<victimSeverityScalingByInvBodySize>true</victimSeverityScalingByInvBodySize>
+			</li>
+		</additionalHediffs>
+		<applyAdditionalHediffsIfHuntingForFood>false</applyAdditionalHediffsIfHuntingForFood>
+	</DamageDef>
 </Defs>

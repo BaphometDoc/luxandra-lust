@@ -105,7 +105,7 @@
 	<!-- This hediff tanks the sex drive of the pawn, combined with
 		rapist trait they'll go on a turbo rape frenzy-->
 	<HediffDef>
-		<defName>LL_RapistRage</defName>
+		<defName>Luxandra_RapistRage</defName>
 		<label>Rapist frenzy</label>
 		<description>A chemically induced frenzy causing a massive increase in carnal desires.</description>
 		<hediffClass>HediffWithComps</hediffClass>

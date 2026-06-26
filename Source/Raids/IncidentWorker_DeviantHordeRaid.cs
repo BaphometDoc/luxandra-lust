@@ -1,5 +1,7 @@
-﻿using RimWorld;
+﻿using HarmonyLib;
+using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using Verse.AI.Group;
 
@@ -85,7 +87,13 @@ namespace LuxandraLust
                 return false;
             }
 
-            HediffDef frenzyHediff = DefDatabase<HediffDef>.GetNamed("LL_AphrodisiacRage", false);
+            // The hediff Luxandra_RapistRage is applied by the raid AI now
+            HediffDef clawHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_EnthrallingTouch", false);
+            if (clawHediff == null)
+            {
+                Log.Error("[LuxandraLust] Missing Luxandra_EnthrallingTouch HediffDef!");
+                return true;
+            }
 
             // Spawn them and send them on rapist frenzy
             for (int i = 0; i < list.Count; i++)
@@ -103,12 +111,27 @@ namespace LuxandraLust
                 }
                 deviant.equipment?.DestroyAllEquipment();
 
-                // Apply the rapist frenzy hediff
-                if (frenzyHediff != null && deviant.health != null)
+                // Apply the as the anesthetic touch
+                if (clawHediff != null && deviant.health != null)
                 {
-                    if (!deviant.health.hediffSet.HasHediff(frenzyHediff))
+                    // Search for either Left or Right hand explicitly
+                    IEnumerable<BodyPartRecord> strikeParts = deviant.RaceProps.body.AllParts.Where(p => p.def.defName.ToLower().Contains("hand"));
+
+                    // Fallback to arms if missing hands
+                    if (!strikeParts.Any())
+                        strikeParts = deviant.RaceProps.body.AllParts.Where(p => p.def == BodyPartDefOf.Arm);
+
+                    // Fallback to torso if all else fails
+                    if (!strikeParts.Any())
+                        strikeParts.AddItem(deviant.RaceProps.body.corePart);
+
+                    if (strikeParts.Any())
                     {
-                        deviant.health.AddHediff(frenzyHediff, null, null, null);
+                        foreach (var strikePart in strikeParts)
+                        {
+                            Hediff enthrallingTouch = HediffMaker.MakeHediff(clawHediff, deviant, strikePart);
+                            deviant.health.AddHediff(enthrallingTouch);
+                        }
                     }
                 }
             }

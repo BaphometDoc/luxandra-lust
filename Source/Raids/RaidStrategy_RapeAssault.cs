@@ -69,7 +69,7 @@ namespace LuxandraLust
                 return;
             }
 
-            HediffDef rapistRageHediff = DefDatabase<HediffDef>.GetNamed("LL_RapistRage", false);
+            HediffDef rapistRageHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_RapistRage", false);
 
             for (int i = 0; i < this.lord.ownedPawns.Count; i++)
             {
