@@ -113,9 +113,12 @@ namespace LuxandraLust
                 }
             }
 
+            // Calling it "massive crowd" when it's like 3 of them seems pretty dumb
+            string crowdDefinition = list.Count > 15 ? "massive crowd" : list.Count < 5 ? "handful" : "group";
+
             Find.LetterStack.ReceiveLetter(
                 "Raid (Deviant Horde)",
-                "A massive crowd of completely naked primal humans are entering the area from the map edge! Driven by a carnal frenzy, they are advancing directly onto your colony. Run, or be ready for what is to come...",
+                $"A {crowdDefinition} of completely naked primal humans are entering the area from the map edge! Driven by a carnal frenzy, they are advancing directly onto your colony. Run, or be ready for what is to come...",
                 LetterDefOf.ThreatBig,
                 list[0]);
 
