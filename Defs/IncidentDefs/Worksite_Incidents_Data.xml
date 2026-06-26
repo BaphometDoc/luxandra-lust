@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<IncidentDef>
+		<defName>Luxandra_Inc_FertilityPulseSite</defName>
+		<label>psychic drone transmitter detected</label>
+		<category>ThreatBig</category> 
+		<workerClass>LuxandraLust.IncidentWorker_FertilityPulseSite</workerClass>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<baseChance>0.3</baseChance> 
+		<minThreatPoints>150</minThreatPoints>
+		<letterDef>NegativeEvent</letterDef>
+		<minRefireDays>15</minRefireDays>
+	</IncidentDef>
+</Defs>
