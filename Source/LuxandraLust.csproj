@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Incidents\MechClusters\IncidentWorker_FertilityPulseMechCluster.cs" />
     <Compile Include="Incidents\Worksites\IncidentWorker_FertilityPulseSite.cs" />
     <Compile Include="Utilities\DebugStuff.cs" />
     <Compile Include="Incidents\FertilityPulse.cs" />

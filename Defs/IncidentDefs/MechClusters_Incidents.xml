@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<IncidentDef>
+		<defName>Luxandra_Inc_FertilityPulseMechCluster</defName>
+		<label>mechanoid fertility transmitter cluster</label>
+		<category>ThreatBig</category>
+		<workerClass>LuxandraLust.IncidentWorker_FertilityPulseMechCluster</workerClass>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<baseChance>1.0</baseChance>
+		<minThreatPoints>500</minThreatPoints>
+		<letterDef>ThreatBig</letterDef>
+		<minRefireDays>20</minRefireDays>
+		<allowedBiomes>
+			<li>BorealForest</li>
+			<li>Tundra</li>
+			<li>ColdBog</li>
+			<li>TemperateForest</li>
+			<li>TemperateSwamp</li>
+			<li>TropicalRainforest</li>
+			<li>TropicalSwamp</li>
+			<li>AridShrubland</li>
+			<li>Desert</li>
+			<li>ExtremeDesert</li>
+		</allowedBiomes>
+	</IncidentDef>
+</Defs>

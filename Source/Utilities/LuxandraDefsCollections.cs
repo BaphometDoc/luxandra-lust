@@ -14,7 +14,10 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyRushFemale;
         public static IncidentDef Luxandra_Inc_HornyRushMale;
         public static IncidentDef Luxandra_Inc_WhiteRain;
+
         public static IncidentDef Luxandra_Inc_LustfulFertilityPulse;
+        public static IncidentDef Luxandra_Inc_FertilityPulseSite;
+        public static IncidentDef Luxandra_Inc_FertilityPulseMechCluster;
 
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_DeviantHordeRaid;
@@ -102,11 +105,25 @@ namespace LuxandraLust
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
-                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseSite,
+                isRaid: false,
+                isNegative: true,
+                isPositive: false
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseMechCluster,
                 isRaid: true,
                 isNegative: true,
                 isPositive: false
             ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                    isRaid: true,
+                    isNegative: true,
+                    isPositive: false
+                ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<IncidentDef>
+		<defName>Luxandra_Inc_FertilityPulseSite</defName>
+		<label>fertility pulse transmitter detected</label>
+		<category>ThreatBig</category>
+		<workerClass>LuxandraLust.IncidentWorker_FertilityPulseSite</workerClass>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<baseChance>0.3</baseChance>
+		<minThreatPoints>150</minThreatPoints>
+		<letterDef>NegativeEvent</letterDef>
+		<minRefireDays>15</minRefireDays>
+	</IncidentDef>
+
+	<SitePartDef>
+		<defName>Luxandra_FertilityPulseSitePart</defName>
+		<label>fertility pulse transmitter</label>
+		<description>A site containing a localized psychic transmitter emitting a frequency across the region.</description>
+		<workerClass>SitePartWorker_ConditionCauser</workerClass>
+		<conditionCauserDef>Luxandra_FertilityPulseTransmitter</conditionCauserDef>
+		<tags>
+			<li>ConditionCauser</li>
+		</tags>
+		<siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+		<expandingIconTexture>World/WorldObjects/Expanding/Sites/Ambush</expandingIconTexture>
+	</SitePartDef>
+
+	<GenStepDef>
+		<defName>Luxandra_FertilityPulseGenStep</defName>
+		<order>450</order>
+		<linkWithSite>Luxandra_FertilityPulseSitePart</linkWithSite>
+		<genStep Class="GenStep_ConditionCauser"/>
+	</GenStepDef>
+</Defs>
