@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+	<!-- Game condition -->
+	<GameConditionDef>
+		<defName>Luxandra_LustfulFertilityPulse</defName>
+		<conditionClass>LuxandraLust.GameCondition_FertilityPulse</conditionClass>
+		<label>lustful fertility pulse</label>
+		<description>A localized psychic ripple is overloading the reproductive instincts of all adult humans on the map.</description>
+		<letterText>A strange psychic pulse is affecting the region. Adults are feeling an overwhelming pressure to procreate.</letterText>
+		<letterDef>NeutralEvent</letterDef>
+		<canBePermanent>true</canBePermanent>
+	</GameConditionDef>
+	
+	<!-- Incident: regular aura -->
 	<IncidentDef>
 		<defName>Luxandra_Inc_LustfulFertilityPulse</defName>
 		<label>Lustful fertility pulse</label>
@@ -19,17 +31,6 @@
 		<letterText>A strange psychic pulse has washed over the region. Children are merely confused by the shifting atmosphere, but all the adults are feeling an overwhelming biological pressure to procreate. Men feel rejuvenated, while women feel the calling of motherhood. Even their bodies reject infertility!</letterText>
 		<letterDef>NeutralEvent</letterDef>
 	</IncidentDef>
-
-	<!-- Game condition -->
-	<GameConditionDef>
-		<defName>Luxandra_LustfulFertilityPulse</defName>
-		<conditionClass>LuxandraLust.GameCondition_FertilityPulse</conditionClass>
-		<label>lustful fertility pulse</label>
-		<description>A localized psychic ripple is overloading the reproductive instincts of all adult humans on the map.</description>
-		<letterText>A strange psychic pulse has washed over the region. Adults are feeling an overwhelming pressure to procreate.</letterText>
-		<letterDef>NeutralEvent</letterDef>
-		<canBePermanent>false</canBePermanent>
-	</GameConditionDef>
   
 	<!-- Child Confusion Hediff -->
 	<HediffDef>
@@ -37,10 +38,10 @@
 		<label>Psychic confusion</label>
 		<description>Confused by the strange behavior of the adults around them.</description>
 		<hediffClass>HediffWithComps</hediffClass>
-    <isBad>false</isBad>
+		<isBad>false</isBad>
 		<stages>
 			<li>
-				<!-- No actual effect, Mood is handled via a ThoughtDef below -->
+				<!-- No actual effect, Mood is handled via a ThoughtDef -->
 			</li>
 		</stages>
 	</HediffDef>
@@ -51,7 +52,7 @@
 		<label>Lustful vigor</label>
 		<description>An intense psychic surge driving up reproductive capabilities and energy.</description>
 		<hediffClass>HediffWithComps</hediffClass>
-    <isBad>false</isBad>
+		<isBad>false</isBad>
 		<defaultLabelColor>(0.85, 0.45, 0.65)</defaultLabelColor>
 		<stages>
 			<li>
@@ -80,7 +81,7 @@
 		<label>Mating pressure</label>
 		<description>An overwhelming psychic biological pull sending ovulation in overdrive and skyrocketing the maternal instinct.</description>
 		<hediffClass>HediffWithComps</hediffClass>
-    <isBad>false</isBad>
+		<isBad>false</isBad>
 		<defaultLabelColor>(0.85, 0.45, 0.65)</defaultLabelColor>
 		<stages>
 			<li>
@@ -105,24 +106,24 @@
 	
 	<!-- Pregnant Female Hediff -->
 	<HediffDef>
-    <defName>Luxandra_PulsePregnantMaternal</defName>
-    <label>maternal alignment pulse</label>
-    <description>The planet has shifted supports this vessel of new life. The pawn feels a cosmic, euphoric validation that they are fulfilling their true evolutionary purpose, though the sheer intensity of this biological bliss leaves them in a heavily dazed, dreamlike state.</description>
-    <hediffClass>HediffWithComps</hediffClass>
-    <defaultLabelColor>(0.85, 0.45, 0.65)</defaultLabelColor>
-    <isBad>false</isBad>
-    <stages>
-      <li>
-        <label>Reproductive bliss</label>
-        <capMods>
-          <li>
-            <capacity>Consciousness</capacity>
-            <setMax>0.80</setMax>
-          </li>
-        </capMods>
-      </li>
-    </stages>
-  </HediffDef>
+		<defName>Luxandra_PulsePregnantMaternal</defName>
+		<label>maternal alignment pulse</label>
+		<description>The planet has shifted supports this vessel of new life. The pawn feels a cosmic, euphoric validation that they are fulfilling their true evolutionary purpose, though the sheer intensity of this biological bliss leaves them in a heavily dazed, dreamlike state.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.85, 0.45, 0.65)</defaultLabelColor>
+		<isBad>false</isBad>
+		<stages>
+			<li>
+				<label>Reproductive bliss</label>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.80</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
 
 	<!-- Child Thought -->
 	<ThoughtDef>
@@ -168,17 +169,17 @@
 	
 	<!-- Pregnant Female Thought -->
 	<ThoughtDef>
-    <defName>Luxandra_PulsePregnantMaternalThought</defName>
-    <workerClass>ThoughtWorker_Hediff</workerClass>
-    <hediff>Luxandra_PulsePregnantMaternal</hediff>
-    <validWhileDespawned>true</validWhileDespawned>
-    <developmentalStageFilter>Adult</developmentalStageFilter>
-    <stages>
-      <li>
-        <label>Maternal bliss</label>
-        <description>The world itself smiles upon me. I am a vessel for new lives... my purpose is clear, and I am fulfilling it.</description>
-        <baseMoodEffect>30</baseMoodEffect>
-      </li>
-    </stages>
-  </ThoughtDef>
+		<defName>Luxandra_PulsePregnantMaternalThought</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_PulsePregnantMaternal</hediff>
+		<validWhileDespawned>true</validWhileDespawned>
+		<developmentalStageFilter>Adult</developmentalStageFilter>
+		<stages>
+			<li>
+				<label>Maternal bliss</label>
+				<description>The world itself smiles upon me. I am a vessel for new lives... my purpose is clear, and I am fulfilling it.</description>
+				<baseMoodEffect>30</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>

@@ -21,6 +21,9 @@ Various potential events
 Ideology integration
 - dedicated ideology
 
+Anomaly integration
+- golden dong - literally the golden cube except it's a +satisfaction -mood effect
+
 Cumpilation integration
 - turn things into samestein/spermatuch?
 - add random spermatuch/samenstein stuff to the supplies drop?

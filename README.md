@@ -6,7 +6,7 @@ Gimmicks:<br>
 <br>
 <br>
 Also adds:<br>
-	- two new raid types: horny tribals (preferring Fantasy Races factions if detected) and rapists (if Ugly bastards is loaded)<br>
+	- 3 new raid types: horny tribals (preferring Fantasy Races factions if detected), lustful nymphs, rapists (if Ugly bastards is loaded)<br>
 	- horny pulse event: your colonists will be way hornier than usual for a bit<br>
 	- genitals resize events: the wind of fortune decided you deserved a different size...<br>
 	- rapist pulse event: one or more of your colonists will not take no for an answer<br>
