@@ -210,18 +210,20 @@ namespace LuxandraLust
                 HediffDef childDef = HediffDef.Named("Luxandra_PulseChildConfusion");
                 HediffDef maleDef = HediffDef.Named("Luxandra_PulseAdultMale");
                 HediffDef femaleDef = HediffDef.Named("Luxandra_PulseAdultFemale");
+                HediffDef pregnantDef = HediffDef.Named("Luxandra_PulsePregnantMaternal");
 
-                foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                // Using a traditional for loop or a cached collection is safer here 
+                // since we are dynamically mutating the hediff lists inside the iteration
+                var spawnedPawns = map.mapPawns.AllPawnsSpawned;
+                for (int i = 0; i < spawnedPawns.Count; i++)
                 {
+                    Pawn pawn = spawnedPawns[i];
                     if (pawn == null || !pawn.RaceProps.Humanlike) continue;
 
-                    Hediff cH = pawn.health.hediffSet.GetFirstHediffOfDef(childDef);
-                    Hediff mH = pawn.health.hediffSet.GetFirstHediffOfDef(maleDef);
-                    Hediff fH = pawn.health.hediffSet.GetFirstHediffOfDef(femaleDef);
-
-                    if (cH != null) pawn.health.RemoveHediff(cH);
-                    if (mH != null) pawn.health.RemoveHediff(mH);
-                    if (fH != null) pawn.health.RemoveHediff(fH);
+                    // Bulk-removal tool to ensure all hediffs are removed
+                    pawn.health.hediffSet.hediffs.RemoveAll(h =>
+                        h.def == childDef || h.def == maleDef || h.def == femaleDef || h.def == pregnantDef
+                    );
                 }
             }
             base.End();
