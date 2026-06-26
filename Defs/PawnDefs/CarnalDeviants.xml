@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
+	<!-- This is totally not nymphs. Nope. Totally not the nymphs from RJW 
+	except they actually work (most of the time) -->
 <Defs>
 	<PawnKindDef>
-		<defName>LL_CarnalDeviantStriker</defName>
+		<defName>Luxandra_CarnalDeviantStriker</defName>
 		<label>Carnal deviant</label>
 		<race>Human</race>
 		<combatPower>30</combatPower>

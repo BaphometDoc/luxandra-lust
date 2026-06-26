@@ -16,7 +16,7 @@ namespace LuxandraLust
             Map map = (Map)parms.target;
 
             LuxandraDebugActions.DebugLogMessage("Attempting to generate a Carnal Deviant raid.");
-            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(DefDatabase<FactionDef>.GetNamed("LL_DeviantHordeFaction", false));
+            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(DefDatabase<FactionDef>.GetNamed("Luxandra_DeviantHordeFaction", false));
 
             // Failsafe 1: Fallback to a hostile tribal faction
             if (deviantFaction == null)
@@ -41,10 +41,10 @@ namespace LuxandraLust
                 parms.points = StorytellerUtility.DefaultThreatPointsNow(map);
             }
 
-            PawnKindDef deviantKind = DefDatabase<PawnKindDef>.GetNamed("LL_CarnalDeviantStriker", false);
+            PawnKindDef deviantKind = DefDatabase<PawnKindDef>.GetNamed("Luxandra_CarnalDeviantStriker", false);
             if (deviantKind == null)
             {
-                Log.Error("[LuxandraLust] Missing LL_CarnalDeviantStriker PawnKindDef!");
+                Log.Error("[LuxandraLust] Missing Luxandra_CarnalDeviantStriker PawnKindDef!");
                 return false;
             }
 

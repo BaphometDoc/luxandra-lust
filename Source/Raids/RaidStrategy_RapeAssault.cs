@@ -62,10 +62,10 @@ namespace LuxandraLust
 
         public override void UpdateAllDuties()
         {
-            DutyDef customDuty = DefDatabase<DutyDef>.GetNamed("LL_BastardAssaultDuty", false);
+            DutyDef customDuty = DefDatabase<DutyDef>.GetNamed("Luxandra_BastardAssaultDuty", false);
             if (customDuty == null)
             {
-                Log.Error("[LuxandraLust] Crucial Error: LL_BastardAssaultDuty missing from XML definitions!");
+                Log.Error("[LuxandraLust] Crucial Error: Luxandra_BastardAssaultDuty missing from XML definitions!");
                 return;
             }
 

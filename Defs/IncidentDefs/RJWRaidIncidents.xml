@@ -33,7 +33,7 @@
 	</IncidentDef>
 	
 	<RaidStrategyDef>
-		<defName>LL_RapeAndPillageAssault</defName>
+		<defName>Luxandra_RapeAndPillageAssault</defName>
 		<workerClass>LuxandraLust.RaidStrategyWorker_RapeAssault</workerClass>
 		<letterLabelEnemy>Raid (Vile Assault)</letterLabelEnemy>
 		<arrivalTextEnemy>A group of raiders have arrived. They are attacking immediately, and they seem to have exceptionally vile intentions for any survivors...</arrivalTextEnemy>
@@ -50,7 +50,7 @@
 	</RaidStrategyDef>
   
 	<DutyDef>
-		<defName>LL_BastardAssaultDuty</defName>
+		<defName>Luxandra_BastardAssaultDuty</defName>
 		<thinkNode Class="ThinkNode_Priority">
 			<subNodes>
 				<!-- Rape enemies -->
@@ -87,7 +87,7 @@
 	</IncidentDef>
   
 	<RaidStrategyDef>
-		<defName>LL_DeviantHordeAssault</defName>
+		<defName>Luxandra_DeviantHordeAssault</defName>
 		<workerClass>LuxandraLust.RaidStrategyWorker_RapeAssault</workerClass>
 		<label>carnal horde</label>
 		<letterLabelEnemy>Raid (Deviant Horde)</letterLabelEnemy>
