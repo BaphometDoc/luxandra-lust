@@ -52,7 +52,7 @@ namespace LuxandraLust
             {
                 Faction fallbackFaction = Find.FactionManager.AllFactions
                     .FirstOrDefault(f => f.HostileTo(Faction.OfPlayer) &&
-                                         (int)f.def.techLevel < (int)TechLevel.Neolithic &&
+                                         (int)f.def.techLevel < (int)TechLevel.Industrial &&
                                          !f.Hidden);
 
                 if (fallbackFaction != null)
@@ -67,10 +67,21 @@ namespace LuxandraLust
                 }
             }
 
+            // Assign a raid strategy
+            if (parms.raidStrategy == null)
+            {
+                parms.raidStrategy = RaidStrategyDefOf.ImmediateAttack;
+            }
+            if (parms.raidArrivalMode == null)
+            {
+                parms.raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkIn;
+            }
+
             bool raidSuccessful = base.TryExecuteWorker(parms);
 
             if (!raidSuccessful)
             {
+                LuxandraDebugActions.DebugLogMessage("Failed to generate a Horny raid for the faction " + parms.faction.Name);
                 return false;
             }
 
@@ -132,6 +143,7 @@ namespace LuxandraLust
             }
 
             // Return true because the raid successfully happened
+            LuxandraDebugActions.DebugLogMessage("Horny raid successfully started for the faction " + parms.faction.Name);
             return true;
         }
     }
