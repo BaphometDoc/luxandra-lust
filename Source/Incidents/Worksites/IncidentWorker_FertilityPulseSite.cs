@@ -15,7 +15,7 @@ namespace LuxandraLust
 
             PlanetTile playerPlanetTile = new PlanetTile(map.Tile);
 
-            return TileFinder.TryFindNewSiteTile(out _, playerPlanetTile, 2, 15, false, null, 0.5f, true, TileFinderMode.Near);
+            return TileFinder.TryFindNewSiteTile(out _, playerPlanetTile, 3, 8, false, null, 0.5f, true, TileFinderMode.Near);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -26,7 +26,7 @@ namespace LuxandraLust
             PlanetTile playerPlanetTile = new PlanetTile(map.Tile);
 
             // 1. Find the target location
-            if (!TileFinder.TryFindNewSiteTile(out PlanetTile targetTile, playerPlanetTile, 2, 15, false, null, 0.5f, true, TileFinderMode.Near))
+            if (!TileFinder.TryFindNewSiteTile(out PlanetTile targetTile, playerPlanetTile, 3, 8, false, null, 0.5f, true, TileFinderMode.Near))
             {
                 return false;
             }
