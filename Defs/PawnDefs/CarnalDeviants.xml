@@ -18,7 +18,7 @@
 		<backstoryFiltersOverride>
 			<li>
 				<categories>
-					<li>LL_RaiderDeviantCategory</li>
+					<li>Luxandra_RaiderDeviantCategory</li>
 				</categories>
 			</li>
 		</backstoryFiltersOverride>
@@ -37,18 +37,18 @@
 		</forcedTraits>
 		<initialWillRange>0~1</initialWillRange>
 		<initialResistanceRange>1~3</initialResistanceRange>
-		<defaultFactionType>LL_DeviantHordeFaction</defaultFactionType>
+		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
 	</PawnKindDef>
 
 	<BackstoryDef>
-		<defName>LL_PrimalLustDeviant</defName>
+		<defName>Luxandra_PrimalLustDeviant</defName>
 		<title>Lustful Deviant</title>
 		<titleShort>deviant</titleShort>
 		<baseDesc>[PAWN_nameDef] is conscious and intellectually lucid, yet [PAWN_possessive] mind is gripped by an absolute, unyielding primal desire. While [PAWN_pronoun] can apparently converse normally, all interest in traditional work has completely evaporated due to their obsessive lust.</baseDesc>
 		<slot>Adulthood</slot>
 		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
 		<spawnCategories>
-			<li>LL_RaiderDeviantCategory</li>
+			<li>Luxandra_RaiderDeviantCategory</li>
 		</spawnCategories>
 		<skillGains>
 			<Social>6</Social>
@@ -79,19 +79,19 @@
 	</BackstoryDef>
   
 	<BackstoryDef>
-		<defName>LL_DeviantChildhoodFeral</defName>
+		<defName>Luxandra_DeviantChildhoodFeral</defName>
 		<title>Feral Deviant</title>
 		<titleShort>Feral</titleShort>
 		<baseDesc>[PAWN_nameDef] was raised in the untamed wilderness. Having never learned the constraints of societal laws, ethical frameworks, or basic morality, [PAWN_pronoun] grew up entirely guided by instinct and the immediate satisfaction of primal urges.</baseDesc>
 		<slot>Childhood</slot>
 		<spawnCategories>
-			<li>LL_RaiderDeviantCategory</li>
+			<li>Luxandra_RaiderDeviantCategory</li>
 		</spawnCategories>
 		<skillGains/>
 	</BackstoryDef>
 
 	<FactionDef ParentName="FactionBase">
-		<defName>LL_DeviantHordeFaction</defName>
+		<defName>Luxandra_DeviantHordeFaction</defName>
 		<label>deviant horde</label>
 		<description>A wild swarm of deviant humans.</description>
 		<pawnSingular>Carnal deviant</pawnSingular>
@@ -107,7 +107,7 @@
 		<backstoryFilters>
 			<li>
 				<categories>
-					<li>LL_PrimalLustDeviant</li>
+					<li>Luxandra_PrimalLustDeviant</li>
 				</categories>
 			</li>
 		</backstoryFilters>
