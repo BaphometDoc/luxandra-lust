@@ -5,6 +5,7 @@
 - Added a new sex-based disease
 - Carnal Deviants are way more likely to pawns instead of killing them via damage
 - If menstruation is loaded, fertility pulse will also replenish ovary power
+- Added a new quest, prisoner breaking.
 
 0.3 - 26/06/2026
 - Added quest site and mech cluster version of the Fertility pulse

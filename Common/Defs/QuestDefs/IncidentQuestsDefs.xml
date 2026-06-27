@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<IncidentDef>
+		<defName>Luxandra_Inc_BreakPrisonersContractQuest</defName>
+		<category>Misc</category>
+		<pointsScaleable>true</pointsScaleable>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_BreakPrisonersContractQuest</workerClass>
+		<baseChance>0.5</baseChance>
+		<minRefireDays>15</minRefireDays>
+	</IncidentDef>
+</Defs>

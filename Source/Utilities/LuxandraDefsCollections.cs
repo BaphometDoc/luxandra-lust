@@ -11,6 +11,7 @@ namespace LuxandraLust
     [DefOf]
     public static class LuxandraIncidentDefOf
     {
+        // Auras, pulses and similar stuff
         public static IncidentDef Luxandra_Inc_HornyRushFemale;
         public static IncidentDef Luxandra_Inc_HornyRushMale;
         public static IncidentDef Luxandra_Inc_WhiteRain;
@@ -19,19 +20,26 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_FertilityPulseSite;
         public static IncidentDef Luxandra_Inc_FertilityPulseMechCluster;
 
+        public static IncidentDef Luxandra_Inc_RapistBreak;
+
+        // Raids
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_DeviantHordeRaid;
 
-        public static IncidentDef Luxandra_Inc_RapistBreak;
-
+        // Disease, illnesses
         public static IncidentDef Luxandra_Inc_AphrodisiacFever;
 
+        // Body part messing
         public static IncidentDef Luxandra_Inc_MaleExpansion;
         public static IncidentDef Luxandra_Inc_FemaleExpansion;
         public static IncidentDef Luxandra_Inc_MaleReduction;
         public static IncidentDef Luxandra_Inc_FemaleReduction;
 
+        // Boons
         public static IncidentDef Luxandra_Inc_LustfulSupplies;
+
+        // Quests incidents
+        public static IncidentDef Luxandra_Inc_BreakPrisonersContractQuest;
 
         static LuxandraIncidentDefOf()
         {
@@ -121,6 +129,13 @@ namespace LuxandraLust
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
+                isRaid: false,
+                isNegative: true,
+                isPositive: false
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                     isRaid: true,
                     isNegative: true,
@@ -130,13 +145,6 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 isRaid: true,
-                isNegative: true,
-                isPositive: false
-            ));
-
-            _allIncidents.Add(new LuxandraIncidentDefs(
-                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
-                isRaid: false,
                 isNegative: true,
                 isPositive: false
             ));
@@ -181,6 +189,14 @@ namespace LuxandraLust
                 isRaid: false,
                 isNegative: false,
                 isPositive: true
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BreakPrisonersContractQuest,
+                isRaid: false,
+                isNegative: false,
+                isPositive: false,
+                isQuest: true
             ));
             #endregion
 

@@ -17,13 +17,16 @@
 		<techHediffsMoney>0~0</techHediffsMoney>
 		<techHediffsTags/>
 		<techHediffsChance>0</techHediffsChance>
-		<initialWillRange>0~1</initialWillRange>
-		<initialResistanceRange>1~3</initialResistanceRange>
+		<initialWillRange>13~15</initialWillRange>
+		<initialResistanceRange>18~25</initialResistanceRange>
+		<forcedTraits>
+			<li>Tough</li>
+		</forcedTraits>
 	</PawnKindDef>
 
 	<!-- The actual quest -->
 	<QuestScriptDef>
-		<defName>Luxandra_BreakPrisonersContract</defName>
+		<defName>Luxandra_BreakPrisonersContractQuest</defName>
 		<rootSelectionWeight>1.0</rootSelectionWeight>
 		<rootMinPoints>350</rootMinPoints>
 		<expireDaysRange>4~8</expireDaysRange>
@@ -40,7 +43,7 @@ Knowing your colony operates outside conventional ethical bounds, they want to t
 
 You can use whatever method at your disposal, as long as they remain alive, and ideally begging for more. 
 
-If all surviving prisoners return broken, the contract is fulfilled. If you managed to completely shatter their will, a bonus structural payload will be authorized.</li>
+If all surviving prisoners return broken, the contract is fulfilled. If you managed to completely shatter their will, a bonus structural payload will be authorized.				</li>
 			</rulesStrings>
 		</questDescriptionRules>
     
@@ -48,6 +51,9 @@ If all surviving prisoners return broken, the contract is fulfilled. If you mana
 			<rulesStrings>
 				<li>questName->The Compliance Mandate</li>
 				<li>questName->Shattered Wills of [$askerFaction]</li>
+				<li>questName->"Honorable interrogation"</li>
+				<li>questName->[$askerFaction]'s dark request</li>
+				<li>questName->Means to an end</li>
 			</rulesStrings>
 		</questNameRules>
 
@@ -91,6 +97,7 @@ If all surviving prisoners return broken, the contract is fulfilled. If you mana
 							<li>(1200, 4)</li>
 						</points>
 					</curve>
+					<roundRandom>true</roundRandom>
 					<storeAs>lodgersCount</storeAs>
 				</li>
 
@@ -178,7 +185,7 @@ If all surviving prisoners return broken, the contract is fulfilled. If you mana
 					</node>
 				</li>
 
-			<!-- ================= GLOBAL REWARD LISTENER (ROOT LEVEL) ================= -->
+				<!-- ================= GLOBAL REWARD LISTENER (ROOT LEVEL) ================= -->
 				<!-- Exactly one instance so the UI compiler can map the player's choices perfectly -->
 				<li Class="QuestNode_GiveRewards">
 					<inSignal>DeliverQuestRewards</inSignal>
@@ -224,14 +231,48 @@ If all surviving prisoners return broken, the contract is fulfilled. If you mana
 								<inSignal>QuestSuccessPerfect</inSignal>
 								<node Class="QuestNode_Sequence">
 									<nodes>
+										<!--Trigger the single global reward node instantly -->
 										<li Class="QuestNode_SendSignals">
 											<outSignals>DeliverQuestRewards</outSignals>
 										</li>
+										
+										<!-- This scales directly off the points system (wealth/combat difficulty) -->
+										<li Class="QuestNode_EvaluateSimpleCurve">
+											<value>$points</value>
+											<roundRandom>true</roundRandom>
+											<curve>
+												<points>
+													<li>(100, 100)</li>
+													<li>(200, 200)</li>
+													<li>(1000, 1000)</li>
+													<li>(2000, 2000)</li>
+													<li>(4000, 4000)</li>
+													<li>(10000, 10000)</li>
+												</points>
+											</curve>
+											<storeAs>BonusSilverMarketValue</storeAs>
+										</li>
+										<li Class="QuestNode_GenerateThing">
+											<def>Silver</def>
+											<stackCount>$BonusSilverMarketValue</stackCount>
+											<storeAs>BonusSilverStack</storeAs>
+										</li>
+
+										<!-- 3. DROP THE SILVER VIA PODS -->
+										<li Class="QuestNode_DropPods">
+											<contents>$BonusSilverStack</contents>
+											<useTradeDropSpot>true</useTradeDropSpot><!-- Drops near their standard silver stash -->
+											<customLetterLabel>Perfect Score Bonus</customLetterLabel>
+											<customLetterText>The client was so impressed by the broken state of the captives that they dropped an extra batch of silver directly to your storage space!</customLetterText>
+										</li>
+										
+										<!-- 4. Show the standard perfect letter -->
 										<li Class="QuestNode_Letter">
 											<label>Flawless Contract Complete</label>
 											<letterDef>PositiveEvent</letterDef>
 											<text>Incredible! Every single prisoner returned completely hollowed out. The client is ecstatic and has authorized your standard rewards alongside a bonus structural payload!</text>
 										</li>
+										<!-- 5. End quest -->
 										<li Class="QuestNode_End">
 											<outcome>Success</outcome>
 											<sendStandardLetter>false</sendStandardLetter>
@@ -282,7 +323,205 @@ If all surviving prisoners return broken, the contract is fulfilled. If you mana
 				
 		
 				<!-- I'll be honest these are copypasted from Royalty and base game
-		     I couldn't figure how to just hook them in -->
+						I couldn't figure how to just hook them in -->
+			 
+				<!-- Lodger died -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.Destroyed</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelGuestDied">Guest died: {SUBJECT_definite}</label>
+								<text TKey="LetterTextGuestDied">One of the prisoners has died. You were meant to break them, not kill them. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>QuestPawnLost</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger arrested -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.Arrested</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelGuestCapture">Guest captured: {SUBJECT_definite}</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LetterTextGuestCapture">One of the prisoners who you were charged to break, has been arrested. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger recruited -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.Recruited</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LabelLabelPrisonerRecruited">Prisoner recruited: {SUBJECT_definite}</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LabelTextPrisonerRecruited">You have recruited {SUBJECT_definite}, who you were charged to break. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>QuestPrisonerRecruited</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger enslaved -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.Enslaved</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LabelLabelPrisonerEnslaved">Prisoner enslaved: {SUBJECT_definite}</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LabelTextPrisonerEnslaved">You have enslaved {SUBJECT_definite}, who you were charged to break. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>QuestPrisonerEnslaved</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger left map -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.LeftMap</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelGuestLost">Guest lost: {SUBJECT_definite}</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LetterTextGuestLost">One of the prisoners who you were charged to break, is gone. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>QuestPawnLost</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger left behind (e.g. map abandoned) -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.LeftBehind</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelGuestLost">Guest lost: {SUBJECT_definite}</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LetterTextGuestLost">One of the prisoners who you were charged to break, is gone. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>QuestPawnLost</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger ran wild -->
+				<li Class="QuestNode_Signal">
+					<inSignal>lodgers.RanWild</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelLodgerRanWild">Guest lost: {SUBJECT_definite}</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LetterTextLodgerRanWild">One of the prisoners who you were charged to break, has run wild. The contract is cancelled, do what you will with any remaining prisoner.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>QuestPawnLost</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Lodger changed faction (e.g. sold to trader) -->
+				<li Class="QuestNode_AnySignal">
+					<inSignals>
+						<li>lodgers.ChangedFaction</li>
+						<li>lodgers.ChangedHostFaction</li>
+					</inSignals>
+					<node Class="QuestNode_Filter_FactionNonPlayer">
+						<node Class="QuestNode_Sequence">
+							<nodes>
+								<li Class="QuestNode_Letter">
+									<label TKey="LetterLabelGuestJoinedOtherFaction">Guest lost: {SUBJECT_definite}</label>
+									<letterDef>NegativeEvent</letterDef>
+									<text TKey="LetterTextGuestJoinedOtherFaction">One of the prisoners who you were charged to break, has joined another faction. The contract is cancelled, do what you will with any remaining prisoner.</text>
+								</li>
+								<li Class="QuestNode_End">
+									<outcome>Fail</outcome>
+									<goodwillChangeAmount>-5</goodwillChangeAmount>
+									<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+									<goodwillChangeReason>QuestPawnLost</goodwillChangeReason>
+								</li>
+							</nodes>
+						</node>
+					</node>
+				</li>
+
+				<!-- Shuttle destroyed -->
+				<li Class="QuestNode_Signal">
+					<inSignal>pickupShipThing.Destroyed</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelShuttleDestroyed">Shuttle destroyed</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LetterTextShuttleDestroyed">The shuttle sent to collect the prisoners has been destroyed. Any prisoner will now leave on foot and hope the wild beasts don't kill them.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+								<goodwillChangeReason>ShuttleDestroyed</goodwillChangeReason>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Shuttle left behind -->
+				<li Class="QuestNode_Signal">
+					<inSignal>pickupShipThing.LeftBehind</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label TKey="LetterLabelShuttleLeftBehind">Shuttle left behind</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text TKey="LetterTextShuttleLeftBehind">The shuttle sent to collect the prisoners has been left behind. Any prisoner will now leave on foot and hope the wild beasts don't kill them.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+							</li>
+						</nodes>
+					</node>
+				</li>
 			</nodes>
 		</root>
 	</QuestScriptDef>
