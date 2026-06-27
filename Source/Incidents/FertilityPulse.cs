@@ -84,6 +84,13 @@ namespace LuxandraLust
                             Hediff oldPregnantHediff = pawn.health.hediffSet.GetFirstHediffOfDef(pregnantDef);
                             pawn.health.RemoveHediff(oldPregnantHediff);
                         }
+
+                        // If menstruation is loaded, replenish the ovary power and send the pawn in ovulation (possibly with multiple eggs)
+                        if (ModsConfig.IsActive("rjw.menstruation"))
+                        {
+                            MenstruationIntegration.IncreaseOvaryPower(pawn);
+                            MenstruationIntegration.ForceOvulation(pawn);
+                        }
                     }
                 }
             }

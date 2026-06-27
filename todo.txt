@@ -2,7 +2,6 @@ List of features proposed
 (Mainly a reminder for myself, but consider it a teaser of what's to come if you want)
 
 Already existing mechanics updates to do
-- (menstruation) fertility pulse will replenish ovary count and force pawns into ovulation
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
 
 Various potential events

@@ -1,19 +1,21 @@
 A RimJobWorld based storyteller.<br>
-
-Gimmicks:<br>
-	Every time a Major threat would fire, if your colony has been regularly been having sex (configurable), the raid will be replaced with a sex-related event.<br>
-	Every 7 (configurable) days, she will check on how horny your pawns are. If they have been satisfied, she will reward you, and punish you if you're being prude.<br>
-	Every time your colonists give birth, Luxanna will punish or reward you based on how the child was conceived<br>
+<br>
+Luxandra Lust is a Storyteller focused on creating adventures that make full use of everything RimJobWorld has to offer.<br>
+<br>
+She introduces both a significant amount of sex-based events of all types, and her own twist on the narration.<br>
+<br>
+The purpose of Luxanna is to act as a truly lustful watcher, demanding your colony to partake in sexual activities, and distributing boons and curses depending on if you entertain her everchanging kinks.<br>
+<br>
+Do not expect a free ride though, nowhere in her ruleset there's anything about asking for consent, unpleasant events will be forced on your colony every so often and you will have to deal with those.<br>
+<br>
+Her population curve is also quite atypical. She offers minor help with recruiting new allies until you have 10 pawns, after which she will not interfere until you have 50 or more. If you're prolific enough to hit that many... she'll sabotage your recruitment chances, as she would much more enjoy watching your groupie getting it going between them, but will never actively try to kill them. Well, at least, not directly.<br>
+<br>
+Her gimmicks have some degree of customization, in when they can activate, and how hard it is to fulfil the conditions. See the mod configs in game. (Opening the configs in Dev mode will have additional data).<br>
+<br>
+Her event rerolling system also ignores quest-related and other forced events, in order to not risk breaking or softlocking saves and avoid mod conflicts.<br>
+<br>
+The special events are actually accessible even if she is not the active storyteller, other storytellers are able to call most of them as well. However, they are just in their own regular event pool, and rarer than normal events.<br>
 <br>
 <br>
-Also adds:<br>
-	- 3 new raid types: horny tribals (preferring Fantasy Races factions if detected), lustful nymphs, rapists (if Ugly bastards is loaded)<br>
-	- horny pulse event: your colonists will be way hornier than usual for a bit<br>
-	- genitals resize events: the wind of fortune decided you deserved a different size...<br>
-	- rapist pulse event: one or more of your colonists will not take no for an answer<br>
-	- a powerful fertility pulse: your pawns will get pregnant, and they will like it<br>
-	- a special drop pod for your most degenerate needs<br>
-	- white rain: it's warm and sticky. Maybe you shouldn't stand outside today<br>
-	- Royalty: 2 events that specifically target your highest standing noble<br>
-	- Ideology: 2 events that specifically target your faction leader<br>
-	
+For more details, check the wiki page<br>
+https://rjw.miraheze.org/wiki/Luxandra_Lust/1.6

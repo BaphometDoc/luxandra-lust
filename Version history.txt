@@ -1,6 +1,7 @@
 0.4 - In development...
 - Updated population curve
 - Carnal Deviants are way more likely to pawns instead of killing them via damage
+- If menstruation is loaded, fertility pulse will also replenish ovary power
 
 0.3 - 26/06/2026
 - Added quest site and mech cluster version of the Fertility pulse
