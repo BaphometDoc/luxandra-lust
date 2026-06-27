@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- The prisoners -->
+	<PawnKindDef ParentName="BasePlayerPawnKind">
+		<defName>Luxandra_StrippedPrisoner</defName>
+		<label>captive</label>
+		<race>Human</race>
+		<defaultFactionType>Ancients</defaultFactionType>
+		<chemicalAddictionChance>0</chemicalAddictionChance>
+		<apparelTags/>
+		<apparelMoney>0~0</apparelMoney>
+		<apparelAllowHeadgearChance>1</apparelAllowHeadgearChance>
+		<apparelRequired>
+			<li>Apparel_Blindfold</li>
+		</apparelRequired>
+		<weaponMoney>0~0</weaponMoney>
+		<techHediffsMoney>0~0</techHediffsMoney>
+		<techHediffsTags/>
+		<techHediffsChance>0</techHediffsChance>
+		<initialWillRange>0~1</initialWillRange>
+		<initialResistanceRange>1~3</initialResistanceRange>
+	</PawnKindDef>
+
+	<!-- The actual quest -->
+	<QuestScriptDef>
+		<defName>Luxandra_BreakPrisonersContract</defName>
+		<rootSelectionWeight>1.0</rootSelectionWeight>
+		<rootMinPoints>350</rootMinPoints>
+		<expireDaysRange>4~8</expireDaysRange>
+		<affectedByPoints>false</affectedByPoints>
+		<hideInvolvedFactionsInfo>true</hideInvolvedFactionsInfo>
+    
+		<questDescriptionRules>
+			<rulesStrings>
+				<li>questDescription->A local proxy acting on behalf of [asker_faction_leaderTitle] [asker_nameFull] has approached you with a sensitive arrangement. 
+
+They have captured a small group of political agitators. Conventional physical interrogation failed to dent their resolve, but internal regulations forbid the faction from applying "other methods."
+
+Knowing your colony operates outside conventional ethical bounds, they want to transport [lodgersCount] prisoners to your facility. You have [durationDays] days to thoroughly break their minds. 
+
+You can use whatever method at your disposal, as long as they remain alive, and ideally begging for more. 
+
+If all surviving prisoners return broken, the contract is fulfilled. If you managed to completely shatter their will, a bonus structural payload will be authorized.</li>
+			</rulesStrings>
+		</questDescriptionRules>
+    
+		<questNameRules>
+			<rulesStrings>
+				<li>questName->The Compliance Mandate</li>
+				<li>questName->Shattered Wills of [$askerFaction]</li>
+			</rulesStrings>
+		</questNameRules>
+
+		<root Class="QuestNode_Sequence">
+			<nodes>
+				<li Class="QuestNode_GetFaction">
+					<allowEnemy>false</allowEnemy>
+					<allowNeutral>true</allowNeutral>
+					<allowAlly>true</allowAlly>
+					<storeAs>askerFaction</storeAs>
+				</li>
+				
+				<li Class="QuestNode_GetPawn">
+					<storeAs>asker</storeAs>
+					<mustBeFactionLeader>true</mustBeFactionLeader>
+				</li>
+
+				<li Class="QuestNode_Set">
+					<name>durationDays</name>
+					<value>7</value>
+				</li>
+				
+				<li Class="QuestNode_Multiply">
+					<value1>$durationDays</value1>
+					<value2>60000</value2>
+					<storeAs>shuttleDelayTicks</storeAs>
+				</li>
+				<li Class="QuestNode_Set">
+					<name>shuttleLeaveDelayTicks</name>
+					<value>60000</value>
+				</li>
+				
+				<!-- Dynamic Point Scaling (1 to 4 prisoners) -->
+				<li Class="QuestNode_EvaluateSimpleCurve">
+					<value>$points</value>
+					<curve>
+						<points>
+							<li>(0,   1)</li>
+							<li>(300, 2)</li>
+							<li>(700, 3)</li>
+							<li>(1200, 4)</li>
+						</points>
+					</curve>
+					<storeAs>lodgersCount</storeAs>
+				</li>
+
+				<li Class="QuestNode_Set">
+					<name>lodgers</name>
+					<value/>
+				</li>
+				<li Class="QuestNode_LoopCount">
+					<loopCount>$lodgersCount</loopCount>
+					<node Class="QuestNode_GeneratePawn">
+						<kindDef>Luxandra_StrippedPrisoner</kindDef>
+						<faction>$askerFaction</faction>
+						<addToList>lodgers</addToList>
+						<fixedGender>Female</fixedGender>
+						<allowAddictions>false</allowAddictions>
+						<allowPregnant>true</allowPregnant>
+					</node>
+				</li>
+
+				<!-- THE CUSTOM EVALUATION NODE -->
+				<li Class="LuxandraLust.QuestNode_BreakPrisonersContract">
+					<inSignal>ShuttleTimerExpired</inSignal>
+					<outSignalSuccess>QuestSuccessBaseline</outSignalSuccess>
+					<outSignalPerfectSuccess>QuestSuccessPerfect</outSignalPerfectSuccess>
+					<outSignalFail>QuestFailedCompliance</outSignalFail>
+					<prisonersPawnList>lodgers</prisonersPawnList>
+				</li>
+
+				
+				<!-- ================= PART 1: PRISONER DELIVERY ================= -->
+				<li Class="QuestNode_GetMap"/>
+
+				<li Class="QuestNode_DropPods">
+					<contents>$lodgers</contents>
+					<useTradeDropSpot>true</useTradeDropSpot>
+					<makePrisoners>true</makePrisoners>
+				</li>
+
+				<li Class="QuestNode_Letter">
+					<label>Prisoners Arrived</label>
+					<text>The drop pods containing the prisoners have touched down. Keep them contained and begin the protocol.</text>
+					<lookTargets>$lodgers</lookTargets>
+				</li>
+				
+				<!-- ================= PART 2: THE SHUTTLE PICKUP ================= -->
+				<li Class="QuestNode_ShuttleDelay">
+					<delayTicks>$shuttleDelayTicks</delayTicks>
+					<lodgers>$lodgers</lodgers>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_SubScript">
+								<def>Util_TransportShip_Pickup</def>
+								<parms>
+									<leaveDelayTicks>$shuttleLeaveDelayTicks</leaveDelayTicks>
+									<requiredPawns>$lodgers</requiredPawns>
+									<sendAwayIfAllDespawned>$lodgers</sendAwayIfAllDespawned>
+									<outSignalShipSent>OurShuttleHasDeparted</outSignalShipSent>
+								</parms>
+							</li>
+
+							<li Class="QuestNode_InspectString">
+								<targets>$lodgers</targets>
+								<inspectString>Should depart on shuttle</inspectString>
+							</li>
+							
+							<li Class="QuestNode_Letter">
+								<label>Shuttle arrived</label>
+								<text>The shuttle has arrived to collect the prisoners. Be sure to have these people loaded before it leaves:\n\n[lodgers]</text>
+								<lookTargets>$lodgers</lookTargets>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- Delayed Trigger Listener -->
+				<li Class="QuestNode_Signal">
+					<!-- Listening directly for the explicit custom signal registered above -->
+					<inSignal>OurShuttleHasDeparted</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_SendSignals">
+								<outSignals>ShuttleTimerExpired</outSignals>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+			<!-- ================= GLOBAL REWARD LISTENER (ROOT LEVEL) ================= -->
+				<!-- Exactly one instance so the UI compiler can map the player's choices perfectly -->
+				<li Class="QuestNode_GiveRewards">
+					<inSignal>DeliverQuestRewards</inSignal>
+					<parms>
+						<allowGoodwill>true</allowGoodwill>
+						<allowRoyalFavor>true</allowRoyalFavor>
+					</parms>
+				</li>
+
+				<!-- ================= SHUTTLE DEPARTURE TREE ================= -->
+				<li Class="QuestNode_Signal">
+					<inSignal>pickupShipThing.SentSatisfied</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<!-- C# script calculations -->
+							<li Class="QuestNode_SendSignals">
+								<outSignals>ShuttleTimerExpired</outSignals>
+							</li>
+							
+							<!-- CASE 1 - SUCCESS: All prisoners were successfully broken -->
+							<li Class="QuestNode_Signal">
+								<inSignal>QuestSuccessBaseline</inSignal>
+								<node Class="QuestNode_Sequence">
+									<nodes>
+										<li Class="QuestNode_SendSignals">
+											<outSignals>DeliverQuestRewards</outSignals>
+										</li>
+										<li Class="QuestNode_Letter">
+											<label>Captive Extraction Complete</label>
+											<letterDef>PositiveEvent</letterDef>
+											<text>The shuttle has successfully departed with the captives! The client is satisfied with their baseline psychological degradation.</text>
+										</li>
+										<li Class="QuestNode_End">
+											<outcome>Success</outcome>
+											<sendStandardLetter>false</sendStandardLetter>
+										</li>
+									</nodes>
+								</node>
+							</li>
+
+							<!-- CASE 2 - PERFECT SUCCESS: All prisoners were perfectly broken -->
+							<li Class="QuestNode_Signal">
+								<inSignal>QuestSuccessPerfect</inSignal>
+								<node Class="QuestNode_Sequence">
+									<nodes>
+										<li Class="QuestNode_SendSignals">
+											<outSignals>DeliverQuestRewards</outSignals>
+										</li>
+										<li Class="QuestNode_Letter">
+											<label>Flawless Contract Complete</label>
+											<letterDef>PositiveEvent</letterDef>
+											<text>Incredible! Every single prisoner returned completely hollowed out. The client is ecstatic and has authorized your standard rewards alongside a bonus structural payload!</text>
+										</li>
+										<li Class="QuestNode_End">
+											<outcome>Success</outcome>
+											<sendStandardLetter>false</sendStandardLetter>
+										</li>
+									</nodes>
+								</node>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- FAILURES -->
+				
+				<!-- Shuttle leaves EMPTY or missing required prisoners -->
+				<li Class="QuestNode_Signal">
+					<inSignal>pickupShipThing.SentUnsatisfied</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label>Extraction Mission Failed</label>
+								<letterDef>NegativeEvent</letterDef>
+								<text>The shuttle departed without all the required captives loaded. The extraction mission has failed.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+								<goodwillChangeAmount>-5</goodwillChangeAmount>
+								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+							</li>
+						</nodes>
+					</node>
+				</li>
+
+				<!-- The prisoners were delivered but they were not broken - -->
+				<li Class="QuestNode_Signal">
+					<inSignal>QuestFailedCompliance</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Letter">
+								<label>Contract Failed</label>
+								<text>The shuttle has reclaimed the prisoners. Upon medical review, the client notes that one or more subjects still retain their original spark of defiance. Payment is withheld.</text>
+							</li>
+							<li Class="QuestNode_End">
+								<outcome>Fail</outcome>
+							</li>
+						</nodes>
+					</node>
+				</li>
+				
+		
+				<!-- I'll be honest these are copypasted from Royalty and base game
+		     I couldn't figure how to just hook them in -->
+			</nodes>
+		</root>
+	</QuestScriptDef>
+</Defs>
