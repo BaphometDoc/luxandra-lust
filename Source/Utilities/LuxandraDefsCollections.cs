@@ -24,6 +24,8 @@ namespace LuxandraLust
 
         public static IncidentDef Luxandra_Inc_RapistBreak;
 
+        public static IncidentDef Luxandra_Inc_AphrodisiacFever;
+
         public static IncidentDef Luxandra_Inc_MaleExpansion;
         public static IncidentDef Luxandra_Inc_FemaleExpansion;
         public static IncidentDef Luxandra_Inc_MaleReduction;
@@ -134,6 +136,13 @@ namespace LuxandraLust
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
+                isRaid: false,
+                isNegative: true,
+                isPositive: false
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever,
                 isRaid: false,
                 isNegative: true,
                 isPositive: false

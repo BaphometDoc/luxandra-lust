@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<HediffDef>
+		<defName>Luxandra_AphrodisiacFever</defName>
+		<label>Aphrodisiac fever</label>
+		<description>A localized, burning fever that hyper-sensitizes the host's tissues. The fever is known to only cool and dissipate through direct contact with freshly produced vaginal fluids or semen, quenching the heat during the act.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.9, 0.3, 0.5)</defaultLabelColor>
+		<initialSeverity>1.0</initialSeverity>
+		<maxSeverity>1.0</maxSeverity>
+		<alwaysShowSeverity>true</alwaysShowSeverity>
+  
+		<stages>
+			<!-- STAGE 1: Minor (Severity 0.01 - 0.39) -->
+			<li>
+				<label>minor</label>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.90</setMax>
+					</li>
+				</capMods>
+				<statOffsets>
+					<RestRateMultiplier>-0.10</RestRateMultiplier>
+					<Vulnerability>0.1</Vulnerability>
+				</statOffsets>
+				<statFactors>
+					<SexSatisfaction>0.5</SexSatisfaction>
+				</statFactors>
+			</li>
+
+			<!-- STAGE 2: Major (Severity 0.40 - 0.79) -->
+			<li>
+				<minSeverity>0.40</minSeverity>
+				<label>major</label>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.80</setMax>
+					</li>
+				</capMods>
+				<statOffsets>
+					<RestRateMultiplier>-0.25</RestRateMultiplier>
+					<Vulnerability>0.25</Vulnerability>
+				</statOffsets>
+				<statFactors>
+					<SexSatisfaction>0.5</SexSatisfaction>
+				</statFactors>
+			</li>
+
+			<!-- STAGE 3: Extreme (Severity 0.80 - 1.00) -->
+			<li>
+				<minSeverity>0.80</minSeverity>
+				<label>extreme</label>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.80</setMax>
+					</li>
+				</capMods>
+				<statOffsets>
+					<RestRateMultiplier>-0.50</RestRateMultiplier>
+					<Vulnerability>0.5</Vulnerability>
+				</statOffsets>
+				<statFactors>
+					<SexSatisfaction>0.5</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<IncidentDef>
+		<defName>Luxandra_Inc_AphrodisiacFever</defName>
+		<label>Aphrodisiac fever outbreak</label>
+		<category>DiseaseHuman</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_AphrodisiacFever</workerClass>
+		<baseChance>0.5</baseChance>
+		<minRefireDays>30</minRefireDays>
+		<durationDays>0</durationDays>
+		<letterLabel>Feverish Flare</letterLabel>
+		<letterDef>NegativeEvent</letterDef>
+	</IncidentDef>
+
+</Defs>

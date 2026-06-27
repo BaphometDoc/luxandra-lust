@@ -2,6 +2,7 @@
 using RimWorld;
 using rjw;
 using System;
+using System.Linq;
 using Verse;
 
 namespace LuxandraLust
@@ -14,6 +15,10 @@ namespace LuxandraLust
         {
             try
             {
+                // Since the disease can be rolled without Luxandra being the storyteller
+                // run the check regardless
+                HandleAphrodisiacFeverInfection(props);
+
                 if (!LuxandraStorytellerCheck.IsActive())
                     return;
 
@@ -83,6 +88,93 @@ namespace LuxandraLust
             catch (Exception ex)
             {
                 Log.Error($"[Luxandra] Critical exception tracking inside SexUtility.Aftersex Postfix: {ex}");
+            }
+        }
+
+        public static void HandleAphrodisiacFeverInfection(SexProps props)
+        {
+            Pawn pawn = props.pawn;
+            LuxandraDebugActions.DebugLogMessage($"Attempting to reduce severity of Aphrodisiac Fever for {props.pawn.NameShortColored} who had sex with with {props.partner?.NameShortColored}");
+            if (pawn == null || pawn.health == null) return;
+
+            // Check if this specific pawn even has the fever
+            var fever = pawn.health.hediffSet.hediffs
+                .FirstOrDefault(h => h.def.defName == "Luxandra_AphrodisiacFever");
+
+            if (fever == null || fever.Part == null) return;
+
+            // 2. Fluid Contact Validation
+            bool hasFluidContact = props.sexType == xxx.rjwSextype.Vaginal ||
+                                   props.sexType == xxx.rjwSextype.Anal ||
+                                   props.sexType == xxx.rjwSextype.Oral ||
+                                   props.sexType == xxx.rjwSextype.Cunnilingus ||
+                                   props.sexType == xxx.rjwSextype.Fellatio;
+
+            if (!hasFluidContact)
+            {
+                LuxandraDebugActions.DebugLogMessage($"Interaction did not involve fluid exchange. No reduction.");
+                return;
+            }
+            ;
+
+            // 2. Fetch the actual parts used from the resolved properties arrays safely
+            string initiatorPartUsed = props.resolved?.InitiatorParts?[0]?.BodyPart?.def?.defName;
+            string receiverPartUsed = props.resolved?.RecipientParts?[0]?.BodyPart?.def?.defName;
+
+            // 3. Process the initiator (props.pawn)
+            if (props.pawn != null)
+            {
+                TryReduceAphrodisiacFever(props.pawn, initiatorPartUsed);
+            }
+
+            // 4. Process the recipient/partner (props.partner)
+            if (props.partner != null)
+            {
+                TryReduceAphrodisiacFever(props.partner, receiverPartUsed);
+            }
+        }
+
+        private static void TryReduceAphrodisiacFever(Pawn pawn, string partUsed)
+        {
+            if (pawn.health == null || partUsed == null) return;
+
+            // Find our custom fever hediff
+            var fever = pawn.health.hediffSet.hediffs
+                .FirstOrDefault(h => h.def.defName == "Luxandra_AphrodisiacFever");
+
+            // If they don't have it, or it's on a part that was missing/destroyed, exit
+            if (fever == null || fever.Part == null) return;
+
+            var feverPart = fever.Part.def.defName;
+
+            bool partWasUsed = false;
+            LuxandraDebugActions.DebugLogMessage($"Part with fever for {pawn.NameShortColored}: {feverPart}");
+            LuxandraDebugActions.DebugLogMessage($"Part used by {pawn.NameShortColored}: {partUsed}");
+
+            // Did the part they just used match where the fever is living?
+            if (feverPart == "Genitals" && partUsed == "Genitals")
+                partWasUsed = true;
+
+            if (feverPart == "Anus" && partUsed == "Anus")
+                partWasUsed = true;
+
+            if ((feverPart == "Mouth" || feverPart == "Stomach") && (partUsed == "Mouth" || partUsed == "Jaw"))
+                partWasUsed = true;
+
+            if (partWasUsed)
+            {
+                float reduction = Rand.Range(0.01f, 0.10f);
+                string percentReduced = (reduction * 100f).ToString("F1");
+
+                LuxandraDebugActions.DebugLogMessage($"{pawn.LabelShort}'s Aphrodisiac Fever on their {fever.Part.def.label} cooled by {percentReduced}%.");
+
+                fever.Severity -= reduction;
+
+                if (fever.Severity <= 0)
+                {
+                    Messages.Message($"{pawn.LabelShort} has successfully quenched and cured their Aphrodisiac Fever!",
+                        pawn, MessageTypeDefOf.PositiveEvent);
+                }
             }
         }
     }
