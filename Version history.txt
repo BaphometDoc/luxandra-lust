@@ -3,7 +3,7 @@
 0.4 - 27/06/2026
 - Updated population curve
 - Added a new sex-based disease
-- Carnal Deviants are way more likely to pawns instead of killing them via damage
+- Carnal Deviants are way more likely to down pawns instead of killing them via damage
 - If menstruation is loaded, fertility pulse will also replenish ovary power
 - Added a new quest, prisoner breaking.
 
