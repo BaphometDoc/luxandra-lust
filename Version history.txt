@@ -2,6 +2,7 @@
 - Significantly increased the budget for the lustful supplies + added Cumpilation items
 - Aphrodisiac fever now gets reduced by a minor amount even if the infected part is not used
 - Sexperience's Sex skill now increases (significantly) the recovery speed
+- Added a very small mood buff/debuff on pleasing/annoying Luxandra for her weekly routine
 
 0.4.1 - 28/06/2027
 - Luxandra now reveals her current kink. Pleasing her kinks will have positive effects

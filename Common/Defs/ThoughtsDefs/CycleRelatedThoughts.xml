@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>Luxandra_SatisfiedCycle</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>Luxandra's amusement</label>
+        <description>I have this warm feeling that some unseen entity just watched our private moments and was entertained. It's a bit shameless, but... honestly, it's kinda hot.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Luxandra_FrustratedCycle</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>Luxandra's judgment</label>
+        <description>There's a faint, judgmental prickle in the back of my mind, like a distant deity is staring down at us and sighing deeply at how utterly prudish and boring we're being.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

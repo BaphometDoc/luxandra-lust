@@ -69,36 +69,6 @@
 			</li>
 		</stages>
 	</ThoughtDef>
-
-	
-	<!-- ========================================== -->
-	<!-- Moodlets for the weekly cycle              -->
-	<!-- ========================================== -->
-	<!-- Positive Cycle Moodlet -->
-	<ThoughtDef>
-		<defName>Luxandra_SatisfiedCycle</defName>
-		<durationDays>3.0</durationDays>
-		<stages>
-			<li>
-				<label>Luxandra's Favor</label>
-				<description>The goddess is pleased with our passion. I feel a lingering wave of vitality and confidence.</description>
-				<baseMoodEffect>2</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
-
-	<!-- Negative Cycle Moodlet -->
-	<ThoughtDef>
-		<defName>Luxandra_FrustratedCycle</defName>
-		<durationDays>3.0</durationDays>
-		<stages>
-			<li>
-				<label>Luxandra's Spite</label>
-				<description>The goddess is mocking our stagnation. The atmospheric energy leaves me feeling deeply uneasy and irritable.</description>
-				<baseMoodEffect>-2</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
 	
 	<!-- ========================================== -->
 	<!-- Moodlets for the resizing events           -->

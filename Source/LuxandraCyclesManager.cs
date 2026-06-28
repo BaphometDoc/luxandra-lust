@@ -132,16 +132,18 @@ namespace LuxandraLust
                 : LetterDefOf.NeutralEvent;
 
             Find.LetterStack.ReceiveLetter(letterLabel, letterText, storytellerLetterDef);
+            LuxandraDebugActions.DebugLogMessage($"Cycle completed. Moodlet to apply: ${moodletToApply.defName}");
 
-            // Apply the mood lets to the current living colonists/slaves maps (even children, they should be proud of their parents... or ashamed)
+            // Apply the mood lets to the current living colonists/slaves maps
             if (moodletToApply != null)
             {
+                LuxandraDebugActions.DebugLogMessage($"Applying moodlets...");
+                // Since I changed the flavour of the moodlet, probably better to keep children off this one
                 var eligiblePawns = targetMap.mapPawns.AllPawnsSpawned.Where(p =>
                     p.RaceProps != null && p.RaceProps.Humanlike && !p.Dead &&
-                    (p.IsColonist || p.IsSlave)
+                    (p.IsColonist || p.IsSlave) && LuxandraUtilities.IsAdult(p)
                 );
 
-                LuxandraDebugActions.DebugLogMessage($"Cycle completed. Moodlet to apply: ${moodletToApply.defName}");
                 foreach (Pawn pawn in eligiblePawns)
                 {
                     if (pawn.needs?.mood?.thoughts?.memories != null)
