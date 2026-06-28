@@ -41,7 +41,7 @@ namespace LuxandraLust
 
                 if (LuxandraUtilities.DoesSexMatchLuxandraKink(props) == true)
                 {
-                    GameComponent_LuxandraLust.Instance?.RegisterSexAction();
+                    GameComponent_LuxandraLust.Instance?.RegisterSexAction(true);
                     if (LuxandraModSettings.enablePleasedNotification)
                     {
                         Messages.Message($"{actor.NameShortColored} has pleased Luxandra with their actions.", MessageTypeDefOf.PositiveEvent, false);

@@ -54,11 +54,8 @@ namespace LuxandraLust
 
         private void TriggerKinkShift()
         {
-            // Roll a new random phase from your enum (excluding None)
-            CurrentKink = (StorytellerKinkPhase)Rand.RangeInclusive(0, 9);
-
-            // Send a quick top-screen alert notifying the player of the shift
-            Messages.Message($"Luxandra's whims have shifted: {CurrentKink} phase is now active.", MessageTypeDefOf.CautionInput, false);
+            // Roll a new random phase
+            RerollKink();
 
             // Roll a random day counter between 1 and 7 days
             int randomDays = Rand.RangeInclusive(1, 7);
@@ -97,7 +94,7 @@ namespace LuxandraLust
                 filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.PositiveEvent).ToList();
 
                 // Flavor text and moodlet for high satisfaction
-                letterLabel = "Pleasure & Favor";
+                letterLabel += "Pleasure & Favor";
                 letterText = "Luxandra smiles upon your settlement. Pleased by the overwhelming passion and satisfaction echoing from your colonists, she rewards them with a wave of vital energy...\n\n";
                 moodletToApply = DefDatabase<ThoughtDef>.GetNamed("Luxandra_SatisfiedCycle", errorOnFail: false);
             }
@@ -106,7 +103,7 @@ namespace LuxandraLust
                 filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.NegativeEvent || e.letterDef == LetterDefOf.ThreatBig).ToList();
 
                 // Flavor text and moodlet for low satisfaction
-                letterLabel = "Boredom & Spite";
+                letterLabel += "Boredom & Spite";
                 letterText = "Luxandra grows bored of your colony's lacking energy. Irritated by the absolute lack of passion and growing frustration, she decides that if you will not embrace your deepest desires willingly, you shall do it forcefully...\n\n";
                 moodletToApply = DefDatabase<ThoughtDef>.GetNamed("Luxandra_FrustratedCycle", errorOnFail: false);
             }
@@ -115,8 +112,8 @@ namespace LuxandraLust
                 filteredPool = totalPool;
 
                 // Flavor text for a neutral state
-                letterLabel = "Altered Alignment";
-                letterText = "The weekly cosmic alignment shifts. Luxandra glances down at your settlement, idly spinning the wheel of fate to disrupt your colonists' mundane routines...\n\n";
+                letterLabel += "Altered Alignment";
+                letterText = "Luxandra glances down at your settlement, idly spinning the wheel of fate to disrupt your colonists' mundane routines...\n\n";
             }
 
             if (filteredPool.Count == 0)
@@ -141,6 +138,7 @@ namespace LuxandraLust
                     (p.IsColonist || p.IsSlave)
                 );
 
+                LuxandraDebugActions.DebugLogMessage($"Cycle completed. Moodlet to apply: ${moodletToApply.defName}");
                 foreach (Pawn pawn in eligiblePawns)
                 {
                     if (pawn.needs?.mood?.thoughts?.memories != null)

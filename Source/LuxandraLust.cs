@@ -29,8 +29,9 @@ namespace LuxandraLust
         {
             base.ExposeData();
 
-            Scribe_Values.Look(ref CurrentKink, "Luxandra_CurrentKinkPhase", StorytellerKinkPhase.None);
-
+            // --- KINK RELATED
+            Scribe_Values.Look(ref CurrentKink, "Luxandra_CurrentKinkPhase", StorytellerKink.None);
+            Scribe_Values.Look(ref kinkPleasedCounter, "kinkPleasedCounter", 0);
 
             // --- GENERIC COUNTERS ---
             Scribe_Values.Look(ref sexActionCounter, "sexActionCounter", 0);
@@ -64,9 +65,13 @@ namespace LuxandraLust
         public int necrophiliaSexActionCounter = 0;
         public int necrophiliaSexActionCounterForCycle = 0;
 
+        public int kinkPleasedCounter = 0;
 
-        // Luxandra's Kinks
-        public enum StorytellerKinkPhase
+
+        /// <summary>
+        /// Luxandra's Kinks
+        /// </summary>
+        public enum StorytellerKink
         {
             None,
             Pregnancy,
@@ -82,13 +87,33 @@ namespace LuxandraLust
             Breasts
         }
 
-        public static StorytellerKinkPhase CurrentKink = StorytellerKinkPhase.None;
+        /// <summary>
+        /// Current active kink
+        /// </summary>
+        public static StorytellerKink CurrentKink = StorytellerKink.None;
 
-        public void RegisterSexAction()
+
+        /// <summary>
+        /// Rerolls Luxandra's current kink (optionally specify which to get)
+        /// </summary>
+        public static void RerollKink(bool forceSpecific = false, StorytellerKink forcedType = StorytellerKink.None)
+        {
+            if (forceSpecific)
+                CurrentKink = forcedType;
+
+            CurrentKink = (StorytellerKink)Rand.RangeInclusive(0, 11);
+
+            Messages.Message($"Luxandra's whims have shifted: {CurrentKink} phase is now active.", MessageTypeDefOf.CautionInput, false);
+        }
+
+        public void RegisterSexAction(bool satisfiedKink = false)
         {
             sexActionCounter++;
             sexActionCounterForRerolls++;
             sexActionCounterForCycle++;
+
+            if (satisfiedKink)
+                kinkPleasedCounter++;
         }
         public void RegisterImpureSexAction()
         {
