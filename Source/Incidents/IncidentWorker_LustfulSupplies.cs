@@ -38,17 +38,17 @@ namespace LuxandraLust
                 hornyMultiplier = 0.75f;
             float modifiedWealth = rawColonyWealth * hornyMultiplier;
 
-            float totalMarketValueBudget = WealthToBudgetCurve.Evaluate(modifiedWealth);
+            float totalMarketValueBudget = WealthToBudgetCurve.Evaluate(modifiedWealth) * 25; // Go partying brother
             LuxandraDebugActions.DebugLogMessage($"Attempted to create a lustful drop pod for wealth equal to {rawColonyWealth}. (Horny modifier: {hornyMultiplier})");
 
             // Possible drops and their values
             List<ThingCountDef> possibleDrops = new List<ThingCountDef>();
-            possibleDrops.Add(new ThingCountDef(ThingDefOf.Beer.defName, 20f));
-            possibleDrops.Add(new ThingCountDef(ThingDefOf.MedicineHerbal.defName, 20f));
+            possibleDrops.Add(new ThingCountDef(ThingDefOf.Beer.defName, 20f)); // Some drinks to get you going
+            possibleDrops.Add(new ThingCountDef(ThingDefOf.MedicineHerbal.defName, 20f)); // Some meds to help you recover from the beer you just drank
 
             // RJW stuff (RimJobWorld is required by this mod, it can't not be on)
             possibleDrops.Add(new ThingCountDef("Condom", 20f)); // Condoms!
-            possibleDrops.Add(new ThingCountDef("UsedCondom", 15f)); // Used condoms! yummy!
+            possibleDrops.Add(new ThingCountDef("UsedCondom", 10)); // Used condoms! yummy!
             possibleDrops.Add(new ThingCountDef("Aphrodisiac", 50f)); // Aphrodisiacs
             possibleDrops.Add(new ThingCountDef("HumpShroom", 35f)); // Our beloved humpshrooms
             possibleDrops.Add(new ThingCountDef("RJW_FertPill", 55f)); // Fertility pills
@@ -67,6 +67,15 @@ namespace LuxandraLust
                 possibleDrops.Add(new ThingCountDef("Absorber_Pad_Dirty", 25f)); // ...and used ones!
             }
 
+            // Cumpilation
+            if (ModsConfig.IsActive("vegapnk.cumpilation") || ModsConfig.IsActive("parciwal.cumpliationlite"))
+            {
+                possibleDrops.Add(new ThingCountDef("Cumpilation_Cum", 10f)); // You knew this one was coming
+                possibleDrops.Add(new ThingCountDef("Cumpilation_Lecithin", 50f)); // Thou shalt cum more
+                possibleDrops.Add(new ThingCountDef("Cumpilation_Galactogogues", 50f)); // Thou shalt make more tit-cum
+                possibleDrops.Add(new ThingCountDef("Cumpilation_Apparel_Plug", 100f)); // Thou shal stop wasting the cum on the floor
+            }
+
             // RJW Genes
             if (ModsConfig.IsActive("Vegapnk.rjw.genes"))
             {
@@ -77,8 +86,10 @@ namespace LuxandraLust
             float spentBudget = 0f;
             int safetyTimeout = 0;
 
+            LuxandraDebugActions.DebugLogMessage($"Starting spawning calculations...");
             while (spentBudget < totalMarketValueBudget && safetyTimeout < 50)
             {
+                LuxandraDebugActions.DebugLogMessage($"Budget spent: {spentBudget} / {totalMarketValueBudget})");
                 safetyTimeout++;
                 var validSelection = possibleDrops
                     .Where(d => d.marketValue <= (totalMarketValueBudget - spentBudget))
@@ -86,6 +97,7 @@ namespace LuxandraLust
                     .FirstOrDefault();
 
                 if (validSelection.defName == null) break;
+                LuxandraDebugActions.DebugLogMessage($"Item rolled: {validSelection.defName})");
 
                 ThingDef foundDef = DefDatabase<ThingDef>.GetNamed(validSelection.defName, errorOnFail: false);
                 if (foundDef != null)
@@ -109,9 +121,16 @@ namespace LuxandraLust
                     itemInstance.stackCount = stackCount;
                     finalDropList.Add(itemInstance);
 
-                    spentBudget += (validSelection.marketValue * stackCount);
+                    var budgetSpentOnGeneration = validSelection.marketValue * stackCount;
+
+                    LuxandraDebugActions.DebugLogMessage($"Spawned {stackCount} {itemInstance.def.defName} for the cost of {budgetSpentOnGeneration}.)");
+
+
+                    spentBudget += budgetSpentOnGeneration;
                 }
             }
+
+            LuxandraDebugActions.DebugLogMessage($"Budget exhausted. Sending {finalDropList.Count} items.");
 
             if (finalDropList.Count == 0) return false;
 
