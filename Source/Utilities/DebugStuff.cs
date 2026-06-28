@@ -118,7 +118,7 @@ namespace LuxandraLust
             Log.Message("==================================================");
 
             // Read and show the tracker
-            var weeklyCycle = Current.Game?.GetComponent<GameComponent_WeeklyEventCycle>();
+            var weeklyCycle = Current.Game?.GetComponent<GameComponent_LuxandraCyclicEvents>();
 
             if (weeklyCycle != null)
             {
@@ -228,7 +228,7 @@ namespace LuxandraLust
         public static void ForceKinkShift()
         {
             // Find the active game component handling the clock
-            var cycleComponent = Current.Game.GetComponent<GameComponent_WeeklyEventCycle>();
+            var cycleComponent = Current.Game.GetComponent<GameComponent_LuxandraCyclicEvents>();
 
             if (cycleComponent != null)
             {
@@ -247,7 +247,7 @@ namespace LuxandraLust
         [DebugAction("Luxandra Lust", "Trigger Weekly Event (1 Tick)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void ForceWeeklyEventNextTick()
         {
-            var cycleComponent = Current.Game.GetComponent<GameComponent_WeeklyEventCycle>();
+            var cycleComponent = Current.Game.GetComponent<GameComponent_LuxandraCyclicEvents>();
 
             if (cycleComponent != null)
             {

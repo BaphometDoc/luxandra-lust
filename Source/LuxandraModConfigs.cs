@@ -80,7 +80,7 @@ namespace LuxandraLust
 
             if (Current.Game != null)
             {
-                var cycleComponent = Current.Game.GetComponent<GameComponent_WeeklyEventCycle>();
+                var cycleComponent = Current.Game.GetComponent<GameComponent_LuxandraCyclicEvents>();
                 if (cycleComponent != null)
                 {
                     int currentMaxTicks = weeklyCycleDays * 60000;

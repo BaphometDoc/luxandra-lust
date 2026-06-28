@@ -101,7 +101,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raids\RaidStrategy_RapeAssault.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="WeeklyEventCycle.cs" />
+    <Compile Include="LuxandraCyclesManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ideology\" />

@@ -6,7 +6,7 @@ using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
-    public class GameComponent_WeeklyEventCycle : GameComponent
+    public class GameComponent_LuxandraCyclicEvents : GameComponent
     {
         private int TicksPerCycle => LuxandraModSettings.weeklyCycleDays > 0 ? (LuxandraModSettings.weeklyCycleDays * 60000) : 420000;
 
@@ -14,7 +14,7 @@ namespace LuxandraLust
 
         public int ticksUntilKinkChange = 3600;
 
-        public GameComponent_WeeklyEventCycle(Game game)
+        public GameComponent_LuxandraCyclicEvents(Game game)
         {
         }
 
@@ -69,11 +69,14 @@ namespace LuxandraLust
             }
         }
 
+        // I say "weekly" but that's the default setting, this can be edited
         private void TriggerWeeklyEvent()
         {
-            LuxandraDebugActions.DebugLogMessage("Weekly event reached! Attempting to launch a sexual event...");
+            LuxandraDebugActions.DebugLogMessage("Weekly event triggered! Attempting to launch a sexual event...");
             Map targetMap = Find.CurrentMap;
             if (targetMap == null) return;
+
+            // TODO: Scale events based on the recent sexual activites
 
             // How horny have we been this week?
             float averageSexNeed = LuxandraUtilities.GetAverageColonySexNeed(targetMap);

@@ -103,7 +103,10 @@ namespace LuxandraLust
 
             CurrentKink = (StorytellerKink)Rand.RangeInclusive(0, 11);
 
-            Messages.Message($"Luxandra's whims have shifted: {CurrentKink} phase is now active.", MessageTypeDefOf.CautionInput, false);
+            if (CurrentKink != StorytellerKink.None)
+                Messages.Message($"Luxandra's whims have shifted: She is now into {CurrentKink}.", MessageTypeDefOf.CautionInput, false);
+            else
+                Messages.Message($"Luxandra's whims have shifted: She is not into anything specific at the moment.", MessageTypeDefOf.CautionInput, false);
         }
 
         public void RegisterSexAction(bool satisfiedKink = false)

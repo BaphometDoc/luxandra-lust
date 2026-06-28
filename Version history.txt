@@ -1,4 +1,7 @@
 0.5 - in development...
+- Significantly increased the budget for the lustful supplies + added Cumpilation items
+- Aphrodisiac fever now gets reduced by a minor amount even if the infected part is not used
+- Sexperience's Sex skill now increases (significantly) the recovery speed
 
 0.4.1 - 28/06/2027
 - Luxandra now reveals her current kink. Pleasing her kinks will have positive effects

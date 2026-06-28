@@ -10,17 +10,17 @@ namespace LuxandraLust
         [HarmonyPostfix]
         public static void Postfix(Pawn pawn, ref float __result)
         {
-            // Only intervene if the engine has already zeroed out or reduced their age-based fertility factor
+            // Only intervene if the base game calcs have already zeroed out or reduced their age-based fertility factor
             if (__result < 1f && pawn?.health?.hediffSet != null)
             {
-                // Ensure they are at least adults (ignoring age-brackets for children)
+                // Ensure they are adults (skip children to prevent weird shit)
                 if (LuxandraUtilities.IsAdult(pawn))
                 {
-                    // Check if they have ANY of our custom Luxandra pulse hediffs active
+                    // Check if they have any of the Fertility pulse hediffs active
                     if (pawn.health.hediffSet.HasHediff(HediffDef.Named("Luxandra_PulseAdultMale")) ||
                         pawn.health.hediffSet.HasHediff(HediffDef.Named("Luxandra_PulseAdultFemale")))
                     {
-                        // Force the age scaling multiplier back to a perfect 100%
+                        // Force the age scaling multiplier back to 100%
                         __result = 1f;
                     }
                 }
