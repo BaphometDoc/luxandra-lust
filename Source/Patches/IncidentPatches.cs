@@ -77,6 +77,9 @@ namespace LuxandraLust
                 var eventType = def.category;
                 LuxandraDebugActions.DebugLogMessage($"Incident about to happen: {__instance.def?.defName} - Event type: {eventType}");
 
+                // TODO: Raid faction changing
+                // if(def == IncidentDefOf.RaidEnemy)
+
                 bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
 
                 // Event conversion condition - 0: Disabled, 1: Only Negative, 2: All Events

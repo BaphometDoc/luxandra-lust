@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<!-- ============================== -->
+	<!-- The faction -->
+	<!-- ============================== -->
+	<FactionDef ParentName="PirateBandBase" MayRequire="Ludeon.RimWorld.Royalty">
+		<defName>Luxandra_PuritanCrusaders</defName>
+		<label>Stainless order</label>
+		<description>An ultra-orthodox, technologically supreme military order dedicated to the absolute eradication of psychological and genetic deviance. They possess advanced psionic manipulation and glitterworld weaponry, which they direct with ruthless efficiency against any settlement they deem to be tainted by heretical, hedonistic influences.</description>
+		<pawnSingular>crusader</pawnSingular>
+		<pawnsPlural>crusaders</pawnsPlural>
+		<allowedCultures>
+			<li>Astropolitan</li>
+		</allowedCultures>
+		<structureMemeWeights>
+			<Structure_OriginChristian MayRequire="Ludeon.RimWorld.Ideology">1</Structure_OriginChristian>
+		</structureMemeWeights><colorSpectrum>
+			<li>(0.98, 0.98, 0.98)</li>
+		</colorSpectrum>
+    
+		<!-- Core Structural Requirements -->
+		<techLevel>Ultra</techLevel>
+		<hidden>false</hidden>
+		<permanentEnemy>false</permanentEnemy>
+		<naturalEnemy>true</naturalEnemy>
+		<canSiege>true</canSiege>
+		<canStageAttacks>true</canStageAttacks>
+		<rescueesCanJoin>true</rescueesCanJoin>
+		<autoFlee>true</autoFlee>
+		<permanentEnemyToEveryoneExcept>
+			<li>OutlanderCivil</li>
+			<li>TribeCivil</li>
+			<li>PlayerTribe</li>
+			<li>PlayerColony</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Beggars</li>
+			<li MayRequire="Ludeon.RimWorld.Anomaly">ResearchExpedition</li>
+			<li MayRequire="Ludeon.RimWorld.Odyssey">GravshipCrew</li>
+			<li MayRequire="Ludeon.RimWorld.Odyssey">TradersGuild</li>
+		</permanentEnemyToEveryoneExcept>
+		<arrivalLayerWhitelist>
+			<li>Surface</li>
+			<li MayRequire="Ludeon.RimWorld.Odyssey">Orbit</li>
+		</arrivalLayerWhitelist>
+		<baseTraderKinds>
+			<li>Base_Empire_Standard</li>
+		</baseTraderKinds>
+		<caravanTraderKinds>
+			<li>Empire_Caravan_TraderGeneral</li>
+		</caravanTraderKinds>
+		<leaderTitle>Divine Judge</leaderTitle>
+		<fixedLeaderKinds>
+			<li>Empire_Fighter_Champion</li>
+		</fixedLeaderKinds>
+		<leaderForceGenerateNewPawn>true</leaderForceGenerateNewPawn>
+	
+		<!-- Ideology setup -->
+		<requiredMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Guilty</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">FleshPurity</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">HumanPrimacy</li>
+		</requiredMemes>
+	
+		<disallowedPrecepts>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Disapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Abhorrent</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Male_Mandatory</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_Mandatory</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_CoveringAnythingButGroinDisapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_FreeApproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_Free</li>
+      
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Acceptable</li>
+			<li MayRequire="rjw.sexperience.ideology">Rape_Acceptable</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Disapproved_CloseOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_IncestOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_AnalOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_OralOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Promiscuous</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_ShamefulF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_ShamefulM</li>
+	  
+			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Accepted</li>
+			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Essential</li>
+			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Sacred</li>
+		</disallowedPrecepts>
+    
+		<!-- World Customization -->
+		<requiredCountAtGameStart>1</requiredCountAtGameStart>
+		<maxConfigurableAtWorldCreation>1</maxConfigurableAtWorldCreation>
+		<canMakeRandomly>false</canMakeRandomly>
+		<listOrderPriority Inherit="False">71</listOrderPriority>
+		<settlementGenerationWeight>0.15</settlementGenerationWeight>
+		<settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
+    
+		<!-- Aesthetics matching the Empire style -->
+		<factionIconPath>World/WorldObjects/Expanding/Empire</factionIconPath>
+		<factionNameMaker>Luxandra_Crusader_FactionNameMaker</factionNameMaker>
+		<settlementNameMaker>Luxandra_Crusader_SettlementNameMaker</settlementNameMaker>
+		<melaninRange>0~0.7</melaninRange>
+		<allowedArrivalTemperatureRange>-50~60</allowedArrivalTemperatureRange>
+		<colorSpectrum Inherit="False">
+			<li>(0.95, 0.95, 0.95)</li>
+			<li>(0.85, 0.85, 0.9)</li>
+		</colorSpectrum>
+    
+		<apparelStuffFilter>
+			<thingDefs>
+				<li>Synthread</li>
+				<li>Hyperweave</li>
+				<li>Plasteel</li>
+				<li>Steel</li>
+			</thingDefs>
+		</apparelStuffFilter>
+    
+		<xenotypeSet Inherit="False">
+			<xenotypeChances>
+				<Baseliner>1.0</Baseliner>
+			</xenotypeChances>
+		</xenotypeSet>
+    
+		<raidCommonalityFromPointsCurve>
+			<points>
+				<li>(0, 1)</li>
+			</points>
+		</raidCommonalityFromPointsCurve>
+		<maxPawnCostPerTotalPointsCurve>
+			<points>
+				<li>(750, 100)</li>
+				<li>(20000, 1250)</li>
+				<li>(60000, 5000)</li>
+				<li>(100000, 10000)</li>
+				<li>(150000, 20000)</li>
+			</points>
+		</maxPawnCostPerTotalPointsCurve>
+    
+		<!-- Temporary Placeholder Group Makers i come up with custom Pawns -->
+		<pawnGroupMakers>
+			<!-- Traders -->
+			<li>
+				<kindDef>Trader</kindDef>
+				<traders>
+					<Empire_Common_Trader>1</Empire_Common_Trader>
+				</traders>
+				<carriers>
+					<Muffalo>6</Muffalo>
+					<Dromedary>5</Dromedary>
+					<Alpaca>2</Alpaca>
+					<Elephant>1</Elephant>
+				</carriers>
+				<guards>
+					<Villager>3</Villager>
+					<Empire_Fighter_Trooper>10</Empire_Fighter_Trooper>
+					<Empire_Fighter_Cataphract>1.5</Empire_Fighter_Cataphract>
+					<Empire_Fighter_Janissary>7</Empire_Fighter_Janissary>
+					<Empire_Fighter_Champion>10</Empire_Fighter_Champion>
+				</guards>
+			</li>
+			<li>
+				<!-- Normal fights -->
+				<kindDef>Combat</kindDef>
+				<commonality>100</commonality>
+				<options>
+					<Empire_Fighter_Trooper>5</Empire_Fighter_Trooper>
+					<Empire_Fighter_Janissary>3.5</Empire_Fighter_Janissary>
+					<Empire_Fighter_Cataphract>2</Empire_Fighter_Cataphract>
+					<Empire_Fighter_Champion>4</Empire_Fighter_Champion>
+				</options>
+			</li>
+			<li>
+				<!-- breach fights -->
+				<kindDef>Combat</kindDef>
+				<commonality>10</commonality>
+				<options>
+					<Empire_Fighter_Grenadier>2</Empire_Fighter_Grenadier>
+					<Empire_Fighter_Trooper>5</Empire_Fighter_Trooper>
+					<Empire_Fighter_Janissary>3.5</Empire_Fighter_Janissary>
+					<Empire_Fighter_Cataphract>2</Empire_Fighter_Cataphract>
+					<Empire_Fighter_Champion>4</Empire_Fighter_Champion>
+				</options>
+			</li>
+			<li>
+				<!-- Base defense, mainly ranged with melee mix-ins -->
+				<kindDef>Settlement</kindDef>
+				<options>
+					<Empire_Fighter_Trooper>5</Empire_Fighter_Trooper>
+					<Empire_Fighter_Janissary>3.5</Empire_Fighter_Janissary>
+					<Empire_Fighter_Cataphract>2</Empire_Fighter_Cataphract>
+					<Empire_Fighter_Champion>4</Empire_Fighter_Champion>
+				</options>
+			</li>
+		</pawnGroupMakers>
+	</FactionDef>
+  
+	<!-- ============================== -->
+	<!-- Pawndefs -->
+	<!-- ============================== -->
+	<!-- TODO -->
+
+	<!-- ============================== -->
+	<!-- Names -->
+	<!-- ============================== -->
+	
+	<RulePackDef>
+		<defName>Luxandra_Crusader_FactionNameMaker</defName>
+		<include><li>GlobalUtility</li></include>
+		<rulePack>
+			<rulesStrings>
+				<li>r_name->The [factionAdj] [factionNoun]</li>
+				<li>r_name->[factionNoun] of the [sacredNoun]</li>
+        
+				<li>factionAdj->Holy</li>
+				<li>factionAdj->Righteous</li>
+				<li>factionAdj->Iron</li>
+				<li>factionAdj->Sovereign</li>
+				<li>factionNoun->Order</li>
+				<li>factionNoun->Crusade</li>
+				<li>factionNoun->Chapter</li>
+				<li>factionNoun->Inquisition</li>
+				<li>sacredNoun->Sword</li>
+				<li>sacredNoun->Light</li>
+				<li>sacredNoun->Chalice</li>
+				<li>sacredNoun->Oath</li>
+			</rulesStrings>
+		</rulePack>
+	</RulePackDef>
+
+	<RulePackDef>
+		<defName>Luxandra_Crusader_SettlementNameMaker</defName>
+		<include><li>GlobalUtility</li></include>
+		<rulePack>
+			<rulesStrings>
+				<li>r_name->[prefix][suffix]</li>
+				<li>r_name->[structure] of [holyWord]</li>
+        
+				<li>prefix->Sion</li>
+				<li>prefix->Val</li>
+				<li>prefix->Iron</li>
+				<li>prefix->Stal</li>
+				<li>prefix->Gold</li>
+				<li>suffix->guard</li>
+				<li>suffix->fast</li>
+				<li>suffix->spire</li>
+				<li>suffix->hold</li>
+				<li>structure->Bastion</li>
+				<li>structure->Citadel</li>
+				<li>structure->Sanctuary</li>
+				<li>holyWord->Light</li>
+				<li>holyWord->Judgment</li>
+				<li>holyWord->The Pious</li>
+			</rulesStrings>
+		</rulePack>
+	</RulePackDef>
+</Defs>

@@ -1,231 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <StorytellerDef ParentName="BaseStoryteller">
-    <defName>LuxandraLust</defName>
-    <label>Luxandra Lust</label>
-	<portraitLarge>UI/Storyteller/LuxandraLust</portraitLarge>
-    <portraitTiny>UI/Storyteller/LuxTiny</portraitTiny>
+	<StorytellerDef ParentName="BaseStoryteller">
+		<defName>LuxandraLust</defName>
+		<label>Luxandra Lust</label>
+		<portraitLarge>UI/Storyteller/LuxandraLust</portraitLarge>
+		<portraitTiny>UI/Storyteller/LuxTiny</portraitTiny>
 
-    <description>Luxandra knows what you are thinking. She can see through your facade, and expose all your desires... and your depravities.\n
+		<description>Luxandra knows what you are thinking. She can see through your facade, and expose all your desires... and your depravities.\n
 She however does not judge you. What she will judge is if you can follow through with it.</description>
 
-    <listOrder>200</listOrder>
-    <!-- POPULATION INTENT -->
-    <populationIntentFactorFromPopCurve>
-      <points>
-        <!-- Intense help if under 5 pawns -->
-        <li>0,  4.0</li>
-        <li>4,  2.0</li>
-        <!-- Minor help up to 10 pawns -->
-        <li>5,  1.3</li>
-        <li>10, 1.0</li>
-        <!-- No particular help or penalties between 10 and 40 (100% normal rates) -->
-        <li>40, 1.0</li>
-        <!-- 40 to 50: Start sabotaging recruits -->
-        <li>50, 0.0</li>
-        <!-- Past 50: Stop helping entirely, but stay at 0.0 so she never actively tries to kill them -->
-        <li>100, 0.0</li>
-      </points>
-    </populationIntentFactorFromPopCurve>
+		<listOrder>200</listOrder>
+		<!-- POPULATION INTENT -->
+		<populationIntentFactorFromPopCurve>
+			<points>
+				<!-- Intense help if under 5 pawns -->
+				<li>0,  4.0</li>
+				<li>4,  2.0</li>
+				<!-- Minor help up to 10 pawns -->
+				<li>5,  1.3</li>
+				<li>10, 1.0</li>
+				<!-- No particular help or penalties between 10 and 40 (100% normal rates) -->
+				<li>40, 1.0</li>
+				<!-- 40 to 50: Start sabotaging recruits -->
+				<li>50, 0.0</li>
+				<!-- Past 50: Stop helping entirely, but stay at 0.0 so she never actively tries to kill them -->
+				<li>100, 0.0</li>
+			</points>
+		</populationIntentFactorFromPopCurve>
 
-    <!-- POPULATION ADAPT DAYS (basically disabled) -->
-    <populationIntentFactorFromPopAdaptDaysCurve>
-      <points>
-        <li>(0, 1)</li>
-        <li>(8, 1)</li>
-      </points>
-    </populationIntentFactorFromPopAdaptDaysCurve>
+		<!-- POPULATION ADAPT DAYS (basically disabled) -->
+		<populationIntentFactorFromPopAdaptDaysCurve>
+			<points>
+				<li>(0, 1)</li>
+				<li>(8, 1)</li>
+			</points>
+		</populationIntentFactorFromPopAdaptDaysCurve>
 	
-	<comps>
-      <!-- Intro -->
-      <li Class="StorytellerCompProperties_ClassicIntro"/>
-      <!-- Home threats -->
-      <li Class="StorytellerCompProperties_OnOffCycle">
-        <category>ThreatBig</category>
-        <minDaysPassed>11.0</minDaysPassed>
-        <onDays>4.6</onDays>
-        <offDays>6.0</offDays>
-        <minSpacingDays>1.9</minSpacingDays>
-        <numIncidentsRange>1~2</numIncidentsRange>
-        <forceRaidEnemyBeforeDaysPassed>20</forceRaidEnemyBeforeDaysPassed>
-        <disallowedTargetTags>
-          <li>Map_RaidBeacon</li>
-        </disallowedTargetTags>
-      </li>
-      <li Class="StorytellerCompProperties_ThreatsGenerator">
-        <allowedTargetTags>
-          <li>Map_RaidBeacon</li>
-        </allowedTargetTags>
-        <parms>
-          <allowedThreats>Raids</allowedThreats>
-          <onDays>1.0</onDays>
-          <offDays>0.5</offDays>
-          <minSpacingDays>0.04</minSpacingDays>
-          <numIncidentsRange>1~2</numIncidentsRange>
-          <minThreatPoints>500</minThreatPoints>
-        </parms>
-      </li>
-      <li Class="StorytellerCompProperties_OnOffCycle">
-        <category>ThreatSmall</category>
-        <minDaysPassed>11.0</minDaysPassed>
-        <onDays>4.6</onDays>
-        <offDays>6.0</offDays>
-        <numIncidentsRange>0.2~1</numIncidentsRange>
-        <acceptPercentFactorPerThreatPointsCurve>
-          <points>
-            <li>(800, 1)</li>
-            <li>(2800, 0)</li>
-          </points>
-        </acceptPercentFactorPerThreatPointsCurve>
-      </li>
-      <!-- Home misc incidents-->
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>Misc</category>
-        <allowedTargetTags>
-          <li>Map_PlayerHome</li>
-        </allowedTargetTags>
-        <minDaysPassed>5</minDaysPassed>
-        <mtbDays>4.8</mtbDays>
-      </li>
-      <li Class="StorytellerCompProperties_ShipChunkDrop"/>
-      <li Class="StorytellerCompProperties_Disease">
-        <category>DiseaseHuman</category>
-        <minDaysPassed>9</minDaysPassed>
-      </li>
-      <li Class="StorytellerCompProperties_Disease">
-        <category>DiseaseAnimal</category>
-        <minDaysPassed>9</minDaysPassed>
-      </li>
-      <!-- Ally/neutral interaction -->
-      <li Class="StorytellerCompProperties_FactionInteraction">
-        <incident>RaidFriendly</incident>
-        <baseIncidentsPerYear>15</baseIncidentsPerYear>
-        <minSpacingDays>0.4</minSpacingDays>
-        <fullAlliesOnly>true</fullAlliesOnly>
-        <minDanger>High</minDanger>
-      </li>
-      <li Class="StorytellerCompProperties_FactionInteraction">
-        <incident>TraderCaravanArrival</incident>
-        <minDaysPassed>5</minDaysPassed>
-        <baseIncidentsPerYear>5</baseIncidentsPerYear>
-        <minSpacingDays>6</minSpacingDays>
-        <allowedTargetTags>
-          <li>Map_PlayerHome</li>
-        </allowedTargetTags>
-      </li>
-      <li Class="StorytellerCompProperties_FactionInteraction">
-        <incident>VisitorGroup</incident>
-        <minDaysPassed>3</minDaysPassed>
-        <baseIncidentsPerYear>4</baseIncidentsPerYear>
-        <minSpacingDays>5</minSpacingDays>
-        <allowedTargetTags>
-          <li>Map_PlayerHome</li>
-        </allowedTargetTags>
-      </li>
-      <li Class="StorytellerCompProperties_FactionInteraction">
-        <incident>TravelerGroup</incident>
-        <minDaysPassed>1</minDaysPassed>
-        <baseIncidentsPerYear>6</baseIncidentsPerYear>
-        <minSpacingDays>1</minSpacingDays>
-        <allowedTargetTags>
-          <li>Map_PlayerHome</li>
-        </allowedTargetTags>
-      </li>
-      <!-- Caravan / temp map -->
-      <li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
-        <category>Misc</category>
-        <allowedTargetTags>
-          <li>Caravan</li>
-          <li>Map_TempIncident</li>
-        </allowedTargetTags>
-      </li>
-      <li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
-        <category>ThreatSmall</category>
-        <applyCaravanVisibility>true</applyCaravanVisibility>
-        <allowedTargetTags>
-          <li>Caravan</li>
-          <li>Map_TempIncident</li>
-        </allowedTargetTags>
-      </li>
-      <li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
-        <category>ThreatBig</category>
-        <applyCaravanVisibility>true</applyCaravanVisibility>
-        <allowedTargetTags>
-          <li>Caravan</li>
-          <li>Map_TempIncident</li>
-        </allowedTargetTags>
-      </li>
-      <!-- Quests - non-Royalty -->
-      <li Class="StorytellerCompProperties_RandomQuest">
-        <category>GiveQuest</category>
-        <allowedTargetTags>
-          <li>World</li>
-        </allowedTargetTags>
-        <onDays>10</onDays>
-        <numIncidentsRange>1</numIncidentsRange>
-        <acceptFractionByDaysPassedCurve>
-          <points>
-            <li>(8, 0)</li>
-            <li>(15, 1)</li>
-          </points>
-        </acceptFractionByDaysPassedCurve>
-        <minSpacingDays>3</minSpacingDays>
-        <disableIfAnyModActive>
-          <li>Ludeon.RimWorld.Royalty</li>
-        </disableIfAnyModActive>
-      </li>
-      <!-- Quests - Royalty -->
-      <li Class="StorytellerCompProperties_RandomQuest">
-        <category>GiveQuest</category>
-        <allowedTargetTags>
-          <li>World</li>
-        </allowedTargetTags>
-        <onDays>12</onDays>
-        <numIncidentsRange>2</numIncidentsRange>
-        <acceptFractionByDaysPassedCurve>
-          <points>
-            <li>(8, 0)</li>
-            <li>(15, 1)</li>
-          </points>
-        </acceptFractionByDaysPassedCurve>
-        <minSpacingDays>3</minSpacingDays>
-        <enableIfAnyModActive>
-          <li>Ludeon.RimWorld.Royalty</li>
-        </enableIfAnyModActive>
-      </li>
-      <!-- World misc incidents-->
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>Misc</category>
-        <allowedTargetTags>
-          <li>World</li>
-        </allowedTargetTags>
-        <minDaysPassed>15</minDaysPassed>
-        <mtbDays>15</mtbDays>
-      </li>
-      <!-- Orbital trader -->
-      <li Class="StorytellerCompProperties_OnOffCycle">
-        <incident>OrbitalTraderArrival</incident>
-        <onDays>7</onDays>
-        <offDays>8</offDays>
-        <numIncidentsRange>1</numIncidentsRange>
-      </li>
-      <!-- Triggered -->
-      <li Class="StorytellerCompProperties_Triggered">
-        <incident>StrangerInBlackJoin</incident>
-        <delayTicks>180</delayTicks>
-      </li>
-    </comps>
+		<comps>
+			<!-- Intro -->
+			<li Class="StorytellerCompProperties_ClassicIntro"/>
+			<!-- Home threats -->
+			<li Class="StorytellerCompProperties_OnOffCycle">
+				<category>ThreatBig</category>
+				<minDaysPassed>11.0</minDaysPassed>
+				<onDays>4.6</onDays>
+				<offDays>6.0</offDays>
+				<minSpacingDays>1.9</minSpacingDays>
+				<numIncidentsRange>1~2</numIncidentsRange>
+				<forceRaidEnemyBeforeDaysPassed>20</forceRaidEnemyBeforeDaysPassed>
+				<disallowedTargetTags>
+					<li>Map_RaidBeacon</li>
+				</disallowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_ThreatsGenerator">
+				<allowedTargetTags>
+					<li>Map_RaidBeacon</li>
+				</allowedTargetTags>
+				<parms>
+					<allowedThreats>Raids</allowedThreats>
+					<onDays>1.0</onDays>
+					<offDays>0.5</offDays>
+					<minSpacingDays>0.04</minSpacingDays>
+					<numIncidentsRange>1~2</numIncidentsRange>
+					<minThreatPoints>500</minThreatPoints>
+				</parms>
+			</li>
+			<li Class="StorytellerCompProperties_OnOffCycle">
+				<category>ThreatSmall</category>
+				<minDaysPassed>11.0</minDaysPassed>
+				<onDays>4.6</onDays>
+				<offDays>6.0</offDays>
+				<numIncidentsRange>0.2~1</numIncidentsRange>
+				<acceptPercentFactorPerThreatPointsCurve>
+					<points>
+						<li>(800, 1)</li>
+						<li>(2800, 0)</li>
+					</points>
+				</acceptPercentFactorPerThreatPointsCurve>
+			</li>
+			<!-- Home misc incidents-->
+			<li Class="StorytellerCompProperties_CategoryMTB">
+				<category>Misc</category>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+				<minDaysPassed>5</minDaysPassed>
+				<mtbDays>4.8</mtbDays>
+			</li>
+			<li Class="StorytellerCompProperties_ShipChunkDrop"/>
+			<li Class="StorytellerCompProperties_Disease">
+				<category>DiseaseHuman</category>
+				<minDaysPassed>9</minDaysPassed>
+			</li>
+			<li Class="StorytellerCompProperties_Disease">
+				<category>DiseaseAnimal</category>
+				<minDaysPassed>9</minDaysPassed>
+			</li>
+			<!-- Ally/neutral interaction -->
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>RaidFriendly</incident>
+				<baseIncidentsPerYear>15</baseIncidentsPerYear>
+				<minSpacingDays>0.4</minSpacingDays>
+				<fullAlliesOnly>true</fullAlliesOnly>
+				<minDanger>High</minDanger>
+			</li>
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>TraderCaravanArrival</incident>
+				<minDaysPassed>5</minDaysPassed>
+				<baseIncidentsPerYear>5</baseIncidentsPerYear>
+				<minSpacingDays>6</minSpacingDays>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>VisitorGroup</incident>
+				<minDaysPassed>3</minDaysPassed>
+				<baseIncidentsPerYear>4</baseIncidentsPerYear>
+				<minSpacingDays>5</minSpacingDays>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_FactionInteraction">
+				<incident>TravelerGroup</incident>
+				<minDaysPassed>1</minDaysPassed>
+				<baseIncidentsPerYear>6</baseIncidentsPerYear>
+				<minSpacingDays>1</minSpacingDays>
+				<allowedTargetTags>
+					<li>Map_PlayerHome</li>
+				</allowedTargetTags>
+			</li>
+			<!-- Caravan / temp map -->
+			<li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+				<category>Misc</category>
+				<allowedTargetTags>
+					<li>Caravan</li>
+					<li>Map_TempIncident</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+				<category>ThreatSmall</category>
+				<applyCaravanVisibility>true</applyCaravanVisibility>
+				<allowedTargetTags>
+					<li>Caravan</li>
+					<li>Map_TempIncident</li>
+				</allowedTargetTags>
+			</li>
+			<li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+				<category>ThreatBig</category>
+				<applyCaravanVisibility>true</applyCaravanVisibility>
+				<allowedTargetTags>
+					<li>Caravan</li>
+					<li>Map_TempIncident</li>
+				</allowedTargetTags>
+			</li>
+			<!-- Quests - non-Royalty -->
+			<li Class="StorytellerCompProperties_RandomQuest">
+				<category>GiveQuest</category>
+				<allowedTargetTags>
+					<li>World</li>
+				</allowedTargetTags>
+				<onDays>10</onDays>
+				<numIncidentsRange>1</numIncidentsRange>
+				<acceptFractionByDaysPassedCurve>
+					<points>
+						<li>(8, 0)</li>
+						<li>(15, 1)</li>
+					</points>
+				</acceptFractionByDaysPassedCurve>
+				<minSpacingDays>3</minSpacingDays>
+				<disableIfAnyModActive>
+					<li>Ludeon.RimWorld.Royalty</li>
+				</disableIfAnyModActive>
+			</li>
+			<!-- Quests - Royalty -->
+			<li Class="StorytellerCompProperties_RandomQuest">
+				<category>GiveQuest</category>
+				<allowedTargetTags>
+					<li>World</li>
+				</allowedTargetTags>
+				<onDays>12</onDays>
+				<numIncidentsRange>2</numIncidentsRange>
+				<acceptFractionByDaysPassedCurve>
+					<points>
+						<li>(8, 0)</li>
+						<li>(15, 1)</li>
+					</points>
+				</acceptFractionByDaysPassedCurve>
+				<minSpacingDays>3</minSpacingDays>
+				<enableIfAnyModActive>
+					<li>Ludeon.RimWorld.Royalty</li>
+				</enableIfAnyModActive>
+			</li>
+			<!-- World misc incidents-->
+			<li Class="StorytellerCompProperties_CategoryMTB">
+				<category>Misc</category>
+				<allowedTargetTags>
+					<li>World</li>
+				</allowedTargetTags>
+				<minDaysPassed>15</minDaysPassed>
+				<mtbDays>15</mtbDays>
+			</li>
+			<!-- Orbital trader -->
+			<li Class="StorytellerCompProperties_OnOffCycle">
+				<incident>OrbitalTraderArrival</incident>
+				<onDays>7</onDays>
+				<offDays>8</offDays>
+				<numIncidentsRange>1</numIncidentsRange>
+			</li>
+			<!-- Triggered -->
+			<li Class="StorytellerCompProperties_Triggered">
+				<incident>StrangerInBlackJoin</incident>
+				<delayTicks>180</delayTicks>
+			</li>
+		</comps>
   
-  </StorytellerDef>
+	</StorytellerDef>
   
-  <!-- Random memes i came up with -->
-  <TipSetDef>
-    <defName>Luxandra_Tips</defName>
-    <li>Luxandra doesn't demand blood sacrifices or gold monuments. She just wants your pawns to stop rejecting each other's terrible pickup lines. Flirt successfully, or face her divine disapproval.</li>
-    <li>Did your colony suddenly receive a drop pod full of high-quality glitterworld medicine and ambrosia? Check your social tab—two of your pawns probably finally hooked up, and Luxandra is celebrating.</li>
-    <li>If a pawn gets rejected three times in one day, Luxandra might send a minor curse just to break the awkward silence. Expect anything from sudden localized lightning to an influx of angry guinea pigs.</li>
-    <li>Building an 'Awful' quality double bed is a direct insult to Luxandra. If your colonists wake up with a bad back and a mood penalty, it wasn't the mattress—it was divine intervention.</li>
-    <li>A love triangle in a standard colony is a logistical nightmare. In a colony watched over by Luxandra, it's a prime-time reality show. The goddess might literally pause a raid just to see who wins the argument.</li>
-    <li>Luxandra's ultimate blessing increases pawn fertility and romance chance by ridicolous amounts. Great for expanding the colony, terrible for your base's single-bedroom allocation budget.</li>
-  </TipSetDef>
+	<!-- Random memes i came up with -->
+	<TipSetDef>
+		<defName>Luxandra_Tips</defName>
+		<tips>
+			<li>Luxandra doesn't demand blood sacrifices or gold monuments. She just wants your pawns to stop rejecting each other's terrible pickup lines. Flirt successfully, or face her divine disapproval.</li>
+			<li>Did your colony suddenly receive a drop pod full of high-quality glitterworld medicine and ambrosia? Check your social tab—two of your pawns probably finally hooked up, and Luxandra is celebrating.</li>
+			<li>If a pawn gets rejected three times in one day, Luxandra might send a minor curse just to break the awkward silence. Expect anything from sudden localized lightning to an influx of angry guinea pigs.</li>
+			<li>Building an 'Awful' quality double bed is a direct insult to Luxandra. If your colonists wake up with a bad back and a mood penalty, it wasn't the mattress—it was divine intervention.</li>
+			<li>A love triangle in a standard colony is a logistical nightmare. In a colony watched over by Luxandra, it's a prime-time reality show. The goddess might literally pause a raid just to see who wins the argument.</li>
+			<li>Luxandra's ultimate blessing increases pawn fertility and romance chance by ridicolous amounts. Great for expanding the colony, terrible for your base's single-bedroom allocation budget.</li>
+		</tips>
+	</TipSetDef>
 </Defs>

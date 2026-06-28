@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- This is totally not nymphs. Nope. Totally not the nymphs from RJW 
 	except they actually work (most of the time) -->
+	
 <Defs>
-
-
-	<!-- Faction -->
+	<!-- ============================== -->
+	<!-- The faction -->
+	<!-- ============================== -->
 	<FactionDef ParentName="FactionBase">
 		<defName>Luxandra_DeviantHordeFaction</defName>
 		<label>deviant horde</label>
-		<description>A wild swarm of deviant humans.</description>
+		<description>A chaotic, lawless collective of unaugmented humans who have completely shed the concepts of ethics, morals, and civilization. Operating entirely on primal impulse and raw necessity, the Horde recognizes no laws, no property, and no rights. To them, survival and satisfaction are the only truths; if they want a territory, a resource, or a life, they take it by sheer force.</description>
 		<pawnSingular>Carnal deviant</pawnSingular>
 		<pawnsPlural>Carnal deviants</pawnsPlural>
 		<hidden>true</hidden>
@@ -17,7 +18,10 @@
 		<canSiege>false</canSiege>
 		<canStageAttacks>true</canStageAttacks>
 		<canGenerateQuestSites>true</canGenerateQuestSites>
-		<factionIconPath>World/WorldObjects/Expanding/CannibalTribe</factionIconPath>
+		<factionIconPath>World/WorldObjects/Expanding/CannibalTribe</factionIconPath><colorSpectrum>
+			<li>(0.78, 0, 0.27)</li>
+			<li>(1, 0.74, 0.83)</li>
+		</colorSpectrum>
 		<techLevel>Neolithic</techLevel>
 		<backstoryFilters>
 			<li>
@@ -26,11 +30,17 @@
 				</categories>
 			</li>
 		</backstoryFilters>
+		<fixedLeaderKinds>
+			<li>Luxandra_CarnalAlphaLeader</li>
+		</fixedLeaderKinds>
+		<leaderForceGenerateNewPawn>true</leaderForceGenerateNewPawn>
 		<leaderTitle>Carnal Master</leaderTitle>
 		<disallowedMemes>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Structure_Ideological</li>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Transhumanist</li>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Blindsight</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">MaleSupremacy</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">FemaleSupremacy</li>
 		</disallowedMemes>
 		<disallowedPrecepts>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Male_CoveringAnythingButGroinDisapproved</li>
@@ -39,8 +49,9 @@
 		<requiredMemes>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Nudism</li>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibal</li>
+			<li MayRequire="rjw.sexperience.ideology">Rapist</li>
 		</requiredMemes>
-		<factionNameMaker>NamerFactionTribal</factionNameMaker>
+		<factionNameMaker>Luxandra_Deviant_FactionNameMaker</factionNameMaker>
 		<settlementNameMaker>NamerSettlementTribal</settlementNameMaker>
 		<requiredCountAtGameStart>1</requiredCountAtGameStart>
 		<maxConfigurableAtWorldCreation>1</maxConfigurableAtWorldCreation>
@@ -91,7 +102,10 @@
 		</pawnGroupMakers>
 	</FactionDef>
 
-	<!-- Actual pawn types -->
+
+	<!-- ============================== -->
+	<!-- Pawn types -->
+	<!-- ============================== -->
 	<PawnKindDef>
 		<defName>Luxandra_CarnalDeviantStriker</defName>
 		<label>Carnal deviant</label>
@@ -135,6 +149,7 @@
 		<defName>Luxandra_CarnalAlphaLeader</defName>
 		<label>Carnal alpha</label>
 		<race>Human</race>
+		<factionLeader>true</factionLeader>
 		<combatPower>60</combatPower>
 		<invNutrition>0</invNutrition>
 		<itemQuality>Poor</itemQuality>
@@ -168,7 +183,10 @@
 		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
 	</PawnKindDef>
 
+	<!-- ============================== -->
 	<!-- DEBUFF APPLIED TO THE VICTIMS -->
+	<!-- ============================== -->
+	
 	<HediffDef>
 		<defName>Luxandra_DeviantStupor</defName>
 		<label>lustful stupor</label>
@@ -219,7 +237,9 @@
 		</stages>
 	</HediffDef>
 
+	<!-- ============================== -->
 	<!-- The "weapon" and all -->
+	<!-- ============================== -->
 	<ToolCapacityDef>
 		<defName>Luxandra_StuporTouchCapacity</defName>
 		<label>sedative touch</label>
@@ -288,4 +308,37 @@
 		</additionalHediffs>
 		<applyAdditionalHediffsIfHuntingForFood>false</applyAdditionalHediffsIfHuntingForFood>
 	</DamageDef>
+	
+	<!-- ============================== -->
+	<!-- Names -->
+	<!-- ============================== -->
+	<RulePackDef>
+		<defName>Luxandra_Deviant_FactionNameMaker</defName>
+		<include><li>GlobalUtility</li></include>
+		<rulePack>
+			<rulesStrings>
+				<li>r_name->The [adj] [group]</li>
+				<li>r_name->The [group] of [concept]</li>
+				<li>r_name->[adj] [concept]</li>
+        
+				<li>adj->Unblemished</li>
+				<li>adj->Pureborn</li>
+				<li>adj->Raw</li>
+				<li>adj->Primal</li>
+				<li>adj->Naked</li>
+				<li>adj->Wild</li>
+				<li>adj->True</li>
+				<li>group->Pack</li>
+				<li>group->Horde</li>
+				<li>group->Brood</li>
+				<li>group->Tribe</li>
+				<li>group->Kinship</li>
+				<li>concept->Marrow</li>
+				<li>concept->The Instinct</li>
+				<li>concept->Flesh</li>
+				<li>concept->The Pulse</li>
+				<li>concept->Blood</li>
+			</rulesStrings>
+		</rulePack>
+	</RulePackDef>
 </Defs>

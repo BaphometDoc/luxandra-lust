@@ -270,7 +270,7 @@ namespace LuxandraLust
             #endregion
 
             #region Brothel Colony Quests
-            if (LuxandraCompatUtilities.IsRJWBrothelColonyQuestsActive())
+            if (LuxandraCompatUtilities.IsBrothelColonyQuestsActive())
             {
                 IncidentDef brothelQuest = DefDatabase<IncidentDef>.GetNamed("RJWBCQ_GiveQuest_BrothelCustomer", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(

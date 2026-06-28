@@ -30,7 +30,12 @@ namespace LuxandraLust
             return ModsConfig.IsActive("c0ffee.rjw.events");
         }
 
-        public static bool IsRJWBrothelColonyQuestsActive()
+        public static bool IsBrothelColonyActive()
+        {
+            return ModsConfig.IsActive("calamabanana.rjw.brothelcolony");
+        }
+
+        public static bool IsBrothelColonyQuestsActive()
         {
             return ModsConfig.IsActive("bep.rjw.brothelcolony.quest");
         }

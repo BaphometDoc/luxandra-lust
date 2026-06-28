@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+	<!-- ============================== -->
+	<!-- The faction -->
+	<!-- ============================== -->
+	<FactionDef ParentName="PirateBandBase">
+		<defName>Luxandra_AmazonTribe</defName>
+		<label>feral amazon enclave</label>
+		<description>A highly aggressive, hidden collective of genetically altered hunters. Driven by an all-consuming predatory instinct, they view other settlements purely as hunting grounds. Despite their absolute refusal to wear clothing, they wield terrifying, stolen spacer-grade weaponry stripped from the corpses of their prey.</description>
+		<pawnSingular>amazoness</pawnSingular>
+		<pawnsPlural>amazonesses</pawnsPlural>
+		<allowedCultures>
+			<li>Rustican</li>
+		</allowedCultures><colorSpectrum>
+			<li>(0.15, 0.65, 0.15)</li>
+			<li>(0.3, 0.5, 0.2)</li>
+		</colorSpectrum>
+    
+		<!-- Core Structural & Configuration Tweaks -->
+		<techLevel>Ultra</techLevel>
+		<hidden>true</hidden>
+		<permanentEnemy>true</permanentEnemy>
+		<naturalEnemy>true</naturalEnemy>
+		<canSiege>true</canSiege>
+		<canStageAttacks>true</canStageAttacks>
+		<rescueesCanJoin>true</rescueesCanJoin>
+		<autoFlee>false</autoFlee>
+		<permanentEnemyToEveryoneExcept>
+			<li>TribeCivil</li>
+		</permanentEnemyToEveryoneExcept>
+		<arrivalLayerWhitelist>
+			<li>Surface</li>
+		</arrivalLayerWhitelist>
+		<leaderTitle>Glorious Matriarch</leaderTitle>
+		<fixedLeaderKinds>
+			<li>Luxandra_Amazon_BloodMother</li>
+		</fixedLeaderKinds>
+		<leaderForceGenerateNewPawn>true</leaderForceGenerateNewPawn>
+	
+		<!-- Ideology setup -->
+		<requiredMemes>
+			<!-- <li MayRequire="Ludeon.RimWorld.Ideology">Supremacist</li> -->
+			<!-- <li MayRequire="Ludeon.RimWorld.Ideology">Raider</li> -->
+			<li MayRequire="rjw.sexperience.ideology">Rapist</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibal</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudism</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">FemaleSupremacy</li>
+		</requiredMemes>
+	
+		<disallowedPrecepts>
+			<li>Slavery_Classic</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Disapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Abhorrent</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_CoveringAnythingButGroinDisapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">IdeoDiversity_Horrible</li>
+      
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_NoRules</li>
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_Horrible</li>
+			<li MayRequire="rjw.sexperience.ideology">GenitalSize_NoRules</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_IncestOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Abhorrent</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Horrible</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Disapproved</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_AnalOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_OralOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Promiscuous</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Disapproved</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_PreciousF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_PreciousM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessM</li>
+		</disallowedPrecepts>
+    
+		<!-- World Customization -->
+		<requiredCountAtGameStart>1</requiredCountAtGameStart>
+		<maxConfigurableAtWorldCreation>1</maxConfigurableAtWorldCreation>
+		<canMakeRandomly>false</canMakeRandomly>
+		<listOrderPriority Inherit="False">70</listOrderPriority>
+		<settlementGenerationWeight>0</settlementGenerationWeight>
+    
+		<!-- Aesthetics & Visual Attributes -->
+		<factionIconPath>World/WorldObjects/Expanding/CannibalTribe</factionIconPath>
+		<factionNameMaker>Luxandra_Amazon_FactionNameMaker</factionNameMaker>
+		<settlementNameMaker>NamerSettlementTribal</settlementNameMaker>
+		<melaninRange>0~1</melaninRange>
+		<allowedArrivalTemperatureRange>-40~55</allowedArrivalTemperatureRange>
+    
+		<apparelStuffFilter>
+			<thingDefs>
+				<li>Synthread</li>
+				<li>DevilstrandCloth</li>
+				<li>Hyperweave</li>
+				<li>Plasteel</li>
+				<li>Steel</li>
+			</thingDefs>
+		</apparelStuffFilter>
+    
+		<xenotypeSet Inherit="False">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+    
+		<raidCommonalityFromPointsCurve>
+			<points>
+				<li>(0, 1)</li>
+			</points>
+		</raidCommonalityFromPointsCurve>
+		<maxPawnCostPerTotalPointsCurve>
+			<points>
+				<li>(750, 100)</li>
+				<li>(20000, 1250)</li>
+				<li>(60000, 5000)</li>
+				<li>(100000, 10000)</li>
+				<li>(150000, 20000)</li>
+			</points>
+		</maxPawnCostPerTotalPointsCurve>
+    
+		<pawnGroupMakers>
+			<!-- 1. THE BLOOD HUNT (Standard Balanced Assault) -->
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>100</commonality>
+				<options>
+					<Luxandra_Amazon_Brawler>10</Luxandra_Amazon_Brawler>
+					<Luxandra_Amazon_Hunter>7</Luxandra_Amazon_Hunter>
+					<Luxandra_Amazon_PackMaster>3</Luxandra_Amazon_PackMaster>
+					<Cobra>5</Cobra><!-- I'm not sure this will work but we try -->
+				</options>
+			</li>
+
+			<!-- 2. THE SQUALL SQUAD (Fast, Ranged Harassment / Early Game) -->
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>50</commonality>
+				<options>
+					<Luxandra_Amazon_Hunter>10</Luxandra_Amazon_Hunter>
+					<Luxandra_Amazon_Brawler>3</Luxandra_Amazon_Brawler>
+				</options>
+			</li>
+
+			<!-- 3. THE SIREN'S CURSE (Specialized Psychic Infiltration) -->
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>30</commonality>
+				<options>
+					<Luxandra_Amazon_Brawler>8</Luxandra_Amazon_Brawler>
+					<Luxandra_Amazon_Siren>3</Luxandra_Amazon_Siren>
+					<Luxandra_Amazon_Hunter>4</Luxandra_Amazon_Hunter>
+				</options>
+			</li>
+
+			<!-- 4. THE BLOOD-MOTHER'S WRATH (Elite Endgame Boss Raid) -->
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>20</commonality>
+				<options>
+					<Luxandra_Amazon_BloodMother>1</Luxandra_Amazon_BloodMother>
+					<Luxandra_Amazon_Brawler>12</Luxandra_Amazon_Brawler>
+					<Luxandra_Amazon_Siren>1</Luxandra_Amazon_Siren>
+					<Luxandra_Amazon_Hunter>6</Luxandra_Amazon_Hunter>
+				</options>
+			</li>
+
+		</pawnGroupMakers>
+	</FactionDef>
+	
+	<!-- ============================== -->
+	<!-- Xenotype -->
+	<!-- ============================== -->
+	<XenotypeDef>
+		<defName>Luxandra_Amazoness</defName>
+		<label>amazoness</label>
+		<description>These women evolved for raw predatory efficiency and overwhelming physiological dominance. They possess extreme metabolic speeds, rapid cellular regeneration, and a hyper-acute nervous system. Because their skin continuously secretes a protective, pheromone-laced lipid barrier, they actively loathe the restriction of clothing, relying instead on blinding speed and raw violence to close the distance on their targets.</description>
+		<iconPath>UI/Icons/Xenotypes/Amazoness</iconPath>
+		<combatPowerFactor>1.2</combatPowerFactor>
+		<genes>
+			<li>ArchiteMetabolism</li>
+			<li>XenogermReimplanter</li>
+			<li>DiseaseFree</li>
+			<li>PerfectImmunity</li>
+			<li>RobustDigestion</li>
+			<li>Superclotting</li>
+			<li>NakedSpeed</li>
+			<li>MinTemp_LargeDecrease</li>
+			<li>MaxTemp_LargeIncrease</li>
+			<li>FireResistant</li>
+			<li>Aggression_HyperAggressive</li>
+			<li>Robust</li>
+			<li>Beauty_Beautiful</li>
+			<li>Body_Standard</li>
+			<li>DarkVision</li>
+			<li>Unstoppable</li>
+			<li>AptitudeTerrible_Construction</li>
+			<li>AptitudeTerrible_Mining</li>
+			<li>AptitudeTerrible_Cooking</li>
+			<li>AptitudeTerrible_Artistic</li>
+
+			<!-- Alpha Genes -->
+			<li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
+			<li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
+			<li MayRequire="sarg.alphagenes">AG_TableResistance</li>
+			<li MayRequire="sarg.alphagenes">AG_ArmourMinor</li>
+			<li MayRequire="sarg.alphagenes">AG_FertilityLight</li>
+
+			<!-- RJW / Sexperience Genes -->
+			<li MayRequire="rjw.menstruation">Menstruation_DoubleEggLifetime</li>
+			<li MayRequire="rjw.menstruation">Menstruation_NoBleeding</li>
+
+			<!-- RJW Genes -->
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_size_blinded</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_female_only</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_big_breasts</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_basic_rut</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_elasticity</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_unbreakable</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_aphrodisiac_pheromones</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_hormonal_saliva</li>
+		</genes>
+	</XenotypeDef>
+  
+	<!-- ============================== -->
+	<!-- Pawn defs -->
+	<!-- ============================== -->
+	<!-- BRAWLER -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_Brawler</defName>
+		<label>amazon brawler</label>
+		<race>Human</race>
+		<combatPower>110</combatPower>
+		<invNutrition>1.5</invNutrition>
+		<itemQuality>Normal</itemQuality>
+		<skills>
+			<li>
+				<skill>Melee</skill>
+				<range>5~15</range>
+			</li>
+		</skills>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+		
+		<apparelMoney>0~0</apparelMoney>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelTags/>
+		<apparelRequired>
+			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Sash</li>
+		</apparelRequired>
+		
+		<weaponMoney>500~3500</weaponMoney>
+		<weaponTags>
+			<li>NeolithicMeleeBasic</li>
+			<li>MedievalMeleeBasic</li>
+			<li>MedievalMeleeAdvanced</li>
+			<li>SpacerMelee</li>
+		</weaponTags>
+		
+		<techHediffsChance>0.10</techHediffsChance>
+		<techHediffsMoney>500~3000</techHediffsMoney>
+		<techHediffsTags>
+			<li>Poor</li>
+			<li>Simple</li>
+			<li>Advanced</li>
+			<li>ImplantEmpireCommon</li>
+		</techHediffsTags>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Brawler</def>
+			</li>
+		</forcedTraits>
+
+		<initialWillRange>6~9</initialWillRange>
+		<initialResistanceRange>35~50</initialResistanceRange>
+		
+		<chronologicalAgeRange>18~25</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+		
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
+	<!-- HUNTER -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_Hunter</defName>
+		<label>amazon hunter</label>
+		<race>Human</race>
+		<combatPower>95</combatPower>
+		<invNutrition>1.5</invNutrition>
+		<itemQuality>Normal</itemQuality>
+		<skills>
+			<li>
+				<skill>Shooting</skill>
+				<range>5~15</range>
+			</li>
+		</skills>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+		
+		<apparelMoney>0~0</apparelMoney>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelTags/>
+		
+		<weaponMoney>500~4500</weaponMoney>
+		<weaponTags>
+			<li>NeolithicRanged</li>
+			<li>IndustrialGunAdvanced</li>
+			<li>SpacerGun</li>
+		</weaponTags>
+		
+		<techHediffsChance>0.15</techHediffsChance>
+		<techHediffsMoney>100~4000</techHediffsMoney>
+		<techHediffsTags>
+			<li>Poor</li>
+			<li>Simple</li>
+			<li>ImplantEmpireCommon</li>
+			<li>Advanced</li>
+		</techHediffsTags>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Nimble</def>
+			</li>
+		</forcedTraits>
+
+		<initialWillRange>5~8</initialWillRange>
+		<initialResistanceRange>30~45</initialResistanceRange>
+		
+		<chronologicalAgeRange>18~25</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+		
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
+	<!-- SIREN -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_Siren</defName>
+		<label>amazon siren</label>
+		<race>Human</race>
+		<combatPower>140</combatPower>
+		<invNutrition>1.5</invNutrition>
+		<itemQuality>Good</itemQuality>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+		
+		<apparelMoney>0~0</apparelMoney>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+		<apparelTags/>
+		<apparelRequired>
+			<li MayRequire="Ludeon.RimWorld.Royalty">Apparel_EltexSkullcap</li>
+		</apparelRequired>
+		
+		<!-- 2. PSYCHIC FOCUS WEAPONS -->
+		<weaponMoney>2000~4000</weaponMoney>
+		<weaponTags>
+			<li MayRequire="Ludeon.RimWorld.Royalty">PsychicStaff</li>
+			<li>SpacerMelee</li>
+		</weaponTags>
+		
+		<techHediffsChance>0.25</techHediffsChance>
+		<techHediffsMoney>1500~5000</techHediffsMoney>
+		<techHediffsTags>
+			<li>Advanced</li>
+		</techHediffsTags>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>NightOwl</def>
+			</li>
+		</forcedTraits>
+
+		<initialWillRange>8~12</initialWillRange>
+		<initialResistanceRange>40~60</initialResistanceRange>
+		
+		<chronologicalAgeRange>18~20</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+		<modExtensions>
+			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+				<implantDef>VPE_PsycastAbilityImplant</implantDef>
+				<initialLevel>1</initialLevel>
+				<statUpgradePoints>2~10</statUpgradePoints>
+				<unlockedPaths>
+					<VPE_Wildspeaker>1~4|2~12</VPE_Wildspeaker>
+					<VPE_Staticlord>1~4|2~12</VPE_Staticlord>
+					<VPE_Frostshaper>1~4|2~12</VPE_Frostshaper>
+				</unlockedPaths>
+			</li>
+		</modExtensions>
+		
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
+	<!-- PACKMASTER -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_PackMaster</defName>
+		<label>amazon pack master</label>
+		<race>Human</race>
+		<combatPower>85</combatPower>
+		<invNutrition>2.0</invNutrition>
+		<itemQuality>Normal</itemQuality>
+		<skills>
+			<li>
+				<skill>Shooting</skill>
+				<range>5~10</range>
+			</li>
+			<li>
+				<skill>Animals</skill>
+				<range>10~15</range>
+			</li>
+		</skills>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+		
+		<apparelMoney>0~0</apparelMoney>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelTags/>
+		<apparelRequired>
+			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Bandolier</li>
+		</apparelRequired>
+		
+		<weaponMoney>3000~3500</weaponMoney>
+		<weaponTags>
+			<li>NeolithicRanged</li>
+		</weaponTags>
+		
+		<techHediffsChance>0</techHediffsChance>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+
+		<initialWillRange>4~7</initialWillRange>
+		<initialResistanceRange>25~35</initialResistanceRange>
+		
+		<chronologicalAgeRange>25~35</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+		
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
+	<!-- BLOOD MOTHER -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_BloodMother</defName>
+		<label>blood mother</label>
+		<race>Human</race>
+		<factionLeader>true</factionLeader>
+		<combatPower>220</combatPower>
+		<invNutrition>2.5</invNutrition>
+		<itemQuality>Excellent</itemQuality>
+		<skills>
+			<li>
+				<skill>Melee</skill>
+				<range>10~15</range>
+			</li>
+		</skills>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+		
+		<apparelMoney>0~0</apparelMoney>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelTags/>
+		<apparelRequired>
+			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Sash</li>
+		</apparelRequired>
+		
+		<weaponMoney>3500~6000</weaponMoney>
+		<weaponTags>
+			<li>SpacerMelee</li>
+		</weaponTags>
+		<biocodeWeaponChance>0.80</biocodeWeaponChance>
+		
+		<techHediffsChance>1.0</techHediffsChance>
+		<techHediffsMoney>3000~7000</techHediffsMoney>
+		<techHediffsTags>
+			<li>Advanced</li>
+		</techHediffsTags>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Brawler</def>
+			</li>
+			<li>
+				<def>Nimble</def>
+			</li>
+			<li>
+				<def>Tough</def>
+			</li>
+		</forcedTraits>
+
+		<initialWillRange>15~22</initialWillRange>
+		<initialResistanceRange>60~85</initialResistanceRange>
+		
+		<chronologicalAgeRange>30~40</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+		<modExtensions>
+			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+				<implantDef>VPE_PsycastAbilityImplant</implantDef>
+				<initialLevel>1</initialLevel>
+				<statUpgradePoints>2~12</statUpgradePoints>
+				<unlockedPaths>
+					<VPE_Warlord>4~5|11~15</VPE_Warlord>
+				</unlockedPaths>
+			</li>
+		</modExtensions>
+		
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
+	<!-- ============================== -->
+	<!-- Names -->
+	<!-- ============================== -->
+	<RulePackDef>
+		<defName>Luxandra_Amazon_FactionNameMaker</defName>
+		<include><li>GlobalUtility</li></include>
+		<rulePack>
+			<rulesStrings>
+				<li>r_name->The [adj] [noun]</li>
+				<li>r_name->[goddess]’s [noun]</li>
+				<li>r_name->The [noun] of [goddess]</li>
+        
+				<li>goddess->Luxandra</li>
+				<li>adj->Crimson</li>
+				<li>adj->Bloodied</li>
+				<li>adj->Flesh</li>
+				<li>adj->Wild</li>
+				<li>adj->Siren</li>
+				<li>noun->Huntresses</li>
+				<li>noun->Covenant</li>
+				<li>noun->Pack</li>
+				<li>noun->Sisters</li>
+				<li>noun->Wrath</li>
+			</rulesStrings>
+		</rulePack>
+	</RulePackDef>
+</Defs>
