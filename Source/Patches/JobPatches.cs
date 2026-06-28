@@ -104,6 +104,7 @@ namespace LuxandraLust
         public static void HandleAphrodisiacFeverInfection(SexProps props)
         {
             Pawn pawn = props.pawn;
+            Pawn partner = props.partner;
 
             if (pawn == null || pawn.health == null) return;
 
@@ -111,7 +112,17 @@ namespace LuxandraLust
             var fever = pawn.health.hediffSet.hediffs
                 .FirstOrDefault(h => h.def.defName == "Luxandra_AphrodisiacFever");
 
-            if (fever == null || fever.Part == null) return;
+            if (fever == null || fever.Part == null)
+            {
+                // Pawn is not infected, check for the partner
+                var partnerFever = partner.health.hediffSet.hediffs
+                    .FirstOrDefault(h => h.def.defName == "Luxandra_AphrodisiacFever");
+
+                // If neither pawn is infected do nothing
+                if (partnerFever == null || partnerFever.Part == null)
+                    return;
+            }
+
             LuxandraDebugActions.DebugLogMessage($"Attempting to reduce severity of Aphrodisiac Fever for {props.pawn.NameShortColored} who had sex with with {props.partner?.NameShortColored}");
 
             // 2. Fluid Contact Validation
@@ -172,20 +183,43 @@ namespace LuxandraLust
             if ((feverPart == "Mouth" || feverPart == "Stomach") && (partUsed == "Mouth" || partUsed == "Jaw"))
                 partWasUsed = true;
 
+            // Calculate the potential reduction
+            float reduction = 0f;
+
             if (partWasUsed)
             {
-                float reduction = Rand.Range(0.01f, 0.10f);
-                string percentReduced = (reduction * 100f).ToString("F1");
+                reduction = Rand.Range(0.05f, 0.10f);
+            }
+            else
+            {
+                reduction = 0.01f;
+            }
 
-                LuxandraDebugActions.DebugLogMessage($"{pawn.LabelShort}'s Aphrodisiac Fever on their {fever.Part.def.label} cooled by {percentReduced}%.");
+            SkillDef sexSkillDef = DefDatabase<SkillDef>.GetNamedSilentFail("Sex");
 
-                fever.Severity -= reduction;
+            // If the pawn is valid and has the skill, grab their level (0 - 20)
+            if (pawn != null && sexSkillDef != null && pawn.skills != null)
+            {
+                int skillLevel = pawn.skills.GetSkill(sexSkillDef).Level;
 
-                if (fever.Severity <= 0)
-                {
-                    Messages.Message($"{pawn.LabelShort} has successfully quenched and cured their Aphrodisiac Fever!",
-                        pawn, MessageTypeDefOf.PositiveEvent);
-                }
+                // A level 0 pawn gets a 1.0x modifier. A level 20 pawn gets a 4.0x modifier.
+                // Formula: 1.0 + (Level * 0.15) -> Maxes out at 4.0x at level 20.
+                float skillMultiplier = 1.0f + (skillLevel * 0.15f);
+                LuxandraDebugActions.DebugLogMessage($"{pawn.LabelShort}'s sex skill increases their healing by a factor of {skillMultiplier}.");
+                reduction = reduction * skillMultiplier;
+            }
+
+            // Reduce the fever
+            fever.Severity -= reduction;
+            string percentReduced = (reduction * 100f).ToString("F1");
+
+            LuxandraDebugActions.DebugLogMessage($"{pawn.LabelShort}'s Aphrodisiac Fever on their {fever.Part.def.label} cooled by {percentReduced}%.");
+
+
+            if (fever.Severity <= 0)
+            {
+                Messages.Message($"{pawn.LabelShort} has successfully quenched and cured their Aphrodisiac Fever!",
+                    pawn, MessageTypeDefOf.PositiveEvent);
             }
         }
     }
