@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -10,6 +11,8 @@ namespace LuxandraLust
         private int TicksPerCycle => LuxandraModSettings.weeklyCycleDays > 0 ? (LuxandraModSettings.weeklyCycleDays * 60000) : 420000;
 
         public int ticksUntilEvent = 420000;
+
+        public int ticksUntilKinkChange = 3600;
 
         public GameComponent_WeeklyEventCycle(Game game)
         {
@@ -33,12 +36,39 @@ namespace LuxandraLust
                 }
             }
 
+            ticksUntilKinkChange--;
+
+            if (ticksUntilKinkChange <= 0)
+            {
+                TriggerKinkShift(); // Change Luxanna's kink, then reset the countdown
+            }
+
             ticksUntilEvent--;
 
             if (ticksUntilEvent <= 0)
             {
                 TriggerWeeklyEvent();
                 ticksUntilEvent = TicksPerCycle; // Reset the 7-day countdown clock
+            }
+        }
+
+        private void TriggerKinkShift()
+        {
+            // Roll a new random phase from your enum (excluding None)
+            CurrentKink = (StorytellerKinkPhase)Rand.RangeInclusive(0, 9);
+
+            // Send a quick top-screen alert notifying the player of the shift
+            Messages.Message($"Luxandra's whims have shifted: {CurrentKink} phase is now active.", MessageTypeDefOf.CautionInput, false);
+
+            // Roll a random day counter between 1 and 7 days
+            int randomDays = Rand.RangeInclusive(1, 7);
+
+            // Convert days to internal ticks (1 day = 60,000 ticks)
+            ticksUntilKinkChange = randomDays * GenDate.TicksPerDay;
+
+            if (LuxandraModSettings.enableLogging)
+            {
+                LuxandraDebugActions.DebugLogMessage($"Storyteller shifted phase to {CurrentKink}. Next shift scheduled in {randomDays} days ({ticksUntilKinkChange} ticks).");
             }
         }
 
@@ -128,12 +158,18 @@ namespace LuxandraLust
             Find.Storyteller.incidentQueue.Add(chosenIncident, Find.TickManager.TicksGame, parms);
         }
 
+        public void ForceImmediateKinkShift()
+        {
+            this.ticksUntilKinkChange = 1;
+        }
+
 
         public override void ExposeData()
         {
             base.ExposeData();
             // Saves the remaining ticks directly into the player's .rws save files
             Scribe_Values.Look(ref ticksUntilEvent, "ticksUntilEvent", TicksPerCycle);
+            Scribe_Values.Look(ref ticksUntilKinkChange, "Luxandra_TicksUntilKinkChange", 3600);
         }
     }
 }

@@ -39,6 +39,12 @@ namespace LuxandraLust
                 if (!isPlayerControlled)
                     return;
 
+                if (LuxandraUtilities.DoesSexMatchLuxandraKink(props) == true)
+                {
+                    GameComponent_LuxandraLust.Instance?.RegisterSexAction();
+                    LuxandraDebugActions.DebugLogMessage($"The sex action for {actor.NameShortColored} with {props.partner?.NameShortColored} pleased Luxandra.");
+                }
+
                 // Fapping won't count, sorry. Nor will touching each other. Get those dicks out already
                 bool isMasturbation = props.sexType == xxx.rjwSextype.Masturbation || props.sexType == xxx.rjwSextype.MutualMasturbation;
                 if (isMasturbation)

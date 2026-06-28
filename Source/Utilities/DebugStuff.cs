@@ -187,6 +187,27 @@ namespace LuxandraLust
             Messages.Message("All Luxandra Lust counters for her cycle have been reset to 0.", MessageTypeDefOf.CautionInput, false);
         }
 
+        // The [DebugAction] attribute registers this automatically into the Dev Menu!
+        [DebugAction("Luxandra Storyteller", "Force Kink Shift", false, false, actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void ForceKinkShift()
+        {
+            // Find the active game component handling the clock
+            var cycleComponent = Current.Game.GetComponent<GameComponent_WeeklyEventCycle>();
+
+            if (cycleComponent != null)
+            {
+                // Access your private trigger method using a quick public hook, 
+                // or simply force the countdown timer to 1 tick so it fires on the very next frame!
+                cycleComponent.ForceImmediateKinkShift();
+
+                DebugLogMessage("Dev Menu command issued: Forced storyteller phase rotation successfully.");
+            }
+            else
+            {
+                Log.Error("Luxandra Mod Error: Could not force shift because GameComponent_WeeklyEventCycle was not found active in this save.");
+            }
+        }
+
         [DebugAction("Luxandra Lust", "Trigger Weekly Event (1 Tick)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void ForceWeeklyEventNextTick()
         {

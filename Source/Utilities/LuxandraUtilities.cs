@@ -4,6 +4,7 @@ using rjw.Modules.Interactions;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -148,6 +149,107 @@ namespace LuxandraLust
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Verifies if the sex act that just happened matches the current kink
+        /// from the storyteller. (Return nulls if the sex actor is not a player humanlike)
+        /// </summary>
+        public static bool? DoesSexMatchLuxandraKink(SexProps props)
+        {
+            if (props == null || props.pawn == null)
+                return null;
+
+
+            Pawn actor = props.pawn;
+
+            if (!actor.RaceProps.Humanlike)
+                return null;
+
+            bool isPlayerControlled = actor.Faction == Faction.OfPlayer ||    // Colonists & Mechs
+                                      actor.IsPrisonerOfColony ||             // Prisoners
+                                      actor.IsSlaveOfColony ||                // Slaves
+                                      actor.IsQuestLodger();                  // Quest Guests / Refugees
+
+            if (!isPlayerControlled)
+                return null;
+
+            Pawn partner = props.partner;
+            StorytellerKinkPhase currentKink = CurrentKink;
+
+            string initiatorPartUsed = props.resolved?.InitiatorParts?[0]?.BodyPart?.def?.defName;
+            string receiverPartUsed = props.resolved?.RecipientParts?[0]?.BodyPart?.def?.defName;
+
+            switch (currentKink)
+            {
+                // No kink: always false
+                case StorytellerKinkPhase.None:
+                default:
+                    return false;
+                // Kink = Pregnancy: vaginal sex, and sex with pregnant women
+                case StorytellerKinkPhase.Pregnancy:
+                    if (props.sexType == xxx.rjwSextype.Vaginal)
+                        return true;
+                    if (IsPregnant(partner) || IsPregnant(actor))
+                        return true;
+                    break;
+                // Kink = Anal: anal sex, fisting, and rimming
+                case StorytellerKinkPhase.Anal:
+                    if (props.sexType == xxx.rjwSextype.Anal || props.sexType == xxx.rjwSextype.Rimming)
+                        return true;
+                    if (props.sexType == xxx.rjwSextype.Fisting && (initiatorPartUsed == "Anus" || receiverPartUsed == "Anus"))
+                        return true;
+                    break;
+                // Kink = Oral: blowjobs, cunnilingus, rimming
+                case StorytellerKinkPhase.Oral:
+                    if (props.sexType == xxx.rjwSextype.Oral || props.sexType == xxx.rjwSextype.Cunnilingus || props.sexType == xxx.rjwSextype.Rimming)
+                        return true;
+                    break;
+                // Kink = Bestiality: one of the partecipants is an animal
+                case StorytellerKinkPhase.Bestiality:
+                    if (actor.IsAnimal || partner.IsAnimal)
+                        return true;
+                    break;
+                // Kink = Rape: rape
+                case StorytellerKinkPhase.Rape:
+                    if (props.isRape)
+                        return true;
+                    break;
+                // Kink = Masturbation: masturbation, mutual masturbation does not count
+                case StorytellerKinkPhase.Masturbation:
+                    if (props.sexType == xxx.rjwSextype.Masturbation)
+                        return true;
+                    break;
+                // Kink = Necrophilia: the partner is dead
+                case StorytellerKinkPhase.Necrophilia:
+                    if (partner != null && partner.Dead)
+                        return true;
+                    break;
+                // Kink = Gay: both partners are men
+                case StorytellerKinkPhase.Gay:
+                    if (actor.gender == Gender.Male && partner.gender == Gender.Male)
+                        return true;
+                    break;
+                // Kink = Lesbian: both partners are women
+                case StorytellerKinkPhase.Lesbian:
+                    if (actor.gender == Gender.Female && partner.gender == Gender.Female)
+                        return true;
+                    break;
+                // Kink = Cum: anything that involves a man and one of part used is a penis
+                case StorytellerKinkPhase.Cum:
+                    if ((actor.gender == Gender.Male || partner.gender == Gender.Male) && (initiatorPartUsed == "Penis" || receiverPartUsed == "Penis"))
+                        return true;
+                    break;
+                // Kink = Breasts: boobjobs and lesbian sex that is not fingering or cunnilingus
+                case StorytellerKinkPhase.Breasts:
+                    if ((actor.gender == Gender.Female && partner.gender == Gender.Female) && props.sexType != xxx.rjwSextype.Fingering && props.sexType != xxx.rjwSextype.Cunnilingus)
+                        return true;
+                    if (props.sexType == xxx.rjwSextype.Boobjob)
+                        return true;
+                    break;
+            }
+
+            return null;
         }
 
         /// <summary>

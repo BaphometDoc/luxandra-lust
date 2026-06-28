@@ -28,6 +28,8 @@ namespace LuxandraLust
         {
             base.ExposeData();
 
+            Scribe_Values.Look(ref CurrentKink, "Luxandra_CurrentKinkPhase", StorytellerKinkPhase.None);
+
             // --- REROLL COUNTERS ---
             Scribe_Values.Look(ref sexActionCounterForRerolls, "sexActionCounterForRerolls", 0);
             Scribe_Values.Look(ref impureSexActionCounterForRerolls, "impureSexActionCounterForRerolls", 0);
@@ -55,6 +57,26 @@ namespace LuxandraLust
         public int bestialitySexActionCounterForCycle = 0;
         public int necrophiliaSexActionCounterForRerolls = 0;
         public int necrophiliaSexActionCounterForCycle = 0;
+
+
+        // Luxandra's Kinks
+        public enum StorytellerKinkPhase
+        {
+            None,
+            Pregnancy,
+            Anal,
+            Oral,
+            Bestiality,
+            Rape,
+            Masturbation,
+            Necrophilia,
+            Gay,
+            Lesbian,
+            Cum,
+            Breasts
+        }
+
+        public static StorytellerKinkPhase CurrentKink = StorytellerKinkPhase.None;
 
         public void RegisterSexAction()
         {
