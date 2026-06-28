@@ -217,4 +217,15 @@ She however does not judge you. What she will judge is if you can follow through
     </comps>
   
   </StorytellerDef>
+  
+  <!-- Random memes i came up with -->
+  <TipSetDef>
+    <defName>Luxandra_Tips</defName>
+    <li>Luxandra doesn't demand blood sacrifices or gold monuments. She just wants your pawns to stop rejecting each other's terrible pickup lines. Flirt successfully, or face her divine disapproval.</li>
+    <li>Did your colony suddenly receive a drop pod full of high-quality glitterworld medicine and ambrosia? Check your social tab—two of your pawns probably finally hooked up, and Luxandra is celebrating.</li>
+    <li>If a pawn gets rejected three times in one day, Luxandra might send a minor curse just to break the awkward silence. Expect anything from sudden localized lightning to an influx of angry guinea pigs.</li>
+    <li>Building an 'Awful' quality double bed is a direct insult to Luxandra. If your colonists wake up with a bad back and a mood penalty, it wasn't the mattress—it was divine intervention.</li>
+    <li>A love triangle in a standard colony is a logistical nightmare. In a colony watched over by Luxandra, it's a prime-time reality show. The goddess might literally pause a raid just to see who wins the argument.</li>
+    <li>Luxandra's ultimate blessing increases pawn fertility and romance chance by ridicolous amounts. Great for expanding the colony, terrible for your base's single-bedroom allocation budget.</li>
+  </TipSetDef>
 </Defs>
