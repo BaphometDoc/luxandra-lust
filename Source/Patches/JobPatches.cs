@@ -94,7 +94,7 @@ namespace LuxandraLust
         public static void HandleAphrodisiacFeverInfection(SexProps props)
         {
             Pawn pawn = props.pawn;
-            LuxandraDebugActions.DebugLogMessage($"Attempting to reduce severity of Aphrodisiac Fever for {props.pawn.NameShortColored} who had sex with with {props.partner?.NameShortColored}");
+
             if (pawn == null || pawn.health == null) return;
 
             // Check if this specific pawn even has the fever
@@ -102,6 +102,7 @@ namespace LuxandraLust
                 .FirstOrDefault(h => h.def.defName == "Luxandra_AphrodisiacFever");
 
             if (fever == null || fever.Part == null) return;
+            LuxandraDebugActions.DebugLogMessage($"Attempting to reduce severity of Aphrodisiac Fever for {props.pawn.NameShortColored} who had sex with with {props.partner?.NameShortColored}");
 
             // 2. Fluid Contact Validation
             bool hasFluidContact = props.sexType == xxx.rjwSextype.Vaginal ||
