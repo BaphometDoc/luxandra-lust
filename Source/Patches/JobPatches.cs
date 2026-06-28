@@ -42,7 +42,11 @@ namespace LuxandraLust
                 if (LuxandraUtilities.DoesSexMatchLuxandraKink(props) == true)
                 {
                     GameComponent_LuxandraLust.Instance?.RegisterSexAction();
-                    LuxandraDebugActions.DebugLogMessage($"The sex action for {actor.NameShortColored} with {props.partner?.NameShortColored} pleased Luxandra.");
+                    if (LuxandraModSettings.enablePleasedNotification)
+                    {
+                        Messages.Message($"{actor.NameShortColored} has pleased Luxandra with their actions.", MessageTypeDefOf.PositiveEvent, false);
+                    }
+                    LuxandraDebugActions.DebugLogMessage($"The {props.sexType} done by {actor.NameShortColored} with {props.partner?.NameShortColored} matched Luxandra's current kink ({GameComponent_LuxandraLust.CurrentKink}).");
                 }
 
                 // Fapping won't count, sorry. Nor will touching each other. Get those dicks out already

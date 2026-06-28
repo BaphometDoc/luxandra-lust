@@ -50,6 +50,7 @@ namespace LuxandraLust
         /// Whether to enable debug logging for the mod
         /// </summary>
         public static bool enableLogging = false;
+        public static bool enablePleasedNotification = false;
 
         public static void DoWindowContents(Rect inRect)
         {
@@ -63,8 +64,12 @@ namespace LuxandraLust
             if (Prefs.DevMode)
             {
                 listingStandard.CheckboxLabeled("Enable Debug Logging", ref enableLogging, "Shows most actions in the log. Very spammy, only for debugging.");
-                listingStandard.Gap(16f);
+                listingStandard.Gap(12f);
             }
+
+            // Satisfaction notification toggle
+            listingStandard.CheckboxLabeled("Show Satisfaction Notifications", ref enablePleasedNotification, "Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks. (can be spammy in large colonies)");
+            listingStandard.Gap(16f);
 
             // Weekly interval modifier
             listingStandard.Label($"Storyteller Special Cycle Interval: {weeklyCycleDays} Days");
@@ -174,6 +179,7 @@ namespace LuxandraLust
                 eventThresholdMultiplier = 1.0f;
                 weeklyCycleDays = 7;
                 enableLogging = false;
+                enablePleasedNotification = false;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
             }
@@ -221,7 +227,8 @@ namespace LuxandraLust
         {
             base.ExposeData();
 
-            Scribe_Values.Look(ref enableLogging, "enableLogging", true);
+            Scribe_Values.Look(ref enableLogging, "enableLogging", false);
+            Scribe_Values.Look(ref enablePleasedNotification, "enablePleasedNotification", false);
             Scribe_Values.Look(ref eventConversionMode, "eventConversionMode", 1);
             Scribe_Values.Look(ref eventRerollCondition, "eventRerollCondition", 2);
             Scribe_Values.Look(ref eventThresholdMultiplier, "eventThresholdMultiplier", 1.0f);
