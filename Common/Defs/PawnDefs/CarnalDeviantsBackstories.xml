@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- This is totally not nymphs. Nope. Totally not the nymphs from RJW 
+	except they actually work (most of the time) -->
+<Defs>
+
+	<BackstoryDef>
+		<defName>Luxandra_PrimalLustDeviant</defName>
+		<title>Lustful Deviant</title>
+		<titleShort>deviant</titleShort>
+		<baseDesc>[PAWN_nameDef] is conscious and intellectually lucid, yet [PAWN_possessive] mind is gripped by an absolute, unyielding primal desire. While [PAWN_pronoun] can apparently converse normally, all interest in traditional work has completely evaporated due to their obsessive lust.</baseDesc>
+		<slot>Adulthood</slot>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<spawnCategories>
+			<li>Luxandra_RaiderDeviantCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>6</Social>
+			<Melee>10</Melee>
+			<Shooting>-10</Shooting>
+			<Medicine>-4</Medicine>
+			<Sex MayRequire="rjw.sexperience">15</Sex>
+		</skillGains>
+		<workDisables>
+			<li>Animals</li>
+			<li>Artistic</li>
+			<li>PlantWork</li>
+			<li>Mining</li>
+			<li>ManualSkilled</li>
+			<li>Cooking</li>
+			<li>Firefighting</li>
+			<li>Constructing</li>
+		</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+		<forcedTraits>
+			<Nymphomaniac>0</Nymphomaniac>
+			<Rapist>0</Rapist>
+			<Bisexual>0</Bisexual>
+		</forcedTraits>
+		<bodyTypeGlobal>Thin</bodyTypeGlobal>
+		<bodyTypeFemale>Thin</bodyTypeFemale>
+		<bodyTypeMale>Thin</bodyTypeMale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>Luxandra_CarnalAlphaDeviant</defName>
+		<title>Carnal alpha</title>
+		<titleShort>alpha</titleShort>
+		<baseDesc>[PAWN_nameDef] is conscious and intellectually lucid, maintaining absolute control over the horde through brutal carnal dominance. While [PAWN_possessive] mind is just as twisted by primal lust, [PAWN_pronoun] channels it into leadership, maintaining the coordination needed to direct siege weapons and force obedience from subordinates.</baseDesc>
+		<slot>Adulthood</slot>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<spawnCategories>
+			<li>Luxandra_DeviantLeaderCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>10</Social>
+			<Melee>8</Melee>
+			<Construction>6</Construction>
+			<Medicine>-4</Medicine>
+			<Sex MayRequire="rjw.sexperience">15</Sex>
+		</skillGains>
+		<workDisables>
+			<li>Animals</li>
+			<li>Artistic</li>
+			<li>PlantWork</li>
+			<li>Mining</li>
+			<li>Cooking</li>
+			<li>Firefighting</li>
+		</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+		<forcedTraits>
+			<Nymphomaniac>0</Nymphomaniac>
+			<Rapist>0</Rapist>
+			<Bisexual>0</Bisexual>
+		</forcedTraits>
+		<bodyTypeGlobal>Thin</bodyTypeGlobal>
+		<bodyTypeFemale>Thin</bodyTypeFemale>
+		<bodyTypeMale>Thin</bodyTypeMale>
+	</BackstoryDef>
+  
+	<BackstoryDef>
+		<defName>Luxandra_DeviantChildhoodFeral</defName>
+		<title>Feral Deviant</title>
+		<titleShort>Feral</titleShort>
+		<baseDesc>[PAWN_nameDef] was raised in the untamed wilderness. Having never learned the constraints of societal laws, ethical frameworks, or basic morality, [PAWN_pronoun] grew up entirely guided by instinct and the immediate satisfaction of primal urges.</baseDesc>
+		<slot>Childhood</slot>
+		<spawnCategories>
+			<li>Luxandra_RaiderDeviantCategory</li>
+			<li>Luxandra_DeviantLeaderCategory</li>
+		</spawnCategories>
+		<skillGains/>
+	</BackstoryDef>
+	
+</Defs>

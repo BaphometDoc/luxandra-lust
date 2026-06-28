@@ -16,10 +16,8 @@ namespace LuxandraLust
         public override float SelectionWeight(Map map, float basePoints)
         {
             // The Debug UI calls this with a null map when initializing!
-            // Always guard against this.
             if (map == null) return 0f;
 
-            // Return the weight you want for your strategy
             // 0.5f is a reasonable default weight for a raid strategy
             return 0.5f;
         }

@@ -1,95 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-	<!-- This is totally not nymphs. Nope. Totally not the nymphs from RJW 
+<!-- This is totally not nymphs. Nope. Totally not the nymphs from RJW 
 	except they actually work (most of the time) -->
 <Defs>
-	<PawnKindDef>
-		<defName>Luxandra_CarnalDeviantStriker</defName>
-		<label>Carnal deviant</label>
-		<race>Human</race>
-		<combatPower>30</combatPower>
-		<invNutrition>0</invNutrition>
-		<itemQuality>Poor</itemQuality>
-		<apparelMoney>0~0</apparelMoney>
-		<weaponMoney>0~0</weaponMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags>
-		</apparelTags>
-		<techHediffsChance>0</techHediffsChance>
-		<backstoryFiltersOverride>
-			<li>
-				<categories>
-					<li>Luxandra_RaiderDeviantCategory</li>
-				</categories>
-			</li>
-		</backstoryFiltersOverride>
-		<forcedTraits>
-			<li>
-				<def>Nymphomaniac</def>
-			</li>
-			<li>
-				<def>Rapist</def>
-			</li>
-			<li>
-				<def>Bisexual</def>
-			</li>
-			<!-- This used to have Zoophile too but apparently they kept 
-			raping animals ignoring colonists ooops -->
-		</forcedTraits>
-		<initialWillRange>0~1</initialWillRange>
-		<initialResistanceRange>1~3</initialResistanceRange>
-		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
-	</PawnKindDef>
 
-	<BackstoryDef>
-		<defName>Luxandra_PrimalLustDeviant</defName>
-		<title>Lustful Deviant</title>
-		<titleShort>deviant</titleShort>
-		<baseDesc>[PAWN_nameDef] is conscious and intellectually lucid, yet [PAWN_possessive] mind is gripped by an absolute, unyielding primal desire. While [PAWN_pronoun] can apparently converse normally, all interest in traditional work has completely evaporated due to their obsessive lust.</baseDesc>
-		<slot>Adulthood</slot>
-		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
-		<spawnCategories>
-			<li>Luxandra_RaiderDeviantCategory</li>
-		</spawnCategories>
-		<skillGains>
-			<Social>6</Social>
-			<Melee>10</Melee>
-			<Shooting>-10</Shooting>
-			<Medicine>-4</Medicine>
-			<Sex MayRequire="rjw.sexperience">15</Sex>
-		</skillGains>
-		<workDisables>
-			<li>Animals</li>
-			<li>Artistic</li>
-			<li>PlantWork</li>
-			<li>Mining</li>
-			<li>ManualSkilled</li>
-			<li>Cooking</li>
-			<li>Firefighting</li>
-			<li>Constructing</li>
-		</workDisables>
-		<requiredWorkTags>None</requiredWorkTags>
-		<forcedTraits>
-			<Nymphomaniac>0</Nymphomaniac>
-			<Rapist>0</Rapist>
-			<Bisexual>0</Bisexual>
-		</forcedTraits>
-		<bodyTypeGlobal>Thin</bodyTypeGlobal>
-		<bodyTypeFemale>Thin</bodyTypeFemale>
-		<bodyTypeMale>Thin</bodyTypeMale>
-	</BackstoryDef>
-  
-	<BackstoryDef>
-		<defName>Luxandra_DeviantChildhoodFeral</defName>
-		<title>Feral Deviant</title>
-		<titleShort>Feral</titleShort>
-		<baseDesc>[PAWN_nameDef] was raised in the untamed wilderness. Having never learned the constraints of societal laws, ethical frameworks, or basic morality, [PAWN_pronoun] grew up entirely guided by instinct and the immediate satisfaction of primal urges.</baseDesc>
-		<slot>Childhood</slot>
-		<spawnCategories>
-			<li>Luxandra_RaiderDeviantCategory</li>
-		</spawnCategories>
-		<skillGains/>
-	</BackstoryDef>
 
+	<!-- Faction -->
 	<FactionDef ParentName="FactionBase">
 		<defName>Luxandra_DeviantHordeFaction</defName>
 		<label>deviant horde</label>
@@ -101,7 +16,7 @@
 		<autoFlee>false</autoFlee>
 		<canSiege>false</canSiege>
 		<canStageAttacks>true</canStageAttacks>
-		<canGenerateQuestSites>false</canGenerateQuestSites>
+		<canGenerateQuestSites>true</canGenerateQuestSites>
 		<factionIconPath>World/WorldObjects/Expanding/CannibalTribe</factionIconPath>
 		<techLevel>Neolithic</techLevel>
 		<backstoryFilters>
@@ -135,15 +50,129 @@
 		<raidCommonalityFromPointsCurve>
 			<points>
 				<li>(0, 0)</li>
+				<li>(500, 0)</li>
+				<li>(1500, 0.1)</li>
 			</points>
 		</raidCommonalityFromPointsCurve>
+		<maxPawnCostPerTotalPointsCurve>
+			<points>
+				<li>(0, 35)</li>
+				<li>(70, 50)</li>
+				<li>(700, 100)</li>
+				<li>(1300, 150)</li>
+				<li>(100000, 10000)</li>
+			</points>
+		</maxPawnCostPerTotalPointsCurve>
+		<pawnGroupMakers>
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>100</commonality>
+				<options>
+					<Luxandra_CarnalDeviantStriker>20</Luxandra_CarnalDeviantStriker>
+					<Luxandra_CarnalAlphaLeader>3</Luxandra_CarnalAlphaLeader>
+				</options>
+			</li>
+
+			<li>
+				<kindDef>Peaceful</kindDef>
+				<options>
+					<Luxandra_CarnalDeviantStriker>20</Luxandra_CarnalDeviantStriker>
+					<Luxandra_CarnalAlphaLeader>3</Luxandra_CarnalAlphaLeader>
+				</options>
+			</li>
+
+			<li>
+				<kindDef>Settlement</kindDef>
+				<options>
+					<Luxandra_CarnalDeviantStriker>20</Luxandra_CarnalDeviantStriker>
+					<Luxandra_CarnalAlphaLeader>3</Luxandra_CarnalAlphaLeader>
+				</options>
+			</li>
+		</pawnGroupMakers>
 	</FactionDef>
+
+	<!-- Actual pawn types -->
+	<PawnKindDef>
+		<defName>Luxandra_CarnalDeviantStriker</defName>
+		<label>Carnal deviant</label>
+		<race>Human</race>
+		<combatPower>30</combatPower>
+		<invNutrition>0</invNutrition>
+		<itemQuality>Poor</itemQuality>
+		<apparelMoney>0~0</apparelMoney>
+		<weaponMoney>0~0</weaponMoney>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelTags>
+		</apparelTags>
+		<techHediffsChance>0</techHediffsChance>
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Luxandra_RaiderDeviantCategory</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Nymphomaniac</def>
+			</li>
+			<li>
+				<def>Rapist</def>
+			</li>
+			<li>
+				<def>Bisexual</def>
+			</li>
+			<!-- This used to have Zoophile too but apparently they kept 
+			raping animals ignoring colonists ooops -->
+		</forcedTraits>
+		<initialWillRange>5~20</initialWillRange>
+		<initialResistanceRange>6~20</initialResistanceRange>
+		<chronologicalAgeRange>20~30</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
+	</PawnKindDef>
+	
+	<PawnKindDef>
+		<defName>Luxandra_CarnalAlphaLeader</defName>
+		<label>Carnal alpha</label>
+		<race>Human</race>
+		<combatPower>60</combatPower>
+		<invNutrition>0</invNutrition>
+		<itemQuality>Poor</itemQuality>
+		<apparelMoney>0~0</apparelMoney>
+		<weaponMoney>0~0</weaponMoney>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelTags>
+		</apparelTags>
+		<techHediffsChance>0</techHediffsChance>
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Luxandra_DeviantLeaderCategory</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Nymphomaniac</def>
+			</li>
+			<li>
+				<def>Rapist</def>
+			</li>
+			<li>
+				<def>Bisexual</def>
+			</li>
+		</forcedTraits>
+		<initialWillRange>1~2</initialWillRange>
+		<initialResistanceRange>2~5</initialResistanceRange>
+		<chronologicalAgeRange>18~35</chronologicalAgeRange>
+		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
+	</PawnKindDef>
 
 	<!-- DEBUFF APPLIED TO THE VICTIMS -->
 	<HediffDef>
 		<defName>Luxandra_DeviantStupor</defName>
 		<label>lustful stupor</label>
-		<description>A psychic fog clouding the mind. Stacks until the victim collapses into a total, helpless coma.</description>
+		<description>A psychic fog clouding the mind. Builds up until the victim collapses into a helpless coma.</description>
 		<hediffClass>HediffWithComps</hediffClass>
 		<defaultLabelColor>(0.8, 0.4, 0.7)</defaultLabelColor>
 		<maxSeverity>1.0</maxSeverity>
@@ -208,16 +237,20 @@
 	<HediffDef ParentName="ImplantHediffBase">
 		<defName>Luxandra_EnthrallingTouch</defName>
 		<label>sensual touch</label>
-		<description>A poisonous touch evolved to weaken the preys, in order to use them while they're still alive.</description>
+		<description>A poisonous touch evolved to weaken the preys, in order to use them while they're still alive. The warm poison also serves the secondary purpose of warming the Deviant's body, increasing cold resistance and pain tolerance.</description>
 		<hediffClass>Hediff_Implant</hediffClass>
 		<defaultLabelColor>(0.8, 0.4, 0.7)</defaultLabelColor>
 		<isBad>false</isBad>
 		<stages>
 			<li>
+				<painOffset>-0.30</painOffset>
+				<painFactor>0.70</painFactor>
 				<statFactors>
-					<!-- Reduces all outbound melee damage by 95% -->
 					<MeleeDamageFactor>0.05</MeleeDamageFactor>
 				</statFactors>
+				<statOffsets>
+					<ComfyTemperatureMin>-20</ComfyTemperatureMin>
+				</statOffsets>
 			</li>
 		</stages>
 		<comps>
