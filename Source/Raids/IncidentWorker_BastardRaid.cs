@@ -9,6 +9,23 @@ namespace LuxandraLust
     // Ugly bastard raid. They're here for your ass...
     public class IncidentWorker_BastardRaid : IncidentWorker_RaidEnemy
     {
+        protected override bool CanFireNowSub(IncidentParms parms)
+        {
+            // 1. Always call the base game rules first (checks population minimums, etc.)
+            if (!base.CanFireNowSub(parms)) return false;
+
+            // Unleashed Bastards must be installed & the faction must actually be in the game
+            if (!LuxandraCompatUtilities.IsUnleashedBastardsActive())
+                return false;
+
+            Faction targetFactionInstance = Find.FactionManager.AllFactions
+                .FirstOrDefault(f => f.def.defName == "RJW_Unleashed_BastardFaction");
+            if (targetFactionInstance == null)
+                return false;
+
+            return true;
+        }
+
         #region Overrides for the event letter
         protected override string GetLetterLabel(IncidentParms parms)
         {

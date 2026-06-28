@@ -6,6 +6,8 @@ using Verse;
 
 namespace LuxandraLust
 {
+    // This file contains mostly the quick references to the defs, as well as the categorization of every
+    // event compatible with the mod.
 
     // Defs for incidents so they can be referenced in code without hardcoding strings everywhere
     [DefOf]
@@ -247,30 +249,28 @@ namespace LuxandraLust
             #endregion
 
             #region RimJobWorld
-            if (ModsConfig.IsActive("rim.job.world"))
-            {
-                IncidentDef nymphJoins = DefDatabase<IncidentDef>.GetNamed("NymphJoins", false);
-                _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: nymphJoins,
-                    isRaid: false,
-                    isNegative: false,
-                    isPositive: true,
-                    requiresMod: true
-                ));
+            // This is a hard dependancy. If this breaks there's a valid reason for it to.
+            IncidentDef nymphJoins = DefDatabase<IncidentDef>.GetNamed("NymphJoins", false);
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: nymphJoins,
+                isRaid: false,
+                isNegative: false,
+                isPositive: true,
+                requiresMod: true
+            ));
 
-                IncidentDef nymphVisitor = DefDatabase<IncidentDef>.GetNamed("NymphVisitor", false);
-                _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: nymphVisitor,
-                    isRaid: false,
-                    isNegative: false,
-                    isPositive: false,
-                    requiresMod: true
-                ));
-            }
+            IncidentDef nymphVisitor = DefDatabase<IncidentDef>.GetNamed("NymphVisitor", false);
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: nymphVisitor,
+                isRaid: false,
+                isNegative: false,
+                isPositive: false,
+                requiresMod: true
+            ));
             #endregion
 
             #region Brothel Colony Quests
-            if (ModsConfig.IsActive("bep.rjw.brothelcolony.quest"))
+            if (LuxandraCompatUtilities.IsRJWBrothelColonyQuestsActive())
             {
                 IncidentDef brothelQuest = DefDatabase<IncidentDef>.GetNamed("RJWBCQ_GiveQuest_BrothelCustomer", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
@@ -305,7 +305,7 @@ namespace LuxandraLust
             #endregion
 
             #region RJW Events
-            if (ModsConfig.IsActive("c0ffee.rjw.events"))
+            if (LuxandraCompatUtilities.IsRJWEventsActive())
             {
                 IncidentDef psychicArouse = DefDatabase<IncidentDef>.GetNamed("PsychicArouse", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
@@ -319,7 +319,7 @@ namespace LuxandraLust
             #endregion
 
             #region RJW Genes
-            if (ModsConfig.IsActive("Vegapnk.rjw.genes"))
+            if (LuxandraCompatUtilities.IsRJWGenesActive())
             {
                 IncidentDef psychicArouse = DefDatabase<IncidentDef>.GetNamed("SuccubusDreamVisit", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
@@ -333,7 +333,7 @@ namespace LuxandraLust
             #endregion
 
             #region Unleashed Bastards
-            if (ModsConfig.IsActive("archersaiter.rjw.unleashed.bastard"))
+            if (LuxandraCompatUtilities.IsUnleashedBastardsActive())
             {
                 IncidentDef unleashedBastardsRaid = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_UnleashedBastardsRaid", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(

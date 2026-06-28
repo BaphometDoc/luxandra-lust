@@ -86,7 +86,7 @@ namespace LuxandraLust
                         }
 
                         // If menstruation is loaded, replenish the ovary power and send the pawn in ovulation (possibly with multiple eggs)
-                        if (ModsConfig.IsActive("rjw.menstruation"))
+                        if (LuxandraCompatUtilities.IsMenstruationActive())
                         {
                             MenstruationIntegration.IncreaseOvaryPower(pawn);
                             MenstruationIntegration.ForceOvulation(pawn);

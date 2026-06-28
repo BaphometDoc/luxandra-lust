@@ -96,6 +96,7 @@
     <Compile Include="Patches\IncidentPatches.cs" />
     <Compile Include="LuxandraLust.cs" />
     <Compile Include="Utilities\LuxandraDefsCollections.cs" />
+    <Compile Include="Utilities\LuxandraCompatUtilities.cs" />
     <Compile Include="Utilities\LuxandraUtilities.cs" />
     <Compile Include="Patches\StatPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
