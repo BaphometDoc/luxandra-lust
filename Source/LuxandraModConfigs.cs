@@ -33,7 +33,7 @@ namespace LuxandraLust
         /// <summary>
         /// Multiplier for the event conversion threshold
         /// </summary>
-        public static float eventThresholdMultiplier = 1.0f;
+        public static float eventRerollThresholdMultiplier = 1.0f;
         /// <summary>
         /// Event conversion condition - 0: Disabled, 1: Only Negative, 2: All Events
         /// </summary>
@@ -126,12 +126,11 @@ namespace LuxandraLust
                 listingStandard.Gap(12f);
 
                 // Sexual reroll threshold
-                listingStandard.Label($"Event sexualization threshold multiplier: {eventThresholdMultiplier:F1}x");
+                listingStandard.Label($"Satisfaction Target Multiplier: {eventRerollThresholdMultiplier.ToString("0.0")}x");
 
-                listingStandard.Label("Adjusts the event conversion multiplier. A higher multiplier means you will need a higher frequency of sex actions to swap negative storyteller events.");
-                listingStandard.Gap(6f);
+                eventRerollThresholdMultiplier = listingStandard.Slider(eventRerollThresholdMultiplier, 0.1f, 2.0f);
 
-                eventThresholdMultiplier = Mathf.RoundToInt(listingStandard.Slider(eventThresholdMultiplier, 0.5f, 10.0f));
+                listingStandard.Label("Adjusts how strictly Luxandra demands satisfaction. Lower values make her easier to please; higher values require intense management.");
                 listingStandard.Gap(24f);
 
                 if (Prefs.DevMode)
@@ -146,12 +145,12 @@ namespace LuxandraLust
                             int adultSlaves = Find.CurrentMap.mapPawns.SlavesOfColonySpawned
                                 .Count(p => LuxandraUtilities.IsAdult(p));
 
-                            int baseThreshold = (adultColonists * 2) + adultSlaves;
-                            int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold * eventThresholdMultiplier));
+                            int baseThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
+                            int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold * eventRerollThresholdMultiplier));
 
                             listingStandard.Label("<color=cyan>Live Active Colony Preview:</color>");
-                            listingStandard.Label($"  • Spawned Adult Colonists: <color=cyan>{adultColonists}</color> (x2 weight)");
-                            listingStandard.Label($"  • Spawned Adult Slaves: <color=cyan>{adultSlaves}</color> (x1 weight)");
+                            listingStandard.Label($"  • Spawned Adult Colonists: <color=cyan>{adultColonists}</color>");
+                            listingStandard.Label($"  • Spawned Adult Slaves: <color=cyan>{adultSlaves}</color>");
                             listingStandard.Label($"  • Base Formula Metric: <color=cyan>{baseThreshold}</color>");
                             listingStandard.Label($"  • Final Active Target Threshold: <color=cyan><b>{finalThreshold}</b></color>");
                         }
@@ -176,7 +175,7 @@ namespace LuxandraLust
             {
                 eventRerollCondition = 1;
                 eventConversionMode = 2;
-                eventThresholdMultiplier = 1.0f;
+                eventRerollThresholdMultiplier = 1.0f;
                 weeklyCycleDays = 7;
                 enableLogging = false;
                 enablePleasedNotification = false;
@@ -231,7 +230,7 @@ namespace LuxandraLust
             Scribe_Values.Look(ref enablePleasedNotification, "enablePleasedNotification", false);
             Scribe_Values.Look(ref eventConversionMode, "eventConversionMode", 1);
             Scribe_Values.Look(ref eventRerollCondition, "eventRerollCondition", 2);
-            Scribe_Values.Look(ref eventThresholdMultiplier, "eventThresholdMultiplier", 1.0f);
+            Scribe_Values.Look(ref eventRerollThresholdMultiplier, "eventRerollThresholdMultiplier", 1.0f);
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
         }
     }

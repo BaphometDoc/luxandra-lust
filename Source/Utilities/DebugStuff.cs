@@ -9,6 +9,46 @@ namespace LuxandraLust
 {
     public static class LuxandraDebugActions
     {
+        [DebugAction("Luxandra Lust", "Log Sex Counters", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void LogSexCounters()
+        {
+            var component = GameComponent_LuxandraLust.Instance;
+
+            if (component == null)
+            {
+                Log.Error("[Luxandra] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
+                return;
+            }
+
+            Map targetMap = Find.CurrentMap;
+            int totalThreshold = 0;
+            int thresholdAfterSettings = 0;
+            int adultColonistCount = 0;
+            int adultSlavesCount = 0;
+            float settingsMultiplier = LuxandraModSettings.eventRerollThresholdMultiplier;
+
+            if (targetMap != null)
+            {
+                adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
+                adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
+                totalThreshold = adultColonistCount * 2 + adultSlavesCount;
+                thresholdAfterSettings = (int)(totalThreshold * settingsMultiplier);
+            }
+
+            // Print the current persistent values beautifully formatted (kinda) to the debug log console
+            Log.Message("==================================================");
+            Log.Message($"[Luxandra Debug] Current Actions Tracked:");
+            Log.Message($" -> Total Sex Actions:       {component.sexActionCounter}");
+            Log.Message($" -> Impure Sex Actions:      {component.impureSexActionCounter}");
+            Log.Message($" -> Rape Sex Actions:        {component.rapeSexActionCounter}");
+            Log.Message($" -> Bestiality Sex Actions:  {component.bestialitySexActionCounter}");
+            Log.Message($" -> Necrophilia Sex Actions: {component.necrophiliaSexActionCounter}");
+            Log.Message("==================================================");
+
+            // Send a quick message to the top left of the screen
+            Messages.Message("Reroll counters printed to debug log console.", MessageTypeDefOf.TaskCompletion, false);
+        }
+
         [DebugAction("Luxandra Lust", "Log Sex Counters (Rerolls)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void LogSexCountersRerolls()
         {
@@ -25,13 +65,13 @@ namespace LuxandraLust
             int thresholdAfterSettings = 0;
             int adultColonistCount = 0;
             int adultSlavesCount = 0;
-            float settingsMultiplier = LuxandraModSettings.eventThresholdMultiplier;
+            float settingsMultiplier = LuxandraModSettings.eventRerollThresholdMultiplier;
 
             if (targetMap != null)
             {
                 adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
                 adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
-                totalThreshold = adultColonistCount * 2 + adultSlavesCount;
+                totalThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
                 thresholdAfterSettings = (int)(totalThreshold * settingsMultiplier);
             }
 
@@ -39,16 +79,12 @@ namespace LuxandraLust
             Log.Message("==================================================");
             Log.Message($"[Luxandra Debug] Current Reroll Actions Tracked:");
             Log.Message($" -> Total Sex Actions:       {component.sexActionCounterForRerolls}");
-            Log.Message($" -> Impure Sex Actions:      {component.impureSexActionCounterForRerolls}");
-            Log.Message($" -> Rape Sex Actions:        {component.rapeSexActionCounterForRerolls}");
-            Log.Message($" -> Bestiality Sex Actions:  {component.bestialitySexActionCounterForRerolls}");
-            Log.Message($" -> Necrophilia Sex Actions: {component.necrophiliaSexActionCounterForRerolls}");
             Log.Message("==================================================");
             if (targetMap != null)
             {
-                Log.Message($" -> Colony Metric: Adults ({adultColonistCount}) * 2 + Slaves ({adultSlavesCount}) = Threshold: {totalThreshold}");
+                Log.Message($" -> Colony Metric: {adultColonistCount} Adults, {adultSlavesCount} Slaves. Threshold: {totalThreshold}");
                 Log.Message($" -> Settings multiplier: {settingsMultiplier} = Effective threshold: {thresholdAfterSettings}");
-                Log.Message($" -> Dynamic Target Met? {(component.sexActionCounterForRerolls > thresholdAfterSettings ? "YES (Will convert negative events)" : "NO")}");
+                Log.Message($" -> Dynamic Target Met? {(component.sexActionCounterForRerolls > thresholdAfterSettings ? "YES" : "NO")}");
             }
             else
             {
@@ -126,7 +162,7 @@ namespace LuxandraLust
             if (comp == null) { LogNullError(); return; }
 
             comp.RegisterImpureSexAction();
-            Messages.Message($"Added +1 to Impure Sex. Reroll total: {comp.impureSexActionCounterForRerolls} | Cycle total: {comp.impureSexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
+            Messages.Message($"Added +1 to Impure Sex. Reroll total: {comp.impureSexActionCounter} | Cycle total: {comp.impureSexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
         }
 
         [DebugAction("Luxandra Lust", "Add +1 Rape Action Count", allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -136,7 +172,7 @@ namespace LuxandraLust
             if (comp == null) { LogNullError(); return; }
 
             comp.RegisterRapeSexAction();
-            Messages.Message($"Added +1 to Rape Actions. Reroll total: {comp.rapeSexActionCounterForRerolls} | Cycle total: {comp.rapeSexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
+            Messages.Message($"Added +1 to Rape Actions. Reroll total: {comp.rapeSexActionCounter} | Cycle total: {comp.rapeSexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
         }
 
         [DebugAction("Luxandra Lust", "Add +1 Bestiality Sex Count", allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -150,7 +186,7 @@ namespace LuxandraLust
             }
 
             comp.RegisterBestialitySexAction();
-            Messages.Message($"Added +1 to Bestiality. Reroll total: {comp.bestialitySexActionCounterForRerolls} | Cycle total: {comp.bestialitySexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
+            Messages.Message($"Added +1 to Bestiality. Reroll total: {comp.bestialitySexActionCounter} | Cycle total: {comp.bestialitySexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
         }
 
         [DebugAction("Luxandra Lust", "Add +1 Necrophilia Sex Count", allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -164,7 +200,7 @@ namespace LuxandraLust
             }
 
             comp.RegisterNecrophiliaSexAction();
-            Messages.Message($"Added +1 to Necrophilia. Reroll total: {comp.necrophiliaSexActionCounterForRerolls} | Cycle total: {comp.necrophiliaSexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
+            Messages.Message($"Added +1 to Necrophilia. Reroll total: {comp.necrophiliaSexActionCounter} | Cycle total: {comp.necrophiliaSexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
         }
 
         [DebugAction("Luxandra Lust", "Reset All Reroll Sex Counters", allowedGameStates = AllowedGameStates.PlayingOnMap)]

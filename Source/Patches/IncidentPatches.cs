@@ -32,7 +32,7 @@ namespace LuxandraLust
             {
                 if (!LuxandraStorytellerCheck.IsActive())
                 {
-                    LuxandraDebugActions.DebugLogMessage("Luxandra was not active. Skipping the incident intercept. Why do you have her debug on again?.");
+                    //LuxandraDebugActions.DebugLogMessage("Luxandra was not active. Skipping the incident intercept. Why do you have her debug on again?.");
                     return true;
                 }
 
@@ -72,15 +72,10 @@ namespace LuxandraLust
                 }
 
                 // Determine the threshold for the event conversion
-                int adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
-                int adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
-
                 LuxandraDebugActions.DebugLogMessage("TryExecute intercepted correctly");
-                LuxandraDebugActions.DebugLogMessage($"Incident about to happen: {__instance.def?.defName}");
-
 
                 var eventType = def.category;
-                LuxandraDebugActions.DebugLogMessage($"Event type: {eventType}");
+                LuxandraDebugActions.DebugLogMessage($"Incident about to happen: {__instance.def?.defName} - Event type: {eventType}");
 
                 bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
 
@@ -89,7 +84,7 @@ namespace LuxandraLust
                 // Event conversion type - 0: Match type, 1: Always positive, 2: Random
                 int rerollModeConfig = LuxandraModSettings.eventConversionMode;
                 // Threshold multiplier from settings
-                float rerollThresholdMultiplierFromConfigs = LuxandraModSettings.eventThresholdMultiplier;
+                float rerollThresholdMultiplierFromConfigs = LuxandraModSettings.eventRerollThresholdMultiplier;
                 LuxandraDebugActions.DebugLogMessage("Configs loaded:");
                 LuxandraDebugActions.DebugLogMessage($"rerollConditionConfig: {rerollConditionConfig}");
                 LuxandraDebugActions.DebugLogMessage($"rerollModeConfig: {rerollModeConfig}");
@@ -102,10 +97,11 @@ namespace LuxandraLust
                     return true;
                 }
 
-                LuxandraDebugActions.DebugLogMessage("Number of sex events detected before the event: " + n.sexActionCounterForRerolls);
+                int totalThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
+                LuxandraDebugActions.DebugLogMessage($"Sex events since last reroll: ${n.sexActionCounterForRerolls} - Event threshold: {totalThreshold}");
 
-                int totalThreshold = (int)((adultColonistCount * 2 + adultSlavesCount) * rerollThresholdMultiplierFromConfigs);
-                LuxandraDebugActions.DebugLogMessage("Event threshold: Adults (" + adultColonistCount + ") * 2 + Slaves (" + adultSlavesCount + ") = " + totalThreshold);
+                // Putting this here so if I feel like changing it I don't need 200 copypastes.
+                string luxandraRerollName = "Luxandra's Lustful Gaze";
 
                 // =========================================
                 // ==== START OF THE PRUDE REROLL LOGIC ====
@@ -119,7 +115,7 @@ namespace LuxandraLust
                 if (playerIsPrude && !multipleColonistsPresent && isSexualRerollEnabled)
                 {
                     Find.LetterStack.ReceiveLetter(
-                                "Luxandra's Lustful Gaze",
+                                luxandraRerollName,
                                 "Luxandra is disappointed at your lack of activity. However, seeing you're alone, she chose to let fate play its cards without her influence.\n\n " +
                                 "You should look for more people before she changes her mind...",
                                 LetterDefOf.NeutralEvent
@@ -148,8 +144,8 @@ namespace LuxandraLust
                             LuxandraDebugActions.DebugLogMessage($"Prude punishment reroll successful, replacement found: {prudeRerollreplacement.defName}");
 
                             Find.LetterStack.ReceiveLetter(
-                                "Luxandra's Lustful Gaze",
-                                "Luxandra is disappointed at your lack of activity. Her lust must be satiated, and you will comply, with or without your approval.\n\n" +
+                                luxandraRerollName,
+                                "Luxandra is disappointed at your lack of activity. Her lust must be satiated, and you WILL comply, with or without your approval.\n\n" +
                                 "Maybe it would be time to find more partners so her opinion of your colony improves...",
                                 LetterDefOf.NegativeEvent
                             );
@@ -190,7 +186,7 @@ namespace LuxandraLust
                     LuxandraDebugActions.DebugLogMessage($"Threshold was not passed. Letting the event continue as planned.");
 
                     Find.LetterStack.ReceiveLetter(
-                        "Luxandra's Lustful Gaze",
+                        luxandraRerollName,
                         "Luxandra is not entertained by your colony.\n" +
                         "She expects more of you... You may not be a complete disappointment, but you have not proven worthy of her intervention.\n\n" +
                         "Maybe more spicy action wouldn't hurt...",
@@ -240,7 +236,7 @@ namespace LuxandraLust
                                 if (rerollModeConfig == 0)
                                 {
                                     Find.LetterStack.ReceiveLetter(
-                                        "Luxandra's Lustful Gaze",
+                                        luxandraRerollName,
                                         "Luxandra is enthralled by your colony, and wants to watch more of your struggles!\n" +
                                         "She saw a dangerous fate incoming, and decided that raw violence is not something you should be threatened by.\n" +
                                         "She used her divine gaze to turn the danger into a more interesting event. One that may prove delightful to watch... at least for her.\n" +
@@ -251,7 +247,7 @@ namespace LuxandraLust
                                 else
                                 {
                                     Find.LetterStack.ReceiveLetter(
-                                        "Luxandra's Lustful Gaze",
+                                        luxandraRerollName,
                                         "Luxandra is pleased by your colony!\n" +
                                         "She saw a dangerous fate incoming, and intervened to turn it. She instead summoned something more...interesting for your colony.\n" +
                                         "Though her concept of 'interesting' isn't always devoid of danger...",
@@ -320,7 +316,7 @@ namespace LuxandraLust
                                 LuxandraDebugActions.DebugLogMessage($"Sexual reroll for positive event successful, replacement found: {replacementForPositiveReroll.defName}");
 
                                 Find.LetterStack.ReceiveLetter(
-                                    "Luxandra's Lustful Gaze",
+                                    luxandraRerollName,
                                     "Luxandra is pleased by your colony!\n" +
                                     "In order to keep your lives interesting, she has replaced a mundane boon into something more... interesting.\n" +
                                     "Though her concept of 'interesting' isn't always devoid of danger...",
@@ -381,7 +377,7 @@ namespace LuxandraLust
                             LuxandraDebugActions.DebugLogMessage($"Sexual reroll for neutral event successful, replacement found: {replacementForNeutralReroll.defName}");
 
                             Find.LetterStack.ReceiveLetter(
-                                "Luxandra's Lustful Gaze",
+                                luxandraRerollName,
                                 "Luxandra is pleased by your colony!\n" +
                                 "In order to keep your lives interesting, she has replaced a mundane boon into something more... interesting.\n" +
                                 "Though her concept of 'interesting' isn't always devoid of danger...",

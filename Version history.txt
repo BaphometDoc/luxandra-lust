@@ -1,6 +1,9 @@
 0.5 - in development...
+
+0.4.1 - 28/06/2027
 - Luxandra now reveals her current kink. Pleasing her kinks will have positive effects
 - Added some cold resistance and pain tolerance to the deviants so they stop collapsing in the cold
+- Reworked the math behind the sexual reroll to make it harder to achieve at baseline (still customizable though)
 
 0.4 - 27/06/2026
 - Updated population curve
