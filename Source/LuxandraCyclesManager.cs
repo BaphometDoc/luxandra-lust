@@ -85,8 +85,9 @@ namespace LuxandraLust
             List<IncidentDef> totalPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.AllIncidents);
             totalPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
             if (totalPool.Count == 0) return;
+            LuxandraDebugActions.DebugLogMessage($"Event pool contains {totalPool.Count} elements.");
 
-            List<IncidentDef> filteredPool = new List<IncidentDef>();
+            List<IncidentDef> filteredPool = totalPool;
 
             string letterText = "";
             string letterLabel = "Luxandra's Cycle: ";
@@ -94,6 +95,7 @@ namespace LuxandraLust
 
             if (averageSexNeed > 0.75f)
             {
+                LuxandraDebugActions.DebugLogMessage("Happy mood: selecting positive event.");
                 filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.PositiveEvent).ToList();
 
                 // Flavor text and moodlet for high satisfaction
@@ -103,6 +105,7 @@ namespace LuxandraLust
             }
             else if (averageSexNeed < 0.25f)
             {
+                LuxandraDebugActions.DebugLogMessage("Negative mood: selecting negative event.");
                 filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.NegativeEvent || e.letterDef == LetterDefOf.ThreatBig).ToList();
 
                 // Flavor text and moodlet for low satisfaction
@@ -112,31 +115,33 @@ namespace LuxandraLust
             }
             else
             {
-                filteredPool = totalPool;
-
+                LuxandraDebugActions.DebugLogMessage("Neutral mood: selecting random event.");
                 // Flavor text for a neutral state
                 letterLabel += "Altered Alignment";
                 letterText = "Luxandra glances down at your settlement, idly spinning the wheel of fate to disrupt your colonists' mundane routines...\n\n";
             }
 
-            if (filteredPool.Count == 0)
+            // Failsafe
+            if (filteredPool == null || filteredPool.Count == 0)
             {
                 LuxandraDebugActions.DebugLogMessage("No event found in the selected pool, swapping to global sexual pool.");
                 filteredPool = totalPool;
             }
+
             IncidentDef chosenIncident = filteredPool.RandomElement();
+            LuxandraDebugActions.DebugLogMessage($"Event selected {chosenIncident.defName}");
 
             // Send the Storyteller's personal announcement letter first
             LetterDef storytellerLetterDef = moodletToApply != null
                 ? (averageSexNeed > 0.75f ? LetterDefOf.PositiveEvent : LetterDefOf.NegativeEvent)
                 : LetterDefOf.NeutralEvent;
 
-            Find.LetterStack.ReceiveLetter(letterLabel, letterText, storytellerLetterDef);
-            LuxandraDebugActions.DebugLogMessage($"Cycle completed. Moodlet to apply: ${moodletToApply.defName}");
 
+            Find.LetterStack.ReceiveLetter(letterLabel, letterText, storytellerLetterDef);
             // Apply the mood lets to the current living colonists/slaves maps
             if (moodletToApply != null)
             {
+                LuxandraDebugActions.DebugLogMessage($"Cycle completed. Moodlet to apply: {moodletToApply.defName}");
                 LuxandraDebugActions.DebugLogMessage($"Applying moodlets...");
                 // Since I changed the flavour of the moodlet, probably better to keep children off this one
                 var eligiblePawns = targetMap.mapPawns.AllPawnsSpawned.Where(p =>
@@ -152,6 +157,8 @@ namespace LuxandraLust
                     }
                 }
             }
+            else
+                LuxandraDebugActions.DebugLogMessage($"Cycle completed with neutral result. No moodlet applied.");
 
             // Queue up the incident
             LuxandraDebugActions.DebugLogMessage($"Event chosen: {chosenIncident.defName}");
