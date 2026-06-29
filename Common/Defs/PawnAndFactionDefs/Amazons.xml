@@ -261,7 +261,6 @@
 			<li>
 				<bodyPartGroup>Torso</bodyPartGroup>
 				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
-				<requiredTag>Nudist</requiredTag>
 			</li>
 		</specificApparelRequirements>
 		<apparelTags Inherit="False">
@@ -338,7 +337,6 @@
 			<li>
 				<bodyPartGroup>Torso</bodyPartGroup>
 				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
-				<requiredTag>Nudist</requiredTag>
 			</li>
 		</specificApparelRequirements>
 		<apparelTags Inherit="False">
@@ -346,7 +344,7 @@
 			<li>Nudist</li>
 		</apparelTags>
 				
-		<weaponMoney>500~4500</weaponMoney>
+		<weaponMoney>400~2500</weaponMoney>
 		<weaponTags>
 			<li>NeolithicRanged</li>
 			<li>IndustrialGunAdvanced</li>
@@ -410,7 +408,6 @@
 			<li>
 				<bodyPartGroup>Torso</bodyPartGroup>
 				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
-				<requiredTag>Nudist</requiredTag>
 			</li>
 		</specificApparelRequirements>
 		<apparelTags Inherit="False">
@@ -499,7 +496,6 @@
 			<li>
 				<bodyPartGroup>Torso</bodyPartGroup>
 				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
-				<requiredTag>Nudist</requiredTag>
 			</li>
 		</specificApparelRequirements>
 		<apparelTags Inherit="False">
@@ -507,7 +503,7 @@
 			<li>Nudist</li>
 		</apparelTags>
 		
-		<weaponMoney>3000~3500</weaponMoney>
+		<weaponMoney>100~1500</weaponMoney>
 		<weaponTags>
 			<li>NeolithicRanged</li>
 		</weaponTags>
@@ -565,7 +561,6 @@
 			<li>
 				<bodyPartGroup>Torso</bodyPartGroup>
 				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
-				<requiredTag>Nudist</requiredTag>
 			</li>
 		</specificApparelRequirements>
 		<apparelTags Inherit="False">
@@ -573,11 +568,10 @@
 			<li>Nudist</li>
 		</apparelTags>
 		
-		<weaponMoney>3500~6000</weaponMoney>
+		<weaponMoney>1500~6000</weaponMoney>
 		<weaponTags>
 			<li>SpacerMelee</li>
 		</weaponTags>
-		<biocodeWeaponChance>0.80</biocodeWeaponChance>
 		
 		<techHediffsChance>1.0</techHediffsChance>
 		<techHediffsMoney>3000~7000</techHediffsMoney>
