@@ -55,4 +55,16 @@
 		<letterDef>PositiveEvent</letterDef>
 	</IncidentDef>
 
+	<IncidentDef>
+		<defName>Luxandra_Inc_TheMilkGame</defName>
+		<label>Lactose Cataclysm</label>
+		<category>ThreatBig</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_TheMilkGame</workerClass>
+		<baseChance>1.0</baseChance>
+		<minRefireDays>15</minRefireDays>
+		<letterDef>NegativeEvent</letterDef>
+	</IncidentDef>
 </Defs>

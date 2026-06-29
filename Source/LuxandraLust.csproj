@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Incidents\IncidentWorker_AphrodisiacFever.cs" />
+    <Compile Include="Incidents\IncidentWorker_TheMilkGame.cs" />
     <Compile Include="Incidents\MechClusters\IncidentWorker_FertilityPulseMechCluster.cs" />
     <Compile Include="Incidents\Worksites\IncidentWorker_FertilityPulseSite.cs" />
     <Compile Include="LuxandraKinkTracker.cs" />

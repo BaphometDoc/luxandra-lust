@@ -27,6 +27,8 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_DeviantHordeRaid;
 
+        public static IncidentDef Luxandra_Inc_TheMilkGame;
+
         // Disease, illnesses
         public static IncidentDef Luxandra_Inc_AphrodisiacFever;
 
@@ -155,6 +157,13 @@ namespace LuxandraLust
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
+                isRaid: true,
+                isNegative: true,
+                isPositive: false
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_TheMilkGame,
                 isRaid: true,
                 isNegative: true,
                 isPositive: false
