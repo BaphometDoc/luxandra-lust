@@ -148,6 +148,11 @@
 		<initialWillRange>5~20</initialWillRange>
 		<initialResistanceRange>6~20</initialResistanceRange>
 		<chronologicalAgeRange>20~30</chronologicalAgeRange>
+    <techHediffsMoney>1000~4000</techHediffsMoney>
+    <techHediffsRequired>
+      <li>Luxandra_EnthrallingTouch</li>
+      <li>Luxandra_EnthrallingTouch</li>
+    </techHediffsRequired>
 		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
 	</PawnKindDef>
 	
@@ -192,6 +197,11 @@
 		<initialWillRange>1~2</initialWillRange>
 		<initialResistanceRange>2~5</initialResistanceRange>
 		<chronologicalAgeRange>18~35</chronologicalAgeRange>
+    <techHediffsMoney>1000~4000</techHediffsMoney>
+    <techHediffsRequired>
+      <li>Luxandra_EnthrallingTouch</li>
+      <li>Luxandra_EnthrallingTouch</li>
+    </techHediffsRequired>
 		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
 	</PawnKindDef>
 
@@ -307,6 +317,56 @@
 			</li>
 		</comps>
 	</HediffDef>
+
+  <ThingDef ParentName="BodyPartBase">
+    <defName>Luxandra_EnthrallingTouch</defName>
+    <label>sensual touch</label>
+    <description>A poisonous touch evolved to weaken the preys, in order to use them while they're still alive. The warm poison also serves the secondary purpose of warming the Deviant's body, increasing cold resistance and pain tolerance.</description>
+    <!-- <descriptionHyperlinks><RecipeDef>InstallDeathAcidifier</RecipeDef></descriptionHyperlinks> -->
+    <techLevel>Spacer</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Health/HealthItem</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.80</drawSize>
+      <color>(189,169,118)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>400</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>BodyPartsBionic</li>
+    </thingCategories>
+  </ThingDef>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>Luxandra_InstallEnthrallingTouch</defName>
+    <label>develop enthralling touch</label>
+    <description>Forces the development of an entralling touch similar to that of the Carnal Deviants.</description>
+    <descriptionHyperlinks>
+      <ThingDef>Luxandra_EnthrallingTouch</ThingDef>
+      <HediffDef>Luxandra_EnthrallingTouch</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing death acidifier.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Luxandra_EnthrallingTouch</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Luxandra_EnthrallingTouch</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <appliedOnFixedBodyParts>
+      <li>Shoulder</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>Luxandra_EnthrallingTouch</addsHediff>
+  </RecipeDef>
 
 	<DamageDef ParentName="BluntBase">
 		<defName>Luxandra_StuporTouchDamage</defName>
