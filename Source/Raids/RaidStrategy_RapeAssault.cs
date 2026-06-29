@@ -87,31 +87,45 @@ namespace LuxandraLust
             Map map = lord.Map;
             if (map == null) return false;
 
-            // Is there any capable colonist capable of fighting back?
+            // Gather colonist headcount parameters
             var colonists = map.mapPawns.FreeAdultColonistsSpawned;
             var consciousColonists = colonists.Where(p => !p.Dead && !p.Downed);
+            int colonistNumber = colonists.Count;
+
+            // Baseline Victory Check: If all colonists are completely defeated
             if (map.mapPawns.FreeColonistsSpawnedCount > 0 && !consciousColonists.Any())
             {
                 if (lord.ownedPawns.Count == 0) return false;
+
+                int satisfiedRaiderCount = 0;
 
                 foreach (Pawn raider in lord.ownedPawns)
                 {
                     if (raider.Dead || raider.Downed) continue;
 
-                    // Locate your sub-mod's unique internal need string descriptor 
-                    var sexNeed = raider.needs.TryGetNeed<rjw.Need_Sex>();
+                    // SAFETY TIME LOCK: Verify the raider has been in their rage state for at least 5 hours
+                    Hediff rageHediff = raider.health?.hediffSet?.hediffs
+                        .FirstOrDefault(h => h.def.defName == "Luxandra_RapistRage");
 
-                    if (sexNeed != null)
+                    if (rageHediff == null || rageHediff.ageTicks < 12500)
                     {
-                        if (sexNeed.CurLevel < 0.5f)
-                        {
-                            return false;
-                        }
+                        // If even one raider hasn't reached the 5-hour active assault threshold, hold the raid group
+                        return false;
+                    }
+
+                    // Check emotional/physical satisfaction
+                    var sexNeed = raider.needs?.TryGetNeed<rjw.Need_Sex>();
+                    if (sexNeed != null && sexNeed.CurLevel >= 0.5f)
+                    {
+                        satisfiedRaiderCount++;
                     }
                 }
 
-                // If everyone alive meets the metric criteria and the colony is defeated, break away!
-                return true;
+                // If the raiders have had their fun, leave
+                if (satisfiedRaiderCount > colonistNumber)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -134,20 +148,37 @@ namespace LuxandraLust
             // Is there any capable colonist capable of fighting back?
             if (lord.ownedPawns.Count == 0) return false;
 
+            int tiredRaiderCount = 0;
+
             foreach (Pawn raider in lord.ownedPawns)
             {
                 if (raider.Dead || raider.Downed) continue;
 
-                var restNeed = DefDatabase<NeedDef>.GetNamed("Rest");
+                // SAFETY TIME LOCK: Verify the raider has been in their rage state for at least 5 hours
+                Hediff rageHediff = raider.health?.hediffSet?.hediffs
+                    .FirstOrDefault(h => h.def.defName == "Luxandra_RapistRage");
+
+                if (rageHediff == null || rageHediff.ageTicks < 12500)
+                {
+                    // If even one raider hasn't reached the 5-hour active assault threshold, hold the raid group
+                    return false;
+                }
+
+                var restNeed = raider.needs?.TryGetNeed(NeedDefOf.Rest);
 
                 if (restNeed != null)
                 {
-                    if (restNeed.baseLevel > 0.3f)
+                    if (restNeed.CurLevel < 0.5f)
                     {
-                        return false;
+                        tiredRaiderCount++;
                     }
                 }
             }
+
+
+            // If less than the pawns are tired, stay
+            if (tiredRaiderCount < lord.ownedPawns?.Count / 2)
+                return false;
 
             // If everyone alive meets the metric criteria and the colony is defeated, break away!
             return true;
