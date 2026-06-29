@@ -74,12 +74,13 @@
     <Compile Include="Incidents\MechClusters\IncidentWorker_FertilityPulseMechCluster.cs" />
     <Compile Include="Incidents\Worksites\IncidentWorker_FertilityPulseSite.cs" />
     <Compile Include="LuxandraKinkTracker.cs" />
+    <Compile Include="LuxandraEventConfigs.cs" />
     <Compile Include="ModIntegrations\Menstruation.cs" />
     <Compile Include="Patches\ChildBirthPatches.cs" />
     <Compile Include="Quests\QuestIncidentWorkers.cs" />
     <Compile Include="Quests\QuestPart_BreakPrisoners.cs" />
     <Compile Include="Utilities\DebugStuff.cs" />
-    <Compile Include="Incidents\FertilityPulse.cs" />
+    <Compile Include="Incidents\IncidentWorker_LustfulFertilityPulse.cs" />
     <Compile Include="Incidents\IncidentWorker_GenitalSizeEvents.cs" />
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderBlessing.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="Incidents\IncidentWorker_RoyalDepravity.cs" />
     <Compile Include="Incidents\IncidentWorker_RoyalLuxury.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderDepravity.cs" />
-    <Compile Include="Incidents\WhiteRainIncident.cs" />
+    <Compile Include="Incidents\IncidentWorker_WhiteRain.cs" />
     <Compile Include="LuxandraModConfigs.cs" />
     <Compile Include="Patches\JobPatches.cs" />
     <Compile Include="Patches\IncidentPatches.cs" />

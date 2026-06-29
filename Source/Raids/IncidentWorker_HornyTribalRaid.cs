@@ -9,6 +9,21 @@ namespace LuxandraLust
     // Horny tribal raid. They're horny, and so is the player now
     public class IncidentWorker_HornyTribalRaid : IncidentWorker_RaidEnemy
     {
+
+        protected override bool CanFireNowSub(IncidentParms parms)
+        {
+            if (!base.CanFireNowSub(parms)) return false;
+
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid.defName))
+            {
+                return false;
+            }
+
+            Map map = (Map)parms.target;
+            // Need at least 1 humanlike adult pawn to even try
+            return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));
+        }
+
         #region Overrides for the event letter
         protected override string GetLetterLabel(IncidentParms parms)
         {

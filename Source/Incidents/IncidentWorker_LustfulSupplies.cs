@@ -19,6 +19,11 @@ namespace LuxandraLust
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_LustfulSupplies.defName))
+            {
+                return false;
+            }
+
             // Standard safety check
             return base.CanFireNowSub(parms) && parms.target is Map;
         }

@@ -14,6 +14,11 @@ namespace LuxandraLust
             // 1. Always call the base game rules first (checks population minimums, etc.)
             if (!base.CanFireNowSub(parms)) return false;
 
+            if (!LuxandraEventCheck.IsEnabled("Luxandra_Inc_UnleashedBastardsRaid"))
+            {
+                return false;
+            }
+
             // Unleashed Bastards must be installed & the faction must actually be in the game
             if (!LuxandraCompatUtilities.IsUnleashedBastardsActive())
                 return false;

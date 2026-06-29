@@ -7,6 +7,20 @@ namespace LuxandraLust
 {
     public class IncidentWorker_TheMilkGame : IncidentWorker
     {
+        protected override bool CanFireNowSub(IncidentParms parms)
+        {
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_TheMilkGame.defName))
+            {
+                return false;
+            }
+
+            Map map = (Map)parms.target;
+            if (map == null) return false;
+
+            // Incident can fire only if there is at least one living, free female adult colonist
+            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Female && !p.Dead && LuxandraUtilities.IsAdult(p));
+        }
+
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;

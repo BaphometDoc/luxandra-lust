@@ -14,7 +14,12 @@ namespace LuxandraLust
                 return false;
             }
 
-            // Find your quest definition by name
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_BreakPrisonersContractQuest.defName))
+            {
+                return false;
+            }
+
+            // Find quest definition by name
             QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamed("Luxandra_BreakPrisonersContractQuest", errorOnFail: false);
             if (questDef == null)
             {

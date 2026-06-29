@@ -11,12 +11,21 @@ namespace LuxandraLust
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak.defName))
+            {
+                return false;
+            }
+
             if (!base.CanFireNowSub(parms)) return false;
 
             Map map = parms.target as Map ?? Find.CurrentMap;
             if (map == null) return false;
 
-            return map.mapPawns.FreeColonistsSpawned.Any(p => !p.Downed && !p.InMentalState);
+            // Don't fire the event if there's less than 2 adults on the map
+            if (map.mapPawns.FreeAdultColonistsSpawnedCount + map.mapPawns.SlavesAndPrisonersOfColonySpawnedCount < 2)
+                return false;
+
+            return map.mapPawns.FreeColonistsSpawned.Any(p => !p.Downed && !p.InMentalState && LuxandraUtilities.IsAdult(p));
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)

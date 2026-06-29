@@ -12,6 +12,11 @@ namespace LuxandraLust
             if (!ModsConfig.RoyaltyActive) return false;
             Map map = parms.target as Map ?? Find.CurrentMap;
 
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_RoyalDepravity.defName))
+            {
+                return false;
+            }
+
             return map.mapPawns.FreeColonistsSpawned.Any(p =>
                 LuxandraUtilities.IsAdult(p) && !p.Dead &&
                 p.royalty != null && p.royalty.AllTitlesInEffectForReading.Count > 0

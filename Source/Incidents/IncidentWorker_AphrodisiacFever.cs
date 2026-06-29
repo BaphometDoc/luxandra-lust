@@ -13,6 +13,11 @@ namespace LuxandraLust
         {
             if (!base.CanFireNowSub(parms)) return false;
 
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName))
+            {
+                return false;
+            }
+
             Map map = (Map)parms.target;
             // Need at least 1 humanlike adult pawn to even try
             return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));

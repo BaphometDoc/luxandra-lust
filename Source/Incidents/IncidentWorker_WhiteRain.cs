@@ -12,6 +12,11 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
 
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName))
+            {
+                return false;
+            }
+
             // Don't fire if the weather or condition is already active on this map
             if (map.gameConditionManager.ConditionIsActive(GameConditionDef.Named("Luxandra_WhiteRain")))
             {

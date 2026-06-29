@@ -11,11 +11,16 @@ namespace LuxandraLust
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale.defName))
+            {
+                return false;
+            }
+
             Map map = (Map)parms.target;
             if (map == null) return false;
 
             // Incident can fire only if there is at least one living, free female colonist
-            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Female && !p.Dead);
+            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Female && !p.Dead && LuxandraUtilities.IsAdult(p));
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -68,11 +73,16 @@ namespace LuxandraLust
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale.defName))
+            {
+                return false;
+            }
+
             Map map = (Map)parms.target;
             if (map == null) return false;
 
             // Incident can fire only if there is at least one living, free male colonist
-            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Male && !p.Dead);
+            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.gender == Gender.Male && !p.Dead && LuxandraUtilities.IsAdult(p));
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)

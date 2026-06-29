@@ -19,9 +19,9 @@
 		<targetTags>
 			<li>Map_PlayerHome</li>
 		</targetTags>
-		<workerClass>IncidentWorker_MakeGameCondition</workerClass>
+		<workerClass>LuxandraLust.IncidentWorker_LustfulFertilityPulse</workerClass>
 		<gameCondition>Luxandra_LustfulFertilityPulse</gameCondition>
-		<baseChance>0.3</baseChance><!-- Rare-ish neutral event -->
+		<baseChance>0.3</baseChance>
 		<minRefireDays>30</minRefireDays>
 		<durationDays>
 			<min>4.5</min>

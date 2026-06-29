@@ -408,12 +408,7 @@ namespace LuxandraLust
         /// </summary>
         public bool RequiresMod { get; set; }
 
-        /// <summary>
-        /// Disabled by configs
-        /// </summary>
-        public bool IsDisabledByConfigs { get; set; }
-
-        public LuxandraIncidentDefs(IncidentDef incidentDef, bool isRaid, bool isNegative, bool isPositive, bool isQuest = false, bool requiresDLC = false, bool requiresMod = false, bool isDisabledByConfigs = false)
+        public LuxandraIncidentDefs(IncidentDef incidentDef, bool isRaid, bool isNegative, bool isPositive, bool isQuest = false, bool requiresDLC = false, bool requiresMod = false)
         {
             this.IncidentDef = incidentDef;
             this.IsRaid = isRaid;
@@ -422,7 +417,6 @@ namespace LuxandraLust
             this.IsQuest = isQuest;
             this.RequiresDLC = requiresDLC;
             this.RequiresMod = requiresMod;
-            this.IsDisabledByConfigs = isDisabledByConfigs;
         }
     }
 

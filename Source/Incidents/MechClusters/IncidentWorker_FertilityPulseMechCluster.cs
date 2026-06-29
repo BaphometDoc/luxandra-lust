@@ -9,6 +9,11 @@ namespace LuxandraLust
         {
             if (!base.CanFireNowSub(parms)) return false;
 
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseMechCluster.defName))
+            {
+                return false;
+            }
+
             Map map = (Map)parms.target;
             if (map == null || !map.IsPlayerHome) return false;
 

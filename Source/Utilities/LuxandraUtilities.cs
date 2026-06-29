@@ -387,4 +387,19 @@ namespace LuxandraLust
             return Find.Storyteller?.def.defName == "LuxandraLust";
         }
     }
+
+    // This class tracks if events are enabled
+    public static class LuxandraEventCheck
+    {
+        /// <summary>
+        /// Verifies if the event with the provided def is enabled in the settings
+        /// </summary>
+        public static bool IsEnabled(string defName)
+        {
+            // Small failsafe just in case
+            if (defName == null || defName == "" || defName == " ") return false;
+
+            return !LuxandraEventSettings.disabledEventNames.Contains(defName);
+        }
+    }
 }

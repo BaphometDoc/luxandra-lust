@@ -5,6 +5,27 @@ using Verse.Sound;
 
 namespace LuxandraLust
 {
+    public class IncidentWorker_LustfulFertilityPulse : IncidentWorker_MakeGameCondition
+    {
+        protected override bool CanFireNowSub(IncidentParms parms)
+        {
+            Map map = (Map)parms.target;
+
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse.defName))
+            {
+                return false;
+            }
+
+            // Don't fire if the weather or condition is already active on this map
+            if (map.gameConditionManager.ConditionIsActive(GameConditionDef.Named("Luxandra_WhiteRain")))
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
     public class GameCondition_FertilityPulse : GameCondition
     {
         private const int ScanInterval = 2500;

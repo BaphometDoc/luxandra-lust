@@ -12,6 +12,20 @@ namespace LuxandraLust
     // NOTE: with the rapist raider AI actually working, this is kinda obsolete, should probably just convert it to something more interesting.
     public class IncidentWorker_DeviantHordeRaid : IncidentWorker
     {
+        protected override bool CanFireNowSub(IncidentParms parms)
+        {
+            if (!base.CanFireNowSub(parms)) return false;
+
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName))
+            {
+                return false;
+            }
+
+            Map map = (Map)parms.target;
+            // Need at least 1 humanlike adult pawn to even try
+            return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));
+        }
+
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;

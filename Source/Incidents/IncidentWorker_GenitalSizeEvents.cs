@@ -15,6 +15,7 @@ namespace LuxandraLust
         protected abstract Gender TargetGender { get; }
         protected abstract string EventLogName { get; }
         protected abstract string AssociatedThoughtDefName { get; }
+        protected abstract string IncidentDef { get; }
 
         protected bool AlterPartSize(Pawn pawn, List<RJWLewdablePart> sexParts, bool isExpansion)
         {
@@ -67,6 +68,11 @@ namespace LuxandraLust
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             if (!base.CanFireNowSub(parms)) return false;
+
+            if (IncidentDef != null && !LuxandraEventCheck.IsEnabled(IncidentDef))
+            {
+                return false;
+            }
 
             Map map = parms.target as Map ?? Find.CurrentMap;
             if (map == null) return false;
@@ -125,6 +131,7 @@ namespace LuxandraLust
         protected override Gender TargetGender => Gender.Male;
         protected override string EventLogName => "Male Expansion";
         protected override string AssociatedThoughtDefName => "Luxandra_MaleExpandedMood";
+        protected override string IncidentDef => LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion.defName;
 
         protected override bool ApplySizeChange(List<Pawn> targets, Map map)
         {
@@ -150,6 +157,7 @@ namespace LuxandraLust
         protected override Gender TargetGender => Gender.Male;
         protected override string EventLogName => "Masculine growth";
         protected override string AssociatedThoughtDefName => "Luxandra_MaleReducedMood";
+        protected override string IncidentDef => LuxandraIncidentDefOf.Luxandra_Inc_MaleReduction.defName;
 
         protected override bool ApplySizeChange(List<Pawn> targets, Map map)
         {
@@ -175,6 +183,7 @@ namespace LuxandraLust
         protected override Gender TargetGender => Gender.Female;
         protected override string EventLogName => "Feminine growth";
         protected override string AssociatedThoughtDefName => "Luxandra_FemaleExpandedMood";
+        protected override string IncidentDef => LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion.defName;
 
         protected override bool ApplySizeChange(List<Pawn> targets, Map map)
         {
@@ -200,6 +209,7 @@ namespace LuxandraLust
         protected override Gender TargetGender => Gender.Female;
         protected override string EventLogName => "Feminine shrinkage";
         protected override string AssociatedThoughtDefName => "Luxandra_FemaleReducedMood";
+        protected override string IncidentDef => LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction.defName;
 
         protected override bool ApplySizeChange(List<Pawn> targets, Map map)
         {

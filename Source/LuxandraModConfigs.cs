@@ -12,7 +12,7 @@ namespace LuxandraLust
     {
         public LuxandraMod(ModContentPack content) : base(content)
         {
-            // Forces RimWorld to read the XML file and populate our static variables right at boot
+            // Forces RimWorld to read the XML file and populate the static variables at boot
             GetSettings<LuxandraModSettings>();
         }
 
@@ -23,7 +23,7 @@ namespace LuxandraLust
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            // Forward directly to the static drawing method, exactly like RJW does
+            // Forward directly to the static drawing method
             LuxandraModSettings.DoWindowContents(inRect);
         }
     }

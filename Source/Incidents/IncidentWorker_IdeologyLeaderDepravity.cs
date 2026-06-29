@@ -12,6 +12,11 @@ namespace LuxandraLust
             if (!ModsConfig.IdeologyActive) return false;
             Map map = parms.target as Map ?? Find.CurrentMap;
 
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderDepravity.defName))
+            {
+                return false;
+            }
+
             // Ensure the player faction has a primary ideoligion and an assigned leader pawn
             Ideo primaryIdeo = Faction.OfPlayer?.ideos?.PrimaryIdeo;
             if (primaryIdeo == null) return false;
