@@ -23,13 +23,17 @@ namespace LuxandraLust
                         pawn.needs.food.CurLevel = pawn.needs.food.MaxLevel;
                     }
 
-                    // Biotech-specific lactation hook
-                    if (ModsConfig.BiotechActive && pawn.gender == Gender.Female)
+                    // "only adults" check for anything related to lactation
+                    if (LuxandraUtilities.IsAdult(pawn))
                     {
-                        HediffDef lactationDef = HediffDefOf.Lactating;
-                        if (lactationDef != null && !pawn.health.hediffSet.HasHediff(lactationDef))
+                        // Biotech-specific lactation hook
+                        if (ModsConfig.BiotechActive && pawn.gender == Gender.Female)
                         {
-                            pawn.health.AddHediff(lactationDef);
+                            HediffDef lactationDef = HediffDefOf.Lactating;
+                            if (lactationDef != null && !pawn.health.hediffSet.HasHediff(lactationDef))
+                            {
+                                pawn.health.AddHediff(lactationDef);
+                            }
                         }
                     }
                 }
@@ -60,7 +64,21 @@ namespace LuxandraLust
                         cropStack.SplitOff(amountToConvert).Destroy(DestroyMode.Vanish);
                     }
 
-                    Thing milk = ThingMaker.MakeThing(ThingDef.Named("Milk"));
+                    ThingDef milkDef = DefDatabase<ThingDef>.GetNamed("Milk", false);
+
+                    // Equal milking milk
+                    ThingDef milkEM = DefDatabase<ThingDef>.GetNamed("EM_HumanMilk", false);
+                    if (milkEM != null)
+                        milkDef = milkEM;
+
+                    // Lactation expansion milk
+                    ThingDef milkLactation = DefDatabase<ThingDef>.GetNamed("SEX_BreastMilk", false);
+                    if (milkLactation != null)
+                        milkDef = milkLactation;
+
+                    Thing milk = ThingMaker.MakeThing(milkDef);
+
+
                     milk.stackCount = amountToConvert;
                     GenSpawn.Spawn(milk, position, map);
                 }
