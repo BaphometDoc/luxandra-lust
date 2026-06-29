@@ -31,6 +31,10 @@ namespace LuxandraLust
     public class LuxandraModSettings : ModSettings
     {
         /// <summary>
+        /// Whether to enable debug logging for the mod
+        /// </summary>
+        public static bool enableLogging = false;
+        /// <summary>
         /// Multiplier for the event conversion threshold
         /// </summary>
         public static float eventRerollThresholdMultiplier = 1.0f;
@@ -47,10 +51,18 @@ namespace LuxandraLust
         /// </summary>
         public static int weeklyCycleDays = 7;
         /// <summary>
-        /// Whether to enable debug logging for the mod
+        /// Whenever to enable the notification of having pleased Luxandra's kink
         /// </summary>
-        public static bool enableLogging = false;
         public static bool enablePleasedNotification = false;
+        /// <summary>
+        /// Whenever to enable the reroll of incoming raids into Luxandra's factions
+        /// </summary>
+        public static bool enableRaidFactionOverride = false;
+        /// <summary>
+        /// Multiplier for the event conversion threshold
+        /// </summary>
+        public static float raidFactionOverrideChance = 50.0f;
+
 
         public static void DoWindowContents(Rect inRect)
         {
@@ -70,6 +82,22 @@ namespace LuxandraLust
             // Satisfaction notification toggle
             listingStandard.CheckboxLabeled("Show Satisfaction Notifications", ref enablePleasedNotification, "Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks. (can be spammy in large colonies)");
             listingStandard.Gap(16f);
+
+            // Enable Faction Skewing
+            listingStandard.CheckboxLabeled("Enable Raid Faction Override", ref enableRaidFactionOverride, "Enables the replacement of incoming non-scripted raids with raids of Luxandra's factions.");
+            listingStandard.Gap(16f);
+
+            // Hide the settings if the reroll is disabled
+            if (enableRaidFactionOverride)
+            {
+                // Faction skewing chance
+                listingStandard.Label($"Raid Faction Override chance: {raidFactionOverrideChance.ToString("0.0")}x");
+
+                raidFactionOverrideChance = listingStandard.Slider(raidFactionOverrideChance, 0.1f, 100.0f);
+
+                listingStandard.Label("Adjust the chances Luxandra replaces a incoming non-scripted raid with one from her own factions.");
+                listingStandard.Gap(24f);
+            }
 
             // Weekly interval modifier
             listingStandard.Label($"Storyteller Special Cycle Interval: {weeklyCycleDays} Days");
@@ -173,12 +201,14 @@ namespace LuxandraLust
             // Reset
             if (listingStandard.ButtonText("Reset to Default"))
             {
+                enableLogging = false;
                 eventRerollCondition = 1;
                 eventConversionMode = 2;
                 eventRerollThresholdMultiplier = 1.0f;
                 weeklyCycleDays = 7;
-                enableLogging = false;
                 enablePleasedNotification = false;
+                enableRaidFactionOverride = false;
+                raidFactionOverrideChance = 50.0f;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
             }
@@ -232,6 +262,8 @@ namespace LuxandraLust
             Scribe_Values.Look(ref eventRerollCondition, "eventRerollCondition", 2);
             Scribe_Values.Look(ref eventRerollThresholdMultiplier, "eventRerollThresholdMultiplier", 1.0f);
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
+            Scribe_Values.Look(ref enableRaidFactionOverride, "enableRaidFactionOverride", false);
+            Scribe_Values.Look(ref raidFactionOverrideChance, "raidFactionOverrideChance", 50.0f);
         }
     }
 }

@@ -14,14 +14,29 @@ namespace LuxandraLust
 
             Log.Message("[Luxandra Lust] loaded successfully");
 
+            bool showDetailedLog = LuxandraModSettings.enableLogging;
+
+            // Initialize the incidents
             LuxandraDefsCollections.InizializeLuxandraIncidents();
-            var incidentsInitialized = LuxandraDefsCollections.AllIncidents;
+            if (showDetailedLog)
+            {
+                var incidentsInitialized = LuxandraDefsCollections.AllIncidents;
 
-            Log.Message($"[Luxandra Lust] found {incidentsInitialized.Count} lustful events.");
+                Log.Message($"[Luxandra Lust] found {incidentsInitialized.Count} lustful events.");
 
-            LuxandraDebugActions.DebugLogMessage($"Positive incidents: {LuxandraDefsCollections.PositiveIncidents.Count()}");
-            LuxandraDebugActions.DebugLogMessage($"Negative incidents: {LuxandraDefsCollections.NegativeIncidents.Count()}");
-            LuxandraDebugActions.DebugLogMessage($"Raids: {LuxandraDefsCollections.Raids.Count()}");
+                LuxandraDebugActions.DebugLogMessage($"Positive incidents: {LuxandraDefsCollections.PositiveIncidents.Count()}");
+                LuxandraDebugActions.DebugLogMessage($"Negative incidents: {LuxandraDefsCollections.NegativeIncidents.Count()}");
+                LuxandraDebugActions.DebugLogMessage($"Raids: {LuxandraDefsCollections.Raids.Count()}");
+            }
+
+            // Initialize the factions
+            LuxandraFactionDefsCollections.InizializeLuxandraFactions();
+            if (showDetailedLog)
+            {
+                var factionsInitialized = LuxandraFactionDefsCollections.AllFactions;
+
+                Log.Message($"[Luxandra Lust] found {factionsInitialized.Count} factions.");
+            }
         }
     }
 }

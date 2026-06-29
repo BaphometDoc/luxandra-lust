@@ -3,6 +3,8 @@
 - Aphrodisiac fever now gets reduced by a minor amount even if the infected part is not used
 - Sexperience's Sex skill now increases (significantly) the recovery speed
 - Added a very small mood buff/debuff on pleasing/annoying Luxandra for her weekly routine
+- Added the two new factions, holy crusaders and feral amazons
+- Added a setting to significantly increase the chance of raids to be from the new factions
 
 0.4.1 - 28/06/2027
 - Luxandra now reveals her current kink. Pleasing her kinks will have positive effects

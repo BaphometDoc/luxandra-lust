@@ -22,8 +22,13 @@ namespace LuxandraLust
             public static bool InLuxandraExecution = false;
         }
 
-        // WARNING: This is a huge mess. Read at your own risk.
+        // =============================================================
+        // === WARNING: This is a huge mess. Read at your own risk.  ===
+        // =============================================================
         // Intercept the storyteller event, and re-evaluate it based on how much sex has been going on
+        // Note to self and whoever attempts to read this
+        // Return TRUE = continue and execute whatever event was queued
+        // Return FALSE = stop and do not execute whatever event was queued
         [HarmonyPatch(typeof(IncidentWorker), "TryExecute")]
         public static class Patch_IncidentExecute
         {
@@ -38,10 +43,11 @@ namespace LuxandraLust
 
                 // Check that the system isnt straight up disabled
                 bool isSexualRerollEnabled = LuxandraModSettings.eventRerollCondition != 0;
-                if (!isSexualRerollEnabled)
+                bool isFactionOverrideEnabled = LuxandraModSettings.enableRaidFactionOverride;
+                if (!isSexualRerollEnabled && !isFactionOverrideEnabled)
                 {
                     // Exits if the reroll is disabled
-                    LuxandraDebugActions.DebugLogMessage("Sexual event rerolling is disabled. Skipping...");
+                    LuxandraDebugActions.DebugLogMessage("Event rerolling is disabled. Skipping...");
                     return true;
                 }
 
@@ -67,7 +73,7 @@ namespace LuxandraLust
                 var n = GameComponent_LuxandraLust.Instance;
                 if (def == null || n == null || targetMap == null)
                 {
-                    LuxandraDebugActions.DebugLogMessage($"The event reroll should have never entered here. You fucked up.");
+                    LuxandraDebugActions.DebugLogMessage($"The event reroll should have never entered here. Something fucked up.");
                     return true;
                 }
 
@@ -77,13 +83,18 @@ namespace LuxandraLust
                 var eventType = def.category;
                 LuxandraDebugActions.DebugLogMessage($"Incident about to happen: {__instance.def?.defName} - Event type: {eventType}");
 
-                // TODO: Raid faction changing
-                // if(def == IncidentDefOf.RaidEnemy)
-
-                bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall;
+                bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall || def == IncidentDefOf.RaidEnemy;
 
                 // Event conversion condition - 0: Disabled, 1: Only Negative, 2: All Events
                 int rerollConditionConfig = LuxandraModSettings.eventRerollCondition;
+
+                if (rerollConditionConfig == 1 && !isNegative)
+                {
+                    // Exit if the config says to only reroll negative events
+                    LuxandraDebugActions.DebugLogMessage("Event not negative. Skipping...");
+                    return true;
+                }
+
                 // Event conversion type - 0: Match type, 1: Always positive, 2: Random
                 int rerollModeConfig = LuxandraModSettings.eventConversionMode;
                 // Threshold multiplier from settings
@@ -93,18 +104,77 @@ namespace LuxandraLust
                 LuxandraDebugActions.DebugLogMessage($"rerollModeConfig: {rerollModeConfig}");
                 LuxandraDebugActions.DebugLogMessage($"rerollThresholdMultiplierFromConfigs: {rerollThresholdMultiplierFromConfigs}");
 
-                if (rerollConditionConfig == 1 && !isNegative)
-                {
-                    // Exit if the config says to only reroll negative events
-                    LuxandraDebugActions.DebugLogMessage("Event not negative. Skipping...");
-                    return true;
-                }
-
                 int totalThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
                 LuxandraDebugActions.DebugLogMessage($"Sex events since last reroll: ${n.sexActionCounterForRerolls} - Event threshold: {totalThreshold}");
 
                 // Putting this here so if I feel like changing it I don't need 200 copypastes.
                 string luxandraRerollName = "Luxandra's Lustful Gaze";
+                bool shouldEventRerollHappen = n.sexActionCounterForRerolls >= totalThreshold && isSexualRerollEnabled; // The isSexualRerollEnabled is redundant but you never know...
+
+                // ==================================================
+                // ==== START OF THE RAID FACTION OVERRIDE LOGIC ====
+                // ==================================================
+
+                // Only enter the override if it's enabled, it's a raid, and the threshold for a event reroll is not met
+                if (isFactionOverrideEnabled && def == IncidentDefOf.RaidEnemy && !shouldEventRerollHappen)
+                {
+                    LuxandraDebugActions.DebugLogMessage("Faction override is enabled. Rolling for chance to happen.");
+                    float roll = Rand.Range(1f, 100f);
+                    float chance = LuxandraModSettings.raidFactionOverrideChance;
+
+                    LuxandraDebugActions.DebugLogMessage($"Rolled {roll} against {chance}.");
+                    if (roll < chance)
+                    {
+                        bool successfullyOverriddenFaction = false;
+                        try
+                        {
+                            LuxandraExecutionGuard.InLuxandraExecution = true;
+                            LuxandraDebugActions.DebugLogMessage("Roll was valid. Attempting the faction override...");
+
+                            var upcomingFaction = parms.faction;
+
+                            var luxandraFactions = LuxandraFactionDefsCollections.AllRaidingFactions.Select(f => f.FactionDef).ToList();
+                            var activeLuxandraFactions = Find.FactionManager.AllFactions.Where(f => luxandraFactions.Contains(f.def) && f.HostileTo(Faction.OfPlayer));
+
+                            if (!activeLuxandraFactions.Contains(parms.faction) && activeLuxandraFactions.Any())
+                            {
+                                // TODO: Weightings?
+                                var selectedFactionDef = activeLuxandraFactions.InRandomOrder().FirstOrDefault();
+                                parms.faction = selectedFactionDef;
+
+                                // TODO: some logic?
+                                parms.raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkIn;
+
+                                successfullyOverriddenFaction = true;
+                            }
+                            else
+                                LuxandraDebugActions.DebugLogMessage("No valid faction was found or the raid was already from one of them. Skipping the reroll.");
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Log.Error($"[Luxandra Debug] Error during raid faction override: {ex}");
+                        }
+                        finally
+                        {
+                            LuxandraExecutionGuard.InLuxandraExecution = false;
+                        }
+
+
+                        if (successfullyOverriddenFaction)
+                        {
+                            LuxandraDebugActions.DebugLogMessage($"Raid faction was rerolled. New faction: {parms.faction.def.defName}");
+                            return true;
+                        }
+                    }
+                }
+
+
+                if (!isSexualRerollEnabled)
+                {
+                    // We didn't do a raid reroll, and sexual reroll is disabled. Leave
+                    LuxandraDebugActions.DebugLogMessage("Sexual rerolling is disabled and faction was not rerolled. Skipping...");
+                    return true;
+                }
 
                 // =========================================
                 // ==== START OF THE PRUDE REROLL LOGIC ====
@@ -201,7 +271,7 @@ namespace LuxandraLust
 
                 // This is a redundant check, but here for safety because there's way too many possible
                 // recursions here
-                if (n.sexActionCounterForRerolls >= totalThreshold && isSexualRerollEnabled)
+                if (shouldEventRerollHappen)
                 {
                     // High Sexual Activity Passed Threshold - reroll to a sexual event according to the settings
                     LuxandraDebugActions.DebugLogMessage($"Threshold was passed!");

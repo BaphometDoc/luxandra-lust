@@ -9,7 +9,6 @@ namespace LuxandraLust
     // This file contains mostly the quick references to the defs, as well as the categorization of every
     // event compatible with the mod.
 
-    // Defs for incidents so they can be referenced in code without hardcoding strings everywhere
     [DefOf]
     public static class LuxandraIncidentDefOf
     {
@@ -36,6 +35,14 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_FemaleExpansion;
         public static IncidentDef Luxandra_Inc_MaleReduction;
         public static IncidentDef Luxandra_Inc_FemaleReduction;
+        [MayRequireRoyalty]
+        public static IncidentDef Luxandra_Inc_RoyalLuxury;
+        [MayRequireRoyalty]
+        public static IncidentDef Luxandra_Inc_RoyalDepravity;
+        [MayRequireIdeology]
+        public static IncidentDef Luxandra_Inc_IdeoLeaderBlessing;
+        [MayRequireIdeology]
+        public static IncidentDef Luxandra_Inc_IdeoLeaderDepravity;
 
         // Boons
         public static IncidentDef Luxandra_Inc_LustfulSupplies;
@@ -51,8 +58,10 @@ namespace LuxandraLust
 
     public static class LuxandraDefsCollections
     {
+        /// <summary>
         // List of all incidents managed by the mod
         // For usage in the rest of the mod
+        /// </summary>
         private static readonly List<LuxandraIncidentDefs> _allIncidents = new List<LuxandraIncidentDefs>();
 
         /// <summary>
@@ -205,18 +214,16 @@ namespace LuxandraLust
             #region Royalty
             if (ModsConfig.RoyaltyActive)
             {
-                IncidentDef royalLuxury = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_RoyalLuxury", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: royalLuxury,
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalLuxury,
                     isRaid: false,
                     isNegative: false,
                     isPositive: true,
                     requiresDLC: true
                 ));
 
-                IncidentDef royalDepravity = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_RoyalDepravity", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: royalDepravity,
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalDepravity,
                     isRaid: false,
                     isNegative: true,
                     isPositive: false,
@@ -228,18 +235,16 @@ namespace LuxandraLust
             #region Ideology
             if (ModsConfig.IdeologyActive)
             {
-                IncidentDef ideoLeaderBlessing = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_IdeoLeaderBlessing", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: ideoLeaderBlessing,
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderBlessing,
                     isRaid: false,
                     isNegative: false,
                     isPositive: true,
                     requiresDLC: true
                 ));
 
-                IncidentDef ideoLeaderDepravity = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_IdeoLeaderDepravity", false);
                 _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: ideoLeaderDepravity,
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderDepravity,
                     isRaid: false,
                     isNegative: true,
                     isPositive: false,
@@ -409,6 +414,93 @@ namespace LuxandraLust
             this.RequiresDLC = requiresDLC;
             this.RequiresMod = requiresMod;
             this.IsDisabledByConfigs = isDisabledByConfigs;
+        }
+    }
+
+
+
+    [DefOf]
+    public static class LuxandraFactionDefOf
+    {
+        /// <summary>
+        /// Feral Amazons
+        /// </summary>
+        public static FactionDef Luxandra_AmazonTribe;
+
+        /// <summary>
+        /// The Crusade
+        /// </summary>
+        [MayRequireRoyalty]
+        public static FactionDef Luxandra_PuritanCrusaders;
+
+        /// <summary>
+        /// Carnal Deviants
+        /// </summary>
+        public static FactionDef Luxandra_DeviantHordeFaction;
+
+        static LuxandraFactionDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(LuxandraFactionDefOf));
+        }
+    }
+
+    public static class LuxandraFactionDefsCollections
+    {
+        /// <summary>
+        // List of all factions managed by the mod
+        // For usage in the rest of the mod
+        /// </summary>
+        private static readonly List<LuxandraFactionDefs> _allFactions = new List<LuxandraFactionDefs>();
+
+        /// <summary>
+        /// All factions available
+        /// </summary>
+        public static ReadOnlyCollection<LuxandraFactionDefs> AllFactions => _allFactions.AsReadOnly();
+
+        /// <summary>
+        /// All factions available capable of raiding
+        /// </summary>
+        public static IEnumerable<LuxandraFactionDefs> AllRaidingFactions => _allFactions.Where(f => f.CanSendRaids);
+
+        public static void InizializeLuxandraFactions()
+        {
+
+            _allFactions.Add(new LuxandraFactionDefs(
+                factionDef: LuxandraFactionDefOf.Luxandra_AmazonTribe,
+                canSendRaids: true
+            ));
+
+            _allFactions.Add(new LuxandraFactionDefs(
+                factionDef: LuxandraFactionDefOf.Luxandra_DeviantHordeFaction,
+                canSendRaids: false
+            ));
+
+            if (ModsConfig.RoyaltyActive)
+            {
+                _allFactions.Add(new LuxandraFactionDefs(
+                    factionDef: LuxandraFactionDefOf.Luxandra_PuritanCrusaders,
+                    canSendRaids: true
+                ));
+            }
+        }
+
+        public class LuxandraFactionDefs
+        {
+            /// <summary>
+            /// The actual def
+            /// </summary>
+            public FactionDef FactionDef { get; set; }
+
+            /// <summary>
+            /// Determines if the faction can send raids
+            /// </summary>
+            public bool CanSendRaids { get; set; }
+
+            public LuxandraFactionDefs(FactionDef factionDef, bool canSendRaids)
+            {
+                this.FactionDef = factionDef;
+                this.CanSendRaids = canSendRaids;
+            }
         }
     }
 }
