@@ -276,11 +276,11 @@
 		<logEntryDef>MeleeAttack</logEntryDef>
 	</ManeuverDef>
 
-	<HediffDef ParentName="ImplantHediffBase">
+	<HediffDef>
 		<defName>Luxandra_EnthrallingTouch</defName>
 		<label>sensual touch</label>
 		<description>A poisonous touch evolved to weaken the preys, in order to use them while they're still alive. The warm poison also serves the secondary purpose of warming the Deviant's body, increasing cold resistance and pain tolerance.</description>
-		<hediffClass>Hediff_Implant</hediffClass>
+		<hediffClass>HediffWithComps</hediffClass>
 		<defaultLabelColor>(0.8, 0.4, 0.7)</defaultLabelColor>
 		<isBad>false</isBad>
 		<stages>
@@ -346,7 +346,7 @@
       <ThingDef>Luxandra_EnthrallingTouch</ThingDef>
       <HediffDef>Luxandra_EnthrallingTouch</HediffDef>
     </descriptionHyperlinks>
-    <jobString>Installing death acidifier.</jobString>
+    <jobString>Causing development of enthralling touch.</jobString>
     <ingredients>
       <li>
         <filter>

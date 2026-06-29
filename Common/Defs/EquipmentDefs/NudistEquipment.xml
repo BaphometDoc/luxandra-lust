@@ -37,6 +37,9 @@
         <li>Arms</li>
         <li>Legs</li>
       </bodyPartGroups>
+      <renderSkipFlags>
+        <li>None</li>
+      </renderSkipFlags>
       <wornGraphicPath>Things/Apparel/InvisibleArmor/InvisibleArmor</wornGraphicPath>
       <layers>
         <li>OnSkin</li>
