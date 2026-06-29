@@ -86,8 +86,9 @@ namespace LuxandraLust
                 // Carve out the remaining space to the right of the checkmark for the text label
                 Rect textRect = new Rect(rowRect.x + 30f, rowRect.y, rowRect.width - 30f, 24f);
 
-                // Draw the actual clickable check/cross widget on the left
-                Widgets.Checkbox(checkRect.position, ref isEnabled, 24f);
+                // Draw the actual clickable check/cross widget on the left -- Using RJW one cause it's appropriate lol
+                //Widgets.Checkbox(checkRect.position, ref isEnabled, 24f);
+                rjw.MainTab.DesignatorCheckbox.Checkbox(checkRect.position, ref isEnabled, 24f);
 
                 // Draw the text label immediately next to it
                 Widgets.Label(textRect, $"{modDescription}");
