@@ -147,10 +147,10 @@ namespace LuxandraLust
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
-                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
-                    isRaid: true,
-                    isNegative: true,
-                    isPositive: false
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
+                isRaid: true,
+                isNegative: true,
+                isPositive: false
                 ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -430,7 +430,6 @@ namespace LuxandraLust
         /// <summary>
         /// The Crusade
         /// </summary>
-        [MayRequireRoyalty]
         public static FactionDef Luxandra_PuritanCrusaders;
 
         /// <summary>
