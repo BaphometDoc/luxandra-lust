@@ -14,7 +14,7 @@
   
   <IncidentDef MayRequire="Ludeon.RimWorld.Ideology">
     <defName>Luxandra_Inc_IdeoLeaderBlessing</defName>
-    <label>Spiritual Radiance</label>
+    <label>Spiritual radiance</label>
     <category>Misc</category>
     <workerClass>LuxandraLust.IncidentWorker_IdeologyLeaderBlessing</workerClass>
     <targetTags>

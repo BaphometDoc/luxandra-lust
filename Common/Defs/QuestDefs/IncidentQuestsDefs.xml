@@ -2,7 +2,7 @@
 <Defs>
 	<IncidentDef>
 		<defName>Luxandra_Inc_BreakPrisonersContractQuest</defName>
-		<label>Prison Breaking Contract</label>
+		<label>Prison breaking contract</label>
 		<category>Misc</category>
 		<pointsScaleable>true</pointsScaleable>
 		<targetTags>

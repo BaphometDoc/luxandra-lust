@@ -57,7 +57,7 @@
 
 	<IncidentDef>
 		<defName>Luxandra_Inc_TheMilkGame</defName>
-		<label>Lactose Cataclysm</label>
+		<label>Lactose cataclysm</label>
 		<category>ThreatBig</category>
 		<targetTags>
 			<li>Map_PlayerHome</li>
