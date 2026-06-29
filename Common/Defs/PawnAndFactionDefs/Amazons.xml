@@ -3,7 +3,7 @@
 	<!-- ============================== -->
 	<!-- The faction -->
 	<!-- ============================== -->
-	<FactionDef ParentName="PirateBandBase">
+	<FactionDef ParentName="FactionBase">
 		<defName>Luxandra_AmazonTribe</defName>
 		<label>feral amazon enclave</label>
 		<description>A highly aggressive, hidden collective of genetically altered hunters. Driven by an all-consuming predatory instinct, they view other settlements purely as hunting grounds. Despite their absolute refusal to wear clothing, they wield terrifying, stolen spacer-grade weaponry stripped from the corpses of their prey.</description>
@@ -11,7 +11,15 @@
 		<pawnsPlural>amazonesses</pawnsPlural>
 		<allowedCultures>
 			<li>Rustican</li>
-		</allowedCultures><colorSpectrum>
+		</allowedCultures>
+		<backstoryFilters>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFilters>
+		<colorSpectrum>
 			<li>(0.15, 0.65, 0.15)</li>
 			<li>(0.3, 0.5, 0.2)</li>
 		</colorSpectrum>
@@ -39,8 +47,8 @@
 	
 		<!-- Ideology setup -->
 		<requiredMemes>
-			<!-- <li MayRequire="Ludeon.RimWorld.Ideology">Supremacist</li> -->
-			<!-- <li MayRequire="Ludeon.RimWorld.Ideology">Raider</li> -->
+			<li MayRequire="Ludeon.RimWorld.Ideology">Supremacist</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Raider</li>
 			<li MayRequire="rjw.sexperience.ideology">Rapist</li>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibal</li>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Nudism</li>
@@ -244,12 +252,22 @@
 			<li>Violent</li>
 		</requiredWorkTags>
 		
-		<apparelMoney>0~0</apparelMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags/>
+		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
+			<li>Luxandra_FeralTalisman</li>
 			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Sash</li>
 		</apparelRequired>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+				<requiredTag>Nudist</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
+			<li>Nudist</li>
+		</apparelTags>
 		
 		<weaponMoney>500~3500</weaponMoney>
 		<weaponTags>
@@ -312,10 +330,22 @@
 			<li>Violent</li>
 		</requiredWorkTags>
 		
-		<apparelMoney>0~0</apparelMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags/>
-		
+		<apparelMoney>10~1000</apparelMoney>
+		<apparelRequired>
+			<li>Luxandra_FeralTalisman</li>
+		</apparelRequired>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+				<requiredTag>Nudist</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
+			<li>Nudist</li>
+		</apparelTags>
+				
 		<weaponMoney>500~4500</weaponMoney>
 		<weaponTags>
 			<li>NeolithicRanged</li>
@@ -370,12 +400,23 @@
 			<li>Violent</li>
 		</requiredWorkTags>
 		
-		<apparelMoney>0~0</apparelMoney>
-		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
-		<apparelTags/>
+		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
-			<li MayRequire="Ludeon.RimWorld.Royalty">Apparel_EltexSkullcap</li>
+			<!-- <li MayRequire="Ludeon.RimWorld.Royalty">Apparel_EltexSkullcap</li> -->
+			<li>Luxandra_FeralTalisman</li>
+			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Sash</li>
 		</apparelRequired>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+				<requiredTag>Nudist</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
+			<li>Nudist</li>
+		</apparelTags>
 		
 		<!-- 2. PSYCHIC FOCUS WEAPONS -->
 		<weaponMoney>2000~4000</weaponMoney>
@@ -450,12 +491,21 @@
 			<li>Violent</li>
 		</requiredWorkTags>
 		
-		<apparelMoney>0~0</apparelMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags/>
+		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
-			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Bandolier</li>
+			<li>Luxandra_FeralTalisman</li>
 		</apparelRequired>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+				<requiredTag>Nudist</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
+			<li>Nudist</li>
+		</apparelTags>
 		
 		<weaponMoney>3000~3500</weaponMoney>
 		<weaponTags>
@@ -504,12 +554,24 @@
 			<li>Violent</li>
 		</requiredWorkTags>
 		
-		<apparelMoney>0~0</apparelMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags/>
+		<apparelMoney>10~1000</apparelMoney>
+		<apparelIgnoreSeasons>true</apparelIgnoreSeasons>
+		<apparelIgnorePollution>true</apparelIgnorePollution>
 		<apparelRequired>
+			<li>Luxandra_FeralTalisman</li>
 			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Sash</li>
 		</apparelRequired>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+				<requiredTag>Nudist</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
+			<li>Nudist</li>
+		</apparelTags>
 		
 		<weaponMoney>3500~6000</weaponMoney>
 		<weaponTags>

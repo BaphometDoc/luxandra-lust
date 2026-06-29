@@ -3,7 +3,7 @@
 	<!-- ============================== -->
 	<!-- The faction -->
 	<!-- ============================== -->
-	<FactionDef ParentName="PirateBandBase" MayRequire="Ludeon.RimWorld.Royalty">
+	<FactionDef ParentName="FactionBase" MayRequire="Ludeon.RimWorld.Royalty">
 		<defName>Luxandra_PuritanCrusaders</defName>
 		<label>Stainless order</label>
 		<description>An ultra-orthodox, technologically supreme military order dedicated to the absolute eradication of psychological and genetic deviance. They possess advanced psionic manipulation and glitterworld weaponry, which they direct with ruthless efficiency against any settlement they deem to be tainted by heretical, hedonistic influences.</description>
@@ -12,6 +12,13 @@
 		<allowedCultures>
 			<li>Astropolitan</li>
 		</allowedCultures>
+		<backstoryFilters>
+			<li>
+				<categories>
+					<li>ImperialCommon</li>
+				</categories>
+			</li>
+		</backstoryFilters>
 		<structureMemeWeights>
 			<Structure_OriginChristian MayRequire="Ludeon.RimWorld.Ideology">1</Structure_OriginChristian>
 		</structureMemeWeights><colorSpectrum>

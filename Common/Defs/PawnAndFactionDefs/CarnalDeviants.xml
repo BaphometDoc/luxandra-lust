@@ -115,8 +115,14 @@
 		<itemQuality>Poor</itemQuality>
 		<apparelMoney>0~0</apparelMoney>
 		<weaponMoney>0~0</weaponMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
 		</apparelTags>
 		<techHediffsChance>0</techHediffsChance>
 		<backstoryFiltersOverride>
@@ -155,8 +161,14 @@
 		<itemQuality>Poor</itemQuality>
 		<apparelMoney>0~0</apparelMoney>
 		<weaponMoney>0~0</weaponMoney>
-		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
-		<apparelTags>
+		<specificApparelRequirements>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li>Luxandra_PrimalForcedGear</li>
 		</apparelTags>
 		<techHediffsChance>0</techHediffsChance>
 		<backstoryFiltersOverride>

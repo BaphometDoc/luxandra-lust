@@ -102,15 +102,6 @@ namespace LuxandraLust
                 IntVec3 loc2 = CellFinder.RandomClosewalkCellNear(loc, map, 5);
                 GenSpawn.Spawn(deviant, loc2, map, WipeMode.Vanish);
 
-                // Nuke their gear in case they spawn with some
-                // (As I learned, the game can in fact give them gear if the colony wealth is high enough)
-                List<Apparel> apparelList = deviant.apparel.WornApparel;
-                for (int j = apparelList.Count - 1; j >= 0; j--)
-                {
-                    deviant.apparel.Remove(apparelList[j]);
-                }
-                deviant.equipment?.DestroyAllEquipment();
-
                 // Apply the as the anesthetic touch
                 if (clawHediff != null && deviant.health != null)
                 {
