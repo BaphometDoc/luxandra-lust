@@ -1,4 +1,6 @@
 0.6 - in development...
+
+0.5.1 - 29/06/2026
 - Removed royalty requirement from Crusaders
 - Implemented a invisible armor that literally does nothing but makes the amazons/deviants actually spawn naked properly even at high wealth values
 - Added a ending condition to the rapist raids (all your pawns are downed + the raiders sex need is satisfied, or the raiders get too tired)
