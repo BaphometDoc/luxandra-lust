@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using RimWorld;
+﻿using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -85,46 +84,6 @@ namespace LuxandraLust
             if (!RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 loc, map, CellFinder.EdgeRoadChance_Hostile))
             {
                 return false;
-            }
-
-            // The hediff Luxandra_RapistRage is applied by the raid AI now
-            HediffDef clawHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_EnthrallingTouch", false);
-            if (clawHediff == null)
-            {
-                Log.Error("[LuxandraLust] Missing Luxandra_EnthrallingTouch HediffDef!");
-                return true;
-            }
-
-            // Spawn them and send them on rapist frenzy
-            for (int i = 0; i < list.Count; i++)
-            {
-                Pawn deviant = list[i];
-                IntVec3 loc2 = CellFinder.RandomClosewalkCellNear(loc, map, 5);
-                GenSpawn.Spawn(deviant, loc2, map, WipeMode.Vanish);
-
-                // Apply the as the anesthetic touch
-                if (clawHediff != null && deviant.health != null)
-                {
-                    // Search for either Left or Right hand explicitly
-                    IEnumerable<BodyPartRecord> strikeParts = deviant.RaceProps.body.AllParts.Where(p => p.def.defName.ToLower().Contains("hand"));
-
-                    // Fallback to arms if missing hands
-                    if (!strikeParts.Any())
-                        strikeParts = deviant.RaceProps.body.AllParts.Where(p => p.def == BodyPartDefOf.Arm);
-
-                    // Fallback to torso if all else fails
-                    if (!strikeParts.Any())
-                        strikeParts.AddItem(deviant.RaceProps.body.corePart);
-
-                    if (strikeParts.Any())
-                    {
-                        foreach (var strikePart in strikeParts)
-                        {
-                            Hediff enthrallingTouch = HediffMaker.MakeHediff(clawHediff, deviant, strikePart);
-                            deviant.health.AddHediff(enthrallingTouch);
-                        }
-                    }
-                }
             }
 
             // Calling it "massive crowd" when it's like 3 of them seems pretty dumb

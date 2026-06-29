@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
@@ -36,11 +37,11 @@ namespace LuxandraLust
             StateGraph graph = base.CreateGraph();
 
             LordToil vanillaAssaultToil = graph.lordToils.FirstOrDefault(t => t is LordToil_AssaultColony && !(t is LordToil_BastardAssault));
+            LordToil_BastardAssault customToil = new LordToil_BastardAssault();
 
+            // Start the rapist raid
             if (vanillaAssaultToil != null)
             {
-                LordToil_BastardAssault customToil = new LordToil_BastardAssault();
-
                 int index = graph.lordToils.IndexOf(vanillaAssaultToil);
                 graph.lordToils[index] = customToil;
 
@@ -50,7 +51,106 @@ namespace LuxandraLust
                 }
             }
 
+            // Find the vanilla kidnapping destination state if it exists in the baseline graph
+            LordToil kidnapToil = graph.lordToils.FirstOrDefault(t => t is LordToil_KidnapCover);
+
+            if (customToil != null && kidnapToil != null)
+            {
+                Transition cleanBreakTransition = new Transition(customToil, kidnapToil);
+
+                // Evaluate if the raiders have had enough fun
+                cleanBreakTransition.AddTrigger(new Trigger_ColonistsDownedAndSexNeedMet());
+
+                // Evaluate if the raiders have had enough fun
+                cleanBreakTransition.AddTrigger(new Trigger_RaidersAreTired());
+
+                // Add a feedback notification
+                cleanBreakTransition.AddPreAction(new TransitionAction_Message("The raiders are satisfied with the attack and are kidnapping who they can before leaving!", MessageTypeDefOf.NegativeEvent));
+
+                graph.AddTransition(cleanBreakTransition);
+            }
+
             return graph;
+        }
+    }
+
+    public class Trigger_ColonistsDownedAndSexNeedMet : Trigger
+    {
+        public override bool ActivateOn(Lord lord, TriggerSignal signal)
+        {
+            // Only execute this heavier condition check on standard periodic environment updates
+            if (signal.type != TriggerSignalType.Tick) return false;
+
+            // Check every 200 ticks (~3.3 seconds) to keep performance flawless
+            if (Find.TickManager.TicksGame % 200 != 0) return false;
+
+            Map map = lord.Map;
+            if (map == null) return false;
+
+            // Is there any capable colonist capable of fighting back?
+            var colonists = map.mapPawns.FreeAdultColonistsSpawned;
+            var consciousColonists = colonists.Where(p => !p.Dead && !p.Downed);
+            if (map.mapPawns.FreeColonistsSpawnedCount > 0 && !consciousColonists.Any())
+            {
+                if (lord.ownedPawns.Count == 0) return false;
+
+                foreach (Pawn raider in lord.ownedPawns)
+                {
+                    if (raider.Dead || raider.Downed) continue;
+
+                    // Locate your sub-mod's unique internal need string descriptor 
+                    var sexNeed = raider.needs.TryGetNeed<rjw.Need_Sex>();
+
+                    if (sexNeed != null)
+                    {
+                        if (sexNeed.CurLevel < 0.5f)
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                // If everyone alive meets the metric criteria and the colony is defeated, break away!
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public class Trigger_RaidersAreTired : Trigger
+    {
+        public override bool ActivateOn(Lord lord, TriggerSignal signal)
+        {
+            // Only execute this heavier condition check on standard periodic environment updates
+            if (signal.type != TriggerSignalType.Tick) return false;
+
+            // Check every 200 ticks (~3.3 seconds) to keep performance flawless
+            if (Find.TickManager.TicksGame % 200 != 0) return false;
+
+            Map map = lord.Map;
+            if (map == null) return false;
+
+            // Is there any capable colonist capable of fighting back?
+            if (lord.ownedPawns.Count == 0) return false;
+
+            foreach (Pawn raider in lord.ownedPawns)
+            {
+                if (raider.Dead || raider.Downed) continue;
+
+                var restNeed = DefDatabase<NeedDef>.GetNamed("Rest");
+
+                if (restNeed != null)
+                {
+                    if (restNeed.baseLevel > 0.3f)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            // If everyone alive meets the metric criteria and the colony is defeated, break away!
+            return true;
         }
     }
 
