@@ -1,4 +1,6 @@
-0.5 - in development...
+0.6 - in development...
+
+0.5 - 29/06/2026
 - Significantly increased the budget for the lustful supplies + added Cumpilation items
 - Aphrodisiac fever now gets reduced by a minor amount even if the infected part is not used
 - Sexperience's Sex skill now increases (significantly) the recovery speed
@@ -6,7 +8,7 @@
 - Added the two new factions, holy crusaders and feral amazons
 - Added a setting to significantly increase the chance of raids to be from the new factions
 
-0.4.1 - 28/06/2027
+0.4.1 - 28/06/2026
 - Luxandra now reveals her current kink. Pleasing her kinks will have positive effects
 - Added some cold resistance and pain tolerance to the deviants so they stop collapsing in the cold
 - Reworked the math behind the sexual reroll to make it harder to achieve at baseline (still customizable though)
