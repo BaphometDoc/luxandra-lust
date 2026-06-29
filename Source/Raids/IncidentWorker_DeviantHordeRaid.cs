@@ -8,6 +8,8 @@ namespace LuxandraLust
 {
     // These totally arent basically RJW nymphs
     // No, really, this used to be a Nymph horde, but RJW just fucks (he he) anything that has "nymph" in their name so... deviants it is.
+
+    // NOTE: with the rapist raider AI actually working, this is kinda obsolete, should probably just convert it to something more interesting.
     public class IncidentWorker_DeviantHordeRaid : IncidentWorker
     {
         protected override bool TryExecuteWorker(IncidentParms parms)
