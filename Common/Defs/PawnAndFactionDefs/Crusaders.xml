@@ -3,7 +3,7 @@
 	<!-- ============================== -->
 	<!-- The faction -->
 	<!-- ============================== -->
-	<FactionDef ParentName="FactionBase" MayRequire="Ludeon.RimWorld.Royalty">
+	<FactionDef ParentName="FactionBase">
 		<defName>Luxandra_PuritanCrusaders</defName>
 		<label>Stainless order</label>
 		<description>An ultra-orthodox, technologically supreme military order dedicated to the absolute eradication of psychological and genetic deviance. They possess advanced psionic manipulation and glitterworld weaponry, which they direct with ruthless efficiency against any settlement they deem to be tainted by heretical, hedonistic influences.</description>
