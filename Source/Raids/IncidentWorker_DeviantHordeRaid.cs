@@ -1,8 +1,6 @@
 ﻿using RimWorld;
-using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using Verse.AI.Group;
 
 namespace LuxandraLust
 {
@@ -10,7 +8,7 @@ namespace LuxandraLust
     // No, really, this used to be a Nymph horde, but RJW just fucks (he he) anything that has "nymph" in their name so... deviants it is.
 
     // NOTE: with the rapist raider AI actually working, this is kinda obsolete, should probably just convert it to something more interesting.
-    public class IncidentWorker_DeviantHordeRaid : IncidentWorker
+    public class IncidentWorker_DeviantHordeRaid : IncidentWorker_RaidEnemy
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
@@ -63,57 +61,29 @@ namespace LuxandraLust
                 return false;
             }
 
-            List<Pawn> list = new List<Pawn>();
-            float currentPoints = 0f;
-
-            // Naked pawns are cheap (combatPower 30), so this will scale up a massive horde naturally
-            // Save your anus...
-            while (currentPoints < parms.points)
+            var raidStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_DeviantHordeAssault", false);
+            if (raidStrategy == null)
             {
-                PawnGenerationRequest request = new PawnGenerationRequest(
-                    deviantKind,
-                    deviantFaction,
-                    PawnGenerationContext.NonPlayer,
-                    -1,
-                    forceGenerateNewPawn: true,
-                    allowDead: false,
-                    allowDowned: false,
-                    canGeneratePawnRelations: false,
-                    mustBeCapableOfViolence: true,
-                    1f
-                )
-                {
-                    // Force the age range here
-                    BiologicalAgeRange = new FloatRange(19f, 30f) // Keep them synced
-                };
-
-                Pawn pawn = PawnGenerator.GeneratePawn(request);
-                list.Add(pawn);
-                currentPoints += deviantKind.combatPower;
-
-                // Safety anchor to prevent infinite loops if something breaks
-                if (list.Count > 100) break;
+                Log.Warning("[LuxandraLust] Raid strategy not found, defaulting to immediate attack.");
+                raidStrategy = RaidStrategyDefOf.ImmediateAttack;
             }
 
-            if (list.Count == 0) return false;
-
-            if (!RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 loc, map, CellFinder.EdgeRoadChance_Hostile))
+            IncidentParms raidParms = new IncidentParms
             {
-                return false;
-            }
+                target = map,
+                points = parms.points,
+                faction = deviantFaction,
+                forced = true,
+                pawnGroupKind = PawnGroupKindDefOf.Combat,
+                raidStrategy = raidStrategy,
+                raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkInGroups,
+                customLetterLabel = "Raid (Deviant Horde)",
+                customLetterText = "A horde of completely naked primal humans are entering the area from the map edge! Driven by a carnal frenzy, they are advancing directly onto your colony. Run, or be ready for what is to come...",
+                customLetterDef = LetterDefOf.ThreatBig,
+                sendLetter = true
+            };
 
-            // Calling it "massive crowd" when it's like 3 of them seems pretty dumb
-            string crowdDefinition = list.Count > 15 ? "massive crowd" : list.Count < 5 ? "handful" : "group";
-
-            Find.LetterStack.ReceiveLetter(
-                "Raid (Deviant Horde)",
-                $"A {crowdDefinition} of completely naked primal humans are entering the area from the map edge! Driven by a carnal frenzy, they are advancing directly onto your colony. Run, or be ready for what is to come...",
-                LetterDefOf.ThreatBig,
-                list[0]);
-
-            LordMaker.MakeNewLord(deviantFaction, new LordJob_RapePillageAssault(deviantFaction, true, true), map, list);
-
-            return true;
+            return IncidentDefOf.RaidEnemy.Worker.TryExecute(parms);
         }
     }
 }

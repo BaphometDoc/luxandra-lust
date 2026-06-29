@@ -76,15 +76,30 @@ namespace LuxandraLust
             Map targetMap = Find.CurrentMap;
             if (targetMap == null) return;
 
+            float threatPoints = StorytellerUtility.DefaultThreatPointsNow(targetMap) * 0.85f;
+            IncidentParms parms = new IncidentParms
+            {
+                target = targetMap,
+                points = threatPoints,
+                forced = true,
+            };
+
             // TODO: Scale events based on the recent sexual activites
 
             // How horny have we been this week?
             float averageSexNeed = LuxandraUtilities.GetAverageColonySexNeed(targetMap);
             LuxandraDebugActions.DebugLogMessage($"Colony Average Sex Need: {averageSexNeed * 100f}%");
 
-            List<IncidentDef> totalPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.AllIncidents);
-            totalPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
-            if (totalPool.Count == 0) return;
+            List<IncidentDef> completeEventPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.AllIncidents);
+            completeEventPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
+
+            // Doublecheck the settings as I can't edit the CanFireNow of other mod events
+            var totalPool = completeEventPool.Where(e => e.Worker.CanFireNow(parms) && LuxandraEventCheck.IsEnabled(e.defName)).ToList();
+            if (totalPool.Count == 0)
+            {
+                LuxandraDebugActions.DebugLogMessage($"There were no valid events in the event pool. Skipping...");
+                return;
+            }
             LuxandraDebugActions.DebugLogMessage($"Event pool contains {totalPool.Count} elements.");
 
             List<IncidentDef> filteredPool = totalPool;
@@ -162,10 +177,12 @@ namespace LuxandraLust
 
             // Queue up the incident
             LuxandraDebugActions.DebugLogMessage($"Event chosen: {chosenIncident.defName}");
-            IncidentParms parms = StorytellerUtility.DefaultParmsNow(chosenIncident.category, targetMap);
-            parms.forced = true;
+            IncidentParms finalParms = StorytellerUtility.DefaultParmsNow(chosenIncident.category, targetMap);
 
-            Find.Storyteller.incidentQueue.Add(chosenIncident, Find.TickManager.TicksGame, parms);
+
+            finalParms.forced = true;
+
+            Find.Storyteller.incidentQueue.Add(chosenIncident, Find.TickManager.TicksGame, finalParms);
         }
 
         public void ForceImmediateKinkShift()
