@@ -37,34 +37,34 @@ namespace LuxandraLust
             {
                 case StorytellerKink.None:
                 default:
-                    flavorText = "Luxandra is enjoying watching whatever comes by. Everything is good to our goddess, as long as it's sexual.";
+                    flavorText = "Luxandra is enjoying watching whatever comes by. Everything is good to our goddess, as long as it's sex.";
                     break;
                 case StorytellerKink.Pregnancy:
-                    flavorText = "Luxandra loves watching raw vaginal sex, as well as seeing already pregnant women still embark in lewd activities.";
+                    flavorText = "Luxandra loves watching raw vaginal sex, as well as seeing already pregnant women still embark in lewd activities despite the new life they carry in them.";
                     break;
                 case StorytellerKink.Anal:
                     flavorText = "Luxandra is enjoying watching sexy backdoor access. Fearless raw anal penetration and fisting truly reward who can stand the heat.";
                     break;
                 case StorytellerKink.Oral:
-                    flavorText = "Luxandra wants to see some good head action. Masterful tongue strokes, gentle sucking, and warm fluid exchanges, she wants it all.";
+                    flavorText = "Luxandra wants to see some good head action. Masterful tongue strokes, gentle sucking, and warm fluid exchanges, she craves it all.";
                     break;
                 case StorytellerKink.Bestiality:
-                    flavorText = "Luxandra thinks that nature has a lot to offer. Expecially huge cocks beyond human ones, soft pussyes with unfamiliar textures, and exciting knot action to be bound by.";
+                    flavorText = "Luxandra thinks that nature has a lot to offer. Expecially huge cocks beyond human sizes, soft pussyes with unfamiliar textures, and exciting knot action to be bound by.";
                     break;
                 case StorytellerKink.Rape:
                     flavorText = "Luxandra is bored of consensuality. She wants to see people taken by force. She loves when the other person cannot say no...";
                     break;
                 case StorytellerKink.Masturbation:
-                    flavorText = "Luxandra often enjoys some alone time, and wants to see people do the same. After all, only you know how to best please yourself.";
+                    flavorText = "Luxandra often enjoys some alone time, and wants to see people do the same. After all, you know how to please yourself better than anyone else.";
                     break;
                 case StorytellerKink.Necrophilia:
-                    flavorText = "Luxandra loves when something is stiff. Or moist. Why use sex toys when corpses always provide a new sensation?";
+                    flavorText = "Luxandra loves when something is stiff. Or moist. Why use sex toys when corpses always provide a new, unexpected sensation?";
                     break;
                 case StorytellerKink.Gay:
                     flavorText = "Luxandra loves manliness, but loves even more when two hot men join in a sensual union of bodies. The muscles, the sweat, the cum, that is what she lives for.";
                     break;
                 case StorytellerKink.Lesbian:
-                    flavorText = "Luxandra craves to see other women toghether. Without the limits of male genitals, women can embrace into virtually infinite exchanges, with their soft breasts bouncing toghether all the time in a marvelous symphony.";
+                    flavorText = "Luxandra craves seeing other women together. Without the limits of male genitals, women can embrace into virtually infinite exchanges, with their soft breasts pressed against each other in a marvelous view.";
                     break;
                 case StorytellerKink.Cum:
                     flavorText = "Luxandra craves the warm, sticky product of male pleasure. Anything that involves making a man cum will be pure ecstasy for her.";
