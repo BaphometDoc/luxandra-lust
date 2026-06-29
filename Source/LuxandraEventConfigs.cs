@@ -41,12 +41,12 @@ namespace LuxandraLust
             // --- SECTION 1: HEADER ---
             Listing_Standard headerListing = new Listing_Standard();
             headerListing.Begin(inRect);
-            headerListing.Label("Toggle Luxandra's Active Storyteller Events:");
+            Rect labelRect = headerListing.Label("Toggle Luxandra's Storyteller Active Events. (hover for details)");
+            TooltipHandler.TipRegion(labelRect, "The events from this mod will be disabled completely unless forced via dev mode. Events from other mods will not be able to be rolled by Luxandra's special pools, but may still show up in regular random storyteller events.");
             headerListing.Gap(10f);
             headerListing.End();
 
             // --- SECTION 2: THE SCROLL VIEW CONTAINER ---
-            // Position the scroll window right below the header text and leave room for buttons at the bottom
             Rect outRect = new Rect(inRect.x, inRect.y + 40f, inRect.width, inRect.height - 110f);
 
             // Calculate the total internal height required for all your checkboxes (approx 26f per row)
@@ -59,65 +59,45 @@ namespace LuxandraLust
             Listing_Standard scrollListing = new Listing_Standard();
             scrollListing.Begin(viewRect);
 
-            //foreach (var eventWrapper in LuxandraDefsCollections.AllIncidents)
-            //{
-            //    if (eventWrapper.IncidentDef == null) continue;
-
-            //    string defName = eventWrapper.IncidentDef.defName;
-            //    string label = eventWrapper.IncidentDef.label.CapitalizeFirst();
-
-            //    bool isEnabled = !disabledEventNames.Contains(defName);
-            //    bool previousState = isEnabled;
-
-            //    // Render the actual checkbox inside the scroll viewport
-            //    scrollListing.CheckboxLabeled($"{label}", ref isEnabled, eventWrapper.IncidentDef.description);
-
-            //    if (isEnabled != previousState)
-            //    {
-            //        if (isEnabled)
-            //        {
-            //            disabledEventNames.Remove(defName);
-            //        }
-            //        else
-            //        {
-            //            disabledEventNames.Add(defName);
-            //        }
-            //    }
-            //}
             foreach (var eventWrapper in LuxandraDefsCollections.AllIncidents)
             {
                 if (eventWrapper.IncidentDef == null) continue;
 
                 string defName = eventWrapper.IncidentDef.defName;
+                string modSource = eventWrapper.ModRequired != "" ? $"({eventWrapper.ModRequired})" : "";
                 string label = eventWrapper.IncidentDef.label.CapitalizeFirst();
 
                 bool isEnabled = !disabledEventNames.Contains(defName);
                 bool previousState = isEnabled;
 
-                // 1. Grab a clean rectangle for the entire current row line from the listing
-                // 24f is the perfect height for standard text and checkboxes
-                Rect rowRect = scrollListing.GetRect(24f);
-
-                // 2. Carve out a tiny box on the absolute left for the checkmark icon
-                Rect checkRect = new Rect(rowRect.x, rowRect.y, 24f, 24f);
-
-                // 3. Carve out the remaining space to the right of the checkmark for your text label
-                // We add +6f of padding so the text isn't stuck right against the box edge
-                Rect textRect = new Rect(rowRect.x + 30f, rowRect.y, rowRect.width - 30f, 24f);
-
-                // 4. Draw the actual clickable check/cross widget on the left
-                Widgets.Checkbox(checkRect.position, ref isEnabled, 24f);
-
-                // 5. Draw the text label immediately next to it
-                Widgets.Label(textRect, $"{label} ({defName})");
-
-                // Optional: Add a tool-tip mouseover description box across the whole row area
-                if (Mouse.IsOver(rowRect) && !eventWrapper.IncidentDef.description.NullOrEmpty())
+                string modDescription = $"{label} {modSource}";
+                // If Devmode is on, show the def too
+                if (Prefs.DevMode)
                 {
-                    TooltipHandler.TipRegion(rowRect, eventWrapper.IncidentDef.description);
+                    modDescription = modDescription + $" ({defName})";
                 }
 
-                // 6. State evaluation remains identical
+                // Clean rectangle for the entire current row line from the listing
+                Rect rowRect = scrollListing.GetRect(24f);
+
+                // Tiny box on the left for the checkmark icon
+                Rect checkRect = new Rect(rowRect.x, rowRect.y, 24f, 24f);
+
+                // Carve out the remaining space to the right of the checkmark for the text label
+                Rect textRect = new Rect(rowRect.x + 30f, rowRect.y, rowRect.width - 30f, 24f);
+
+                // Draw the actual clickable check/cross widget on the left
+                Widgets.Checkbox(checkRect.position, ref isEnabled, 24f);
+
+                // Draw the text label immediately next to it
+                Widgets.Label(textRect, $"{modDescription}");
+
+                // TODO: Add a tool-tip mouseover description box across the whole row area
+                //if (Mouse.IsOver(rowRect) && !eventWrapper.IncidentDef.description.NullOrEmpty())
+                //{
+                //    TooltipHandler.TipRegion(rowRect, eventWrapper.IncidentDef.description);
+                //}
+
                 if (isEnabled != previousState)
                 {
                     if (isEnabled)
@@ -146,7 +126,6 @@ namespace LuxandraLust
         {
             base.ExposeData();
 
-            // This tells RimWorld how to read/write the list to the configuration XML file
             Scribe_Collections.Look(ref disabledEventNames, "disabledEventNames", LookMode.Value);
 
             // Safety check: ensure it isn't null on a brand-new save/game boot

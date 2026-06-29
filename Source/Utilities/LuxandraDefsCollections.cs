@@ -270,7 +270,8 @@ namespace LuxandraLust
                 isRaid: false,
                 isNegative: false,
                 isPositive: true,
-                requiresMod: true
+                requiresMod: true,
+                modRequired: "RimJobWorld"
             ));
 
             IncidentDef nymphVisitor = DefDatabase<IncidentDef>.GetNamed("NymphVisitor", false);
@@ -279,7 +280,8 @@ namespace LuxandraLust
                 isRaid: false,
                 isNegative: false,
                 isPositive: false,
-                requiresMod: true
+                requiresMod: true,
+                modRequired: "RimJobWorld"
             ));
             #endregion
 
@@ -293,7 +295,8 @@ namespace LuxandraLust
                    isNegative: false,
                    isPositive: false,
                    isQuest: true,
-                   requiresMod: true
+                   requiresMod: true,
+                   modRequired: "Brothel Colony Quests"
                ));
 
                 IncidentDef brothelQuestBig = DefDatabase<IncidentDef>.GetNamed("RJWBCQ_GiveQuest_BrothelCustomer_Big", false);
@@ -303,7 +306,8 @@ namespace LuxandraLust
                    isNegative: false,
                    isPositive: false,
                    isQuest: true,
-                   requiresMod: true
+                   requiresMod: true,
+                   modRequired: "Brothel Colony Quests"
                ));
 
                 IncidentDef brothelQuestExtreme = DefDatabase<IncidentDef>.GetNamed("RJWBCQ_GiveQuest_BrothelCustomer_Extreme", false);
@@ -313,7 +317,8 @@ namespace LuxandraLust
                    isNegative: false,
                    isPositive: false,
                    isQuest: true,
-                   requiresMod: true
+                   requiresMod: true,
+                   modRequired: "Brothel Colony Quests"
                ));
             }
             #endregion
@@ -327,7 +332,8 @@ namespace LuxandraLust
                    isRaid: false,
                    isNegative: true,
                    isPositive: false,
-                   requiresMod: true
+                   requiresMod: true,
+                   modRequired: "RJW Events"
                ));
             }
             #endregion
@@ -341,7 +347,8 @@ namespace LuxandraLust
                    isRaid: false,
                    isNegative: true,
                    isPositive: false,
-                   requiresMod: true
+                   requiresMod: true,
+                   modRequired: "RJW Genes"
                ));
             }
             #endregion
@@ -408,7 +415,12 @@ namespace LuxandraLust
         /// </summary>
         public bool RequiresMod { get; set; }
 
-        public LuxandraIncidentDefs(IncidentDef incidentDef, bool isRaid, bool isNegative, bool isPositive, bool isQuest = false, bool requiresDLC = false, bool requiresMod = false)
+        /// <summary>
+        /// Mod the event is from
+        /// </summary>
+        public string ModRequired { get; set; }
+
+        public LuxandraIncidentDefs(IncidentDef incidentDef, bool isRaid, bool isNegative, bool isPositive, bool isQuest = false, bool requiresDLC = false, bool requiresMod = false, string modRequired = "")
         {
             this.IncidentDef = incidentDef;
             this.IsRaid = isRaid;
@@ -417,6 +429,7 @@ namespace LuxandraLust
             this.IsQuest = isQuest;
             this.RequiresDLC = requiresDLC;
             this.RequiresMod = requiresMod;
+            this.ModRequired = modRequired;
         }
     }
 
