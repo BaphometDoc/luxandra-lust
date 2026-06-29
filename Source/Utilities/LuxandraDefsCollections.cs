@@ -430,6 +430,7 @@ namespace LuxandraLust
         /// <summary>
         /// The Crusade
         /// </summary>
+        [MayRequireRoyalty]
         public static FactionDef Luxandra_PuritanCrusaders;
 
         /// <summary>

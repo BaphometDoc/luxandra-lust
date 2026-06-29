@@ -3,7 +3,7 @@
 	<!-- ============================== -->
 	<!-- The faction -->
 	<!-- ============================== -->
-	<FactionDef ParentName="FactionBase">
+	<FactionDef MayRequire="Ludeon.RimWorld.Royalty" ParentName="FactionBase">
 		<defName>Luxandra_PuritanCrusaders</defName>
 		<label>Stainless order</label>
 		<description>An ultra-orthodox, technologically supreme military order dedicated to the absolute eradication of psychological and genetic deviance. They possess advanced psionic manipulation and glitterworld weaponry, which they direct with ruthless efficiency against any settlement they deem to be tainted by heretical, hedonistic influences.</description>
@@ -56,7 +56,7 @@
 		</caravanTraderKinds>
 		<leaderTitle>Divine Judge</leaderTitle>
 		<fixedLeaderKinds>
-			<li>Empire_Fighter_Champion</li>
+			<li>Luxandra_Crusader_Leader</li>
 		</fixedLeaderKinds>
 		<leaderForceGenerateNewPawn>true</leaderForceGenerateNewPawn>
 	
@@ -146,58 +146,33 @@
 		</maxPawnCostPerTotalPointsCurve>
     
 		<!-- Temporary Placeholder Group Makers i come up with custom Pawns -->
-		<pawnGroupMakers>
-			<!-- Traders -->
+	<pawnGroupMakers>
 			<li>
 				<kindDef>Trader</kindDef>
 				<traders>
-					<Empire_Common_Trader>1</Empire_Common_Trader>
+					<Luxandra_Crusader_Trader>1</Luxandra_Crusader_Trader>
 				</traders>
 				<carriers>
 					<Muffalo>6</Muffalo>
-					<Dromedary>5</Dromedary>
-					<Alpaca>2</Alpaca>
-					<Elephant>1</Elephant>
 				</carriers>
 				<guards>
-					<Villager>3</Villager>
-					<Empire_Fighter_Trooper>10</Empire_Fighter_Trooper>
-					<Empire_Fighter_Cataphract>1.5</Empire_Fighter_Cataphract>
-					<Empire_Fighter_Janissary>7</Empire_Fighter_Janissary>
-					<Empire_Fighter_Champion>10</Empire_Fighter_Champion>
+					<Luxandra_Crusader_Trooper>10</Luxandra_Crusader_Trooper>
+					<Luxandra_Crusader_Cataphract>2</Luxandra_Crusader_Cataphract>
 				</guards>
 			</li>
 			<li>
-				<!-- Normal fights -->
 				<kindDef>Combat</kindDef>
 				<commonality>100</commonality>
 				<options>
-					<Empire_Fighter_Trooper>5</Empire_Fighter_Trooper>
-					<Empire_Fighter_Janissary>3.5</Empire_Fighter_Janissary>
-					<Empire_Fighter_Cataphract>2</Empire_Fighter_Cataphract>
-					<Empire_Fighter_Champion>4</Empire_Fighter_Champion>
+					<Luxandra_Crusader_Trooper>5</Luxandra_Crusader_Trooper>
+					<Luxandra_Crusader_Cataphract>2</Luxandra_Crusader_Cataphract>
 				</options>
 			</li>
 			<li>
-				<!-- breach fights -->
-				<kindDef>Combat</kindDef>
-				<commonality>10</commonality>
-				<options>
-					<Empire_Fighter_Grenadier>2</Empire_Fighter_Grenadier>
-					<Empire_Fighter_Trooper>5</Empire_Fighter_Trooper>
-					<Empire_Fighter_Janissary>3.5</Empire_Fighter_Janissary>
-					<Empire_Fighter_Cataphract>2</Empire_Fighter_Cataphract>
-					<Empire_Fighter_Champion>4</Empire_Fighter_Champion>
-				</options>
-			</li>
-			<li>
-				<!-- Base defense, mainly ranged with melee mix-ins -->
 				<kindDef>Settlement</kindDef>
 				<options>
-					<Empire_Fighter_Trooper>5</Empire_Fighter_Trooper>
-					<Empire_Fighter_Janissary>3.5</Empire_Fighter_Janissary>
-					<Empire_Fighter_Cataphract>2</Empire_Fighter_Cataphract>
-					<Empire_Fighter_Champion>4</Empire_Fighter_Champion>
+					<Luxandra_Crusader_Trooper>5</Luxandra_Crusader_Trooper>
+					<Luxandra_Crusader_Cataphract>2</Luxandra_Crusader_Cataphract>
 				</options>
 			</li>
 		</pawnGroupMakers>
@@ -206,7 +181,92 @@
 	<!-- ============================== -->
 	<!-- Pawndefs -->
 	<!-- ============================== -->
-	<!-- TODO -->
+	<!-- TEMPORARY PAWNS -->
+	<PawnKindDef Name="Luxandra_Crusader_BaseSafe" Abstract="True">
+		<race>Human</race>
+		<defaultFactionType>Luxandra_PuritanCrusaders</defaultFactionType>
+		<chemicalAddictionChance>0.0</chemicalAddictionChance>
+		<backstoryCryptosleepCommonality>0.08</backstoryCryptosleepCommonality>
+		<invNutrition>2.55</invNutrition>
+		<itemQuality>Normal</itemQuality>
+		<backstoryFilters>
+			<li>
+				<categories>
+					<li>ImperialCommon</li>
+				</categories>
+			</li>
+		</backstoryFilters>
+		<initialWillRange>15~22</initialWillRange>
+		<initialResistanceRange>60~85</initialResistanceRange>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
+		<defName>Luxandra_Crusader_Trooper</defName>
+		<label>crusader trooper</label>
+		<combatPower>60</combatPower>
+		<isFighter>true</isFighter>
+		<gearHealthRange>1~1</gearHealthRange>
+		<apparelMoney>1500~2500</apparelMoney>
+		<apparelTags>
+			<li>ImperialLight</li>
+		</apparelTags>
+		<weaponMoney>500~1000</weaponMoney>
+		<weaponTags>
+			<li>IndustrialGunAdvanced</li>
+		</weaponTags>
+		<initialWillRange>15~22</initialWillRange>
+		<initialResistanceRange>60~85</initialResistanceRange>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
+		<defName>Luxandra_Crusader_Cataphract</defName>
+		<label>crusader cataphract</label>
+		<combatPower>150</combatPower>
+		<isFighter>true</isFighter>
+		<gearHealthRange>1~1</gearHealthRange>
+		<apparelMoney>7000~9000</apparelMoney>
+		<apparelTags>
+			<li>ImperialHeavy</li>
+		</apparelTags>
+		<weaponMoney>2000~4000</weaponMoney>
+		<weaponTags>
+			<li>ImperialWeaponBladelink</li>
+		</weaponTags>
+		<initialWillRange>15~22</initialWillRange>
+		<initialResistanceRange>60~85</initialResistanceRange>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
+		<defName>Luxandra_Crusader_Trader</defName>
+		<label>crusader purveyor</label>
+		<combatPower>40</combatPower>
+		<trader>true</trader>
+		<apparelMoney>1000~2000</apparelMoney>
+		<apparelTags>
+			<li>ImperialCommon</li>
+		</apparelTags>
+		<initialWillRange>15~22</initialWillRange>
+		<initialResistanceRange>60~85</initialResistanceRange>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
+		<defName>Luxandra_Crusader_Leader</defName>
+		<label>Divine Judge</label>
+		<combatPower>200</combatPower>
+		<isFighter>true</isFighter>
+		<itemQuality>Excellent</itemQuality>
+		<gearHealthRange>1~1</gearHealthRange>
+		<apparelMoney>8000~12000</apparelMoney>
+		<apparelTags>
+			<li>ImperialHeavy</li>
+		</apparelTags>
+		<weaponMoney>4000~6000</weaponMoney>
+		<weaponTags>
+			<li>ImperialWeaponBladelink</li>
+		</weaponTags>
+		<initialWillRange>15~22</initialWillRange>
+		<initialResistanceRange>60~85</initialResistanceRange>
+	</PawnKindDef>
 
 	<!-- ============================== -->
 	<!-- Names -->
