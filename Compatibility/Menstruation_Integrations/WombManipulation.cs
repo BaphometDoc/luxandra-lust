@@ -68,7 +68,7 @@ namespace Luxandra_Menstruation_Integrations
                     LuxandraDebugActions.DebugLogMessage($"{pawn.Name}'s {comp.Def.defName} was in already in ovulatory state.");
                     return;
                 }
-                else
+                else if (!comp.IsEggExist)
                 {
                     int coinflip = Rand.RangeInclusive(1, 2);
                     if (coinflip == 2)
@@ -76,6 +76,10 @@ namespace Luxandra_Menstruation_Integrations
 
                     comp.GoNextStage(HediffComp_Menstruation.Stage.Ovulatory);
                     LuxandraDebugActions.DebugLogMessage($"{pawn.Name}'s {comp.Def.defName} was forced to ovulate with {coinflip} eggs.");
+                }
+                else
+                {
+                    LuxandraDebugActions.DebugLogMessage($"{pawn.Name}'s already had eggs in her womb.");
                 }
             }
         }
