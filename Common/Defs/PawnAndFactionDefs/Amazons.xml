@@ -251,6 +251,7 @@
 		<requiredWorkTags>
 			<li>Violent</li>
 		</requiredWorkTags>
+		<isFighter>true</isFighter>
 		
 		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
@@ -328,6 +329,7 @@
 		<requiredWorkTags>
 			<li>Violent</li>
 		</requiredWorkTags>
+		<isFighter>true</isFighter>
 		
 		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
@@ -397,6 +399,7 @@
 		<requiredWorkTags>
 			<li>Violent</li>
 		</requiredWorkTags>
+		<isFighter>true</isFighter>
 		
 		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
@@ -487,6 +490,7 @@
 		<requiredWorkTags>
 			<li>Violent</li>
 		</requiredWorkTags>
+		<isFighter>true</isFighter>
 		
 		<apparelMoney>10~1000</apparelMoney>
 		<apparelRequired>
@@ -549,6 +553,7 @@
 		<requiredWorkTags>
 			<li>Violent</li>
 		</requiredWorkTags>
+		<isFighter>true</isFighter>
 		
 		<apparelMoney>10~1000</apparelMoney>
 		<apparelIgnoreSeasons>true</apparelIgnoreSeasons>

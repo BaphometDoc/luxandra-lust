@@ -159,6 +159,7 @@
 			<li>Luxandra_EnthrallingTouch</li>
 		</techHediffsRequired>
 		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
+		<isFighter>true</isFighter>
 	</PawnKindDef>
 	
 	<PawnKindDef>
@@ -208,6 +209,7 @@
 			<li>Luxandra_EnthrallingTouch</li>
 		</techHediffsRequired>
 		<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
+		<isFighter>true</isFighter>
 	</PawnKindDef>
 
 	<!-- ============================== -->

@@ -347,6 +347,7 @@
 		<weaponTags>
 			<li>SpacerGun</li>
 		</weaponTags>
+		<isFighter>true</isFighter>
 		
 		<modExtensions>
 			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
