@@ -80,7 +80,7 @@
 		<stages>
 			<li>
 				<label>Masculine growth</label>
-				<description>I feel an incredible surge of presence and raw power down below. It's magnificent.</description>
+				<description>I feel an incredible surge of presence and raw power down below. It's magnificent. I wish it'd stay like this forever.</description>
 				<baseMoodEffect>5</baseMoodEffect>
 			</li>
 		</stages>
@@ -92,7 +92,7 @@
 		<stages>
 			<li>
 				<label>Feminine growth</label>
-				<description>My body feels much more voluptuous and heavy... I feel deeply desirable.</description>
+				<description>My body feels much more voluptuous and heavy... I feel deeply desirable. I wish it'd stay like this forever.</description>
 				<baseMoodEffect>5</baseMoodEffect>
 			</li>
 		</stages>
@@ -103,7 +103,7 @@
 		<stages>
 			<li>
 				<label>Masculine shrinkage</label>
-				<description>Where did it go?! I feel diminished... exposed... smaller.</description>
+				<description>Where did it go?! I feel diminished... exposed... smaller. I hope it goes back to how it was before...</description>
 				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 		</stages>
@@ -115,7 +115,7 @@
 		<stages>
 			<li>
 				<label>Feminine shrinkage</label>
-				<description>I feel so flat and light... My natural curves have wasted away.</description>
+				<description>I feel so flat and light... My natural curves have wasted away. I hope they recover quickly...</description>
 				<baseMoodEffect>-5</baseMoodEffect>
 			</li>
 		</stages>

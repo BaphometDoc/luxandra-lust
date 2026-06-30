@@ -69,4 +69,18 @@
 			</li>
 		</stages>
 	</HediffDef>
+	
+	<HediffDef>
+    <defName>Luxandra_GenitalResizing</defName>
+    <label>intimate resizing</label>
+    <description>A lingering change caused by Luxandra's evershifting whims. Your pawn's intimate parts are not of the size they used to be.</description>
+    <hediffClass>LuxandraLust.Hediff_GenitalResizing</hediffClass>
+    <defaultLabelColor>(0.8, 0.3, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+  </HediffDef>
 </Defs>

@@ -9,60 +9,48 @@ namespace LuxandraLust
 {
     public abstract class IncidentWorker_GenitalSizeChange : IncidentWorker
     {
-        private const float MaxSeverity = 3.0f;
-        private const float MinSeverity = 0.01f;
-
         protected abstract Gender TargetGender { get; }
         protected abstract string EventLogName { get; }
         protected abstract string AssociatedThoughtDefName { get; }
         protected abstract string IncidentDef { get; }
 
-        protected bool AlterPartSize(Pawn pawn, List<RJWLewdablePart> sexParts, bool isExpansion)
+        protected bool ApplyBodyAlteringHediff(Pawn pawn, List<RJWLewdablePart> sexParts, bool isExpansion)
         {
+            LuxandraDebugActions.DebugLogMessage($"Attempted to alter {pawn.def} part size. IsExpansion: {isExpansion.ToString()}");
             if (pawn == null || pawn.Dead || sexParts.EnumerableNullOrEmpty()) return false;
 
-            bool anyChanged = false;
-
-            foreach (var part in sexParts)
+            LuxandraDebugActions.DebugLogMessage($"Pawn and sex part was valid.");
+            HediffDef resizeHediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_GenitalResizing", false);
+            if (resizeHediffDef == null)
             {
-                if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
-                {
-                    float currentSeverity = naturalPart.Severity;
-                    float changeAmount = 0.5f;
-
-                    // Calculates adjustments trying to not exceed the severity limits
-                    float newSeverity = isExpansion
-                        ? UnityEngine.Mathf.Min(currentSeverity + changeAmount, MaxSeverity)
-                        : UnityEngine.Mathf.Max(currentSeverity - changeAmount, MinSeverity);
-
-                    if (newSeverity != currentSeverity)
-                    {
-                        naturalPart.Severity = newSeverity;
-
-                        var comp = part.SexPart.GetPartComp();
-                        comp?.SetSeverity(newSeverity, sync: false);
-
-                        anyChanged = true;
-                    }
-                }
+                Log.Warning("[Luxandra Debug] Def for Luxandra_GenitalResizing not found in the database.");
+                return false;
             }
 
-            // If their body size changed successfully, attempt to push the mood memory assignment
-            if (anyChanged && pawn.needs?.mood?.thoughts?.memories != null)
+            // Apply the tracking Hediff to the pawn
+            Hediff_GenitalResizing trackingHediff = HediffMaker.MakeHediff(resizeHediffDef, pawn, null) as Hediff_GenitalResizing;
+            trackingHediff.isExpansion = isExpansion;
+
+            pawn.health.AddHediff(trackingHediff, null, null, null);
+
+            var disappearComp = trackingHediff.TryGetComp<HediffComp_Disappears>();
+            if (disappearComp != null)
             {
                 ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamed(AssociatedThoughtDefName, errorOnFail: false);
 
-                if (thought != null)
+                int exactDurationTicks = disappearComp.ticksToDisappear;
+
+                // Give the thought and match the duration
+                pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
+                Thought_Memory liveMemory = pawn.needs.mood.thoughts.memories.GetFirstMemoryOfDef(thought);
+                if (liveMemory != null)
                 {
-                    pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
-                }
-                else
-                {
-                    Log.Error($"[{EventLogName}] Moodlet Failed: Could not find any ThoughtDef named '{AssociatedThoughtDefName}' in the database!");
+                    liveMemory.durationTicksOverride = exactDurationTicks;
+                    liveMemory.age = 0;
                 }
             }
 
-            return anyChanged;
+            return true;
         }
 
         protected override bool CanFireNowSub(IncidentParms parms)
@@ -113,19 +101,23 @@ namespace LuxandraLust
 
         private bool IsEligibleTarget(Pawn p)
         {
+            // Check that they there is someone who hasnt got hit yet first
+            HediffDef resizeHediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_GenitalResizing", false);
+
             return p != null
                    && !p.Dead
                    && p.RaceProps != null
                    && p.RaceProps.Humanlike
                    && LuxandraUtilities.IsAdult(p)
-                   && p.gender == TargetGender;
+                   && p.gender == TargetGender
+                   && !p.health.hediffSet.HasHediff(resizeHediffDef);
         }
 
         protected abstract bool ApplySizeChange(List<Pawn> targets, Map map);
     }
 
 
-    // Male Expansion Event (Penises +0.1)
+    // Male Expansion Event (Penises +0.5)
     public class IncidentWorker_MaleExpansion : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Male;
@@ -141,7 +133,7 @@ namespace LuxandraLust
                 var sexParts = pawn.GetLewdParts();
                 if (sexParts != null && !sexParts.Penises.EnumerableNullOrEmpty())
                 {
-                    if (AlterPartSize(pawn, sexParts.Penises, isExpansion: true))
+                    if (ApplyBodyAlteringHediff(pawn, sexParts.Penises, isExpansion: true))
                     {
                         executedSuccessfully = true;
                     }
@@ -151,7 +143,7 @@ namespace LuxandraLust
         }
     }
 
-    // Male Reduction Event (Penises -0.1)
+    // Male Reduction Event (Penises -0.5)
     public class IncidentWorker_MaleReduction : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Male;
@@ -167,7 +159,7 @@ namespace LuxandraLust
                 var sexParts = pawn.GetLewdParts();
                 if (sexParts != null && !sexParts.Penises.EnumerableNullOrEmpty())
                 {
-                    if (AlterPartSize(pawn, sexParts.Penises, isExpansion: false))
+                    if (ApplyBodyAlteringHediff(pawn, sexParts.Penises, isExpansion: false))
                     {
                         executedSuccessfully = true;
                     }
@@ -177,7 +169,7 @@ namespace LuxandraLust
         }
     }
 
-    // Female Expansion Event (Breasts +0.1)
+    // Female Expansion Event (Breasts +0.5)
     public class IncidentWorker_FemaleExpansion : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Female;
@@ -193,7 +185,7 @@ namespace LuxandraLust
                 var sexParts = pawn.GetLewdParts();
                 if (sexParts != null && !sexParts.Breasts.EnumerableNullOrEmpty())
                 {
-                    if (AlterPartSize(pawn, sexParts.Breasts, isExpansion: true))
+                    if (ApplyBodyAlteringHediff(pawn, sexParts.Breasts, isExpansion: true))
                     {
                         executedSuccessfully = true;
                     }
@@ -203,7 +195,7 @@ namespace LuxandraLust
         }
     }
 
-    // Female Reduction Event (Breasts -0.1)
+    // Female Reduction Event (Breasts -0.5)
     public class IncidentWorker_FemaleReduction : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Female;
@@ -219,13 +211,132 @@ namespace LuxandraLust
                 var sexParts = pawn.GetLewdParts();
                 if (sexParts != null && !sexParts.Breasts.EnumerableNullOrEmpty())
                 {
-                    if (AlterPartSize(pawn, sexParts.Breasts, isExpansion: false))
+                    if (ApplyBodyAlteringHediff(pawn, sexParts.Breasts, isExpansion: false))
                     {
                         executedSuccessfully = true;
                     }
                 }
             }
             return executedSuccessfully;
+        }
+    }
+
+    /// <summary>
+    /// Hediff that handles the genitalia resizing
+    /// </summary>
+    public class Hediff_GenitalResizing : HediffWithComps
+    {
+        // Trackers to save the snapshot over game saves
+        public List<RJWLewdablePart> affectedParts = new List<RJWLewdablePart>();
+        public List<float> originalSeverities = new List<float>();
+
+        public bool isExpansion = true;
+        private const float ChangeAmount = 0.5f;
+        private const float MaxSeverity = 3.0f;
+        private const float MinSeverity = 0.01f;
+
+        public override void PostAdd(DamageInfo? dinfo)
+        {
+            base.PostAdd(dinfo);
+            LuxandraDebugActions.DebugLogMessage($"Resizing hediff applied to {pawn.NameShortColored} parts.");
+
+            // Randomize duration between 3 days (180,000 ticks) and 7 days (420,000 ticks)
+            int randomTicks = Rand.RangeInclusive(180000, 420000);
+
+            var disappearComp = this.TryGetComp<HediffComp_Disappears>();
+            if (disappearComp != null)
+            {
+                disappearComp.ticksToDisappear = randomTicks;
+            }
+
+            ApplyTemporarySizeChange();
+        }
+
+        private void ApplyTemporarySizeChange()
+        {
+            // Gather the appropriate RJW parts based on the gender
+            var sexParts = pawn.GetLewdParts();
+            if (sexParts == null) return;
+
+            // Target penises for males, breasts for females
+            var partsToModify = (pawn.gender == Gender.Male) ? sexParts.Penises : sexParts.Breasts;
+            if (partsToModify.EnumerableNullOrEmpty()) return;
+
+            affectedParts = partsToModify;
+
+            for (int i = 0; i < affectedParts.Count; i++)
+            {
+                var part = affectedParts[i];
+                if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
+                {
+                    float currentSeverity = naturalPart.Severity;
+                    originalSeverities.Add(currentSeverity);
+
+                    // Calculates adjustments trying to not exceed the severity limits
+                    float newSeverity = isExpansion
+                        ? UnityEngine.Mathf.Min(currentSeverity + ChangeAmount, MaxSeverity)
+                        : UnityEngine.Mathf.Max(currentSeverity - ChangeAmount, MinSeverity);
+
+                    if (newSeverity != currentSeverity)
+                    {
+                        naturalPart.Severity = newSeverity;
+
+                        var comp = part.SexPart.GetPartComp();
+                        comp?.SetSeverity(newSeverity);
+
+                        var debugString = isExpansion ? "Increased" : "Decreased";
+                        LuxandraDebugActions.DebugLogMessage($"{debugString} {pawn.NameShortColored}'s {naturalPart.def} from {currentSeverity} to {newSeverity}.");
+                    }
+                }
+            }
+        }
+
+        // RESTORE OLD SIZES ON EXPIRATION
+        public override void PostRemoved()
+        {
+            base.PostRemoved();
+
+            // Gather the appropriate RJW parts based on the gender
+            var sexParts = pawn.GetLewdParts();
+            if (sexParts == null) return;
+
+            // Target penises for males, breasts for females
+            var partsToModify = (pawn.gender == Gender.Male) ? sexParts.Penises : sexParts.Breasts;
+            if (partsToModify.EnumerableNullOrEmpty()) return;
+
+            affectedParts = partsToModify;
+
+            for (int i = 0; i < affectedParts.Count; i++)
+            {
+                var part = affectedParts[i];
+                if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
+                {
+                    float currentSeverity = naturalPart.Severity;
+                    // Calculates adjustments trying to not exceed the severity limits
+                    float newSeverity = originalSeverities[i];
+
+                    if (newSeverity != currentSeverity)
+                    {
+                        naturalPart.Severity = newSeverity;
+
+                        var comp = part.SexPart.GetPartComp();
+                        comp?.SetSeverity(newSeverity);
+
+                        LuxandraDebugActions.DebugLogMessage($"Restored {pawn.NameShortColored}'s {naturalPart.def} to {newSeverity}.");
+                    }
+                }
+            }
+
+            var messageString = pawn.gender == Gender.Male ? "Penises" : "Breasts";
+            Messages.Message($"{pawn.LabelShort}'s {messageString} have gone back to their previous size.", pawn, MessageTypeDefOf.NeutralEvent);
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref isExpansion, "isExpansion", true);
+            Scribe_Collections.Look(ref affectedParts, "affectedParts", LookMode.Reference);
+            Scribe_Collections.Look(ref originalSeverities, "originalSeverities", LookMode.Value);
         }
     }
 }
