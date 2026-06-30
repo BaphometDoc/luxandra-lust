@@ -365,7 +365,40 @@ namespace LuxandraLust
                    requiresMod: true
                ));
             }
-            #endregion 
+            #endregion
+
+            #region Anomaly
+
+            if (ModsConfig.AnomalyActive)
+            {
+                #region Forbidden Anomalies
+                if (LuxandraCompatUtilities.IsForbiddenAnomaliesActive())
+                {
+                    IncidentDef rapenant = DefDatabase<IncidentDef>.GetNamed("FA_RapenantIncident", false);
+                    _allIncidents.Add(new LuxandraIncidentDefs(
+                       incidentDef: rapenant,
+                       isRaid: false,
+                       isNegative: true,
+                       isPositive: false,
+                       requiresDLC: true,
+                       requiresMod: true,
+                       modRequired: "Forbidden Anomalies"
+                   ));
+
+                    IncidentDef graspBloom = DefDatabase<IncidentDef>.GetNamed("FA_GraspbloomSpawn", false);
+                    _allIncidents.Add(new LuxandraIncidentDefs(
+                       incidentDef: graspBloom,
+                       isRaid: false,
+                       isNegative: true,
+                       isPositive: false,
+                       requiresDLC: true,
+                       requiresMod: true,
+                       modRequired: "Forbidden Anomalies"
+                   ));
+                }
+                #endregion
+            }
+            #endregion
 
             // A final cleanup, just in case any def was wrong or corrupted
             var modsWithMissingDefs = _allIncidents.Where(i => i.IncidentDef == null || i.IncidentDef.defName == "");

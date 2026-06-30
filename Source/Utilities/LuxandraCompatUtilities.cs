@@ -45,6 +45,11 @@ namespace LuxandraLust
             return ModsConfig.IsActive("archersaiter.rjw.unleashed.bastard");
         }
 
+        public static bool IsForbiddenAnomaliesActive()
+        {
+            return ModsConfig.IsActive("forbidden.anomalies");
+        }
+
         #endregion
     }
 }
