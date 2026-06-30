@@ -6,7 +6,7 @@
 	<!-- ========================================================================= -->
 	<HediffDef>
 		<defName>Luxandra_ColonyPleasureBlessing</defName>
-		<label>Luxanna's Ecstasy</label>
+		<label>Blessed Ecstasy</label>
 		<description>Your actions have brought joy to Luxanna. Her divine favor manifests as a mental bliss across the entire colony.</description>
 		<hediffClass>HediffWithComps</hediffClass>
 		<defaultLabelColor>(0.85, 0.45, 0.85)</defaultLabelColor>
@@ -19,11 +19,6 @@
 				<showRemainingTime>true</showRemainingTime>
 			</li>
 		</comps>
-		<stages>
-			<li>
-				<label>Blessed Ecstasy</label>
-			</li>
-		</stages>
 	</HediffDef>
 
 	<ThoughtDef>
@@ -61,7 +56,6 @@
 		</comps>
 		<stages>
 			<li>
-				<label>Divine proliferator</label>
 				<capMods>
 					<li>
 						<capacity>Metabolism</capacity>

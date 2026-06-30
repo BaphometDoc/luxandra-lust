@@ -58,81 +58,116 @@ namespace LuxandraLust
             // Base header tag for all letters
             string letterBase = "Luxandra's Appraisal";
 
-            // TODO: Whoring part
+            bool isMotherPlayerOwned = mother.Faction.IsPlayer || mother.IsSlaveOfColony;
+            bool isMotherWhore = rjw.xxx.is_whore(mother);
+            bool isFatherPlayerOwned = father != null && (father.Faction.IsPlayer || father.IsSlaveOfColony);
 
-            // Bestiality checks - Are you being faithful to your feral desires?
-            bool isColonyZoophile = DetermineBestialitySupport(map);
+            bool childFromProstitution = LuxandraCompatUtilities.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned; // Don't even track this if brothel colony isnt active
             bool childFromZoophilia = mother.IsHumanLike() && father.IsAnimal();
+            bool childFromRape = !(isMotherPlayerOwned && isFatherPlayerOwned) && !isMotherWhore;
 
-            if (isColonyZoophile)
+            bool isColonyRepopulating = DetermineRepopulationSupport(map);
+            bool isColonyZoophile = DetermineBestialitySupport(map);
+            bool isColonyRapist = DetermineRapistSupport(map);
+
+            // ===============================================================================
+            // Logic for blessings and punishment. Some may be repeated, it's a bit inevitable
+            // ===============================================================================
+
+            // Is the child is from animals (if father is an animal, all other precepts don't matter)
+            if (childFromZoophilia)
             {
-                if (childFromZoophilia)
+                // Colony is zoophile - Luxandra is pleased
+                if (isColonyZoophile)
                 {
-                    // Committed bestiality - Luxandra is pleased
                     ApplyPleasureBlessing(map, mother, father,
                         $"{letterBase}: Feral Devotion",
                         $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. By embracing the wild, beastial lineage of the father, your colony has proven true to its carnal doctrine. She rewards your raw fidelity.");
+                    return;
                 }
+                // Colony was not zoophile - Luxandra is angry
                 else
                 {
-                    // Did not commit bestiality - Luxandra is angry
-                    TriggerManhunterPunishment(map,
-                        $"{letterBase}: Domestic Defiance",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn and finds it lacking. You have defaulted to sterile, civilized normalcy. To break your domestic complacency, she commands the wild to correct your path.");
+                    ApplyDegradationPunishment(map,
+                        $"{letterBase}: Primal Contamination",
+                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with profound disdain. An bestial violation has stained your community. A heavy fog descends upon your minds, dragging your consciousness down to match the beast you so eagerly defiled.");
+                    return;
                 }
+            }
+
+            // Colony is zoophile and the child was a normal child - Luxandra is angry
+            if (isColonyZoophile && !childFromZoophilia)
+            {
+                TriggerManhunterPunishment(map,
+                             $"{letterBase}: Domestic Defiance",
+                             $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn and finds it lacking. You have defaulted to sterile, civilized normalcy. To break your domestic complacency, she commands the wild to correct your path.");
                 return;
             }
 
-            // Rapist check - Are you forcing others to please you?
-            bool isColonyRapist = DetermineRapistSupport(map);
-            bool isMotherPlayerOwned = mother.Faction.IsPlayer;
-            bool isFatherPlayerOwned = father != null && father.Faction.IsPlayer;
-            bool childFromRape = !(isMotherPlayerOwned && isFatherPlayerOwned);
-
-            if (isColonyRapist)
+            // Is the child from a whore
+            if (isMotherWhore)
             {
-                if (childFromRape && !childFromZoophilia)
+                // Colony is repopulationist and the child is from prostitution - Luxandra is pleased
+                if (isColonyRepopulating && childFromProstitution)
                 {
-                    // The child was forced - Luxandra is pleased
+                    ApplyPleasureBlessing(map, mother, father,
+                        $"{letterBase}: Commercial Fertility",
+                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. By generating life through the sacred transactional exchange of the flesh, your colony honors her carnal marketplace. She grants a swelling gift of physical beauty across your colonists, ensuring they remain happy and pleasing to look upon.");
+                    return;
+                }
+                // Colony is repopulationist and the child is not from prostitution - Luxandra is angry
+                else if (isColonyRepopulating)
+                {
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName, //TODO: Change to amazons
+                        $"{letterBase}: Insular Hoarding",
+                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with sharp irritation. You waste your seed on insular, domestic comfort rather than using your bodies to populate and subvert the neighboring factions. To punish your selfish prudeness and break your hoarders' mentality, a deviant tribal horde descends to forcibly open your gates.");
+                    return;
+                }
+                // Child was from prostitution, and colony is not repopulationist - Luxandra is angry
+                else if (childFromProstitution)
+                {
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName,
+                        $"{letterBase}: Untracked Contagion",
+                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with disgust. You have allowed your colony's lineage to be compromised by a commercialized union of unknown origin and health. To correct this careless breeding, she unleashes a burning fever across your community.");
+                    return;
+                }
+            }
+
+            // The child was from rape
+            if (childFromRape)
+            {
+                // Colony supports rape - Luxandra is pleased
+                if (isColonyRapist)
+                {
                     ApplyPleasureBlessing(map, mother, father,
                         $"{letterBase}: Sovereign Dominion",
                         $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. The product of absolute subjection and forceful conquest validates your creed of total authority. Your dominance is rewarded.");
+                    return;
                 }
+                // The colony does not support rape - Luxandra is angry
                 else
                 {
-                    // The child was agreed between colonists - Luxandra is angry
-                    TriggerIncidentPunishment(map, "Luxandra_Inc_DeviantHordeRaid",
-                        $"{letterBase}: Insipid Consent",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn and rejects it. Your colonists chose soft, mutual compromise over absolute dominion. She sends a horde of true deviants to ruthlessly remind what your duty was.");
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName,
+                   $"{letterBase}: Fractured Order",
+                   $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. A violent, undisciplined acts has fractured your civilized vows. She unleashes the White Rain to show you what it truly means to lose control over your instincts.");
+                    return;
                 }
+            }
+
+            // Colony is rapist, but the child was  was agreed between colonists - Luxandra is angry
+            if (isColonyRapist && !childFromRape)
+            {
+                TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
+                     $"{letterBase}: Insipid Consent",
+                     $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn and rejects it. Your colonists chose soft, mutual compromise over absolute dominion. She sends a horde of true deviants to ruthlessly remind what your duty was.");
                 return;
             }
 
-            // Lawful good check - Are you being faithful to your colonists?
-            if (!isColonyZoophile && !isColonyRapist)
-            {
-                if (childFromZoophilia)
-                {
-                    // The child was from zoophilia - Luxandra is angry
-                    ApplyDegradationPunishment(map, "Luxandra_BestialDegradation",
-                        $"{letterBase}: Primal Contamination",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with profound disdain. An animalistic violation has stained your community. A heavy fog descends upon your minds, dragging your consciousness down to match the beast you so eagerly defiled.");
-                }
-                else if (childFromRape)
-                {
-                    // The child was not from zoophilia but was forced - Luxandra is still angry
-                    TriggerIncidentPunishment(map, "Luxandra_Inc_WhiteRain",
-                        $"{letterBase}: Fractured Order",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. A violent, undisciplined acts has fractured your civilized vows. She unleashes the White Rain to show you what it truly means to lose control over your instincts.");
-                }
-                else
-                {
-                    // The child was agreed between colonists - Luxandra is pleased
-                    ApplyPleasureBlessing(map, mother, father,
-                        $"{letterBase}: Sanctified Union",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. Your commitment to your community's continuity is recognized. She blesses your dedication to a pure and disciplined order.");
-                }
-            }
+            // The colony has no special affinity and the child was agreed between colonists - Luxandra is pleased
+            ApplyPleasureBlessing(map, mother, father,
+                $"{letterBase}: Sanctified Union",
+                $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. Your commitment to your community's continuity is recognized. She blesses your dedication to a pure and disciplined order.");
+            return;
         }
 
         // ==========================================
@@ -165,10 +200,10 @@ namespace LuxandraLust
             }
         }
 
-        private static void ApplyDegradationPunishment(Map map, string hediffDefName, string title, string text)
+        private static void ApplyDegradationPunishment(Map map, string title, string text)
         {
             Find.LetterStack.ReceiveLetter(title, text, LetterDefOf.NegativeEvent);
-            HediffDef punishmentHediff = DefDatabase<HediffDef>.GetNamed(hediffDefName, false);
+            HediffDef punishmentHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_BestialDegradation", false);
 
             List<Pawn> adults = map.mapPawns.FreeColonists;
             for (int i = 0; i < adults.Count; i++)
@@ -302,6 +337,49 @@ namespace LuxandraLust
             int rapistColonists = LuxandraUtilities.CountColonistsWithTraitOnMap(map, rapistTrait);
 
             if (rapistColonists > localColonists.Count * 2 / 3)
+                return true;
+
+            return false;
+        }
+
+        // Brothel Colony Repopulation - Player has the meme and one of Kindness, Greed or Duty
+        private static bool DetermineRepopulationSupport(Map map)
+        {
+            // Ideology + Brothel Colony
+            if (ModsConfig.IdeologyActive && LuxandraCompatUtilities.IsBrothelColonyActive())
+            {
+                MemeDef repopulationMeme = DefDatabase<MemeDef>.GetNamed("CB_Repopulationist", false);
+                PreceptDef repopulationKindness = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Kindness", false);
+                PreceptDef repopulationGreed = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Greed", false);
+                PreceptDef repopulationDuty = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Duty", false);
+
+                if (LuxandraUtilities.PlayerFactionHasMeme(repopulationMeme) ||
+                   LuxandraUtilities.PlayerFactionHasPrecept(repopulationKindness) ||
+                   LuxandraUtilities.PlayerFactionHasPrecept(repopulationGreed) ||
+                   LuxandraUtilities.PlayerFactionHasPrecept(repopulationDuty))
+                {
+                    return true;
+                }
+            }
+
+            var localColonists = map.mapPawns.FreeColonists;
+
+            // Biotech - same as above but for RJW genes
+            if (ModsConfig.BiotechActive)
+            {
+                GeneDef zoophileGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_zoophile", false);
+                int zoophileGeneColonists = LuxandraUtilities.CountColonistsWithGeneOnMap(map, zoophileGene);
+
+                if (zoophileGeneColonists > localColonists.Count * 2 / 3)
+                    return true;
+            }
+
+            // Traits
+
+            TraitDef zoophileTrait = DefDatabase<TraitDef>.GetNamed("Zoophile", false);
+            int zoophileColonists = LuxandraUtilities.CountColonistsWithTraitOnMap(map, zoophileTrait);
+
+            if (zoophileColonists > localColonists.Count * 2 / 3)
                 return true;
 
             return false;
