@@ -52,11 +52,11 @@ namespace LuxandraLust
             }
 
             // Find the vanilla escaping destination state if it exists in the baseline graph
-            LordToil kidnapToil = graph.lordToils.FirstOrDefault(t => t is LordToil_ExitMap);
+            LordToil escapeToil = graph.lordToils.FirstOrDefault(t => t is LordToil_PanicFlee);
 
-            if (customToil != null && kidnapToil != null)
+            if (customToil != null && escapeToil != null)
             {
-                Transition cleanBreakTransition = new Transition(customToil, kidnapToil);
+                Transition cleanBreakTransition = new Transition(customToil, escapeToil);
 
                 // Evaluate if the raiders have had enough fun
                 cleanBreakTransition.AddTrigger(new Trigger_ColonistsDownedAndSexNeedMet());
