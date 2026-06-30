@@ -69,6 +69,21 @@ namespace LuxandraLust
             }
         }
 
+        private bool CheckIfEventIsAvailable(IncidentDef incident, IncidentParms parms)
+        {
+            try
+            {
+                bool canFire = incident.Worker.CanFireNow(parms);
+                bool isEnabled = LuxandraEventCheck.IsEnabled(incident.defName);
+                return canFire && isEnabled;
+            }
+            catch
+            {
+                Log.Warning($"[Luxandra Debug] Error evaluating the event ${incident.defName} for the weekly cycle");
+                return false;
+            }
+        }
+
         // I say "weekly" but that's the default setting, this can be edited
         private void TriggerWeeklyEvent()
         {
@@ -94,7 +109,7 @@ namespace LuxandraLust
             completeEventPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
 
             // Doublecheck the settings as I can't edit the CanFireNow of other mod events
-            var totalPool = completeEventPool.Where(e => e.Worker.CanFireNow(parms) && LuxandraEventCheck.IsEnabled(e.defName)).ToList();
+            var totalPool = completeEventPool.Where(e => CheckIfEventIsAvailable(e, parms)).ToList();
             if (totalPool.Count == 0)
             {
                 LuxandraDebugActions.DebugLogMessage($"There were no valid events in the event pool. Skipping...");
