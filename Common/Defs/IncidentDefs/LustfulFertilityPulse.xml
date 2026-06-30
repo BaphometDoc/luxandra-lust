@@ -107,14 +107,13 @@
 	<!-- Pregnant Female Hediff -->
 	<HediffDef>
 		<defName>Luxandra_PulsePregnantMaternal</defName>
-		<label>maternal alignment pulse</label>
+		<label>Reproductive bliss</label>
 		<description>The planet has shifted supports this vessel of new life. The pawn feels a cosmic, euphoric validation that they are fulfilling their true evolutionary purpose, though the sheer intensity of this biological bliss leaves them in a heavily dazed, dreamlike state.</description>
 		<hediffClass>HediffWithComps</hediffClass>
 		<defaultLabelColor>(0.85, 0.45, 0.65)</defaultLabelColor>
 		<isBad>false</isBad>
 		<stages>
 			<li>
-				<label>Reproductive bliss</label>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>

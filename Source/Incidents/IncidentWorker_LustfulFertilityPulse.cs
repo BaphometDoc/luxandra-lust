@@ -67,7 +67,7 @@ namespace LuxandraLust
             HediffDef femaleDef = HediffDef.Named("Luxandra_PulseAdultFemale");
             HediffDef pregnantDef = HediffDef.Named("Luxandra_PulsePregnantMaternal");
 
-            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+            foreach (Pawn pawn in map.mapPawns.AllHumanlikeSpawned)
             {
                 if (pawn == null || pawn.Dead || !pawn.RaceProps.Humanlike) continue;
 
@@ -96,8 +96,6 @@ namespace LuxandraLust
                     }
                     else
                     {
-                        EnsureHediff(pawn, femaleDef);
-                        if (pawn.IsColonist || pawn.IsSlave || pawn.IsPrisoner) ClearFertilitySuppressants(pawn);
 
                         // Clean up the pregnant hediff if a pregnancy somehow ended while the pulse is active
                         if (pawn.health.hediffSet.HasHediff(pregnantDef))
@@ -105,6 +103,9 @@ namespace LuxandraLust
                             Hediff oldPregnantHediff = pawn.health.hediffSet.GetFirstHediffOfDef(pregnantDef);
                             pawn.health.RemoveHediff(oldPregnantHediff);
                         }
+
+                        EnsureHediff(pawn, femaleDef);
+                        if (pawn.IsColonist || pawn.IsSlave || pawn.IsPrisoner) ClearFertilitySuppressants(pawn);
 
                         // If menstruation is loaded, replenish the ovary power and send the pawn in ovulation (possibly with multiple eggs)
                         if (LuxandraCompatUtilities.IsMenstruationActive())
