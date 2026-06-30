@@ -63,14 +63,21 @@ namespace LuxandraLust
         /// </summary>
         public static float raidFactionOverrideChance = 50.0f;
 
+        private static Vector2 scrollPosition = Vector2.zero;
+        private static float dynamicContentHeight = 100f;
 
         public static void DoWindowContents(Rect inRect)
         {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.maxOneColumn = true;
+            Rect outRect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height - 50f);
 
-            listingStandard.Begin(inRect);
-            listingStandard.Gap(12f);
+            // Define the total height of the scroll area
+            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, dynamicContentHeight); // -16f prevents horizontal bar clipping
+
+            Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
+
+            listingStandard.Begin(viewRect);
 
             // Debug logging toggle
             if (Prefs.DevMode)
@@ -78,6 +85,23 @@ namespace LuxandraLust
                 listingStandard.CheckboxLabeled("Enable Debug Logging", ref enableLogging, "Shows most actions in the log. Very spammy, only for debugging.");
                 listingStandard.Gap(12f);
             }
+
+            // Reset
+            if (listingStandard.ButtonText("Reset to Default"))
+            {
+                enableLogging = false;
+                eventRerollCondition = 1;
+                eventConversionMode = 2;
+                eventRerollThresholdMultiplier = 1.0f;
+                weeklyCycleDays = 7;
+                enablePleasedNotification = false;
+                enableRaidFactionOverride = false;
+                raidFactionOverrideChance = 50.0f;
+
+                SoundDefOf.Click.PlayOneShotOnCamera();
+            }
+
+            listingStandard.Gap(16f);
 
             // Satisfaction notification toggle
             listingStandard.CheckboxLabeled("Show Satisfaction Notifications", ref enablePleasedNotification, "Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks. (can be spammy in large colonies)");
@@ -195,25 +219,11 @@ namespace LuxandraLust
                 }
 
             }
-
-            listingStandard.Gap(24f);
-
-            // Reset
-            if (listingStandard.ButtonText("Reset to Default"))
-            {
-                enableLogging = false;
-                eventRerollCondition = 1;
-                eventConversionMode = 2;
-                eventRerollThresholdMultiplier = 1.0f;
-                weeklyCycleDays = 7;
-                enablePleasedNotification = false;
-                enableRaidFactionOverride = false;
-                raidFactionOverrideChance = 50.0f;
-
-                SoundDefOf.Click.PlayOneShotOnCamera();
-            }
+            float totalHeightUsed = listingStandard.CurHeight;
 
             listingStandard.End();
+            Widgets.EndScrollView();
+            dynamicContentHeight = totalHeightUsed + 20f;
         }
 
         private static void DrawSettingRowWithButon(Listing_Standard listing, string label, string[] options, int selectedIndex, Action<int> onSelect, float labelWidth, float buttonWidth, string tooltip = null)

@@ -35,6 +35,7 @@ namespace LuxandraLust
 
         private static Vector2 scrollPosition = Vector2.zero;
 
+        private static float dynamicEventsHeight = 100f;
 
         public static void DoWindowContents(Rect inRect)
         {
@@ -47,10 +48,9 @@ namespace LuxandraLust
             headerListing.End();
 
             // --- SECTION 2: THE SCROLL VIEW CONTAINER ---
-            Rect outRect = new Rect(inRect.x, inRect.y + 40f, inRect.width, inRect.height - 110f);
+            Rect outRect = new Rect(inRect.x, inRect.y + 40f, inRect.width, inRect.height - 140f);
 
-            // Calculate the total internal height required for all your checkboxes (approx 26f per row)
-            float totalViewHeight = LuxandraDefsCollections.AllIncidents.Count * 26f;
+            float totalViewHeight = (LuxandraDefsCollections.AllIncidents.Count * 26f) + 10f;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, totalViewHeight);
 
             // Begin the scroll area window context
@@ -74,11 +74,10 @@ namespace LuxandraLust
                 // If Devmode is on, show the def too
                 if (Prefs.DevMode)
                 {
-                    modDescription = modDescription + $" ({defName})";
+                    modDescription = modDescription + $" (def: {defName})";
                 }
 
-                // Clean rectangle for the entire current row line from the listing
-                Rect rowRect = scrollListing.GetRect(24f);
+                Rect rowRect = scrollListing.GetRect(26f);
 
                 // Tiny box on the left for the checkmark icon
                 Rect checkRect = new Rect(rowRect.x, rowRect.y, 24f, 24f);
@@ -102,20 +101,16 @@ namespace LuxandraLust
                 if (isEnabled != previousState)
                 {
                     if (isEnabled)
-                    {
                         disabledEventNames.Remove(defName);
-                    }
                     else
-                    {
                         disabledEventNames.Add(defName);
-                    }
                 }
             }
 
             scrollListing.End();
             Widgets.EndScrollView();
 
-            Rect resetRect = new Rect(inRect.x, inRect.height - 45f, 140f, 30f);
+            Rect resetRect = new Rect(inRect.x, inRect.height - 40f, 140f, 30f);
             if (Widgets.ButtonText(resetRect, "Reset Defaults"))
             {
                 disabledEventNames.Clear();
