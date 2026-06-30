@@ -145,34 +145,48 @@
 			</points>
 		</maxPawnCostPerTotalPointsCurve>
     
-		<!-- Temporary Placeholder Group Makers i come up with custom Pawns -->
-	<pawnGroupMakers>
+		<disallowedRaidStrategies>
+			<li>Luxandra_DeviantHordeAssault</li>
+		</disallowedRaidStrategies>
+  
+		<pawnGroupMakers>
+			<!-- 1. COMBAT RAID COMPOSITION -->
+			<li>
+				<kindDef>Combat</kindDef>
+				<options>
+					<Luxandra_Crusader_WhiteCape>10</Luxandra_Crusader_WhiteCape>
+					<Luxandra_Crusader_Inquisitor MayRequire="Ludeon.RimWorld.Anomaly">6</Luxandra_Crusader_Inquisitor>
+					<Luxandra_Crusader_Guard>4</Luxandra_Crusader_Guard>
+					<Luxandra_Crusader_Seer>2</Luxandra_Crusader_Seer>
+					<Luxandra_Crusader_Leader>1</Luxandra_Crusader_Leader>
+				</options>
+			</li>
+
+			<!-- 2. PEACEFUL TRADER CARAVAN COMPOSITION -->
 			<li>
 				<kindDef>Trader</kindDef>
 				<traders>
-					<Luxandra_Crusader_Trader>1</Luxandra_Crusader_Trader>
+					<Luxandra_Crusader_Seer>1</Luxandra_Crusader_Seer>
 				</traders>
 				<carriers>
-					<Muffalo>6</Muffalo>
+					<Muffalo>1</Muffalo>
 				</carriers>
 				<guards>
-					<Luxandra_Crusader_Trooper>10</Luxandra_Crusader_Trooper>
-					<Luxandra_Crusader_Cataphract>2</Luxandra_Crusader_Cataphract>
+					<Luxandra_Crusader_WhiteCape>6</Luxandra_Crusader_WhiteCape>
+					<Luxandra_Crusader_Guard>2</Luxandra_Crusader_Guard>
 				</guards>
 			</li>
-			<li>
-				<kindDef>Combat</kindDef>
-				<commonality>100</commonality>
-				<options>
-					<Luxandra_Crusader_Trooper>5</Luxandra_Crusader_Trooper>
-					<Luxandra_Crusader_Cataphract>2</Luxandra_Crusader_Cataphract>
-				</options>
-			</li>
+
+			<!-- 3. PERMANENT BASE/SETTLEMENT COMPOSITION -->
 			<li>
 				<kindDef>Settlement</kindDef>
 				<options>
-					<Luxandra_Crusader_Trooper>5</Luxandra_Crusader_Trooper>
-					<Luxandra_Crusader_Cataphract>2</Luxandra_Crusader_Cataphract>
+					<Luxandra_Crusader_WhiteCape>12</Luxandra_Crusader_WhiteCape>
+					<!-- Safe Guard: Only loaded if Anomaly is present -->
+					<Luxandra_Crusader_Inquisitor MayRequire="Ludeon.RimWorld.Anomaly">6</Luxandra_Crusader_Inquisitor>
+					<Luxandra_Crusader_Guard>6</Luxandra_Crusader_Guard>
+					<Luxandra_Crusader_Seer>3</Luxandra_Crusader_Seer>
+					<Luxandra_Crusader_Leader>1</Luxandra_Crusader_Leader>
 				</options>
 			</li>
 		</pawnGroupMakers>
@@ -181,91 +195,220 @@
 	<!-- ============================== -->
 	<!-- Pawndefs -->
 	<!-- ============================== -->
-	<!-- TEMPORARY PAWNS -->
-	<PawnKindDef Name="Luxandra_Crusader_BaseSafe" Abstract="True">
+	<PawnKindDef Name="Luxandra_PuritanCrusader_Base" Abstract="True">
 		<race>Human</race>
-		<defaultFactionType>Luxandra_PuritanCrusaders</defaultFactionType>
-		<chemicalAddictionChance>0.0</chemicalAddictionChance>
-		<backstoryCryptosleepCommonality>0.08</backstoryCryptosleepCommonality>
-		<invNutrition>2.55</invNutrition>
-		<itemQuality>Normal</itemQuality>
-		<backstoryFilters>
+		<combatPower>60</combatPower>
+		<chronologicalAgeRange>35~45</chronologicalAgeRange>
+		<initialWillRange>6~8</initialWillRange>
+		<initialResistanceRange>40~45</initialResistanceRange>
+		<backstoryFiltersOverride MayRequire="Ludeon.RimWorld.Royalty">
 			<li>
 				<categories>
 					<li>ImperialCommon</li>
+					<li>ImperialFighter</li>
+					<li>ImperialRoyal</li>
 				</categories>
 			</li>
-		</backstoryFilters>
-		<initialWillRange>15~22</initialWillRange>
-		<initialResistanceRange>60~85</initialResistanceRange>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Psychopath</def>
+			</li>
+		</forcedTraits>
+    
+		<!-- Must be capable of violence -->
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+    
+		<!-- Flesh Purists: Absolutely zero bionics or tech-hediffs -->
+		<techHediffsChance>0</techHediffsChance>
+		<techHediffsMoney>0</techHediffsMoney>
+		<techHediffsTags>
+			<li>None</li>
+		</techHediffsTags>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
-		<defName>Luxandra_Crusader_Trooper</defName>
-		<label>crusader trooper</label>
-		<combatPower>60</combatPower>
-		<isFighter>true</isFighter>
-		<gearHealthRange>1~1</gearHealthRange>
-		<apparelMoney>1500~2500</apparelMoney>
+	<!-- GUARDS (The Regular Footsoldiers) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base">
+		<defName>Luxandra_Crusader_Guard</defName>
+		<label>puritan guard</label>
+		<combatPower>150</combatPower>
+    
+		<backstoryFiltersOverride MayRequire="Ludeon.RimWorld.Royalty">
+			<li>
+				<categories>
+					<li>ImperialFighter</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+
+		<apparelMoney>7000~10000</apparelMoney>
+		<weaponMoney>2000~3500</weaponMoney>
+
 		<apparelTags>
-			<li>ImperialLight</li>
+			<li>ArmorPower</li>
+			<li>SpacerMilitary</li>
+			<li>ImperialHeavy</li>
 		</apparelTags>
-		<weaponMoney>500~1000</weaponMoney>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+
 		<weaponTags>
+			<li>SpacerGun</li>
 			<li>IndustrialGunAdvanced</li>
 		</weaponTags>
-		<initialWillRange>15~22</initialWillRange>
-		<initialResistanceRange>60~85</initialResistanceRange>
-	</PawnKindDef>
 
-	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
-		<defName>Luxandra_Crusader_Cataphract</defName>
-		<label>crusader cataphract</label>
-		<combatPower>150</combatPower>
 		<isFighter>true</isFighter>
-		<gearHealthRange>1~1</gearHealthRange>
-		<apparelMoney>7000~9000</apparelMoney>
+		<chemicalAddictionChance>0.0</chemicalAddictionChance>
+	</PawnKindDef>
+
+	<!-- WHITE CAPES (The Zealot Footsoldiers) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base">
+		<defName>Luxandra_Crusader_WhiteCape</defName>
+		<label>white cape zealot</label>
+		<combatPower>70</combatPower>
+
+		<apparelMoney>600~1200</apparelMoney>
 		<apparelTags>
-			<li>ImperialHeavy</li>
+			<li>NeolithicPreacher</li>
+			<li>RoyalTier1</li>
 		</apparelTags>
-		<weaponMoney>2000~4000</weaponMoney>
+		<apparelRequired>
+			<li>Apparel_Cape</li>
+		</apparelRequired>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+
+		<weaponMoney>250~400</weaponMoney>
 		<weaponTags>
-			<li>ImperialWeaponBladelink</li>
+			<li>Revolver</li>
 		</weaponTags>
-		<initialWillRange>15~22</initialWillRange>
-		<initialResistanceRange>60~85</initialResistanceRange>
+		<isFighter>true</isFighter>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
-		<defName>Luxandra_Crusader_Trader</defName>
-		<label>crusader purveyor</label>
-		<combatPower>40</combatPower>
-		<trader>true</trader>
-		<apparelMoney>1000~2000</apparelMoney>
+	<!-- INQUISITOR (The Cleansing Flame) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base" MayRequire="Ludeon.RimWorld.Anomaly">
+		<defName>Luxandra_Crusader_Inquisitor</defName>
+		<label>puritan inquisitor</label>
+		<combatPower>140</combatPower>
+
+		<apparelMoney>1500~3000</apparelMoney>
 		<apparelTags>
-			<li>ImperialCommon</li>
+			<li>RoyalTier2</li>
+			<li>Cape</li>
 		</apparelTags>
-		<initialWillRange>15~22</initialWillRange>
-		<initialResistanceRange>60~85</initialResistanceRange>
+		<apparelRequired>
+			<li>Apparel_Cape</li>
+		</apparelRequired>
+		<apparelColor>(115, 30, 30)</apparelColor>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+		
+		<fixedInventory>
+			<li>
+				<thingDef>Gun_HellcatRifle</thingDef>
+			</li>
+		</fixedInventory>
+		<!-- Forced to spawn with the Anomaly Hellcat Rifle -->
+		<weaponMoney>600~2500</weaponMoney>
+		<weaponTags>
+			<li>AnomalyWeaponAdvanced</li>
+		</weaponTags>
+		<isFighter>true</isFighter>
+	</PawnKindDef>
+	
+	<!-- SEER (The Psychic Enforcer) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base">
+		<defName>Luxandra_Crusader_Seer</defName>
+		<label>puritan seer</label>
+		<combatPower>160</combatPower>
+		<chronologicalAgeRange>40~60</chronologicalAgeRange>
+
+		<backstoryFiltersOverride MayRequire="Ludeon.RimWorld.Royalty">
+			<li>
+				<categories>
+					<li>ImperialRoyal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+
+		<apparelMoney>4000~8000</apparelMoney>
+		<apparelTags>
+			<li>RoyalTier3</li>
+			<li>RoyalTier4</li>
+		</apparelTags>
+
+		<apparelRequired>
+			<li>Apparel_PsyfocusVest</li>
+			<li>Apparel_PsyfocusRobe</li>
+			<li>Apparel_EltexSkullcap</li>
+		</apparelRequired>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+
+		<weaponMoney>1500~3000</weaponMoney>
+		<weaponTags>
+			<li>SpacerGun</li>
+		</weaponTags>
+		
+		<modExtensions>
+			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+				<implantDef>VPE_PsycastAbilityImplant</implantDef>
+				<initialLevel>1</initialLevel>
+				<statUpgradePoints>1~7</statUpgradePoints>
+				<unlockedPaths>
+					<VPE_Staticlord>1~4|2~12</VPE_Staticlord>
+				</unlockedPaths>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 
-	<PawnKindDef ParentName="Luxandra_Crusader_BaseSafe">
+	<!-- PURIST (The High Arbiter Leader) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base">
 		<defName>Luxandra_Crusader_Leader</defName>
-		<label>Divine Judge</label>
-		<combatPower>200</combatPower>
-		<isFighter>true</isFighter>
-		<itemQuality>Excellent</itemQuality>
-		<gearHealthRange>1~1</gearHealthRange>
-		<apparelMoney>8000~12000</apparelMoney>
+		<label>high purist</label>
+		<combatPower>250</combatPower>
+		<chronologicalAgeRange>50~60</chronologicalAgeRange>
+
+		<backstoryFiltersOverride MayRequire="Ludeon.RimWorld.Royalty">
+			<li>
+				<categories>
+					<li>ImperialRoyal</li>
+					<li>ImperialFighter</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+
+		<apparelMoney>9000~15000</apparelMoney>
 		<apparelTags>
-			<li>ImperialHeavy</li>
+			<li>ArmorPower</li>
+			<li>SpacerMilitary</li>
+			<li>RoyalTier5</li>
 		</apparelTags>
-		<weaponMoney>4000~6000</weaponMoney>
+        
+		<apparelRequired>
+			<li>Apparel_Cape</li>
+			<li>Apparel_Coronet</li>
+		</apparelRequired>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+
+		<weaponMoney>3000~9000</weaponMoney>
 		<weaponTags>
-			<li>ImperialWeaponBladelink</li>
+			<li>SpacerGun</li>
+			<li>SpacerGunAdvanced</li>
 		</weaponTags>
-		<initialWillRange>15~22</initialWillRange>
-		<initialResistanceRange>60~85</initialResistanceRange>
+        
+		<modExtensions>
+			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+				<implantDef>VPE_PsycastAbilityImplant</implantDef>
+				<initialLevel>1</initialLevel>
+				<statUpgradePoints>2~10</statUpgradePoints>
+				<unlockedPaths>
+					<VPE_Staticlord>1~4|2~12</VPE_Staticlord>
+					<VPE_Frostshaper>1~4|2~12</VPE_Frostshaper>
+				</unlockedPaths>
+			</li>
+		</modExtensions>
+		
+		<isFighter>true</isFighter>
+		<factionLeader>true</factionLeader>
 	</PawnKindDef>
 
 	<!-- ============================== -->
