@@ -52,22 +52,45 @@ namespace LuxandraLust
             }
 
             // Find the vanilla escaping destination state if it exists in the baseline graph
-            LordToil escapeToil = graph.lordToils.FirstOrDefault(t => t is LordToil_PanicFlee);
+            // LordToil escapeToil = graph.lordToils.FirstOrDefault(t => t is LordToil_ExitMapFighting);
+            LordToil escapeToil = new LordToil_ExitMapFighting();
+            graph.AddToil(escapeToil);
+
+            if (customToil == null)
+                LuxandraDebugActions.DebugLogMessage("CustomToil for the raid was bugged. something went wrong.");
+            if (escapeToil == null)
+                LuxandraDebugActions.DebugLogMessage("EscapeToil for the raid was bugged. something went wrong.");
+
 
             if (customToil != null && escapeToil != null)
             {
-                Transition cleanBreakTransition = new Transition(customToil, escapeToil);
+                LuxandraDebugActions.DebugLogMessage("Creating transitions.....");
 
-                // Evaluate if the raiders have had enough fun
-                cleanBreakTransition.AddTrigger(new Trigger_ColonistsDownedAndSexNeedMet());
+                // --- 1. NATURAL COMBAT OUTCOMES ---
+                Transition naturalExitTransition = new Transition(customToil, escapeToil);
 
-                // Evaluate if the raiders are tired
-                cleanBreakTransition.AddTrigger(new Trigger_RaidersAreTired());
+                // Satisfied (Sex needs met) OR Exhausted (Rest levels tanked)
+                naturalExitTransition.AddTrigger(new Trigger_ColonistsDownedAndSexNeedMet());
+                naturalExitTransition.AddTrigger(new Trigger_RaidersAreTired());
 
-                // Add a feedback notification
-                cleanBreakTransition.AddPreAction(new TransitionAction_Message("The raiders are satisfied with the attack and are leaving the area.", MessageTypeDefOf.NegativeEvent));
+                naturalExitTransition.AddPreAction(new TransitionAction_Message("The raiders are satisfied with the attack and are leaving the area.", MessageTypeDefOf.NegativeEvent));
+                graph.AddTransition(naturalExitTransition);
 
-                graph.AddTransition(cleanBreakTransition);
+
+                // --- 2. FAILSAFE: NO DAMAGE FOR 5 HOURS (12500 Ticks) ---
+                Transition stalemateTransition = new Transition(customToil, escapeToil);
+                stalemateTransition.AddTrigger(new Trigger_TicksPassedAndNoRecentHarm(12500));
+
+                stalemateTransition.AddPreAction(new TransitionAction_Message("The attackers got bored of the situation and are withdrawing.", MessageTypeDefOf.NeutralEvent));
+                graph.AddTransition(stalemateTransition);
+
+
+                // --- 3. FAILSAFE: 12-HOUR HARD CEILING (30000 Ticks) ---
+                Transition timeLimitTransition = new Transition(customToil, escapeToil);
+                timeLimitTransition.AddTrigger(new Trigger_TicksPassed(30000));
+
+                timeLimitTransition.AddPreAction(new TransitionAction_Message("The raiders have overstayed their window and are calling off the assault.", MessageTypeDefOf.NeutralEvent));
+                graph.AddTransition(timeLimitTransition);
             }
 
             return graph;
@@ -78,54 +101,49 @@ namespace LuxandraLust
     {
         public override bool ActivateOn(Lord lord, TriggerSignal signal)
         {
-            // Only execute this heavier condition check on standard periodic environment updates
             if (signal.type != TriggerSignalType.Tick) return false;
-
-            // Check every 200 ticks (~3.3 seconds) to keep performance flawless
             if (Find.TickManager.TicksGame % 200 != 0) return false;
 
             Map map = lord.Map;
             if (map == null) return false;
 
-            // Gather colonist headcount parameters
             var colonists = map.mapPawns.FreeAdultColonistsSpawned;
-            var consciousColonists = colonists.Where(p => !p.Dead && !p.Downed);
-            int colonistNumber = colonists.Count;
+            bool anyColonistsConscious = colonists.Any(p => !p.Dead && !p.Downed);
 
-            // Baseline Victory Check: If all colonists are completely defeated
-            if (map.mapPawns.FreeColonistsSpawnedCount > 0 && !consciousColonists.Any())
+            // If there are still active colonists fighting back, the assault isn't won yet
+            if (anyColonistsConscious) return false;
+
+            int activeRaiderCount = 0;
+            int satisfiedRaiderCount = 0;
+
+            foreach (Pawn raider in lord.ownedPawns)
             {
-                if (lord.ownedPawns.Count == 0) return false;
+                if (raider.Dead || raider.Downed) continue;
 
-                int satisfiedRaiderCount = 0;
+                // Count active raiders dynamically
+                activeRaiderCount++;
 
-                foreach (Pawn raider in lord.ownedPawns)
+                // Filter out individual safety time locks on a per-pawn basis instead of breaking the loop
+                Hediff rageHediff = raider.health?.hediffSet?.hediffs
+                    .FirstOrDefault(h => h.def.defName == "Luxandra_RapistRage");
+
+                if (rageHediff == null || rageHediff.ageTicks < 12500) continue;
+
+                var sexNeed = raider.needs?.TryGetNeed<rjw.Need_Sex>();
+                if (sexNeed != null && sexNeed.CurLevel >= 0.5f)
                 {
-                    if (raider.Dead || raider.Downed) continue;
-
-                    // SAFETY TIME LOCK: Verify the raider has been in their rage state for at least 5 hours
-                    Hediff rageHediff = raider.health?.hediffSet?.hediffs
-                        .FirstOrDefault(h => h.def.defName == "Luxandra_RapistRage");
-
-                    if (rageHediff == null || rageHediff.ageTicks < 12500)
-                    {
-                        // If even one raider hasn't reached the 5-hour active assault threshold, hold the raid group
-                        return false;
-                    }
-
-                    // Check emotional/physical satisfaction
-                    var sexNeed = raider.needs?.TryGetNeed<rjw.Need_Sex>();
-                    if (sexNeed != null && sexNeed.CurLevel >= 0.5f)
-                    {
-                        satisfiedRaiderCount++;
-                    }
+                    satisfiedRaiderCount++;
                 }
+            }
 
-                // If the raiders have had their fun, leave
-                if (satisfiedRaiderCount > colonistNumber)
-                {
-                    return true;
-                }
+            if (activeRaiderCount == 0) return false;
+
+            // Dynamic Cap: If at least 60% of the active, raiders are fully satisfied, wrap up!
+            float satisfactionPercent = (float)satisfiedRaiderCount / activeRaiderCount;
+            if (satisfactionPercent >= 0.60f)
+            {
+                LuxandraDebugActions.DebugLogMessage("Threshold for escape due to sexual fulfilment reached.");
+                return true;
             }
 
             return false;
@@ -148,39 +166,44 @@ namespace LuxandraLust
             // Is there any capable colonist capable of fighting back?
             if (lord.ownedPawns.Count == 0) return false;
 
+            int activeRaiderCount = 0;
             int tiredRaiderCount = 0;
 
             foreach (Pawn raider in lord.ownedPawns)
             {
+                // Dead and downed pawns shouldn't count toward tactical decisions
                 if (raider.Dead || raider.Downed) continue;
 
-                // SAFETY TIME LOCK: Verify the raider has been in their rage state for at least 5 hours
+                activeRaiderCount++;
+
+                // SAFETY TIME LOCK: Verify the active raider has been in their rage state for at least 5 hours
                 Hediff rageHediff = raider.health?.hediffSet?.hediffs
                     .FirstOrDefault(h => h.def.defName == "Luxandra_RapistRage");
 
                 if (rageHediff == null || rageHediff.ageTicks < 12500)
                 {
-                    // If even one raider hasn't reached the 5-hour active assault threshold, hold the raid group
+                    // If even one active raider hasn't reached the 5-hour threshold, keep the assault going
                     return false;
                 }
 
                 var restNeed = raider.needs?.TryGetNeed(NeedDefOf.Rest);
-
-                if (restNeed != null)
+                if (restNeed != null && restNeed.CurLevel < 0.5f)
                 {
-                    if (restNeed.CurLevel < 0.5f)
-                    {
-                        tiredRaiderCount++;
-                    }
+                    tiredRaiderCount++;
                 }
             }
 
+            // If the entire squad is dead or downed, let another system handle the lord's cleanup
+            if (activeRaiderCount == 0) return false;
 
-            // If less than the pawns are tired, stay
-            if (tiredRaiderCount < lord.ownedPawns?.Count / 2)
+            // Use floating-point math to completely avoid the integer division truncation trap
+            float exhaustionThreshold = activeRaiderCount / 2f;
+
+            if (tiredRaiderCount < exhaustionThreshold)
                 return false;
 
-            // If everyone alive meets the metric criteria and the colony is defeated, break away!
+            LuxandraDebugActions.DebugLogMessage("Threshold for escape due to exhaustion reached.");
+            // Half or more of the currently living, active raiders are exhausted! Break away!
             return true;
         }
     }
