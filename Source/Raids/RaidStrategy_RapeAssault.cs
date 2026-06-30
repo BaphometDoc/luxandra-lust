@@ -51,8 +51,8 @@ namespace LuxandraLust
                 }
             }
 
-            // Find the vanilla kidnapping destination state if it exists in the baseline graph
-            LordToil kidnapToil = graph.lordToils.FirstOrDefault(t => t is LordToil_KidnapCover);
+            // Find the vanilla escaping destination state if it exists in the baseline graph
+            LordToil kidnapToil = graph.lordToils.FirstOrDefault(t => t is LordToil_ExitMap);
 
             if (customToil != null && kidnapToil != null)
             {
@@ -61,11 +61,11 @@ namespace LuxandraLust
                 // Evaluate if the raiders have had enough fun
                 cleanBreakTransition.AddTrigger(new Trigger_ColonistsDownedAndSexNeedMet());
 
-                // Evaluate if the raiders have had enough fun
+                // Evaluate if the raiders are tired
                 cleanBreakTransition.AddTrigger(new Trigger_RaidersAreTired());
 
                 // Add a feedback notification
-                cleanBreakTransition.AddPreAction(new TransitionAction_Message("The raiders are satisfied with the attack and are kidnapping who they can before leaving!", MessageTypeDefOf.NegativeEvent));
+                cleanBreakTransition.AddPreAction(new TransitionAction_Message("The raiders are satisfied with the attack and are leaving the area.", MessageTypeDefOf.NegativeEvent));
 
                 graph.AddTransition(cleanBreakTransition);
             }
