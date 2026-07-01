@@ -34,6 +34,10 @@ And when I started writing Luxandra, I chose to say "yes" to that question
 			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
 		</li>
 	</modDependencies>
+    <incompatibleWith>
+        <li>Abraxas.Tweaks.Incest</li> <!-- Both mods have same incest patch -->
+        <li>nugerumon.IWantIncest</li>
+    </incompatibleWith>
 	<loadAfter>
 		<li>brrainz.harmony</li>
 		<li>rim.job.world</li>

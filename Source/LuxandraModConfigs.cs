@@ -49,11 +49,15 @@ namespace LuxandraLust
         /// <summary>
         /// Enable the notification of having pleased Luxandra's kink
         /// </summary>
-        public static bool enablePleasedNotification = false;
+        public static bool enablePleasedNotification = true;
         /// <summary>
         /// Enable the childbirth appraisal gimmick
         /// </summary>
         public static bool enableChildbirthAppraisal = true;
+        /// <summary>
+        /// Removes the romance restrictions for close relatives
+        /// </summary>
+        public static bool removeRomanceRestrictions = false;
 
         private static Vector2 scrollPosition = Vector2.zero;
         private static float dynamicContentHeight = 100f;
@@ -85,8 +89,9 @@ namespace LuxandraLust
                 eventRerollCondition = 1;
                 eventRerollThresholdMultiplier = 1.0f;
                 weeklyCycleDays = 7;
-                enablePleasedNotification = false;
+                enablePleasedNotification = true;
                 enableChildbirthAppraisal = true;
+                removeRomanceRestrictions = false;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
             }
@@ -99,6 +104,10 @@ namespace LuxandraLust
 
             // Enable Childbirth Appraisal
             listingStandard.CheckboxLabeled("Enable Childbirth Appraisal", ref enableChildbirthAppraisal, "Enables the judging of children birth.\nLuxandra will compare the conception method with your colony beliefs (ideology > genes > traits) and either bless or curse you based on if they match.\n\n(She will judge Bestiality, then Prostitution, and then Rape)");
+            listingStandard.Gap(16f);
+
+            // Enable Romance Patches
+            listingStandard.CheckboxLabeled("Remove Close Relatives Romance Restrictions (requires restart)", ref removeRomanceRestrictions, "Removes the romance chance penalities related to incestuous relationships.");
             listingStandard.Gap(16f);
 
             // Weekly interval modifier
@@ -238,11 +247,12 @@ namespace LuxandraLust
             base.ExposeData();
 
             Scribe_Values.Look(ref enableLogging, "enableLogging", false);
-            Scribe_Values.Look(ref enablePleasedNotification, "enablePleasedNotification", false);
+            Scribe_Values.Look(ref enablePleasedNotification, "enablePleasedNotification", true);
             Scribe_Values.Look(ref eventRerollCondition, "eventRerollCondition", 2);
             Scribe_Values.Look(ref eventRerollThresholdMultiplier, "eventRerollThresholdMultiplier", 1.0f);
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
             Scribe_Values.Look(ref enableChildbirthAppraisal, "enableChildbirthAppraisal", true);
+            Scribe_Values.Look(ref removeRomanceRestrictions, "removeRomanceRestrictions", false);
         }
     }
 }

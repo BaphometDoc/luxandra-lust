@@ -8,8 +8,9 @@
 		<value>
 			<li Class="StockGenerator_Slaves">
 				<countRange>5~8</countRange>
+				<respectPopulationIntent>false</respectPopulationIntent>
 			</li>
-		</value>				
+		</value>
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
@@ -22,7 +23,7 @@
 					<li>(2, 3.0)</li>
 				</points>
 			</commonalityMultFromPopulationIntent>
-		</value>				
+		</value>
 	</Operation>
 	
 	<!-- Also forcefully forbidding the no-slavery precepts from the factions who
@@ -34,7 +35,7 @@
 				<nomatch Class="PatchOperationAdd">
 					<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]</xpath>
 					<value>
-						<disallowedPrecepts />
+						<disallowedPrecepts/>
 					</value>
 				</nomatch>
 			</li>

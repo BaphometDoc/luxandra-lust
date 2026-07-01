@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+    <Operation Class="Luxandra.PatchOperation_BloodRelationPatch">
+        <enabledPatch Class="PatchOperationSequence">
+            <success>Normal</success>
+            <operations>
+                <!-- Remove romance chance penalty for blood relatives -->
+                <li Class="PatchOperationReplace">
+                    <xpath>Defs/PawnRelationDef[familyByBloodRelation="true"]/romanceChanceFactor</xpath>
+                    <value>
+                        <romanceChanceFactor>1</romanceChanceFactor>
+                    </value>
+                </li>
+                <!-- Close relationship: Clear incestOpinionOffset -->
+                <li Class="PatchOperationReplace">
+                    <xpath>Defs/PawnRelationDef[defName="Parent" or defName="Child"]/incestOpinionOffset</xpath>
+                    <value>
+                        <incestOpinionOffset>0</incestOpinionOffset>
+                    </value>
+                </li>
+                <!-- Medium relationship: Clear incestOpinionOffset -->
+                <li Class="PatchOperationReplace">
+                    <xpath>Defs/PawnRelationDef[defName="UncleOrAunt" or defName="Cousin" or defName="HalfSibling" or defName="Sibling"]/incestOpinionOffset</xpath>
+                    <value>
+                        <incestOpinionOffset>0</incestOpinionOffset>
+                    </value>
+                </li>
+            </operations>
+        </enabledPatch>
+    </Operation>
+</Patch>
