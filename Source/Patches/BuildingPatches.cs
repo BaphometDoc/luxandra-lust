@@ -82,57 +82,124 @@ namespace LuxandraLust
             ShowDialog(rootNode, "Communing with Luxandra");
         }
 
+        private string DetermineSectionFlavorText(LuxandraIncidentType incidentType)
+        {
+            switch (incidentType)
+            {
+                case LuxandraIncidentType.Positive:
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a blessing? Some gifts, or maybe something more... exciting?";
+                case LuxandraIncidentType.Neutral:
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a mundane event? Maybe something to spice your boring days?";
+                case LuxandraIncidentType.Negative:
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a trial? An exotic threat, for the arousing thrill of danger?";
+                case LuxandraIncidentType.Raid:
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a threat to your colony? Reckless bravery, or another chance to acquire more subjects for your perversions?";
+                case LuxandraIncidentType.Quest:
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a mission? A demand of sort, to test your abilities?";
+                default: // This should never show up but here just in case
+                    return "Luxandra's gaze is drawn to the threads of fate, each shimmering with potential.";
+            }
+        }
+
         // --- STEP 2: THE INCIDENT SELECTION WINDOW ---
         private void OpenIncidentSelectionDialogue(Pawn pawn)
         {
-            DiaNode selectionNode = new DiaNode("Luxandra sifts through the tapestry of fates, waiting for your request.\n\nWhat twist of fate will you try to invoke?");
+            DiaNode rootSelectionNode = new DiaNode("Luxandra sifts through the tapestry of fates, waiting for your request.\n\nWhat twist of fate will you try to invoke?");
 
-            // Grab only the incidents that have a valid point cost
-            var buyableIncidents = LuxandraDefsCollections.AllIncidents
-                .Where(x => x.PointBaseCost.HasValue)
-                .OrderBy(x => x.IncidentType);
+            // Define our categories mapping to your collections
+            var categories = new List<(string Name, IEnumerable<LuxandraIncidentDefs> Incidents, string FlavorText)>
+                                        {
+                                            ("Positive Blessings", LuxandraDefsCollections.PositiveIncidents, DetermineSectionFlavorText(LuxandraIncidentType.Positive)),
+                                            ("Neutral Alterations", LuxandraDefsCollections.NeutralIncidentsNoQuests, DetermineSectionFlavorText(LuxandraIncidentType.Neutral)),
+                                            ("Negative Afflictions", LuxandraDefsCollections.NegativeIncidentsNoRaids, DetermineSectionFlavorText(LuxandraIncidentType.Negative)),
+                                            ("Raids & Invasions", LuxandraDefsCollections.Raids, DetermineSectionFlavorText(LuxandraIncidentType.Raid)),
+                                            ("Sacred Quests", LuxandraDefsCollections.Quests, DetermineSectionFlavorText(LuxandraIncidentType.Quest))
+                                            };
 
-            foreach (var luxIncident in buyableIncidents)
+
+            foreach (var category in categories)
             {
-                decimal masterThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
-                decimal multiplier = luxIncident.PointBaseCost.Value / 50m;
-                int cost = (int)Math.Ceiling(masterThreshold * multiplier);
-                string label = $"{luxIncident.IncidentDef.LabelCap} (Cost: {cost} Favor)";
+                // Filter out what belongs to this category and actually has a cost config
+                var categoryIncidents = category.Incidents
+                    .Where(p => LuxandraEventCheck.IsEnabled(p.IncidentDef.defName) && p.PointBaseCost != null)
+                    .OrderBy(x => x.PointBaseCost)
+                    .ToList();
 
-                DiaOption incidentOption = new DiaOption(label);
-
-                var canFireNow = luxIncident.IncidentDef.Worker.CanFireNow(StorytellerUtility.DefaultParmsNow(luxIncident.IncidentDef.category, pawn.Map));
-
-                // Check if the colony can actually afford it
-                if (LuxandraComp.colonyFavorPoints < cost)
+                // If the XML collection is completely empty or no items have costs configured
+                if (!categoryIncidents.Any())
                 {
-                    incidentOption.Disable($"\nRequires {cost} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+                    DiaOption emptyCategoryOption = new DiaOption(category.Name);
+                    emptyCategoryOption.Disable("\nNone available at the moment");
+                    rootSelectionNode.options.Add(emptyCategoryOption);
+                    continue;
                 }
-                else if (!canFireNow)
+
+                // Otherwise, proceed with creating the sub-menu node as normal.
+                DiaNode subMenuNode = new DiaNode(category.FlavorText);
+                bool anyEventAvailable = false;
+
+                // Generate the submenu
+                foreach (var luxIncident in categoryIncidents)
                 {
-                    incidentOption.Disable("\nCannot be invoked right now.");
+                    // Calculation for base event costs: sexual threshold / 50
+                    decimal masterThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
+                    decimal multiplier = luxIncident.PointBaseCost.Value / 50m;
+                    int cost = (int)Math.Ceiling(masterThreshold * multiplier);
+
+                    string label = $"({cost} Favor) {luxIncident.IncidentDef.LabelCap}";
+                    DiaOption incidentOption = new DiaOption(label);
+
+                    var canFireNow = luxIncident.IncidentDef.Worker.CanFireNow(StorytellerUtility.DefaultParmsNow(luxIncident.IncidentDef.category, pawn.Map));
+
+                    if (LuxandraComp.colonyFavorPoints < cost)
+                    {
+                        incidentOption.Disable($"Requires {cost} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+                    }
+                    else if (!canFireNow)
+                    {
+                        incidentOption.Disable("Cannot be invoked right now.");
+                    }
+                    else
+                    {
+                        incidentOption.action = () => OpenConfirmationDialogue(pawn, luxIncident, cost);
+                        anyEventAvailable = true; // Found at least one playable event!
+                    }
+
+                    subMenuNode.options.Add(incidentOption);
+                }
+
+                // Add a back button inside the sub-menu to return to our main category listing
+                DiaOption subMenuBack = new DiaOption("Go Back");
+                subMenuBack.action = () => ShowDialog(rootSelectionNode, "Select a Blessing");
+                subMenuNode.options.Add(subMenuBack);
+
+                // 2. Create the main menu option that links to this sub-node
+                DiaOption categoryOption = new DiaOption(category.Name);
+
+                if (!anyEventAvailable)
+                {
+                    categoryOption.Disable("No events in this category are currently available or affordable.");
                 }
                 else
                 {
-                    // Transition to confirmation step if clicked
-                    incidentOption.action = () => OpenConfirmationDialogue(pawn, luxIncident, cost);
+                    categoryOption.action = () => ShowDialog(subMenuNode, category.Name);
                 }
 
-                selectionNode.options.Add(incidentOption);
+                rootSelectionNode.options.Add(categoryOption);
             }
 
-            // Let the player back out to the main menu screen
+            // Main menu "Go Back" button
             DiaOption backOption = new DiaOption("Go Back");
             backOption.action = () => OpenRootDialogue(pawn);
-            selectionNode.options.Add(backOption);
+            rootSelectionNode.options.Add(backOption);
 
-            ShowDialog(selectionNode, "Select a Blessing");
+            ShowDialog(rootSelectionNode, "Select a Category");
         }
 
         // --- STEP 3: THE CONFIRMATION WINDOW ---
         private void OpenConfirmationDialogue(Pawn pawn, LuxandraIncidentDefs luxIncident, int cost)
         {
-            string text = $"Are you sure you want to spend {cost} Favor to summon {luxIncident.IncidentDef.label}?\nYou would have {LuxandraComp.colonyFavorPoints - cost} left after the request.";
+            string text = $"Are you sure you want to spend {cost} Favor to invoke {luxIncident.IncidentDef.LabelCap}?\n\nYou would have {LuxandraComp.colonyFavorPoints - cost} left after the request.";
 
             DiaNode confirmNode = new DiaNode(text);
 
@@ -141,6 +208,7 @@ namespace LuxandraLust
             {
                 // Prepare incident parameters
                 IncidentParms parms = StorytellerUtility.DefaultParmsNow(luxIncident.IncidentDef.category, pawn.Map);
+                parms.forced = true; // Force the incident to occur, bypassing the reroll from Luxandra
 
                 // Immediately queue or fire the incident
                 if (luxIncident.IncidentDef.Worker.CanFireNow(parms))
@@ -154,7 +222,7 @@ namespace LuxandraLust
                 }
 
                 LuxandraComp.PayForLuxandraServices(cost);
-                Messages.Message($"Your request to Luxandra consumed {cost} Favor to manifest {luxIncident.IncidentDef.defName}.", MessageTypeDefOf.TaskCompletion, false);
+                Messages.Message($"Your request to Luxandra consumed {cost} Favor to manifest {luxIncident.IncidentDef.LabelCap}.", MessageTypeDefOf.TaskCompletion, false);
             };
             yesOption.resolveTree = true; // This finishes the interaction entirely
             confirmNode.options.Add(yesOption);

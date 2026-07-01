@@ -91,14 +91,24 @@ namespace LuxandraLust
         public static List<LuxandraIncidentDefs> PositiveIncidents => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Positive).ToList();
 
         /// <summary>
-        /// Incidents that harm or challenge the player
+        /// Incidents that harm or challenge the player (including raids)
         /// </summary>
         public static List<LuxandraIncidentDefs> NegativeIncidents => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Negative || i.IncidentType == LuxandraIncidentType.Raid).ToList();
 
         /// <summary>
-        /// Incidents that are not strictly good nor bad, and are not quests
+        /// Incidents that harm or challenge the player (excluding raids)
+        /// </summary>
+        public static List<LuxandraIncidentDefs> NegativeIncidentsNoRaids => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Negative).ToList();
+
+        /// <summary>
+        /// Incidents that are not strictly good nor bad (including quests)
         /// </summary>
         public static List<LuxandraIncidentDefs> NeutralIncidents => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Neutral || i.IncidentType == LuxandraIncidentType.Quest).ToList();
+
+        /// <summary>
+        /// Incidents that are not strictly good nor bad (excluding quests)
+        /// </summary>
+        public static List<LuxandraIncidentDefs> NeutralIncidentsNoQuests => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Neutral).ToList();
 
         /// <summary>
         /// Quests
