@@ -1,6 +1,7 @@
 0.7 - 01/07/2026
 - Changed the rapist raid strat to escape without taking prisoners. You get some actual NTR action now, and "surrendering" is actually a valid strategy.
 - The size resizing pulses are now temporary resizes. The penis/breasts will go back to the previous size after a while.
+- Added the Forbidden Anomaly events to the event pool (assuming the monolith is at the correct level)
 - Made the setting windows actually not suck (yes this was hard enough to deserve a patch history entry)
 - Added Brothel Colony support to the Childbirth judgement (will evaluate your dedication to the Repopulation meme)
 - Added the option to disable the Childbirth judgement

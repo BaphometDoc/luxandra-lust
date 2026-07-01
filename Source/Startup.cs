@@ -25,8 +25,9 @@ namespace LuxandraLust
                 Log.Message($"[Luxandra Lust] found {incidentsInitialized.Count} lustful events.");
 
                 LuxandraDebugActions.DebugLogMessage($"Positive incidents: {LuxandraDefsCollections.PositiveIncidents.Count()}");
-                LuxandraDebugActions.DebugLogMessage($"Negative incidents: {LuxandraDefsCollections.NegativeIncidents.Count()}");
-                LuxandraDebugActions.DebugLogMessage($"Raids: {LuxandraDefsCollections.Raids.Count()}");
+                LuxandraDebugActions.DebugLogMessage($"Neutral incidents: {LuxandraDefsCollections.NeutralIncidents.Count()} (including {LuxandraDefsCollections.Quests.Count()} quests)");
+                LuxandraDebugActions.DebugLogMessage($"Negative incidents: {LuxandraDefsCollections.NegativeIncidents.Count()} (including {LuxandraDefsCollections.Raids.Count()} raids)");
+                LuxandraDebugActions.DebugLogMessage($"TOTAL: {LuxandraDefsCollections.AllIncidents.Count()} incidents available.");
             }
 
             // Initialize the factions

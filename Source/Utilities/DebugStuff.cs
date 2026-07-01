@@ -272,11 +272,12 @@ namespace LuxandraLust
         [DebugAction("Luxandra Lust", "Print Sexual Event Pool Audit", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void AuditEventPoolClassification()
         {
+            var allEvents = LuxandraDefsCollections.AllIncidents;
             var positiveEvents = LuxandraDefsCollections.PositiveIncidents;
             var negativeEvents = LuxandraDefsCollections.NegativeIncidents;
             var neutralEvents = LuxandraDefsCollections.NeutralIncidents;
             var raidEvents = LuxandraDefsCollections.Raids;
-            var questEvents = LuxandraDefsCollections.Quests; ;
+            var questEvents = LuxandraDefsCollections.Quests;
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("==================================================");
@@ -298,6 +299,8 @@ namespace LuxandraLust
             LogCategory("RAID EVENTS", raidEvents);
             LogCategory("QUEST EVENTS", questEvents);
 
+            sb.AppendLine("==================================================");
+            LogCategory("TOTAL EVENTS:", allEvents);
             sb.AppendLine("==================================================");
             Log.Message(sb.ToString());
 
