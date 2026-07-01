@@ -138,6 +138,11 @@ namespace LuxandraLust
                 // Skip surgeries, implants, or permanent injuries
                 if (h is Hediff_AddedPart || h is Hediff_Implant || h.def.isBad) continue;
 
+                // Hediffs that are tecnically implants but aren't classified as one
+                if (h.def == DefDatabase<HediffDef>.GetNamed("ImpregnationBlocker", false) || // (RJW) Archotech pregnancy blocker
+                    h.def == DefDatabase<HediffDef>.GetNamed("RJW_IUD", false)) // (RJW) IUD
+                    continue;
+
                 // Don't remove the biotech lactating hediff either as that one does tank fertility
                 // but we don't want the babies to starve. Modded ones usually do not interfere
                 if (ModsConfig.BiotechActive)
