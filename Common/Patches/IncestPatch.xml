@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
-    <Operation Class="Luxandra.PatchOperation_BloodRelationPatch">
+    <Operation Class="LuxandraLust.PatchOperation_BloodRelationPatch">
         <enabledPatch Class="PatchOperationSequence">
-            <success>Normal</success>
             <operations>
                 <!-- Remove romance chance penalty for blood relatives -->
                 <li Class="PatchOperationReplace">

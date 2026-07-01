@@ -4,7 +4,8 @@
 	Luxandra's meant to help with population curve and slaves are 
 	one way to getmore toys -->
 	<Operation Class="PatchOperationReplace">
-		<xpath>/Defs/TraderKindDef/stockGenerators/li[@class="StockGenerator_Slaves"]</xpath>
+		<!-- FIXED: changed StockGenerators to stockGenerators -->
+		<xpath>/Defs/TraderKindDef/stockGenerators/li[@Class="StockGenerator_Slaves"]</xpath>
 		<value>
 			<li Class="StockGenerator_Slaves">
 				<countRange>5~8</countRange>
@@ -14,7 +15,8 @@
 	</Operation>
 
 	<Operation Class="PatchOperationReplace">
-		<xpath>/Defs/TraderKindDef[defName="Caravan_Neolithic_Slaver" or "Caravan_Outlander_PirateMerchant" or defName="Orbital_PirateMerchant"]/commonalityMultFromPopulationIntent</xpath>
+		<!-- FIXED: expanded the 'or' conditions and corrected Caravan_Neolithic_SlaveTrader defName -->
+		<xpath>/Defs/TraderKindDef[defName="Caravan_Neolithic_SlaveTrader" or defName="Caravan_Outlander_PirateMerchant" or defName="Orbital_PirateMerchant"]/commonalityMultFromPopulationIntent</xpath>
 		<value>
 			<commonalityMultFromPopulationIntent>
 				<points>
@@ -31,9 +33,10 @@
 	<Operation Class="PatchOperationSequence">
 		<operations>
 			<li Class="PatchOperationConditional">
-				<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]/disallowedPrecepts</xpath>
+				<!-- FIXED: added /Defs/ to the front of the paths -->
+				<xpath>/Defs/FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]/disallowedPrecepts</xpath>
 				<nomatch Class="PatchOperationAdd">
-					<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]</xpath>
+					<xpath>/Defs/FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]</xpath>
 					<value>
 						<disallowedPrecepts/>
 					</value>
@@ -42,7 +45,8 @@
 
 			<!-- 2. Safely add the anti-slavery precepts into their disallowed lists -->
 			<li Class="PatchOperationAdd">
-				<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]/disallowedPrecepts</xpath>
+				<!-- FIXED: added /Defs/ to the front of the path -->
+				<xpath>/Defs/FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]/disallowedPrecepts</xpath>
 				<value>
 					<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Abhorrent</li>
 					<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Horrible</li>
