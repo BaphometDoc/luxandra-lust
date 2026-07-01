@@ -55,6 +55,10 @@ namespace LuxandraLust
         /// </summary>
         public static bool enableChildbirthAppraisal = true;
         /// <summary>
+        /// Enable the childbirth appraisal gimmick for animals under colony control
+        /// </summary>
+        public static bool trackChildbirthAppraisalForAnimals = false;
+        /// <summary>
         /// Removes the romance restrictions for close relatives
         /// </summary>
         public static bool removeRomanceRestrictions = false;
@@ -91,6 +95,7 @@ namespace LuxandraLust
                 weeklyCycleDays = 7;
                 enablePleasedNotification = true;
                 enableChildbirthAppraisal = true;
+                trackChildbirthAppraisalForAnimals = false;
                 removeRomanceRestrictions = false;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
@@ -105,6 +110,13 @@ namespace LuxandraLust
             // Enable Childbirth Appraisal
             listingStandard.CheckboxLabeled("Enable Childbirth Appraisal", ref enableChildbirthAppraisal, "Enables the judging of children birth.\nLuxandra will compare the conception method with your colony beliefs (ideology > genes > traits) and either bless or curse you based on if they match.\n\n(She will judge Bestiality, then Prostitution, and then Rape)");
             listingStandard.Gap(16f);
+
+            if (enableChildbirthAppraisal)
+            {
+                // Enable Childbirth Appraisal
+                listingStandard.CheckboxLabeled("Enable Childbirth Appraisal for colony animals", ref trackChildbirthAppraisalForAnimals, "Births from colony animals will also be judged for your Bestiality affinity if birth humans.");
+                listingStandard.Gap(16f);
+            }
 
             // Enable Romance Patches
             listingStandard.CheckboxLabeled("Remove Close Relatives Romance Restrictions (requires restart)", ref removeRomanceRestrictions, "Removes the romance chance penalities related to incestuous relationships.");
@@ -252,6 +264,7 @@ namespace LuxandraLust
             Scribe_Values.Look(ref eventRerollThresholdMultiplier, "eventRerollThresholdMultiplier", 1.0f);
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
             Scribe_Values.Look(ref enableChildbirthAppraisal, "enableChildbirthAppraisal", true);
+            Scribe_Values.Look(ref trackChildbirthAppraisalForAnimals, "trackChildbirthAppraisalForAnimals", false);
             Scribe_Values.Look(ref removeRomanceRestrictions, "removeRomanceRestrictions", false);
         }
     }

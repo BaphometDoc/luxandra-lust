@@ -17,14 +17,13 @@ namespace LuxandraLust
         [HarmonyPostfix]
         public static void BiotechBirthPostfix(Pawn mother, Pawn baby)
         {
-            if (!ShouldExecute()) return;
+            if (!ShouldExecute(mother)) return;
 
             LuxandraDebugActions.DebugLogMessage($"Intercepted Biotech birth event. Mother: {mother.NameShortColored}, Baby: {baby.NameShortColored}");
-            if (baby == null || mother?.Map == null) return;
 
             if (mother.Faction != null && (mother.Faction.IsPlayer || mother.IsPrisonerOfColony || mother.IsSlaveOfColony))
             {
-                ExecutePreceptBirthJudgement(mother, baby.GetFather());
+                ExecutePreceptBirthJudgement(mother, baby.GetFather(), baby);
             }
         }
 
@@ -36,28 +35,34 @@ namespace LuxandraLust
         {
             public static void Postfix(Hediff_BasePregnancy __instance, Pawn mother, Pawn father, Pawn baby)
             {
-                if (!ShouldExecute()) return;
+                if (!ShouldExecute(mother)) return;
 
                 LuxandraDebugActions.DebugLogMessage($"Intercepted birth event. Mother: {mother.NameShortColored}, Father: {father?.NameShortColored}, Baby: {baby.NameShortColored}");
-                if (mother?.Map == null) return;
 
                 if (mother.Faction != null && (mother.Faction.IsPlayer || mother.IsPrisonerOfColony || mother.IsSlaveOfColony))
                 {
-                    ExecutePreceptBirthJudgement(mother, father);
+                    ExecutePreceptBirthJudgement(mother, father, baby);
                 }
             }
         }
 
-        private static bool ShouldExecute()
+        private static bool ShouldExecute(Pawn mother)
         {
+            // Only enable for Luxandra
             if (!LuxandraStorytellerCheck.IsActive()) return false;
+
+            // Don't run the postfix if the mother is invalid or if the map is null 
+            if (mother == null || mother?.Map == null) return false;
+
+            // Don't run the postfix if the mother is an animal and the player has disabled tracking for animals
+            if (mother.IsAnimal() && !LuxandraModSettings.trackChildbirthAppraisalForAnimals) return false;
+
+            // Finally check if the setting is enabled in first place
             return LuxandraModSettings.enableChildbirthAppraisal;
         }
 
-        private static void ExecutePreceptBirthJudgement(Pawn mother, Pawn father)
+        private static void ExecutePreceptBirthJudgement(Pawn mother, Pawn father, Pawn baby)
         {
-
-
             Map map = mother.Map;
 
             if (father == null)
@@ -82,8 +87,29 @@ namespace LuxandraLust
             bool isColonyRapist = DetermineRapistSupport(map);
 
             // ===============================================================================
-            // Logic for blessings and punishment. Some may be repeated, it's a bit inevitable
+            //                      Logic for blessings and punishment.
             // ===============================================================================
+
+            // Is the human child from a animal mother and the setting is enabled
+            if (mother.IsAnimal() && baby.IsHumanLike() && LuxandraModSettings.trackChildbirthAppraisalForAnimals)
+            {
+                // Colony is zoophile - Luxandra is pleased
+                if (isColonyZoophile)
+                {
+                    ApplyPleasureBlessing(map, mother, father,
+                         $"{letterBase}: Feral Devotion",
+                         $"Luxandra has appraised the birth of {mother.LabelShortCap}'s miracle. By guiding your human seed into the wild beasts of the world, your colony has shattered the boundaries of standard flesh to prove true to its carnal doctrine. She rewards your raw fidelity with a grand ecstasy.");
+                    return;
+                }
+                // Colony was not zoophile - Luxandra is angry
+                else
+                {
+                    ApplyDegradationPunishment(map,
+                          $"{letterBase}: Primal Contamination",
+                          $"Luxandra has appraised the birth of {mother.LabelShortCap}'s unnatural newborn with profound disdain. A man of your colony has willingly surrendered his humanity to an animal, leaving a stain of bestial violation upon your community. A heavy fog descends upon your minds, dragging your consciousness down to match the beast you so eagerly defiled.");
+                    return;
+                }
+            }
 
             // Is the child is from animals (if father is an animal, all other precepts don't matter)
             if (childFromZoophilia)
@@ -204,7 +230,7 @@ namespace LuxandraLust
             }
 
             // Target Parents for the massive buffs
-            if (mother != null && !mother.Dead) mother.health.AddHediff(parentalBlessing);
+            if (mother != null && !mother.Dead && mother.IsHumanLike()) mother.health.AddHediff(parentalBlessing);
             if (father != null && !father.Dead && father.IsHumanLike() && father.Map == map)
             {
                 father.health.AddHediff(parentalBlessing);

@@ -126,100 +126,117 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
                 incidentType: LuxandraIncidentType.Positive,
+                description: "Causes a surge of speed and libido in female colonists.",
                 pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
                 incidentType: LuxandraIncidentType.Positive,
+                description: "Causes a surge of speed and libido in male colonists.",
                 pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
                 incidentType: LuxandraIncidentType.Negative,
+                description: "It's warm. It's sticky. You probably shouldn't go outside today.",
                 pointBaseCost: 40
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse,
                 incidentType: LuxandraIncidentType.Neutral,
+                description: "A somewhat long lasting condition that will massively increase the fertility and libido of every human in the map.",
                 pointBaseCost: 55
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseSite,
-                incidentType: LuxandraIncidentType.Negative
+                incidentType: LuxandraIncidentType.Negative,
+                description: "A remote transmitter will cause a Fertility Pulse on your map until you disable it"
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseMechCluster,
                 incidentType: LuxandraIncidentType.Raid,
+                description: "A mech cluster will cause a Fertility Pulse on your map until you destroy it",
                 pointBaseCost: 45
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
-                incidentType: LuxandraIncidentType.Negative
+                incidentType: LuxandraIncidentType.Negative,
+                description: "One or more pawns go on a Random Rape mental break"
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 incidentType: LuxandraIncidentType.Raid,
+                description: "A tribal raid with increased speed and sex drive",
                 pointBaseCost: 35
              ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 incidentType: LuxandraIncidentType.Raid,
+                description: "A Carnal Deviant that will try to rape your colonists rather than kill them",
                 pointBaseCost: 35
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_TheMilkGame,
                 incidentType: LuxandraIncidentType.Neutral,
+                description: "A gift of milk, but someone will come for the newly fed cattles...",
                 pointBaseCost: 40
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever,
                 incidentType: LuxandraIncidentType.Negative,
+                description: "A disease that heals only via sex.",
                 pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
+                description: "Male colonist penises will grow for a while.",
                 pointBaseCost: 25
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
+                description: "Female colonist breasts will grow for a while.",
                 pointBaseCost: 25
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_MaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
+                description: "Male colonist penises will shrink for a while.",
                 pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
+                description: "Female colonist breasts will shrink for a while.",
                 pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulSupplies,
                 incidentType: LuxandraIncidentType.Positive,
+                description: "A drop of supplies for your more exotic needs.",
                 pointBaseCost: 55
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BreakPrisonersContractQuest,
                 incidentType: LuxandraIncidentType.Quest,
+                description: "A request to 'break' some prisoners.",
                 pointBaseCost: 40
             ));
             #endregion
@@ -230,6 +247,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalLuxury,
                     incidentType: LuxandraIncidentType.Positive,
+                    description: "Your royal colonist will gain several permanent sex related boons.",
                     requiresMod: true,
                     modRequired: "Royalty",
                     pointBaseCost: 35
@@ -238,6 +256,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalDepravity,
                     incidentType: LuxandraIncidentType.Negative,
+                    description: "Your royal colonist will gain several permanent sex related penalties and go on a rapist rage.",
                     requiresMod: true,
                     modRequired: "Royalty"
                 ));
@@ -250,6 +269,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderBlessing,
                     incidentType: LuxandraIncidentType.Positive,
+                    description: "Your ideology leader will gain several permanent sex related boons.",
                     requiresMod: true,
                     modRequired: "Ideology",
                     pointBaseCost: 35
@@ -258,6 +278,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderDepravity,
                     incidentType: LuxandraIncidentType.Negative,
+                    description: "Your ideology will gain several permanent sex related penalties and go on a rapist rage.",
                     requiresMod: true,
                     modRequired: "Ideology"
                 ));
@@ -350,6 +371,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                    incidentDef: unleashedBastardsRaid,
                    incidentType: LuxandraIncidentType.Raid,
+                   description: "A stronger raid which will more easily try to rape your colonists.",
                    requiresMod: true
                ));
             }
@@ -407,6 +429,11 @@ namespace LuxandraLust
         public LuxandraIncidentType IncidentType { get; set; }
 
         /// <summary>
+        /// Short description of the event
+        /// </summary>
+        public string ShortDescription { get; set; }
+
+        /// <summary>
         /// Base cost to be bought from event selectors (null = can't be bought)
         /// </summary>
         public decimal? PointBaseCost { get; set; }
@@ -421,10 +448,11 @@ namespace LuxandraLust
         /// </summary>
         public string ModRequired { get; set; }
 
-        public LuxandraIncidentDefs(IncidentDef incidentDef, LuxandraIncidentType incidentType, decimal? pointBaseCost = null, bool requiresMod = false, string modRequired = "")
+        public LuxandraIncidentDefs(IncidentDef incidentDef, LuxandraIncidentType incidentType, string description = "", decimal? pointBaseCost = null, bool requiresMod = false, string modRequired = "")
         {
             this.IncidentDef = incidentDef;
             this.IncidentType = incidentType;
+            this.ShortDescription = description;
             this.PointBaseCost = pointBaseCost;
             this.RequiresMod = requiresMod;
             this.ModRequired = modRequired;

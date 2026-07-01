@@ -2,7 +2,9 @@
 - Introducing the Luxandra's Favor gimmick. Gain favor with her (currently just via sex + pleasing her kink, more to come) and spend it to alter your fate or gain her blessings
 - Completely reworked the event reroll system in favor of the new system, and removed the prude punishment (that'll return in a different form at later point)
 - Added a new buildable, Luxandra's Monument, only available if she is the selected storyteller. Pray to this monument to receive her blessings. (And more stuff in the future)
-- Added togglable incest relationship patch. (It's the usual one you see in many other mods)
+- Added togglable incest relationship patch. (off by default, It's the usual one you see in many other mods)
+- Childbirth judgement can now be applied to human children born from your colony animal (off by default, enable in mod settings)
+- Added small description tooltips to the events from this mod in the event settings
 
 0.7 - 01/07/2026
 - Changed the rapist raid strat to escape without taking prisoners. You get some actual NTR action now, and "surrendering" is actually a valid strategy.

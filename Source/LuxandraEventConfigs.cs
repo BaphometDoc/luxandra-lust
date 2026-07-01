@@ -90,11 +90,11 @@ namespace LuxandraLust
                 // Draw the text label immediately next to it
                 Widgets.Label(textRect, $"{modDescription}");
 
-                // TODO: Add a tool-tip mouseover description box across the whole row area
-                //if (Mouse.IsOver(rowRect) && !eventWrapper.IncidentDef.description.NullOrEmpty())
-                //{
-                //    TooltipHandler.TipRegion(rowRect, eventWrapper.IncidentDef.description);
-                //}
+                // Add a tool-tip mouseover description box across the whole row area
+                if (Mouse.IsOver(rowRect) && !eventWrapper.ShortDescription.NullOrEmpty())
+                {
+                    TooltipHandler.TipRegion(rowRect, eventWrapper.ShortDescription);
+                }
 
                 if (isEnabled != previousState)
                 {
