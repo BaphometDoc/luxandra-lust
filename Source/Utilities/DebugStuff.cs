@@ -72,7 +72,6 @@ namespace LuxandraLust
                 adultColonistCount = targetMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
                 adultSlavesCount = targetMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
                 totalThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
-                thresholdAfterSettings = (int)(totalThreshold * settingsMultiplier);
             }
 
             // Print the current persistent values beautifully formatted (kinda) to the debug log console

@@ -178,7 +178,7 @@ namespace LuxandraLust
                                 .Count(p => LuxandraUtilities.IsAdult(p));
 
                             int baseThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
-                            int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold * eventRerollThresholdMultiplier));
+                            int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold));
 
                             listingStandard.Label("<color=cyan>Live Active Colony Preview:</color>");
                             listingStandard.Label($"  • Spawned Adult Colonists: <color=cyan>{adultColonists}</color>");

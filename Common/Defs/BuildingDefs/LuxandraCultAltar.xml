@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="SteleBase">
+    <defName>Luxandra_SacredMonument</defName>
+    <label>Monument of Luxandra</label>
+    <description>A grand monument dedicated to Luxandra. Can only be constructed while she guides your colony's fate.</description>
+  <size>(2,2)</size>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>8000</WorkToBuild>
+      <Beauty>50</Beauty>
+      <MeditationFocusStrength>0.15</MeditationFocusStrength>
+    </statBases>
+    <costStuffCount>150</costStuffCount>
+    <uiIconScale>0.8</uiIconScale>
+    <uiIconOffset>(0, 0.04)</uiIconOffset>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <graphicData>
+	  <graphicClass>Graphic_Random</graphicClass>
+      <texPath>Things/Building/Furniture/SteleLarge</texPath>
+      <drawSize>(4,4)</drawSize>
+      <drawOffset>(0,0,0.05)</drawOffset>
+      <shadowData>
+        <volume>(1.5, 0.6, 1.5)</volume>
+        <offset>(0, 0, -0.15)</offset>
+      </shadowData>
+      <damageData>
+        <rect>(0.1,0.1,1.9,1.9)</rect>
+      </damageData>
+    </graphicData>
+    <comps>
+	<li Class="LuxandraLust.CompProperties_LuxandraMonument"/>
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Artistic</li>		  
+		  <li>Sex</li>
+        </focusTypes>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

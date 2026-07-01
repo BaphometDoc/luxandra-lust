@@ -182,7 +182,7 @@ namespace LuxandraLust
         }
 
         /// <summary>
-        /// Calculates the threshold to trigger Luxanna's event reroll
+        /// Calculates the threshold to trigger Luxanna's event reroll (Configs included)
         /// </summary>
         public static int CalculateSexualRerollThreshold()
         {

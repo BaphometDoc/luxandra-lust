@@ -116,25 +116,25 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
                 incidentType: LuxandraIncidentType.Positive,
-                pointBaseCost: 1
+                pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
                 incidentType: LuxandraIncidentType.Positive,
-                pointBaseCost: 1
+                pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
                 incidentType: LuxandraIncidentType.Negative,
-                pointBaseCost: 5
+                pointBaseCost: 40
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse,
                 incidentType: LuxandraIncidentType.Neutral,
-                pointBaseCost: 5
+                pointBaseCost: 55
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -145,7 +145,7 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseMechCluster,
                 incidentType: LuxandraIncidentType.Raid,
-                pointBaseCost: 7.5m
+                pointBaseCost: 45
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -156,61 +156,61 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 incidentType: LuxandraIncidentType.Raid,
-                pointBaseCost: 1
+                pointBaseCost: 35
              ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 incidentType: LuxandraIncidentType.Raid,
-                pointBaseCost: 2
+                pointBaseCost: 35
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_TheMilkGame,
                 incidentType: LuxandraIncidentType.Neutral,
-                pointBaseCost: 5
+                pointBaseCost: 40
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever,
                 incidentType: LuxandraIncidentType.Negative,
-                pointBaseCost: 2
+                pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
-                pointBaseCost: 1.5m
+                pointBaseCost: 25
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
-                pointBaseCost: 1.5m
+                pointBaseCost: 25
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_MaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
-                pointBaseCost: 1.5m
+                pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
-                pointBaseCost: 1.5m
+                pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulSupplies,
                 incidentType: LuxandraIncidentType.Positive,
-                pointBaseCost: 5
+                pointBaseCost: 55
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BreakPrisonersContractQuest,
                 incidentType: LuxandraIncidentType.Quest,
-                pointBaseCost: 2.5m
+                pointBaseCost: 40
             ));
             #endregion
 
@@ -222,15 +222,14 @@ namespace LuxandraLust
                     incidentType: LuxandraIncidentType.Positive,
                     requiresMod: true,
                     modRequired: "Royalty",
-                    pointBaseCost: 5
+                    pointBaseCost: 35
                 ));
 
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalDepravity,
                     incidentType: LuxandraIncidentType.Negative,
                     requiresMod: true,
-                    modRequired: "Royalty",
-                    pointBaseCost: 5
+                    modRequired: "Royalty"
                 ));
             }
             #endregion
@@ -243,15 +242,14 @@ namespace LuxandraLust
                     incidentType: LuxandraIncidentType.Positive,
                     requiresMod: true,
                     modRequired: "Ideology",
-                    pointBaseCost: 5
+                    pointBaseCost: 35
                 ));
 
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderDepravity,
                     incidentType: LuxandraIncidentType.Negative,
                     requiresMod: true,
-                    modRequired: "Ideology",
-                    pointBaseCost: 5
+                    modRequired: "Ideology"
                 ));
             }
             #endregion
@@ -264,7 +262,7 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Positive,
                 requiresMod: true,
                 modRequired: "RimJobWorld",
-                pointBaseCost: 2.5m
+                pointBaseCost: 35
             ));
 
             IncidentDef nymphVisitor = DefDatabase<IncidentDef>.GetNamed("NymphVisitor", false);
@@ -285,7 +283,7 @@ namespace LuxandraLust
                    incidentType: LuxandraIncidentType.Quest,
                    requiresMod: true,
                    modRequired: "Brothel Colony Quests",
-                   pointBaseCost: 2
+                   pointBaseCost: 45
                ));
 
                 IncidentDef brothelQuestBig = DefDatabase<IncidentDef>.GetNamed("RJWBCQ_GiveQuest_BrothelCustomer_Big", false);
@@ -294,7 +292,7 @@ namespace LuxandraLust
                    incidentType: LuxandraIncidentType.Quest,
                    requiresMod: true,
                    modRequired: "Brothel Colony Quests",
-                   pointBaseCost: 5
+                   pointBaseCost: 55
                ));
 
                 IncidentDef brothelQuestExtreme = DefDatabase<IncidentDef>.GetNamed("RJWBCQ_GiveQuest_BrothelCustomer_Extreme", false);
@@ -303,7 +301,7 @@ namespace LuxandraLust
                    incidentType: LuxandraIncidentType.Quest,
                    requiresMod: true,
                    modRequired: "Brothel Colony Quests",
-                   pointBaseCost: 5
+                   pointBaseCost: 65
                ));
             }
             #endregion
@@ -317,7 +315,7 @@ namespace LuxandraLust
                    incidentType: LuxandraIncidentType.Negative,
                    requiresMod: true,
                    modRequired: "RJW Events",
-                   pointBaseCost: 1.5m
+                   pointBaseCost: 25
                ));
             }
             #endregion
@@ -330,8 +328,7 @@ namespace LuxandraLust
                    incidentDef: psychicArouse,
                    incidentType: LuxandraIncidentType.Neutral,
                    requiresMod: true,
-                   modRequired: "RJW Genes",
-                   pointBaseCost: 2.5m
+                   modRequired: "RJW Genes"
                ));
             }
             #endregion
@@ -343,8 +340,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                    incidentDef: unleashedBastardsRaid,
                    incidentType: LuxandraIncidentType.Raid,
-                   requiresMod: true,
-                   pointBaseCost: 2
+                   requiresMod: true
                ));
             }
             #endregion
@@ -370,7 +366,7 @@ namespace LuxandraLust
                        incidentType: LuxandraIncidentType.Negative,
                        requiresMod: true,
                        modRequired: "Forbidden Anomalies",
-                       pointBaseCost: 2.5m
+                       pointBaseCost: 35
                    ));
                 }
                 #endregion
