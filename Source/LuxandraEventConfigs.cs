@@ -35,8 +35,6 @@ namespace LuxandraLust
 
         private static Vector2 scrollPosition = Vector2.zero;
 
-        private static float dynamicEventsHeight = 100f;
-
         public static void DoWindowContents(Rect inRect)
         {
             // --- SECTION 1: HEADER ---

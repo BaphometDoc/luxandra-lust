@@ -1,3 +1,7 @@
+0.8 - 01/07/2026
+- Introducing the Luxandra's Favor gimmick. Gain favor with her (currently just via sex + pleasing her kink, more to come) and spend it to alter your fate or gain her blessings
+- Completely reworked the event reroll system in favor of the new system, and removed the prude punishment (that'll return in a different form at later point)
+
 0.7 - 01/07/2026
 - Changed the rapist raid strat to escape without taking prisoners. You get some actual NTR action now, and "surrendering" is actually a valid strategy.
 - The size resizing pulses are now temporary resizes. The penis/breasts will go back to the previous size after a while.

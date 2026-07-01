@@ -14,11 +14,14 @@ namespace LuxandraLust
         /// <summary>
         /// Extracts all incident defs from a the sexual incident collections
         /// </summary>
-        public static List<IncidentDef> ExtractIncidentsFromCollection(IEnumerable<LuxandraIncidentDefs> incidentCollection)
+        public static List<IncidentDef> ExtractIncidentsFromCollection(List<LuxandraIncidentDefs> incidentCollection)
         {
+            LuxandraDebugActions.DebugLogMessage($"Extracting incidents from list with {incidentCollection.Count()} incidents.");
+
             if (incidentCollection == null || incidentCollection.Count() == 0)
                 return new List<IncidentDef>();
 
+            LuxandraDebugActions.DebugLogMessage($"Extracting incidents from list with {incidentCollection.Count()} incidents.");
             return incidentCollection.Select(i => i.IncidentDef).ToList();
         }
 
@@ -414,6 +417,50 @@ namespace LuxandraLust
             if (defName == null || defName == "" || defName == " ") return false;
 
             return !LuxandraEventSettings.disabledEventNames.Contains(defName);
+        }
+
+        /// <summary>
+        /// Verifies which of the events with the provided def list are enabled in the settings
+        /// </summary>
+        public static List<string> EnabledIncidents(List<string> incidentDefs)
+        {
+            // Small failsafe just in case
+            if (incidentDefs == null || incidentDefs.Count == 0) return new List<string>();
+
+            return incidentDefs.Where(i => !LuxandraEventSettings.disabledEventNames.Contains(i)).ToList();
+        }
+
+        /// <summary>
+        /// Verifies if ANY event is enabled at all of a given type.
+        /// Returns true if at least one event is enabled, false if all events are disabled.
+        /// </summary>
+        public static bool IsAnyEventEnabled(LuxandraIncidentType eventType = LuxandraIncidentType.Any)
+        {
+            List<LuxandraIncidentDefs> incidentsToCheck = LuxandraDefsCollections.AllIncidents;
+
+            switch (eventType)
+            {
+                case LuxandraIncidentType.Positive:
+                    incidentsToCheck = LuxandraDefsCollections.PositiveIncidents;
+                    break;
+                case LuxandraIncidentType.Negative:
+                    incidentsToCheck = LuxandraDefsCollections.NegativeIncidents;
+                    break;
+                case LuxandraIncidentType.Neutral:
+                    incidentsToCheck = LuxandraDefsCollections.NeutralIncidents;
+                    break;
+                case LuxandraIncidentType.Quest:
+                    incidentsToCheck = LuxandraDefsCollections.Quests;
+                    break;
+                case LuxandraIncidentType.Raid:
+                    incidentsToCheck = LuxandraDefsCollections.Raids;
+                    break;
+                case LuxandraIncidentType.Any:
+                default:
+                    break;
+            }
+
+            return incidentsToCheck.Any(i => !LuxandraEventSettings.disabledEventNames.Contains(i.IncidentDef.defName));
         }
     }
 }

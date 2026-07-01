@@ -41,7 +41,7 @@ namespace LuxandraLust
             Scribe_Values.Look(ref necrophiliaSexActionCounter, "necrophiliaSexActionCounter", 0);
 
             // --- REROLL COUNTER ---
-            Scribe_Values.Look(ref sexActionCounterForRerolls, "sexActionCounterForRerolls", 0);
+            Scribe_Values.Look(ref colonyFavorPoints, "colonyFavorPoints", 0);
 
             // --- CYCLE COUNTERS --- (TODO: Determine events in base of sexual skewing)
             Scribe_Values.Look(ref sexActionCounterForCycle, "sexActionCounterForCycle", 0);
@@ -52,9 +52,13 @@ namespace LuxandraLust
         }
 
 
+        /// <summary>
+        /// Favor points owned by the colony (Former sexActionCounterForRerolls)
+        /// </summary>
+        public int colonyFavorPoints = 0;
+
         // Sex counters
         public int sexActionCounter = 0;
-        public int sexActionCounterForRerolls = 0;
         public int sexActionCounterForCycle = 0;
         public int impureSexActionCounter = 0;
         public int impureSexActionCounterForCycle = 0;
@@ -109,14 +113,30 @@ namespace LuxandraLust
                 Messages.Message($"Luxandra's whims have shifted: She is not into anything specific at the moment.", MessageTypeDefOf.CautionInput, false);
         }
 
+        /// <summary>
+        /// Subtracts the specified amount from the sex counter
+        /// </summary>
+        public void PayForLuxandraServices(int amountPaid)
+        {
+            colonyFavorPoints -= amountPaid;
+        }
+
+        public void AddToFavorCounter(int amount)
+        {
+            colonyFavorPoints += amount;
+        }
+
         public void RegisterSexAction(bool satisfiedKink = false)
         {
             sexActionCounter++;
-            sexActionCounterForRerolls++;
+            colonyFavorPoints++;
             sexActionCounterForCycle++;
 
             if (satisfiedKink)
+            {
+                colonyFavorPoints++;
                 kinkPleasedCounter++;
+            }
         }
         public void RegisterImpureSexAction()
         {
@@ -141,7 +161,7 @@ namespace LuxandraLust
 
         public void ResetSexCountersForRerolls()
         {
-            sexActionCounterForRerolls = 0;
+            colonyFavorPoints = 0;
             impureSexActionCounter = 0;
             rapeSexActionCounter = 0;
             bestialitySexActionCounter = 0;

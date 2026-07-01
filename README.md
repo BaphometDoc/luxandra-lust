@@ -10,7 +10,7 @@ Do not expect a free ride though, nowhere in her ruleset there's anything about 
 <br>
 Her population curve is also quite atypical. She offers minor help with recruiting new allies until you have 10 pawns, after which she will not interfere until you have 50 or more. If you're prolific enough to hit that many... she'll sabotage your recruitment chances, as she would much more enjoy watching your groupie getting it going between them, but will never actively try to kill them. Well, at least, not directly.<br>
 <br>
-Her gimmicks have some degree of customization, in when they can activate, and how hard it is to fulfil the conditions. See the mod configs in game. (Opening the configs in Dev mode will have additional data).<br>
+All of her systems and events can be disabled, and several have additional options to fine tune them. The default settings are still recommended for the best experience.
 <br>
 Her event rerolling system also ignores quest-related and other forced events, in order to not risk breaking or softlocking saves and avoid mod conflicts.<br>
 <br>

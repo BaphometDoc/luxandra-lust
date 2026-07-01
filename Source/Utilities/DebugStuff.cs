@@ -77,14 +77,14 @@ namespace LuxandraLust
 
             // Print the current persistent values beautifully formatted (kinda) to the debug log console
             Log.Message("==================================================");
-            Log.Message($"[Luxandra Debug] Current Reroll Actions Tracked:");
-            Log.Message($" -> Total Sex Actions:       {component.sexActionCounterForRerolls}");
+            Log.Message($"[Luxandra Debug] Current Reroll Metrics Tracked:");
+            Log.Message($" -> Total Favor Points:       {component.colonyFavorPoints}");
             Log.Message("==================================================");
             if (targetMap != null)
             {
                 Log.Message($" -> Colony Metric: {adultColonistCount} Adults, {adultSlavesCount} Slaves. Threshold: {totalThreshold}");
                 Log.Message($" -> Settings multiplier: {settingsMultiplier} = Effective threshold: {thresholdAfterSettings}");
-                Log.Message($" -> Dynamic Target Met? {(component.sexActionCounterForRerolls > thresholdAfterSettings ? "YES" : "NO")}");
+                Log.Message($" -> Dynamic Target Met? {(component.colonyFavorPoints > thresholdAfterSettings ? "YES" : "NO")}");
             }
             else
             {
@@ -151,13 +151,23 @@ namespace LuxandraLust
             List<DebugMenuOption> options = new List<DebugMenuOption>();
 
             // --- ADD INCREMENT ACTIONS ---
+            options.Add(new DebugMenuOption("Add +50 Favor Points", DebugMenuOptionMode.Action, () =>
+            {
+                var comp = GameComponent_LuxandraLust.Instance;
+                if (comp == null) { LogNullError(); return; }
+
+                comp.AddToFavorCounter(50);
+                Messages.Message($"Added +50 Favor. New total: {comp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
+            }));
+
+            // --- ADD INCREMENT ACTIONS ---
             options.Add(new DebugMenuOption("Add +1 Sex Count", DebugMenuOptionMode.Action, () =>
             {
                 var comp = GameComponent_LuxandraLust.Instance;
                 if (comp == null) { LogNullError(); return; }
 
                 comp.RegisterSexAction();
-                Messages.Message($"Added +1 to Total Sex. Reroll total: {comp.sexActionCounterForRerolls} | Cycle total: {comp.sexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message($"Added +1 to Total Sex to counters. Favor: {comp.colonyFavorPoints} | Cycle sex counter: {comp.sexActionCounterForCycle}", MessageTypeDefOf.NeutralEvent, false);
             }));
 
             options.Add(new DebugMenuOption("Add +1 Impure Sex Count", DebugMenuOptionMode.Action, () =>
