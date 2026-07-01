@@ -16,16 +16,16 @@ namespace LuxandraLust
                 return false;
             }
 
-            if (!base.CanFireNowSub(parms)) return false;
-
             Map map = parms.target as Map ?? Find.CurrentMap;
             if (map == null) return false;
 
-            // Don't fire the event if there's less than 2 adults on the map
-            if (map.mapPawns.FreeAdultColonistsSpawnedCount + map.mapPawns.SlavesAndPrisonersOfColonySpawnedCount < 2)
+            var validTargets = map.mapPawns.FreeColonistsSpawned.Where(p => p.Awake() && !p.Dead && !p.Downed && !p.InMentalState && LuxandraUtilities.IsAdult(p));
+
+            // Don't fire the event if there's less than 5 adult colonists
+            if (!validTargets.Any() || validTargets.Count() < 5)
                 return false;
 
-            return map.mapPawns.FreeColonistsSpawned.Any(p => !p.Downed && !p.InMentalState && LuxandraUtilities.IsAdult(p));
+            return base.CanFireNowSub(parms);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -50,14 +50,11 @@ namespace LuxandraLust
             int targetsToSelect = System.Math.Max(1, totalWorkforce / 4);
 
             List<Pawn> candidates = map.mapPawns.FreeColonistsSpawned
-                .Where(p => !p.Downed && !p.Dead && LuxandraUtilities.IsAdult(p) && p.skills != null && !p.InMentalState)
+                .Where(p => p.Awake() && !p.Downed && !p.Dead && LuxandraUtilities.IsAdult(p) && !p.InMentalState)
                 .OrderByDescending(p => p.skills.GetSkill(SkillDefOf.Melee).Level) // Sort by highest Melee
                 .ToList();
 
             if (candidates.Count == 0) return false;
-
-            if (candidates.Count > targetsToSelect)
-                candidates = candidates.Take(targetsToSelect).ToList();
 
             bool anySucceeded = false;
             List<Pawn> affectedPawns = new List<Pawn>();
@@ -65,6 +62,12 @@ namespace LuxandraLust
 
             foreach (Pawn targetPawn in candidates)
             {
+                if (affectedPawns.Count >= targetsToSelect)
+                {
+                    break; // Stop if we've already affected the desired number of pawns
+                }
+
+                LuxandraDebugActions.DebugLogMessage($"Attempting to send {targetPawn.NameShortColored} in a raping frenzy.");
                 // Send them raping (or try to)
                 targetPawn.mindState.mentalStateHandler.TryStartMentalState(rjwBreakDef, "Rapist Break", forced: true);
 
@@ -102,6 +105,7 @@ namespace LuxandraLust
                 }
             }
 
+            LuxandraDebugActions.DebugLogMessage($"Pawns affected: {affectedPawns.Count}.");
             if (anySucceeded)
             {
                 string pawnNames = string.Join(", ", affectedPawns.Select(p => p.LabelShortCap));
@@ -115,7 +119,7 @@ namespace LuxandraLust
                 return true;
             }
             else
-                Log.Warning("[Luxandra Debug] Failed to find apply mental state to pawns for Rapist Break incident.");
+                Log.Warning("[Luxandra Debug] Failed to find apply mental state to pawns for Rapist Break incident. If this shows up please contact the dev cause he fucked up something again on this incident..");
 
             return false;
         }
