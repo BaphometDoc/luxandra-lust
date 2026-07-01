@@ -298,11 +298,15 @@ namespace LuxandraLust
 
                 var resourcePregnancy = DefDatabase<HediffDef>.GetNamed("PregnancyRJWMR", false);
 
+                var graspbloomPregnancy = DefDatabase<HediffDef>.GetNamed("FA_GraspbloomPregnancy", false);
+                var rapenantPregnancy = DefDatabase<HediffDef>.GetNamed("FA_RapenantPregnancy", false);
+
                 HediffDef hediffDef = h.def;
                 // Catches Vanilla, Biotech, RJW, and most common pregnancy mod variants
                 if (hediffDef == biotechPregnancy || hediffDef == biotechLabor || hediffDef == biotechLaborPushing ||
                     hediffDef == RJWPregnancy || hediffDef == RJWBestialPregnancy || hediffDef == RJWMechPregnancy ||
-                    hediffDef == elToroMechPregnancy || hediffDef == resourcePregnancy)
+                    hediffDef == elToroMechPregnancy || hediffDef == resourcePregnancy ||
+                    hediffDef == graspbloomPregnancy || hediffDef == rapenantPregnancy)
                 {
                     return true;
                 }
