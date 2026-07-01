@@ -1,10 +1,12 @@
 List of features proposed
 (Mainly a reminder for myself, but consider it a teaser of what's to come if you want)
-TODO: Fix the lack of "basic" pawn for the 3 factions
+
+Bugfixes to do:
+Fix the lack of "basic" pawn for the 3 factions so they can show up in traders
 
 Already existing mechanics updates to do
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
-- change the resize pulses to temporary events and have separate flavoured permanent events
+- Add more events involving the 3 factions
 
 Various potential events
 - unexpected pregnancy (jesus was only a setback - bestiality too?)
@@ -35,6 +37,6 @@ RJW Insect integration
 - Insect eggs event
 
 Brothel Colony integration
-- Add whoring to the childbirth event
 - Traitor customer
 - Whore joiner (also traitor)
+- Do we really want the metalhorror from whores? really?
