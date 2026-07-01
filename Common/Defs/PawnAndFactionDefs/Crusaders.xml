@@ -190,6 +190,7 @@
 				</options>
 			</li>
 		</pawnGroupMakers>
+		<basicMemberKind>Colonist</basicMemberKind>
 	</FactionDef>
   
 	<!-- ============================== -->

@@ -88,23 +88,8 @@
 					<Luxandra_CarnalAlphaLeader>3</Luxandra_CarnalAlphaLeader>
 				</options>
 			</li>
-
-			<li>
-				<kindDef>Peaceful</kindDef>
-				<options>
-					<Luxandra_CarnalDeviantStriker>20</Luxandra_CarnalDeviantStriker>
-					<Luxandra_CarnalAlphaLeader>3</Luxandra_CarnalAlphaLeader>
-				</options>
-			</li>
-
-			<li>
-				<kindDef>Settlement</kindDef>
-				<options>
-					<Luxandra_CarnalDeviantStriker>20</Luxandra_CarnalDeviantStriker>
-					<Luxandra_CarnalAlphaLeader>5</Luxandra_CarnalAlphaLeader>
-				</options>
-			</li>
 		</pawnGroupMakers>
+		<basicMemberKind>Colonist</basicMemberKind>
 	</FactionDef>
 
 

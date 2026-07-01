@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<!-- This is your typical slave count increase patches, 
+	Luxandra's meant to help with population curve and slaves are 
+	one way to getmore toys -->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/TraderKindDef/stockGenerators/li[@class="StockGenerator_Slaves"]</xpath>
+		<value>
+			<li Class="StockGenerator_Slaves">
+				<countRange>5~8</countRange>
+			</li>
+		</value>				
+	</Operation>
+
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/TraderKindDef[defName="Caravan_Neolithic_Slaver" or "Caravan_Outlander_PirateMerchant" or defName="Orbital_PirateMerchant"]/commonalityMultFromPopulationIntent</xpath>
+		<value>
+			<commonalityMultFromPopulationIntent>
+				<points>
+					<li>(0, 1.0)</li>
+					<li>(1, 1.0)</li>
+					<li>(2, 3.0)</li>
+				</points>
+			</commonalityMultFromPopulationIntent>
+		</value>				
+	</Operation>
+	
+	<!-- Also forcefully forbidding the no-slavery precepts from the factions who
+	can have slave traders so they don't arbitrarly spawn with no slaves -->
+	<Operation Class="PatchOperationSequence">
+		<operations>
+			<li Class="PatchOperationConditional">
+				<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]/disallowedPrecepts</xpath>
+				<nomatch Class="PatchOperationAdd">
+					<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]</xpath>
+					<value>
+						<disallowedPrecepts />
+					</value>
+				</nomatch>
+			</li>
+
+			<!-- 2. Safely add the anti-slavery precepts into their disallowed lists -->
+			<li Class="PatchOperationAdd">
+				<xpath>FactionDef[caravanTraderKinds/li[text()="Caravan_Outlander_PirateMerchant"] or caravanTraderKinds/li[text()="Caravan_Neolithic_SlaveTrader"]]/disallowedPrecepts</xpath>
+				<value>
+					<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Abhorrent</li>
+					<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Horrible</li>
+					<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Disapproved</li>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+</Patch>

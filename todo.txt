@@ -1,5 +1,6 @@
 List of features proposed
 (Mainly a reminder for myself, but consider it a teaser of what's to come if you want)
+TODO: Fix the lack of "basic" pawn for the 3 factions
 
 Already existing mechanics updates to do
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has

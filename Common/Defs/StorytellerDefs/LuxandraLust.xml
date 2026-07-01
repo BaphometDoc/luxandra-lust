@@ -14,11 +14,11 @@ She however does not judge you. What she will judge is if you can follow through
 		<populationIntentFactorFromPopCurve>
 			<points>
 				<!-- Intense help if under 5 pawns -->
-				<li>0,  4.0</li>
-				<li>4,  2.0</li>
+				<li>0,  8.0</li>
+				<li>4,  5.0</li>
 				<!-- Minor help up to 10 pawns -->
-				<li>5,  1.3</li>
-				<li>10, 1.0</li>
+				<li>5,  3.0</li>
+				<li>10, 2.0</li>
 				<!-- No particular help or penalties between 10 and 40 (100% normal rates) -->
 				<li>40, 1.0</li>
 				<!-- 40 to 50: Start sabotaging recruits -->
@@ -31,7 +31,7 @@ She however does not judge you. What she will judge is if you can follow through
 		<!-- POPULATION ADAPT DAYS (basically disabled) -->
 		<populationIntentFactorFromPopAdaptDaysCurve>
 			<points>
-				<li>(0, 1)</li>
+				<li>(0, 0.8)</li>
 				<li>(8, 1)</li>
 			</points>
 		</populationIntentFactorFromPopAdaptDaysCurve>
