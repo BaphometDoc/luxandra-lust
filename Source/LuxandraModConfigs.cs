@@ -31,7 +31,7 @@ namespace LuxandraLust
     public class LuxandraModSettings : ModSettings
     {
         /// <summary>
-        /// Whether to enable debug logging for the mod
+        /// Enable debug logging for the mod
         /// </summary>
         public static bool enableLogging = false;
         /// <summary>
@@ -51,11 +51,15 @@ namespace LuxandraLust
         /// </summary>
         public static int weeklyCycleDays = 7;
         /// <summary>
-        /// Whenever to enable the notification of having pleased Luxandra's kink
+        /// Enable the notification of having pleased Luxandra's kink
         /// </summary>
         public static bool enablePleasedNotification = false;
         /// <summary>
-        /// Whenever to enable the reroll of incoming raids into Luxandra's factions
+        /// Enable the childbirth appraisal gimmick
+        /// </summary>
+        public static bool enableChildbirthAppraisal = true;
+        /// <summary>
+        /// Enable the reroll of incoming raids into Luxandra's factions
         /// </summary>
         public static bool enableRaidFactionOverride = false;
         /// <summary>
@@ -95,6 +99,7 @@ namespace LuxandraLust
                 eventRerollThresholdMultiplier = 1.0f;
                 weeklyCycleDays = 7;
                 enablePleasedNotification = false;
+                enableChildbirthAppraisal = true;
                 enableRaidFactionOverride = false;
                 raidFactionOverrideChance = 50.0f;
 
@@ -104,11 +109,15 @@ namespace LuxandraLust
             listingStandard.Gap(16f);
 
             // Satisfaction notification toggle
-            listingStandard.CheckboxLabeled("Show Satisfaction Notifications", ref enablePleasedNotification, "Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks. (can be spammy in large colonies)");
+            listingStandard.CheckboxLabeled("Show Satisfaction Notifications", ref enablePleasedNotification, "Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks.\n\n(can be spammy in large colonies)");
+            listingStandard.Gap(16f);
+
+            // Enable Childbirth Appraisal
+            listingStandard.CheckboxLabeled("Enable Childbirth Appraisal", ref enableChildbirthAppraisal, "Enables the judging of children birth.\nLuxandra will compare the conception method with your colony beliefs (ideology > genes > traits) and either bless or curse you based on if they match.\n\n(She will judge Bestiality, then Prostitution, and then Rape)");
             listingStandard.Gap(16f);
 
             // Enable Faction Skewing
-            listingStandard.CheckboxLabeled("Enable Raid Faction Override", ref enableRaidFactionOverride, "Enables the replacement of incoming non-scripted raids with raids of Luxandra's factions.");
+            listingStandard.CheckboxLabeled("Enable Raid Faction Override", ref enableRaidFactionOverride, "Enables the replacement of incoming non-scripted raids with raids of Luxandra's factions.\n\n(Still not fully tested, use at your own risk)");
             listingStandard.Gap(16f);
 
             // Hide the settings if the reroll is disabled
@@ -183,6 +192,8 @@ namespace LuxandraLust
                 eventRerollThresholdMultiplier = listingStandard.Slider(eventRerollThresholdMultiplier, 0.1f, 2.0f);
 
                 listingStandard.Label("Adjusts how strictly Luxandra demands satisfaction. Lower values make her easier to please; higher values require intense management.");
+                listingStandard.Gap(6f);
+                listingStandard.Label("With default settings a colony with normal sex activity should be able to consistently please her every 2 events on average.");
                 listingStandard.Gap(24f);
 
                 if (Prefs.DevMode)
@@ -272,6 +283,7 @@ namespace LuxandraLust
             Scribe_Values.Look(ref eventRerollCondition, "eventRerollCondition", 2);
             Scribe_Values.Look(ref eventRerollThresholdMultiplier, "eventRerollThresholdMultiplier", 1.0f);
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
+            Scribe_Values.Look(ref enableChildbirthAppraisal, "enableChildbirthAppraisal", true);
             Scribe_Values.Look(ref enableRaidFactionOverride, "enableRaidFactionOverride", false);
             Scribe_Values.Look(ref raidFactionOverrideChance, "raidFactionOverrideChance", 50.0f);
         }

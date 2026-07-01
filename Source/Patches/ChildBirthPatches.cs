@@ -12,20 +12,21 @@ namespace LuxandraLust
         // ==========================================
         // BIOTECH / VANILLA POSTFIX 
         // ==========================================        
-        // This will throw a harmless error if the player doesn't have Biotech
-        // EDIT: Might actually not be necessary, if I didn't fuck up the one below should also catch the vanilla one now.
-        //[HarmonyPatch("RimWorld.PregnancyUtility", "DoBirth")]
-        //[HarmonyPostfix]
-        //public static void BiotechBirthPostfix(Pawn mother, Pawn baby)
-        //{
-        //    LuxandraDebugActions.DebugLogMessage($"Intercepted Biotech birth event. Mother: {mother.NameShortColored}, Baby: {baby.NameShortColored}");
-        //    if (baby == null || mother?.Map == null) return;
+        // This will throw a harmless error if the player doesn't have Biotech (who doesn't have Biotech nowadays?)        
+        [HarmonyPatch("RimWorld.PregnancyUtility", "DoBirth")]
+        [HarmonyPostfix]
+        public static void BiotechBirthPostfix(Pawn mother, Pawn baby)
+        {
+            if (!ShouldExecute()) return;
 
-        //    if (mother.Faction != null && (mother.Faction.IsPlayer || mother.IsPrisonerOfColony || mother.IsSlaveOfColony))
-        //    {
-        //        ExecutePreceptBirthJudgement(mother, baby.GetFather());
-        //    }
-        //}
+            LuxandraDebugActions.DebugLogMessage($"Intercepted Biotech birth event. Mother: {mother.NameShortColored}, Baby: {baby.NameShortColored}");
+            if (baby == null || mother?.Map == null) return;
+
+            if (mother.Faction != null && (mother.Faction.IsPlayer || mother.IsPrisonerOfColony || mother.IsSlaveOfColony))
+            {
+                ExecutePreceptBirthJudgement(mother, baby.GetFather());
+            }
+        }
 
         // ==========================================
         // RJW POSTFIX
@@ -35,6 +36,8 @@ namespace LuxandraLust
         {
             public static void Postfix(Hediff_BasePregnancy __instance, Pawn mother, Pawn father, Pawn baby)
             {
+                if (!ShouldExecute()) return;
+
                 LuxandraDebugActions.DebugLogMessage($"Intercepted birth event. Mother: {mother.NameShortColored}, Father: {father?.NameShortColored}, Baby: {baby.NameShortColored}");
                 if (mother?.Map == null) return;
 
@@ -45,8 +48,16 @@ namespace LuxandraLust
             }
         }
 
+        private static bool ShouldExecute()
+        {
+            if (!LuxandraStorytellerCheck.IsActive()) return false;
+            return LuxandraModSettings.enableChildbirthAppraisal;
+        }
+
         private static void ExecutePreceptBirthJudgement(Pawn mother, Pawn father)
         {
+
+
             Map map = mother.Map;
 
             if (father == null)
