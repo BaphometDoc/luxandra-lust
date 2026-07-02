@@ -19,8 +19,10 @@ namespace LuxandraLust
             LuxandraDebugActions.DebugLogMessage($"Attempted to alter {pawn.def} part size. IsExpansion: {isExpansion.ToString()}");
             if (pawn == null || pawn.Dead || sexParts.EnumerableNullOrEmpty()) return false;
 
+            string properHediffDef = isExpansion ? "Luxandra_IntimateGrowth" : "Luxandra_IntimateShrinking";
+
             LuxandraDebugActions.DebugLogMessage($"Pawn and sex part was valid.");
-            HediffDef resizeHediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_GenitalResizing", false);
+            HediffDef resizeHediffDef = DefDatabase<HediffDef>.GetNamed(properHediffDef, false);
             if (resizeHediffDef == null)
             {
                 Log.Warning("[Luxandra Debug] Def for Luxandra_GenitalResizing not found in the database.");
@@ -28,8 +30,7 @@ namespace LuxandraLust
             }
 
             // Apply the tracking Hediff to the pawn
-            Hediff_GenitalResizing trackingHediff = HediffMaker.MakeHediff(resizeHediffDef, pawn, null) as Hediff_GenitalResizing;
-            trackingHediff.isExpansion = isExpansion;
+            HediffWithComps trackingHediff = HediffMaker.MakeHediff(resizeHediffDef, pawn, null) as HediffWithComps;
 
             pawn.health.AddHediff(trackingHediff, null, null, null);
 
@@ -222,23 +223,18 @@ namespace LuxandraLust
     }
 
     /// <summary>
-    /// Hediff that handles the genitalia resizing
+    /// Hediff that handles the genitalia increase
     /// </summary>
-    public class Hediff_GenitalResizing : HediffWithComps
+    public class Hediff_IntimateGrowth : HediffWithComps
     {
-        // Trackers to save the snapshot over game saves
-        public List<RJWLewdablePart> affectedParts = new List<RJWLewdablePart>();
-        public List<float> originalSeverities = new List<float>();
-
-        public bool isExpansion = true;
         private const float ChangeAmount = 0.5f;
-        private const float MaxSeverity = 3.0f;
+        private const float MaxSeverity = 5.0f;
         private const float MinSeverity = 0.01f;
 
-        public override void PostAdd(DamageInfo? dinfo)
+        public override void PostAdd(DamageInfo? dinfo) // Increase by 0.5
         {
             base.PostAdd(dinfo);
-            LuxandraDebugActions.DebugLogMessage($"Resizing hediff applied to {pawn.NameShortColored} parts.");
+            LuxandraDebugActions.DebugLogMessage($"Genital growth hediff applied to {pawn.NameShortColored} parts.");
 
             // Randomize duration between 3 days (180,000 ticks) and 7 days (420,000 ticks)
             int randomTicks = Rand.RangeInclusive(180000, 420000);
@@ -249,12 +245,6 @@ namespace LuxandraLust
                 disappearComp.ticksToDisappear = randomTicks;
             }
 
-            ApplyTemporarySizeChange();
-        }
-
-        private void ApplyTemporarySizeChange()
-        {
-            // Gather the appropriate RJW parts based on the gender
             var sexParts = pawn.GetLewdParts();
             if (sexParts == null) return;
 
@@ -262,20 +252,15 @@ namespace LuxandraLust
             var partsToModify = (pawn.gender == Gender.Male) ? sexParts.Penises : sexParts.Breasts;
             if (partsToModify.EnumerableNullOrEmpty()) return;
 
-            affectedParts = partsToModify;
-
-            for (int i = 0; i < affectedParts.Count; i++)
+            for (int i = 0; i < partsToModify.Count; i++)
             {
-                var part = affectedParts[i];
+                var part = partsToModify[i];
                 if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
                 {
                     float currentSeverity = naturalPart.Severity;
-                    originalSeverities.Add(currentSeverity);
 
                     // Calculates adjustments trying to not exceed the severity limits
-                    float newSeverity = isExpansion
-                        ? UnityEngine.Mathf.Min(currentSeverity + ChangeAmount, MaxSeverity)
-                        : UnityEngine.Mathf.Max(currentSeverity - ChangeAmount, MinSeverity);
+                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + ChangeAmount, MaxSeverity);
 
                     if (newSeverity != currentSeverity)
                     {
@@ -284,14 +269,13 @@ namespace LuxandraLust
                         var comp = part.SexPart.GetPartComp();
                         comp?.SetSeverity(newSeverity);
 
-                        var debugString = isExpansion ? "Increased" : "Decreased";
-                        LuxandraDebugActions.DebugLogMessage($"{debugString} {pawn.NameShortColored}'s {naturalPart.def} from {currentSeverity} to {newSeverity}.");
+                        LuxandraDebugActions.DebugLogMessage($"Increased {pawn.NameShortColored}'s {naturalPart.def} from {currentSeverity} to {newSeverity}.");
                     }
                 }
             }
         }
 
-        // RESTORE OLD SIZES ON EXPIRATION
+        // RESTORE OLD SIZES ON EXPIRATION (Decrease by 0.5)
         public override void PostRemoved()
         {
             base.PostRemoved();
@@ -304,16 +288,14 @@ namespace LuxandraLust
             var partsToModify = (pawn.gender == Gender.Male) ? sexParts.Penises : sexParts.Breasts;
             if (partsToModify.EnumerableNullOrEmpty()) return;
 
-            affectedParts = partsToModify;
-
-            for (int i = 0; i < affectedParts.Count; i++)
+            for (int i = 0; i < partsToModify.Count; i++)
             {
-                var part = affectedParts[i];
+                var part = partsToModify[i];
                 if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
                 {
                     float currentSeverity = naturalPart.Severity;
                     // Calculates adjustments trying to not exceed the severity limits
-                    float newSeverity = originalSeverities[i];
+                    float newSeverity = UnityEngine.Mathf.Max(currentSeverity - ChangeAmount, MinSeverity);
 
                     if (newSeverity != currentSeverity)
                     {
@@ -330,13 +312,98 @@ namespace LuxandraLust
             var messageString = pawn.gender == Gender.Male ? "Penises" : "Breasts";
             Messages.Message($"{pawn.LabelShort}'s {messageString} have gone back to their previous size.", pawn, MessageTypeDefOf.NeutralEvent);
         }
+    }
 
-        public override void ExposeData()
+    /// <summary>
+    /// Hediff that handles the genitalia decrease
+    /// </summary>
+    public class Hediff_IntimateShrinking : HediffWithComps
+    {
+        private const float ChangeAmount = 0.5f;
+        private const float MaxSeverity = 5.0f;
+        private const float MinSeverity = 0.01f;
+
+        public override void PostAdd(DamageInfo? dinfo) // Decrease by 0.5
         {
-            base.ExposeData();
-            Scribe_Values.Look(ref isExpansion, "isExpansion", true);
-            Scribe_Collections.Look(ref affectedParts, "affectedParts", LookMode.Reference);
-            Scribe_Collections.Look(ref originalSeverities, "originalSeverities", LookMode.Value);
+            base.PostAdd(dinfo);
+            LuxandraDebugActions.DebugLogMessage($"Genital growth hediff applied to {pawn.NameShortColored} parts.");
+
+            // Randomize duration between 3 days (180,000 ticks) and 7 days (420,000 ticks)
+            int randomTicks = Rand.RangeInclusive(180000, 420000);
+
+            var disappearComp = this.TryGetComp<HediffComp_Disappears>();
+            if (disappearComp != null)
+            {
+                disappearComp.ticksToDisappear = randomTicks;
+            }
+
+            // Gather the appropriate RJW parts based on the gender
+            var sexParts = pawn.GetLewdParts();
+            if (sexParts == null) return;
+
+            // Target penises for males, breasts for females
+            var partsToModify = (pawn.gender == Gender.Male) ? sexParts.Penises : sexParts.Breasts;
+            if (partsToModify.EnumerableNullOrEmpty()) return;
+
+            for (int i = 0; i < partsToModify.Count; i++)
+            {
+                var part = partsToModify[i];
+                if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
+                {
+                    float currentSeverity = naturalPart.Severity;
+
+                    // Calculates adjustments trying to not exceed the severity limits
+                    float newSeverity = UnityEngine.Mathf.Max(currentSeverity - ChangeAmount, MinSeverity);
+
+                    if (newSeverity != currentSeverity)
+                    {
+                        naturalPart.Severity = newSeverity;
+
+                        var comp = part.SexPart.GetPartComp();
+                        comp?.SetSeverity(newSeverity);
+
+                        LuxandraDebugActions.DebugLogMessage($"Decreased {pawn.NameShortColored}'s {naturalPart.def} from {currentSeverity} to {newSeverity}.");
+                    }
+                }
+            }
+        }
+
+        // RESTORE OLD SIZES ON EXPIRATION (Increase by 0.5)
+        public override void PostRemoved()
+        {
+            base.PostRemoved();
+
+            // Gather the appropriate RJW parts based on the gender
+            var sexParts = pawn.GetLewdParts();
+            if (sexParts == null) return;
+
+            // Target penises for males, breasts for females
+            var partsToModify = (pawn.gender == Gender.Male) ? sexParts.Penises : sexParts.Breasts;
+            if (partsToModify.EnumerableNullOrEmpty()) return;
+
+            for (int i = 0; i < partsToModify.Count; i++)
+            {
+                var part = partsToModify[i];
+                if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
+                {
+                    float currentSeverity = naturalPart.Severity;
+                    // Calculates adjustments trying to not exceed the severity limits
+                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + ChangeAmount, MaxSeverity);
+
+                    if (newSeverity != currentSeverity)
+                    {
+                        naturalPart.Severity = newSeverity;
+
+                        var comp = part.SexPart.GetPartComp();
+                        comp?.SetSeverity(newSeverity);
+
+                        LuxandraDebugActions.DebugLogMessage($"Restored {pawn.NameShortColored}'s {naturalPart.def} to {newSeverity}.");
+                    }
+                }
+            }
+
+            var messageString = pawn.gender == Gender.Male ? "Penises" : "Breasts";
+            Messages.Message($"{pawn.LabelShort}'s {messageString} have gone back to their previous size.", pawn, MessageTypeDefOf.NeutralEvent);
         }
     }
 }
