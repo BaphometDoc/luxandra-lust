@@ -1,4 +1,6 @@
 ﻿using RimWorld;
+using rjw;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -88,7 +90,10 @@ namespace LuxandraLust
             Gay,
             Lesbian,
             Cum,
-            Breasts
+            Breasts,
+            Incest,
+            Implantation,
+            Futa
         }
 
         /// <summary>
@@ -105,12 +110,48 @@ namespace LuxandraLust
             if (forceSpecific)
                 CurrentKink = forcedType;
 
-            CurrentKink = (StorytellerKink)Rand.RangeInclusive(0, 11);
+            var validKinks = GetEnabledKinks();
+
+            CurrentKink = validKinks.RandomElement();
 
             if (CurrentKink != StorytellerKink.None)
                 Messages.Message($"Luxandra's whims have shifted: She is now into {CurrentKink}.", MessageTypeDefOf.CautionInput, false);
             else
                 Messages.Message($"Luxandra's whims have shifted: She is not into anything specific at the moment.", MessageTypeDefOf.CautionInput, false);
+        }
+
+        /// <summary>
+        /// Gets the kinks that are enabled based on the RJW settings and potential submods
+        /// </summary>
+        public static List<StorytellerKink> GetEnabledKinks()
+        {
+            List<StorytellerKink> validKinks = new List<StorytellerKink>();
+
+            validKinks.Add(StorytellerKink.None);
+
+            validKinks.Add(StorytellerKink.Pregnancy);
+            validKinks.Add(StorytellerKink.Anal);
+            validKinks.Add(StorytellerKink.Oral);
+            validKinks.Add(StorytellerKink.Masturbation);
+            validKinks.Add(StorytellerKink.Gay);
+            validKinks.Add(StorytellerKink.Lesbian);
+            validKinks.Add(StorytellerKink.Cum);
+            validKinks.Add(StorytellerKink.Breasts);
+
+            if (RJWSettings.bestiality_enabled)
+                validKinks.Add(StorytellerKink.Bestiality);
+
+            if (RJWSettings.rape_enabled)
+                validKinks.Add(StorytellerKink.Rape);
+
+            if (RJWSettings.necrophilia_enabled)
+                validKinks.Add(StorytellerKink.Necrophilia);
+
+            // TODO: Implantation
+            // TODO: Incest
+            // TODO: Futa
+
+            return validKinks;
         }
 
         /// <summary>
