@@ -40,7 +40,7 @@ namespace LuxandraLust
             // --- SECTION 1: HEADER ---
             Listing_Standard headerListing = new Listing_Standard();
             headerListing.Begin(inRect);
-            Rect labelRect = headerListing.Label("Toggle Luxandra's Storyteller Active Events. (hover for details)");
+            Rect labelRect = headerListing.Label("Toggle Luxandra's Storyteller Active Events. (Hover for details)");
             TooltipHandler.TipRegion(labelRect, "The events from this mod will be disabled completely unless forced via dev mode. Events from other mods will not be able to be rolled by Luxandra's special pools, but may still show up in regular random storyteller events.");
             headerListing.Gap(10f);
             headerListing.End();
@@ -56,6 +56,11 @@ namespace LuxandraLust
 
             Listing_Standard scrollListing = new Listing_Standard();
             scrollListing.Begin(viewRect);
+
+            if (!LuxandraDefsCollections.AllIncidents.Any())
+            {
+                scrollListing.Label("If this box is empty on game load, check again in a few minutes. On big modlists it can take a while before all events are cached.");
+            }
 
             foreach (var eventWrapper in LuxandraDefsCollections.AllIncidents)
             {
