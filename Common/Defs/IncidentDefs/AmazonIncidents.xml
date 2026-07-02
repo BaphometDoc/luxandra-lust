@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <IncidentDef>
+    <defName>Luxandra_Inc_AmazonStealthAmbush</defName>
+    <label>amazon stealth ambush</label>
+    <workerClass>LuxandraLust.IncidentWorker_AmazonStealthAmbush</workerClass>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <pointsScaleable>true</pointsScaleable>
+	<category>ThreatBig</category>
+	<letterDef>ThreatBig</letterDef>
+		<baseChance>0.1</baseChance>
+  </IncidentDef>
+
+  <IncidentDef>
+    <defName>Luxandra_Inc_AmazonBloodTrial</defName>
+    <label>amazon blood trial</label>
+    <workerClass>LuxandraLust.IncidentWorker_AmazonBloodTrial</workerClass>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <pointsScaleable>true</pointsScaleable>
+		<category>ThreatBig</category>
+		<letterDef>ThreatBig</letterDef>
+    <baseChance>0.3</baseChance>
+  </IncidentDef>
+
+  <!-- The Special Trial Frenzy Status Effect -->
+  <HediffDef>
+    <defName>Luxandra_BloodTrialFrenzy</defName>
+    <label>blood trial frenzy</label>
+    <description>An intense adrenaline state. Initiates on their ritual blood trials ignore pain and physical exhaustion until their goal is achieved or they die trying.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.8, 0.1, 0.1)</defaultLabelColor> 
+    <isBad>false</isBad>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>0.60</MoveSpeed>
+          <PainShockThreshold>-0.25</PainShockThreshold> 
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>0.25</RestFallRateFactor> 
+        </statFactors>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.05</offset> 
+          </li>
+        </capMods>
+      </li>
+    </stages>
+	  <comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>60000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+			</comps>
+  </HediffDef>
+</Defs>

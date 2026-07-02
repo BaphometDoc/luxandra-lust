@@ -7,6 +7,7 @@ Fix the lack of "basic" pawn for the 3 factions so they can show up in traders
 Already existing mechanics updates to do
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
 - Add more events involving the 3 factions
+- Be able to request a slave trader from blessing (if ero trader present: always that)
 
 Various potential events
 - unexpected pregnancy (jesus was only a setback - bestiality too?)

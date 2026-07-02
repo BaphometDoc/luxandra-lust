@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <ThingDef ParentName="ApparelBase">
-    <defName>Luxandra_FeralTalisman</defName>
-    <label>feral talisman</label>
-    <description>A Talisman worn by the ferals, it seems to have some mystical properties, but at same time prevent clothing to touch the skin.</description>
-    <graphicData>
-      <texPath>Things/Pawn/Humanlike/Apparel/TribalA/TribalA</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>0.7</drawSize>
-    </graphicData>
-    <techLevel>Industrial</techLevel>
-    <stuffCategories>
-      <li>Metallic</li>
-      <li>Woody</li>
-    </stuffCategories>
-    <statBases>
-      <MaxHitPoints>50</MaxHitPoints>
-      <WorkToMake>1000</WorkToMake>
-      <Mass>0.5</Mass>
-      <!-- <StuffEffectMultiplierArmor>0.1</StuffEffectMultiplierArmor> -->
-      <!-- <StuffEffectMultiplierInsulation_Cold>0.1</StuffEffectMultiplierInsulation_Cold> -->
-      <!-- <StuffEffectMultiplierInsulation_Heat>0.1</StuffEffectMultiplierInsulation_Heat> -->
-      <EquipDelay>0.5</EquipDelay>
-    </statBases>
-	<costStuffCount>5</costStuffCount>
-    <thingCategories>
-      <li>ApparelMisc</li>
-    </thingCategories>
-    <apparel>
-      <bodyPartGroups>
-		<li>UpperHead</li>
-		<li>FullHead</li>
-        <li>Torso</li>
-        <li>Neck</li>
-        <li>Shoulders</li>
-        <li>Arms</li>
-        <li>Legs</li>
-      </bodyPartGroups>
-      <renderSkipFlags>
-        <li>None</li>
-      </renderSkipFlags>
-      <wornGraphicPath>Things/Apparel/InvisibleArmor/InvisibleArmor</wornGraphicPath>
-      <layers>
-        <li>OnSkin</li>
-		<li>Shell</li>
-		<li>Overhead</li>
-      </layers>
-      <countsAsClothingForNudity>false</countsAsClothingForNudity>
-      <defaultOutfitTags>
-        <li>Nudist</li>
-      </defaultOutfitTags>
-	  <tags>
-        <li>Luxandra_PrimalForcedGear</li>
-      </tags>
-      <canBeDesiredForIdeo>false</canBeDesiredForIdeo>
-	  <!-- <canBeGeneratedToSatisfyWarmth>false</canBeGeneratedToSatisfyWarmth> -->
-	  <!-- <canBeGeneratedToSatisfyVacuumResistance>false</canBeGeneratedToSatisfyVacuumResistance> -->
-      <!-- <canBeGeneratedToSatisfyToxicEnvironmentResistance>false</canBeGeneratedToSatisfyToxicEnvironmentResistance> -->
-    </apparel>
-  </ThingDef>
+	<ThingDef ParentName="ApparelBase">
+		<defName>Luxandra_FeralTalisman</defName>
+		<label>feral talisman</label>
+		<description>A Talisman worn by the ferals, it seems to have some mystical properties, but at same time prevent clothing to touch the skin.</description>
+		<graphicData>
+			<texPath>Things/Pawn/Humanlike/Apparel/TribalA/TribalA</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>0.7</drawSize>
+		</graphicData>
+		<techLevel>Industrial</techLevel>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Woody</li>
+		</stuffCategories>
+		<statBases>
+			<MaxHitPoints>50</MaxHitPoints>
+			<WorkToMake>1000</WorkToMake>
+			<Mass>0.5</Mass>
+			<!-- <StuffEffectMultiplierArmor>0.1</StuffEffectMultiplierArmor> -->
+			<!-- <StuffEffectMultiplierInsulation_Cold>0.1</StuffEffectMultiplierInsulation_Cold> -->
+			<!-- <StuffEffectMultiplierInsulation_Heat>0.1</StuffEffectMultiplierInsulation_Heat> -->
+			<EquipDelay>0.5</EquipDelay>
+		</statBases>
+		<costStuffCount>5</costStuffCount>
+		<thingCategories>
+			<li>ApparelMisc</li>
+		</thingCategories>
+		<apparel>
+			<bodyPartGroups>
+				<li>UpperHead</li>
+				<li>FullHead</li>
+				<li>Torso</li>
+				<li>Neck</li>
+				<li>Shoulders</li>
+				<li>Arms</li>
+				<li>Legs</li>
+			</bodyPartGroups>
+			<renderSkipFlags>
+				<li>None</li>
+			</renderSkipFlags>
+			<wornGraphicPath>Things/Apparel/InvisibleArmor/InvisibleArmor</wornGraphicPath>
+			<layers>
+				<li>OnSkin</li>
+				<li>Shell</li>
+				<li>Overhead</li>
+			</layers>
+			<countsAsClothingForNudity>false</countsAsClothingForNudity>
+			<defaultOutfitTags>
+				<li>Nudist</li>
+				<li>SizedApparel_ShowPrivateCrotch</li>
+				<li>SizedApparel_ShowBelly</li>
+			</defaultOutfitTags>
+			<tags>
+				<li>Luxandra_PrimalForcedGear</li>
+			</tags>
+			<canBeDesiredForIdeo>false</canBeDesiredForIdeo>
+			<!-- <canBeGeneratedToSatisfyWarmth>false</canBeGeneratedToSatisfyWarmth> -->
+			<!-- <canBeGeneratedToSatisfyVacuumResistance>false</canBeGeneratedToSatisfyVacuumResistance> -->
+			<!-- <canBeGeneratedToSatisfyToxicEnvironmentResistance>false</canBeGeneratedToSatisfyToxicEnvironmentResistance> -->
+		</apparel>
+	</ThingDef>
 
 </Defs>

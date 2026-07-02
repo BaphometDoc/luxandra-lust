@@ -137,7 +137,7 @@
 					<Luxandra_Amazon_Brawler>10</Luxandra_Amazon_Brawler>
 					<Luxandra_Amazon_Hunter>7</Luxandra_Amazon_Hunter>
 					<Luxandra_Amazon_PackMaster>3</Luxandra_Amazon_PackMaster>
-					<Cobra>5</Cobra><!-- I'm not sure this will work but we try -->
+					<Cobra>5</Cobra>
 				</options>
 			</li>
 
@@ -146,6 +146,7 @@
 				<kindDef>Combat</kindDef>
 				<commonality>50</commonality>
 				<options>
+					<Luxandra_Amazon_Fledgling>3</Luxandra_Amazon_Fledgling>
 					<Luxandra_Amazon_Hunter>10</Luxandra_Amazon_Hunter>
 					<Luxandra_Amazon_Brawler>3</Luxandra_Amazon_Brawler>
 				</options>
@@ -175,7 +176,7 @@
 			</li>
 
 		</pawnGroupMakers>
-		<basicMemberKind>Colonist</basicMemberKind>
+		<basicMemberKind>Luxandra_Amazon_Fledgling</basicMemberKind>
 	</FactionDef>
 	
 	<!-- ============================== -->
@@ -235,6 +236,81 @@
 	<!-- ============================== -->
 	<!-- Pawn defs -->
 	<!-- ============================== -->
+	
+	<!-- TRAINEES -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_Fledgling</defName>
+		<label>amazon fledgling</label>
+		<race>Human</race>
+		<!-- Low combat power means they are cheap; the game will spawn a massive crowd of them -->
+		<combatPower>45</combatPower>
+		<invNutrition>1.0</invNutrition>
+		<itemQuality>Poor</itemQuality>
+	
+		<skills>
+			<li>
+				<skill>Melee</skill>
+				<range>2~6</range>
+			</li>
+			<li>
+				<skill>Shooting</skill>
+				<range>1~5</range>
+			</li>
+		</skills>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+	
+		<apparelMoney>0~200</apparelMoney>
+		<apparelRequired>
+			<li>Luxandra_FeralTalisman</li>
+			<li MayRequire="Ludeon.RimWorld.Biotech">Apparel_Sash</li>
+		</apparelRequired>
+		<apparelTags Inherit="False">
+			<li>Nudist</li>
+		</apparelTags>
+	
+		<weaponMoney>60~250</weaponMoney>
+		<weaponTags>
+			<li>NeolithicMeleeBasic</li><!-- Clubs, stone spears -->
+			<li>NeolithicRangedBasic</li><!-- Shortbows, pila -->
+		</weaponTags>
+	
+		<techHediffsChance>0.0</techHediffsChance>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+	
+		<forcedTraits>
+			<li>
+				<def>Nimble</def>
+			</li>
+			<li MayRequire="rjw.sexperience">
+				<def MayRequire="rjw.sexperience">Virgin</def>
+			</li>
+		</forcedTraits>
+
+		<initialWillRange>1~3</initialWillRange>
+		<initialResistanceRange>10~18</initialResistanceRange>
+	
+		<chronologicalAgeRange>16~18</chronologicalAgeRange>
+		<minGenerationAge>16</minGenerationAge>
+		<maxGenerationAge>18</maxGenerationAge>
+		<canStrip>false</canStrip>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+	
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
 	<!-- BRAWLER -->
 	<PawnKindDef>
 		<defName>Luxandra_Amazon_Brawler</defName>
@@ -304,6 +380,9 @@
 		<initialResistanceRange>35~50</initialResistanceRange>
 		
 		<chronologicalAgeRange>18~25</chronologicalAgeRange>
+		<minGenerationAge>18</minGenerationAge>
+		<maxGenerationAge>25</maxGenerationAge>
+		<canStrip>false</canStrip>
 		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
 		
 		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
@@ -380,8 +459,100 @@
 		<initialResistanceRange>30~45</initialResistanceRange>
 		
 		<chronologicalAgeRange>18~25</chronologicalAgeRange>
+		<minGenerationAge>18</minGenerationAge>
+		<maxGenerationAge>25</maxGenerationAge>
+		<canStrip>false</canStrip>
 		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
 		
+		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</PawnKindDef>
+	
+	<!-- ELITE ASSASSINS -->
+	<PawnKindDef>
+		<defName>Luxandra_Amazon_Infiltrator</defName>
+		<label>amazon infiltrator</label>
+		<race>Human</race>
+		<combatPower>220</combatPower>
+		<invNutrition>2.0</invNutrition>
+		<itemQuality>Excellent</itemQuality>
+		<skills>
+			<li>
+				<skill>Melee</skill>
+				<range>12~20</range>
+			</li>
+		</skills>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>
+		<isFighter>true</isFighter>
+	
+		<apparelMoney>1500~4000</apparelMoney>
+		<apparelRequired>
+			<li>Luxandra_FeralTalisman</li>
+		</apparelRequired>
+		<specificApparelRequirements>
+			<li MayRequire="Kilo.CombatDollNSFW">
+				<bodyPartGroup>UpperHead</bodyPartGroup>
+				<requiredTag MayRequire="Kilo.CombatDollNSFW">CombatDollClothing</requiredTag>
+			</li>
+			<li MayRequire="Kilo.CombatDollNSFW">
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag MayRequire="Kilo.CombatDollNSFW">CombatDollClothing</requiredTag>
+			</li>
+			<li>
+				<bodyPartGroup>Torso</bodyPartGroup>
+				<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+			</li>
+		</specificApparelRequirements>
+		<apparelTags Inherit="False">
+			<li MayRequire="Kilo.CombatDollNSFW">CombatDollClothing</li>
+			<li>Luxandra_PrimalForcedGear</li>
+		</apparelTags>
+	
+		<weaponMoney>2500~6000</weaponMoney>
+		<weaponTags>
+			<li>MedievalMeleeAdvanced</li>
+			<li>SpacerMelee</li>
+		</weaponTags>
+	
+		<techHediffsChance>0.35</techHediffsChance>
+		<techHediffsMoney>2000~5000</techHediffsMoney>
+		<techHediffsTags>
+			<li>Advanced</li>
+		</techHediffsTags>
+
+		<backstoryFiltersOverride>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFiltersOverride>
+		<forcedTraits>
+			<li>
+				<def>Brawler</def>
+			</li>
+			<li>
+				<def>Nimble</def>
+			</li>
+			<li MayRequire="rjw.sexperience">
+				<def MayRequire="rjw.sexperience">Virgin</def>
+			</li>
+		</forcedTraits>
+
+		<initialWillRange>8~12</initialWillRange>
+		<initialResistanceRange>45~60</initialResistanceRange>
+	
+		<chronologicalAgeRange>18~20</chronologicalAgeRange>
+		<minGenerationAge>18</minGenerationAge>
+		<maxGenerationAge>20</maxGenerationAge>
+		<canStrip>false</canStrip>
+		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
+	
 		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
 			<xenotypeChances>
 				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
@@ -419,7 +590,7 @@
 			<li>Nudist</li>
 		</apparelTags>
 		
-		<!-- 2. PSYCHIC FOCUS WEAPONS -->
+		<!-- PSYCHIC FOCUS WEAPONS -->
 		<weaponMoney>2000~4000</weaponMoney>
 		<weaponTags>
 			<li MayRequire="Ludeon.RimWorld.Royalty">PsychicStaff</li>
@@ -449,6 +620,9 @@
 		<initialResistanceRange>40~60</initialResistanceRange>
 		
 		<chronologicalAgeRange>18~20</chronologicalAgeRange>
+		<minGenerationAge>18</minGenerationAge>
+		<maxGenerationAge>20</maxGenerationAge>
+		<canStrip>false</canStrip>
 		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
 		<modExtensions>
 			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
@@ -608,6 +782,9 @@
 		<initialResistanceRange>60~85</initialResistanceRange>
 		
 		<chronologicalAgeRange>30~40</chronologicalAgeRange>
+		<minGenerationAge>30</minGenerationAge>
+		<maxGenerationAge>40</maxGenerationAge>
+		<canStrip>false</canStrip>
 		<defaultFactionType>Luxandra_AmazonTribe</defaultFactionType>
 		<modExtensions>
 			<li MayRequire="VanillaExpanded.VPsycastsE" Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
