@@ -78,7 +78,7 @@ namespace LuxandraLust
             bool isMotherWhore = rjw.xxx.is_whore(mother);
             bool isFatherPlayerOwned = father != null && (father.Faction.IsPlayer || father.IsSlaveOfColony);
 
-            bool childFromProstitution = LuxandraCompatUtilities.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned; // Don't even track this if brothel colony isnt active
+            bool childFromProstitution = LuxandraModChecks.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned; // Don't even track this if brothel colony isnt active
             bool childFromZoophilia = mother.IsHumanLike() && father.IsAnimal();
             bool childFromRape = !(isMotherPlayerOwned && isFatherPlayerOwned) && !isMotherWhore;
 
@@ -390,7 +390,7 @@ namespace LuxandraLust
         private static bool DetermineRepopulationSupport(Map map)
         {
             // Ideology + Brothel Colony
-            if (ModsConfig.IdeologyActive && LuxandraCompatUtilities.IsBrothelColonyActive())
+            if (ModsConfig.IdeologyActive && LuxandraModChecks.IsBrothelColonyActive())
             {
                 MemeDef repopulationMeme = DefDatabase<MemeDef>.GetNamed("CB_Repopulationist", false);
                 PreceptDef repopulationKindness = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Kindness", false);

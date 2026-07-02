@@ -108,7 +108,7 @@ namespace LuxandraLust
                         if (pawn.IsColonist || pawn.IsSlave || pawn.IsPrisoner) ClearFertilitySuppressants(pawn);
 
                         // If menstruation is loaded, replenish the ovary power and send the pawn in ovulation (possibly with multiple eggs)
-                        if (LuxandraCompatUtilities.IsMenstruationActive())
+                        if (LuxandraModChecks.IsMenstruationActive())
                         {
                             MenstruationIntegration.IncreaseOvaryPower(pawn);
                             MenstruationIntegration.ForceOvulation(pawn);

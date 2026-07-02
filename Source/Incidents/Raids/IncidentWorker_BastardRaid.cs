@@ -20,7 +20,7 @@ namespace LuxandraLust
             }
 
             // Unleashed Bastards must be installed & the faction must actually be in the game
-            if (!LuxandraCompatUtilities.IsUnleashedBastardsActive())
+            if (!LuxandraModChecks.IsUnleashedBastardsActive())
                 return false;
 
             Faction targetFactionInstance = Find.FactionManager.AllFactions

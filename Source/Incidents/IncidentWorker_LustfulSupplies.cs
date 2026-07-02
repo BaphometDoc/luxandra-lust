@@ -60,7 +60,7 @@ namespace LuxandraLust
             possibleDrops.Add(new ThingCountDef("RJW_Contraceptive", 55f)); // And antifertility pills
 
             // Menstruation
-            if (LuxandraCompatUtilities.IsMenstruationActive())
+            if (LuxandraModChecks.IsMenstruationActive())
             {
                 possibleDrops.Add(new ThingCountDef("OvaryRegenerationPill", 250f)); // Ovary regeneration pills are not cheap
                 possibleDrops.Add(new ThingCountDef("SuperovulationInducingAgent", 250f)); // Superovulation inducing agents are also not cheap
@@ -73,7 +73,7 @@ namespace LuxandraLust
             }
 
             // Cumpilation
-            if (LuxandraCompatUtilities.IsCumpilationActive())
+            if (LuxandraModChecks.IsCumpilationActive())
             {
                 possibleDrops.Add(new ThingCountDef("Cumpilation_Cum", 10f)); // You knew this one was coming
                 possibleDrops.Add(new ThingCountDef("Cumpilation_Lecithin", 50f)); // Thou shalt cum more
@@ -82,7 +82,7 @@ namespace LuxandraLust
             }
 
             // RJW Genes
-            if (LuxandraCompatUtilities.IsRJWGenesActive())
+            if (LuxandraModChecks.IsRJWGenesActive())
             {
                 // Should add some of the bionics once I find the recipes
             }

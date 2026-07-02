@@ -2,14 +2,17 @@
 
 namespace LuxandraLust
 {
-    // Various utilities related to mod compatibility
-    public static class LuxandraCompatUtilities
+    /// <summary>
+    /// Checks for the presence of other mods to enable compatibility features or adjust behavior accordingly.
+    /// </summary>
+    public static class LuxandraModChecks
     {
         // This mainly exists cause i'm lazy and cba checking the mod packages every time I want 
         // to add compatibility. Also lets me quickly fix every instance in case I end up needing
         // to due to a mod being discontinued and replaced by a fork
         #region Mod Checks
 
+        // Includes Cumpilation and Cumpilation Lite
         public static bool IsCumpilationActive()
         {
             return ModsConfig.IsActive("vegapnk.cumpilation") || ModsConfig.IsActive("parciwal.cumpliationlite");
