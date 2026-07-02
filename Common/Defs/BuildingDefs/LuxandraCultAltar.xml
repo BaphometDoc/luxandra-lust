@@ -16,12 +16,12 @@
     <uiIconOffset>(0, 0.04)</uiIconOffset>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
     <graphicData>
-	  <graphicClass>Graphic_Random</graphicClass>
-      <texPath>Things/Building/Furniture/SteleLarge</texPath>
-      <drawSize>(4,4)</drawSize>
+            <texPath>Things/Buildings/LuxandraMonument</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>(4,4)</drawSize>
       <drawOffset>(0,0,0.05)</drawOffset>
       <shadowData>
-        <volume>(1.5, 0.6, 1.5)</volume>
+        <volume>(0.5, 0.6, 0.5)</volume>
         <offset>(0, 0, -0.15)</offset>
       </shadowData>
       <damageData>

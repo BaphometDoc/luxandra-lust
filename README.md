@@ -19,3 +19,6 @@ The special events are actually accessible even if she is not the active storyte
 <br>
 For more details, check the wiki page<br>
 https://rjw.miraheze.org/wiki/Luxandra_Lust/1.6
+
+
+Altar art by Gerrymon
