@@ -138,6 +138,9 @@
 		<initialWillRange>5~20</initialWillRange>
 		<initialResistanceRange>6~20</initialResistanceRange>
 		<chronologicalAgeRange>20~30</chronologicalAgeRange>
+		<minGenerationAge>18</minGenerationAge>
+		<maxGenerationAge>30</maxGenerationAge>
+		<canStrip>false</canStrip>
 		<techHediffsMoney>1000~4000</techHediffsMoney>
 		<techHediffsRequired>
 			<li>Luxandra_EnthrallingTouch</li>
@@ -187,7 +190,9 @@
 		</forcedTraits>
 		<initialWillRange>1~2</initialWillRange>
 		<initialResistanceRange>2~5</initialResistanceRange>
-		<chronologicalAgeRange>18~35</chronologicalAgeRange>
+		<chronologicalAgeRange>18~65</chronologicalAgeRange>
+		<minGenerationAge>18</minGenerationAge>
+		<canStrip>false</canStrip>
 		<techHediffsMoney>1000~4000</techHediffsMoney>
 		<techHediffsRequired>
 			<li>Luxandra_EnthrallingTouch</li>
