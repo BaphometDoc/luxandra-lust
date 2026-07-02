@@ -235,6 +235,13 @@ namespace LuxandraLust
             {
                 father.health.AddHediff(parentalBlessing);
             }
+
+            string parentNames = mother.NameShortColored;
+            if (father != null)
+                parentNames = parentNames + " and " + father.NameShortColored;
+
+            Messages.Message($"The actions of {parentNames} have pleased Luxandra. You gained 10 Favor with her.", MessageTypeDefOf.PositiveEvent);
+            GameComponent_LuxandraLust.Instance?.AddToFavorCounter(10);
         }
 
         private static void ApplyDegradationPunishment(Map map, string title, string text)
