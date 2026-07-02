@@ -1,4 +1,7 @@
 0.10 - 
+- Positive childbirth appraisals will grant Favor with Luxandra
+- I've totally fixed the genital size events this time
+- You can now spend 10 favor to request a slave trader. If RJW Ero trader is loaded, it'll always be a erotic trader.
 
 0.9 - 02/07/2026
 - Added Amazon Ambush and Amazon Blood Trial events

@@ -50,6 +50,11 @@ namespace LuxandraLust
             return ModsConfig.IsActive("forbidden.anomalies");
         }
 
+        public static bool IsEroTraderActive()
+        {
+            return ModsConfig.IsActive("shauaputa.lewdtrader");
+        }
+
         #endregion
     }
 }

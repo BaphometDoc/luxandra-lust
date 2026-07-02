@@ -74,6 +74,14 @@ namespace LuxandraLust
             prayOption.action = () => OpenIncidentSelectionDialogue(pawn);
             rootNode.options.Add(prayOption);
 
+            if (ModsConfig.IdeologyActive)
+            {
+                // Option: Summon a slaver (open list)
+                DiaOption slaverOption = new DiaOption("Request the visit of a slaver");
+                slaverOption.action = () => OpenRequestSlaverDialogue(pawn);
+                rootNode.options.Add(slaverOption);
+            }
+
             // Option: Leave
             DiaOption leaveOption = new DiaOption("Leave");
             leaveOption.resolveTree = true;
@@ -82,26 +90,139 @@ namespace LuxandraLust
             ShowDialog(rootNode, "Communing with Luxandra");
         }
 
+        #region Request Slave Traders
+        private void OpenRequestSlaverDialogue(Pawn pawn)
+        {
+            var isEroTraderActive = LuxandraCompatUtilities.IsEroTraderActive();
+
+            var extraDialogue = isEroTraderActive ? "\n\nI know of some with a very interesting selection..." : "";
+            DiaNode rootSelectionNode = new DiaNode($"<color=#D4AF37>Luxandra</color>:\n\nYou require the visit of a slave seller? Are you in need of more subjects, or you have more... interesting plans?{extraDialogue}");
+
+            DiaOption slaverOption = new DiaOption("(10 Favor) Yes, please bless us with their visit.");
+            if (LuxandraComp.colonyFavorPoints < 10)
+            {
+                slaverOption.Disable($"Requires {10} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+            }
+            slaverOption.action = () => OpenSlaverConfirmationDialogue(pawn);
+            rootSelectionNode.options.Add(slaverOption);
+
+            // Add a back button inside the sub-menu to return to our main category listing
+            DiaOption subMenuBack = new DiaOption("No, choose something else");
+            subMenuBack.action = () => OpenRootDialogue(pawn);
+            rootSelectionNode.options.Add(subMenuBack);
+
+            ShowDialog(rootSelectionNode, "Request the visit of a slaver");
+        }
+
+        private void OpenSlaverConfirmationDialogue(Pawn pawn)
+        {
+            string text = $"Are you sure you want to spend 10 Favor to request the visit a Slave Trader?\n\nYou would have {LuxandraComp.colonyFavorPoints - 10} left after the request.";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            DiaOption yesOption = new DiaOption("Yes, request it");
+
+            bool failedToFindTrader = false;
+
+            // Prepare slaver parameters
+            TraderKindDef slaveTraderDef = DefDatabase<TraderKindDef>.GetNamed("RJW_Lewd_Trader_Caravan", false);
+
+
+            if (slaveTraderDef == null)
+                slaveTraderDef = DefDatabase<TraderKindDef>.GetNamed("Caravan_Neolithic_Slaver", false);
+            if (slaveTraderDef == null)
+                slaveTraderDef = DefDatabase<TraderKindDef>.GetNamed("Caravan_Outlander_PirateMerchant", false);
+            if (slaveTraderDef == null)
+            {
+                failedToFindTrader = true;
+                LuxandraDebugActions.DebugLogMessage("No valid slave trader found for Luxandra's request.");
+            }
+            else
+                LuxandraDebugActions.DebugLogMessage($"Found valid trader def: {slaveTraderDef.defName}.");
+
+            Faction tradingFaction = Find.FactionManager.AllFactions
+                    .Where(f => !f.def.permanentEnemy && !f.IsPlayer && !f.defeated && f.def.caravanTraderKinds.Any())
+                    .RandomElementWithFallback(null);
+
+            if (tradingFaction == null)
+            {
+                // Absolute safety fallback to any peaceful entity if specialized ones aren't active
+                tradingFaction = Find.FactionManager.AllFactions
+                    .Where(f => !f.def.permanentEnemy && !f.IsPlayer && !f.defeated)
+                    .RandomElementWithFallback(null);
+            }
+
+            if (tradingFaction == null)
+            {
+                LuxandraDebugActions.DebugLogMessage("Could not find any valid faction to send a slave trader.");
+                failedToFindTrader = true;
+            }
+            else
+                LuxandraDebugActions.DebugLogMessage($"Found valid faction: {tradingFaction.NameColored}.");
+
+            if (failedToFindTrader)
+            {
+                yesOption.Disable("None available right now.");
+            }
+
+            // Prepare the trader incident
+            IncidentDef incidentDef = IncidentDefOf.TraderCaravanArrival;
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(incidentDef.category, pawn.Map);
+            parms.faction = tradingFaction;
+            parms.traderKind = slaveTraderDef;
+            parms.forced = true;
+
+            yesOption.action = () =>
+            {
+                if (!incidentDef.Worker.TryExecute(parms))
+                {
+                    LuxandraDebugActions.DebugLogMessage("Caravan arrival failed due to save state corruption or map error. Falling back to Orbital Trade Ship.");
+
+                    IncidentDef orbitalInc = IncidentDefOf.OrbitalTraderArrival;
+                    IncidentParms orbitalParms = StorytellerUtility.DefaultParmsNow(orbitalInc.category, pawn.Map);
+                    orbitalParms.traderKind = slaveTraderDef;
+                    orbitalParms.forced = true;
+
+                    orbitalInc.Worker.TryExecute(orbitalParms);
+                }
+
+                LuxandraComp.PayForLuxandraServices(10);
+                Messages.Message($"Your request to Luxandra consumed 10 Favor to invoke a trader visit.", MessageTypeDefOf.TaskCompletion, false);
+            };
+
+            yesOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(yesOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else");
+            noOption.action = () => OpenRequestSlaverDialogue(pawn);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, "Confirm Slave Trader request");
+        }
+
+        #endregion
+
+        #region Request incidents
         private string DetermineSectionFlavorText(LuxandraIncidentType incidentType)
         {
             switch (incidentType)
             {
                 case LuxandraIncidentType.Positive:
-                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a blessing? Some gifts, or maybe something more... exciting?";
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a blessing?\n\nSome gifts, or maybe something more... exciting?";
                 case LuxandraIncidentType.Neutral:
-                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a mundane event? Maybe something to spice your boring days?";
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a mundane event?\n\nMaybe something to spice your boring days?";
                 case LuxandraIncidentType.Negative:
-                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a trial? An exotic threat, for the arousing thrill of danger?";
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a trial?\n\nAn exotic threat, for the arousing thrill of danger?";
                 case LuxandraIncidentType.Raid:
-                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a threat to your colony? Reckless bravery, or another chance to acquire more subjects for your perversions?";
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a threat to your colony?\n\nReckless bravery, or another chance to acquire more subjects for your perversions?";
                 case LuxandraIncidentType.Quest:
-                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a mission? A demand of sort, to test your abilities?";
+                    return "<color=#D4AF37>Luxandra</color>:\n\nYou would request a mission?\n\nA demand of sort, to test your abilities?";
                 default: // This should never show up but here just in case
                     return "Luxandra's gaze is drawn to the threads of fate, each shimmering with potential.";
             }
         }
 
-        // --- STEP 2: THE INCIDENT SELECTION WINDOW ---
+        // --- THE INCIDENT SELECTION WINDOW ---
         private void OpenIncidentSelectionDialogue(Pawn pawn)
         {
             DiaNode rootSelectionNode = new DiaNode("Luxandra sifts through the tapestry of fates, waiting for your request.\n\nWhat twist of fate will you try to invoke?");
@@ -161,7 +282,7 @@ namespace LuxandraLust
                     }
                     else
                     {
-                        incidentOption.action = () => OpenConfirmationDialogue(pawn, luxIncident, cost);
+                        incidentOption.action = () => OpenIncidentConfirmationDialogue(pawn, luxIncident, cost);
                         anyEventAvailable = true; // Found at least one playable event!
                     }
 
@@ -197,7 +318,7 @@ namespace LuxandraLust
         }
 
         // --- STEP 3: THE CONFIRMATION WINDOW ---
-        private void OpenConfirmationDialogue(Pawn pawn, LuxandraIncidentDefs luxIncident, int cost)
+        private void OpenIncidentConfirmationDialogue(Pawn pawn, LuxandraIncidentDefs luxIncident, int cost)
         {
             string text = $"Are you sure you want to spend {cost} Favor to invoke {luxIncident.IncidentDef.LabelCap}?\n\nYou would have {LuxandraComp.colonyFavorPoints - cost} left after the request.";
 
@@ -280,4 +401,5 @@ namespace LuxandraLust
             this.compClass = typeof(Comp_LuxandraMonument);
         }
     }
+    #endregion
 }

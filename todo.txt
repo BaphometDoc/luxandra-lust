@@ -7,7 +7,6 @@ Fix the lack of "basic" pawn for the 3 factions so they can show up in traders
 Already existing mechanics updates to do
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
 - Add more events involving the 3 factions
-- Be able to request a slave trader from blessing (if ero trader present: always that)
 - Add implantation, futa and incest to the kinks
 
 Various potential events
@@ -21,6 +20,8 @@ Various potential events
 - breast growth! everyone gets tits!
 - "nude quake"
 - curse of reverse depravity: make someone more beautiful and vulnerable
+- one pawn becomes a harem center, everyone opinion maxed, optional everyone falls in love with them
+- make everyone a nympho for a few hours
 
 Ideology integration
 - dedicated ideology
