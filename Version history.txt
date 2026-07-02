@@ -1,4 +1,4 @@
-0.9 - 
+0.9 - 02/07/2026
 - Added Amazon Ambush and Amazon Blood Trial events
 - Added Deviant Hunger Swarm raid
 - Added the literal inquisition raid from the Crusaders
