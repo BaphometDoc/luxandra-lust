@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
+	<!-- Thoughts related to Luxandra's cycles -->
   <ThoughtDef>
     <defName>Luxandra_SatisfiedCycle</defName>
     <durationDays>1.0</durationDays>

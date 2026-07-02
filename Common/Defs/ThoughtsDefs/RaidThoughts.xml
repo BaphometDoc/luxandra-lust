@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+<!-- Moodlets related to raid events -->
   <ThoughtDef>
     <defName>Luxandra_WarCry_Panic</defName>
     <durationDays>0.0833</durationDays>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- TOTALLY NOT NYMPHS RAID -->
+	<IncidentDef>
+		<defName>Luxandra_Inc_DeviantHordeRaid</defName>
+		<label>carnal horde</label>
+		<category>ThreatBig</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_DeviantHordeRaid</workerClass>
+		<baseChance>1.0</baseChance>
+		<minRefireDays>15</minRefireDays>
+		<pointsScaleable>true</pointsScaleable>
+		<tale>Raid</tale>
+	</IncidentDef>
+</Defs>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>	
+	<RaidStrategyDef>
+		<defName>Luxandra_RapeAndPillageAssault</defName>
+		<workerClass>LuxandraLust.RaidStrategyWorker_RapeAssault</workerClass>
+		<letterLabelEnemy>Raid (Vile Assault)</letterLabelEnemy>
+		<arrivalTextEnemy>A group of raiders have arrived. They are attacking immediately, and they seem to have exceptionally vile intentions for any survivors...</arrivalTextEnemy>
+		<selectionWeightPerPointsCurve>
+			<points>
+				<li>(400, 0.0)</li>
+				<li>(1000, 0.2)</li>
+			</points>
+		</selectionWeightPerPointsCurve>
+		<arriveModes>
+			<li>EdgeWalkIn</li>
+			<li>EdgeDrop</li>
+		</arriveModes>
+	</RaidStrategyDef>
+  
+	<DutyDef>
+		<defName>Luxandra_BastardAssaultDuty</defName>
+		<thinkNode Class="ThinkNode_Priority">
+			<subNodes>
+				<!-- Rape enemies -->
+				<li Class="rjw.JobGiver_RapeEnemy"/>
+
+				<!-- Fight visible enemies natively -->
+				<li Class="JobGiver_AIFightEnemies"/>
+        
+				<!-- Travel to the nearest hostile target across the map -->
+				<li Class="JobGiver_AIGotoNearestHostile"/>
+		
+				<!-- Smash buildings/furniture far away (basically forces them to go to the base) -->
+				<li Class="JobGiver_AITrashBuildingsDistant"/>
+
+				<!-- Smash things right next to them inside the base -->
+				<li Class="JobGiver_AITrashColonyClose"/>
+			</subNodes>
+		</thinkNode>
+	</DutyDef>
+  
+	<!-- This hediff tanks the sex drive of the pawn, combined with
+		rapist trait they'll go on a turbo rape frenzy-->
+	<HediffDef>
+		<defName>Luxandra_RapistRage</defName>
+		<label>Rapist frenzy</label>
+		<description>A chemically induced frenzy causing a massive increase in carnal desires.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.9, 0.2, 0.2)</defaultLabelColor>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>60000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<statOffsets>
+					<SexFrequency>50.0</SexFrequency>
+					<Vulnerability>-10</Vulnerability>
+				</statOffsets>
+				<statFactors>
+					<SexSatisfaction>0.2</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>
+	</HediffDef>
+</Defs>
