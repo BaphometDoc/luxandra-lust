@@ -39,6 +39,9 @@ namespace LuxandraLust
         // Raids
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_DeviantHordeRaid;
+        public static IncidentDef Luxandra_Inc_AmazonStealthAmbush;
+        public static IncidentDef Luxandra_Inc_AmazonBloodTrial;
+        public static IncidentDef Luxandra_Inc_DeviantHungerSwarm;
 
         public static IncidentDef Luxandra_Inc_TheMilkGame;
 
@@ -181,6 +184,26 @@ namespace LuxandraLust
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A Carnal Deviant that will try to rape your colonists rather than kill them",
+                pointBaseCost: 35
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHungerSwarm,
+                incidentType: LuxandraIncidentType.Raid,
+                description: "A horde of hungry Deviants is approaching your colony to find food",
+                pointBaseCost: 35
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AmazonStealthAmbush,
+                incidentType: LuxandraIncidentType.Raid,
+                description: "An elite assassin squad of Amazons attempts to kill your most valuable pawn... or male."
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AmazonBloodTrial,
+                incidentType: LuxandraIncidentType.Raid,
+                description: "Young amazons are sent on a trial to prove their worth. They'll have your heads or die trying.",
                 pointBaseCost: 35
             ));
 

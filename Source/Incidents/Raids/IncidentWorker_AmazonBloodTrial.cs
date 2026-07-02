@@ -12,18 +12,18 @@ namespace LuxandraLust
         {
             if (!base.CanFireNowSub(parms)) return false;
 
-            Map map = (Map)parms.target;
-
-            // MUST have at least one conscious, living male colonist on the map
-            bool hasMaleColonist = map.mapPawns.FreeColonistsSpawned
-                .Any(p => p.gender == Gender.Male && LuxandraUtilities.IsAdult(p) && !p.Downed && !p.Dead);
-            if (!hasMaleColonist) return false;
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_AmazonBloodTrial.defName))
+            {
+                return false;
+            }
 
             // Verify faction exists
-            Faction amazonFaction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Luxandra_AmazonTribe"));
-            if (amazonFaction == null || amazonFaction.HostileTo(Faction.OfPlayer)) return false;
+            Faction amazonFaction = Find.FactionManager.FirstFactionOfDef(LuxandraFactionDefOf.Luxandra_AmazonTribe);
+            if (amazonFaction == null) return false;
 
-            return true;
+            Map map = (Map)parms.target;
+            // Need at least 1 male adult pawn to even try
+            return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p) && p.gender == Gender.Male);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)

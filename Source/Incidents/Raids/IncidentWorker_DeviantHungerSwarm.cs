@@ -12,12 +12,17 @@ namespace LuxandraLust
         {
             if (!base.CanFireNowSub(parms)) return false;
 
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_DeviantHungerSwarm.defName))
+            {
+                return false;
+            }
+
+            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(LuxandraFactionDefOf.Luxandra_DeviantHordeFaction);
+            if (deviantFaction == null) return false;
+
             Map map = (Map)parms.target;
-
-            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Luxandra_DeviantHordeFaction"));
-            if (deviantFaction == null || deviantFaction.HostileTo(Faction.OfPlayer)) return false;
-
-            return true;
+            // Need at least 1 humanlike adult pawn to even try
+            return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)

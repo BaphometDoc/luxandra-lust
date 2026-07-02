@@ -70,7 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Incidents\IncidentWorker_AmazonStealthAmbush.cs" />
+    <Compile Include="Incidents\Raids\IncidentWorker_AmazonStealthAmbush.cs" />
     <Compile Include="Incidents\IncidentWorker_AphrodisiacFever.cs" />
     <Compile Include="Incidents\IncidentWorker_TheMilkGame.cs" />
     <Compile Include="Incidents\MechClusters\IncidentWorker_FertilityPulseMechCluster.cs" />
@@ -83,17 +83,17 @@
     <Compile Include="Patches\IncestPatches.cs" />
     <Compile Include="Quests\QuestIncidentWorkers.cs" />
     <Compile Include="Quests\QuestPart_BreakPrisoners.cs" />
-    <Compile Include="Raids\IncidentWorker_AmazonBloodTrial.cs" />
-    <Compile Include="Raids\IncidentWorker_DeviantHungerSwarm.cs" />
+    <Compile Include="Incidents\Raids\IncidentWorker_AmazonBloodTrial.cs" />
+    <Compile Include="Incidents\Raids\IncidentWorker_DeviantHungerSwarm.cs" />
     <Compile Include="Utilities\DebugStuff.cs" />
     <Compile Include="Incidents\IncidentWorker_LustfulFertilityPulse.cs" />
     <Compile Include="Incidents\IncidentWorker_GenitalSizeEvents.cs" />
     <Compile Include="Incidents\IncidentWorker_HornyRush.cs" />
     <Compile Include="Incidents\IncidentWorker_IdeologyLeaderBlessing.cs" />
     <Compile Include="Incidents\IncidentWorker_LustfulSupplies.cs" />
-    <Compile Include="Raids\IncidentWorker_HornyTribalRaid.cs" />
-    <Compile Include="Raids\IncidentWorker_DeviantHordeRaid.cs" />
-    <Compile Include="Raids\IncidentWorker_BastardRaid.cs" />
+    <Compile Include="Incidents\Raids\IncidentWorker_HornyTribalRaid.cs" />
+    <Compile Include="Incidents\Raids\IncidentWorker_DeviantHordeRaid.cs" />
+    <Compile Include="Incidents\Raids\IncidentWorker_BastardRaid.cs" />
     <Compile Include="Incidents\IncidentWorker_RapistBreak.cs" />
     <Compile Include="Incidents\IncidentWorker_RoyalDepravity.cs" />
     <Compile Include="Incidents\IncidentWorker_RoyalLuxury.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="Utilities\LuxandraUtilities.cs" />
     <Compile Include="Patches\StatPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Raids\RaidStrategy_RapeAssault.cs" />
+    <Compile Include="Incidents\Raids\RaidStrategy_RapeAssault.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="LuxandraCyclesManager.cs" />
   </ItemGroup>

@@ -29,7 +29,7 @@ namespace LuxandraLust
             Map map = (Map)parms.target;
 
             LuxandraDebugActions.DebugLogMessage("Attempting to generate a Carnal Deviant raid.");
-            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(DefDatabase<FactionDef>.GetNamed("Luxandra_DeviantHordeFaction", false));
+            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(LuxandraFactionDefOf.Luxandra_DeviantHordeFaction);
 
             // Failsafe 1: Fallback to a hostile tribal faction
             if (deviantFaction == null)
@@ -37,7 +37,7 @@ namespace LuxandraLust
                 Log.Warning("[LuxandraLust] Carnal Deviantfaction not found, searching for hostile tribal fallback.");
 
                 deviantFaction = Find.FactionManager.AllFactionsListForReading
-                    .FirstOrDefault(f => !f.IsPlayer && f.HostileTo(Faction.OfPlayer) && f.def.techLevel == TechLevel.Neolithic);
+                    .FirstOrDefault(f => !f.IsPlayer && f.HostileTo(Faction.OfPlayer) && f.def.techLevel < TechLevel.Industrial);
             }
 
             //  Failsafe 2: Abort if absolutely no hostile tribal faction exists
