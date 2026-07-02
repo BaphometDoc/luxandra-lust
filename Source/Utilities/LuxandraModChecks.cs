@@ -23,6 +23,16 @@ namespace LuxandraLust
             return ModsConfig.IsActive("rjw.menstruation");
         }
 
+        public static bool IsSexperienceActive()
+        {
+            return ModsConfig.IsActive("rjw.sexperience");
+        }
+
+        public static bool IsSexperienceIdeologyActive()
+        {
+            return ModsConfig.IsActive("rjw.sexperience.ideology");
+        }
+
         public static bool IsRJWGenesActive()
         {
             return ModsConfig.IsActive("Vegapnk.rjw.genes");
@@ -51,6 +61,11 @@ namespace LuxandraLust
         public static bool IsForbiddenAnomaliesActive()
         {
             return ModsConfig.IsActive("forbidden.anomalies");
+        }
+
+        public static bool IsRJWInsectsActive()
+        {
+            return ModsConfig.IsActive("Ed86.rjwinsects");
         }
 
         public static bool IsEroTraderActive()

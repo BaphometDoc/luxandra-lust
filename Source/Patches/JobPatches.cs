@@ -44,7 +44,7 @@ namespace LuxandraLust
                     GameComponent_LuxandraLust.Instance?.RegisterSexAction(true);
                     if (LuxandraModSettings.enablePleasedNotification)
                     {
-                        Messages.Message($"{actor.NameShortColored} has pleased Luxandra with their actions.", MessageTypeDefOf.PositiveEvent, false);
+                        Messages.Message($"{actor.NameShortColored} has pleased Luxandra with their actions. She rewarded you with 1 Favor.", MessageTypeDefOf.PositiveEvent, false);
                     }
                     LuxandraDebugActions.DebugLogMessage($"The {props.sexType} done by {actor.NameShortColored} with {props.partner?.NameShortColored} matched Luxandra's current kink ({GameComponent_LuxandraLust.CurrentKink}).");
                 }

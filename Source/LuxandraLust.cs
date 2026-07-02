@@ -59,7 +59,7 @@ namespace LuxandraLust
         /// </summary>
         public int colonyFavorPoints = 0;
 
-        // Sex counters
+        // Sex counters (these still do nothing atm)
         public int sexActionCounter = 0;
         public int sexActionCounterForCycle = 0;
         public int impureSexActionCounter = 0;
@@ -147,9 +147,16 @@ namespace LuxandraLust
             if (RJWSettings.necrophilia_enabled)
                 validKinks.Add(StorytellerKink.Necrophilia);
 
-            // TODO: Implantation
-            // TODO: Incest
-            // TODO: Futa
+            if (RJWPregnancySettings.insect_pregnancy_enabled || RJWPregnancySettings.insect_anal_pregnancy_enabled ||
+                RJWPregnancySettings.insect_oral_pregnancy_enabled || LuxandraModChecks.IsRJWInsectsActive())
+                validKinks.Add(StorytellerKink.Implantation);
+
+            if (LuxandraModChecks.IsSexperienceIdeologyActive() || LuxandraModSettings.removeRomanceRestrictions)
+                validKinks.Add(StorytellerKink.Incest);
+
+            if (RJWSettings.futa_natives_chance > 0 || RJWSettings.futa_nymph_chance > 0 || RJWSettings.futa_spacers_chance > 0 ||
+                RJWSettings.FemaleFuta || RJWSettings.GenderlessAsFuta)
+                validKinks.Add(StorytellerKink.Futa);
 
             return validKinks;
         }

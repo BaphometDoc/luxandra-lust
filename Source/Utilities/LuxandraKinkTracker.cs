@@ -72,6 +72,15 @@ namespace LuxandraLust
                 case StorytellerKink.Breasts:
                     flavorText = "Luxandra enjoys looking the curves of other women. Small, big or gargantuan, all are proud symbols of fertility, and strong instruments of seduction.";
                     break;
+                case StorytellerKink.Incest:
+                    flavorText = "Luxandra loves the forbidden. She wants to see people who are not supposed to be together, together. The more taboo, the better.";
+                    break;
+                case StorytellerKink.Implantation:
+                    flavorText = "Luxandra has seen parasitic insectoids use humans as seed bed and found it arousing. She wants to see more of them, witness eggs implanted into people and watch those unsettling births come toghether.";
+                    break;
+                case StorytellerKink.Futa:
+                    flavorText = "Luxandra loves the best of both worlds. She enjoys seeing women with massive dicks, and men with enormous breasts hiding their vagina behind their throbbing cocks. The combination of both worlds is a true delight for her.";
+                    break;
             }
 
             return $"Current Obsession: {phaseName}\n\n{flavorText}";

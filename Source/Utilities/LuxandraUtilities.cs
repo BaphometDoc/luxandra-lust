@@ -250,6 +250,22 @@ namespace LuxandraLust
                     if (props.sexType == xxx.rjwSextype.Boobjob)
                         return true;
                     break;
+                // Kink = Incest: blood relations
+                case StorytellerKink.Incest:
+                    var directRelations = actor.relations.DirectRelations.Where(r => r.def.familyByBloodRelation);
+                    if (directRelations.Any() && directRelations.Any(r => r.otherPawn == partner))
+                        return true;
+                    break;
+                // Kink = Implantation: sex involving female ovipositors
+                case StorytellerKink.Implantation:
+                    if (props.resolved?.InitiatorParts?[0]?.Family == LewdablePartFamily.FemaleOvipositor || props.resolved?.RecipientParts?[0]?.Family == LewdablePartFamily.FemaleOvipositor)
+                        return true;
+                    break;
+                // Kink = Futa: chicks with dicks, and men with pussyes and/or breasts
+                case StorytellerKink.Futa:
+                    if (GenderHelper.GetSex(actor) == GenderHelper.Sex.Futa || GenderHelper.GetSex(actor) == GenderHelper.Sex.Trap || GenderHelper.GetSex(partner) == GenderHelper.Sex.Futa || GenderHelper.GetSex(partner) == GenderHelper.Sex.Trap)
+                        return true;
+                    break;
             }
 
             return null;
