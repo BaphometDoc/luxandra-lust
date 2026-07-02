@@ -38,6 +38,12 @@ namespace LuxandraLust
             Faction amazonFaction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Luxandra_AmazonTribe"));
             PawnKindDef infiltratorKind = PawnKindDef.Named("Luxandra_Amazon_Infiltrator");
 
+            if (amazonFaction == null || infiltratorKind == null)
+            {
+                Log.Warning("[LuxandraLust] Amazon Blood Trial incident failed: Missing faction or pawn kind definition.");
+                return false;
+            }
+
             // Rule 2: Find the priority target pawn
             Pawn targetPawn = FindTargetPawn(map);
             if (targetPawn == null) return false;

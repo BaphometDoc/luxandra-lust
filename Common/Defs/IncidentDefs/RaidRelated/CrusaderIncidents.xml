@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IncidentDef>
+    <defName>Luxandra_Inc_InquisitionPurgeSappers</defName>
+    <label>inquisition fiery purge</label>
+    <workerClass>LuxandraLust.IncidentWorker_InquisitionPurge</workerClass>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <pointsScaleable>true</pointsScaleable>
+    <baseChance>0.8</baseChance>
+    <minRefireDays>6</minRefireDays>
+    <letterDef>ThreatBig</letterDef>
+  </IncidentDef>
+</Defs>

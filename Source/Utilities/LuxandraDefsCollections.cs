@@ -39,9 +39,11 @@ namespace LuxandraLust
         // Raids
         public static IncidentDef Luxandra_Inc_HornyTribalRaid;
         public static IncidentDef Luxandra_Inc_DeviantHordeRaid;
+        public static IncidentDef Luxandra_Inc_DeviantHungerSwarm;
         public static IncidentDef Luxandra_Inc_AmazonStealthAmbush;
         public static IncidentDef Luxandra_Inc_AmazonBloodTrial;
-        public static IncidentDef Luxandra_Inc_DeviantHungerSwarm;
+        [MayRequireRoyalty]
+        public static IncidentDef Luxandra_Inc_InquisitionPurgeSappers;
 
         public static IncidentDef Luxandra_Inc_TheMilkGame;
 
@@ -280,6 +282,15 @@ namespace LuxandraLust
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalDepravity,
                     incidentType: LuxandraIncidentType.Negative,
                     description: "Your royal colonist will gain several permanent sex related penalties and go on a rapist rage.",
+                    requiresMod: true,
+                    modRequired: "Royalty"
+                ));
+
+                // Crusader events require Royalty
+                _allIncidents.Add(new LuxandraIncidentDefs(
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_InquisitionPurgeSappers,
+                    incidentType: LuxandraIncidentType.Raid,
+                    description: "A group of crusaders took the 'burn the infidels' motto very literally.",
                     requiresMod: true,
                     modRequired: "Royalty"
                 ));

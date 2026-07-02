@@ -7,7 +7,7 @@
 		<workerClass>LuxandraLust.RaidStrategyWorker_RapeAssault</workerClass>
 		<label>carnal horde</label>
 		<letterLabelEnemy>Raid (Deviant Horde)</letterLabelEnemy>
-		<arrivalTextEnemy>A massive gathering of carnal deviants has detected your colony. They are unarmed, naked, and driven entirely by an inescapable carnal frenzy...</arrivalTextEnemy>
+		<arrivalTextEnemy>A gathering of frenzied people has arrived your colony. They are unarmed, naked, and driven entirely by an inescapable carnal frenzy...</arrivalTextEnemy>
 		<pointsFactorCurve>
 			<points>
 				<li>(0, 1)</li>

@@ -32,7 +32,11 @@ namespace LuxandraLust
             PawnKindDef runtKind = PawnKindDef.Named("Luxandra_CarnalDeviantRunt");
             HediffDef feralHediff = HediffDef.Named("Luxandra_PrimalFeralStarvation");
 
-            if (deviantFaction == null || runtKind == null) return false;
+            if (deviantFaction == null || runtKind == null)
+            {
+                Log.Warning("[LuxandraLust] Deviant Hunger Swarm incident failed: Missing faction or pawn kind definition.");
+                return false;
+            }
 
             // Calculate count and apply our 50-pawn safety cap
             float unitCost = runtKind.combatPower;
@@ -77,6 +81,8 @@ namespace LuxandraLust
                 {
                     runt.health.AddHediff(feralHediff);
                 }
+                else
+                    LuxandraDebugActions.DebugLogMessage("Feral Starvation Hediff not found for Deviant Hunger Swarm incident.");
 
                 GenSpawn.Spawn(runt, spawnCell, map);
 

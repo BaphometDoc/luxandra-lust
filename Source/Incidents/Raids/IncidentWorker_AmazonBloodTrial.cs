@@ -32,6 +32,12 @@ namespace LuxandraLust
             Faction amazonFaction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Luxandra_AmazonTribe"));
             PawnKindDef fledglingKind = PawnKindDef.Named("Luxandra_Amazon_Fledgling");
 
+            if (amazonFaction == null || fledglingKind == null)
+            {
+                Log.Warning("[LuxandraLust] Amazon Blood Trial incident failed: Missing faction or pawn kind definition.");
+                return false;
+            }
+
             HediffDef trialHediff = HediffDef.Named("Luxandra_BloodTrialFrenzy");
 
             float unitCost = fledglingKind.combatPower;
@@ -90,6 +96,8 @@ namespace LuxandraLust
                 {
                     fledgling.health.AddHediff(frenzyHediff);
                 }
+                else
+                    LuxandraDebugActions.DebugLogMessage("Blood Trial Hediff not found for Amazon Blood Trial incident.");
 
                 GenSpawn.Spawn(fledgling, cell, map);
                 spawnedList.Add(fledgling);

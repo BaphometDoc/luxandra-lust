@@ -147,6 +147,7 @@
     
 		<disallowedRaidStrategies>
 			<li>Luxandra_DeviantHordeAssault</li>
+			<li>Luxandra_RapeAndPillageAssault</li>
 		</disallowedRaidStrategies>
   
 		<pawnGroupMakers>
@@ -159,6 +160,19 @@
 					<Luxandra_Crusader_Guard>4</Luxandra_Crusader_Guard>
 					<Luxandra_Crusader_Seer>2</Luxandra_Crusader_Seer>
 					<Luxandra_Crusader_Leader>1</Luxandra_Crusader_Leader>
+				</options>
+			</li>
+			
+			<li>
+				<kindDef>Combat</kindDef>
+				<disallowedStrategies>
+					<li>Siege</li>
+				</disallowedStrategies>
+				<options>
+					<Luxandra_Crusader_WhiteCape>8</Luxandra_Crusader_WhiteCape>
+					<Luxandra_Crusader_Conscript>6</Luxandra_Crusader_Conscript>
+					<Luxandra_Crusader_Cleanser>10</Luxandra_Crusader_Cleanser>
+					<Luxandra_Crusader_Inquisitor MayRequire="Ludeon.RimWorld.Anomaly">5</Luxandra_Crusader_Inquisitor>
 				</options>
 			</li>
 
@@ -182,7 +196,6 @@
 				<kindDef>Settlement</kindDef>
 				<options>
 					<Luxandra_Crusader_WhiteCape>12</Luxandra_Crusader_WhiteCape>
-					<!-- Safe Guard: Only loaded if Anomaly is present -->
 					<Luxandra_Crusader_Inquisitor MayRequire="Ludeon.RimWorld.Anomaly">6</Luxandra_Crusader_Inquisitor>
 					<Luxandra_Crusader_Guard>6</Luxandra_Crusader_Guard>
 					<Luxandra_Crusader_Seer>3</Luxandra_Crusader_Seer>
@@ -190,7 +203,7 @@
 				</options>
 			</li>
 		</pawnGroupMakers>
-		<basicMemberKind>Colonist</basicMemberKind>
+		<basicMemberKind>Luxandra_Crusader_Conscript</basicMemberKind>
 	</FactionDef>
   
 	<!-- ============================== -->
@@ -230,6 +243,62 @@
 		<techHediffsTags>
 			<li>None</li>
 		</techHediffsTags>
+	</PawnKindDef>
+	
+	<!-- CONSCRIPTS (tactically useless cowards) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base">
+		<defName>Luxandra_Crusader_Conscript</defName>
+		<label>reluctant conscript</label>
+		<combatPower>35</combatPower>
+		<chronologicalAgeRange>20~35</chronologicalAgeRange>
+		<minGenerationAge>20</minGenerationAge>
+		<maxGenerationAge>35</maxGenerationAge>
+
+		<initialWillRange>1~2</initialWillRange>
+		<initialResistanceRange>2~5</initialResistanceRange>
+
+		<forcedTraits>
+			<li>
+				<def>Wimp</def>
+			</li>
+			<li>
+				<def>Greedy</def>
+			</li>
+		</forcedTraits>
+
+		<skills>
+			<li>
+				<skill>Shooting</skill>
+				<range>4~7</range>
+			</li>
+			<li>
+				<skill>Melee</skill>
+				<range>0~2</range>
+			</li>
+		</skills>
+
+		<!-- High apparel budget for pompous, non-armor noble clothing -->
+		<apparelMoney>4000~8000</apparelMoney>
+		<apparelTags>
+			<li>Royal</li>
+			<li>RoyalTier1</li>
+			<li>RoyalTier2</li>
+			<li>RoyalTier3</li>
+			<li>RoyalTier4</li>
+			<li>RoyalTier5</li>
+			<li>Cape</li>
+		</apparelTags>
+		<apparelDisallowTags>
+			<li>ArmorPower</li>
+			<li>IndustrialMilitaryAdvanced</li>
+		</apparelDisallowTags>
+		<apparelAllowHeadgearChance>0.5</apparelAllowHeadgearChance>
+
+		<weaponMoney>1500~2500</weaponMoney>
+		<weaponTags>
+			<li>SniperRifle</li>
+			<li>BoltActionRifle</li>
+		</weaponTags>
 	</PawnKindDef>
 
 	<!-- GUARDS (The Regular Footsoldiers) -->
@@ -274,6 +343,7 @@
 		<apparelMoney>600~1200</apparelMoney>
 		<apparelTags>
 			<li>NeolithicPreacher</li>
+			<li>Royal</li>
 			<li>RoyalTier1</li>
 		</apparelTags>
 		<apparelRequired>
@@ -315,6 +385,41 @@
 		<weaponTags>
 			<li>AnomalyWeaponAdvanced</li>
 		</weaponTags>
+		<isFighter>true</isFighter>
+	</PawnKindDef>
+	
+	<!-- CLEANSER (The Much More Cleansing Flame) -->
+	<PawnKindDef ParentName="Luxandra_PuritanCrusader_Base">
+		<defName>Luxandra_Crusader_Cleanser</defName>
+		<label>puritan cleanser</label>
+		<combatPower>85</combatPower>
+
+		<forcedTraits>
+			<li>
+				<def>Pyromaniac</def>
+			</li>
+		</forcedTraits>
+
+		<apparelMoney>3000~6000</apparelMoney>
+		<apparelTags>
+			<li>RoyalTier2</li>
+			<li>Cape</li>
+		</apparelTags>
+		<apparelRequired>
+			<li>Apparel_Cape</li>
+		</apparelRequired>
+		<apparelDisallowTags>
+			<li>ArmorPower</li>
+		</apparelDisallowTags>
+		<apparelAllowHeadgearChance>1.0</apparelAllowHeadgearChance>
+
+		<weaponMoney>350~1500</weaponMoney>
+		<weaponTags>
+			<li>GrenadeIncendiary</li>
+			<li>GrenadeDestructive</li>
+			<li>GrenadeFlame</li>
+		</weaponTags>
+
 		<isFighter>true</isFighter>
 	</PawnKindDef>
 	
