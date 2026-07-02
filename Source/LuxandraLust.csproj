@@ -84,6 +84,7 @@
     <Compile Include="Quests\QuestIncidentWorkers.cs" />
     <Compile Include="Quests\QuestPart_BreakPrisoners.cs" />
     <Compile Include="Raids\IncidentWorker_AmazonBloodTrial.cs" />
+    <Compile Include="Raids\IncidentWorker_DeviantHungerSwarm.cs" />
     <Compile Include="Utilities\DebugStuff.cs" />
     <Compile Include="Incidents\IncidentWorker_LustfulFertilityPulse.cs" />
     <Compile Include="Incidents\IncidentWorker_GenitalSizeEvents.cs" />

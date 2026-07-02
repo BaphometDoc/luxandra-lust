@@ -5,13 +5,58 @@
 		<defName>Luxandra_Inc_DeviantHordeRaid</defName>
 		<label>carnal horde</label>
 		<category>ThreatBig</category>
+		<letterDef>ThreatBig</letterDef>
 		<targetTags>
 			<li>Map_PlayerHome</li>
 		</targetTags>
 		<workerClass>LuxandraLust.IncidentWorker_DeviantHordeRaid</workerClass>
-		<baseChance>1.0</baseChance>
+		<baseChance>0.8</baseChance>
 		<minRefireDays>15</minRefireDays>
 		<pointsScaleable>true</pointsScaleable>
 		<tale>Raid</tale>
 	</IncidentDef>
+	
+	<IncidentDef>
+		<defName>Luxandra_Inc_DeviantHungerSwarm</defName>
+		<label>deviant hunger swarm</label>
+		<workerClass>LuxandraLust.IncidentWorker_DeviantHungerSwarm</workerClass>
+		<letterDef>ThreatBig</letterDef>
+		<category>ThreatBig</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<pointsScaleable>true</pointsScaleable>
+		<baseChance>0.5</baseChance>
+		<tale>Raid</tale>
+	</IncidentDef>
+
+	<!-- Starvation Buff (keeps them fast even while completely starving) -->
+	<HediffDef>
+		<defName>Luxandra_PrimalFeralStarvation</defName>
+		<label>feral desperation</label>
+		<description>Adrenaline triggered by severe pack starvation. Relying only on animal impulse, this human is moving significantly faster than normal to secure their next meal.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.9, 0.4, 0.1)</defaultLabelColor>
+		<stages>
+			<li>
+				<statOffsets>
+					<MoveSpeed>0.80</MoveSpeed>
+					<MeleeDodgeChance>0.15</MeleeDodgeChance>
+					<PainShockThreshold>-0.15</PainShockThreshold>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Manipulation</capacity>
+						<offset>-0.2</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>45000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
 </Defs>

@@ -36,9 +36,10 @@
     <isBad>false</isBad>
     <stages>
       <li>
+        <painOffset>0.15</painOffset>
+        <hungerRateFactorOffset>-0.5</hungerRateFactorOffset>
         <statOffsets>
           <MoveSpeed>0.60</MoveSpeed>
-          <PainShockThreshold>-0.25</PainShockThreshold> 
         </statOffsets>
         <statFactors>
           <RestFallRateFactor>0.25</RestFallRateFactor> 

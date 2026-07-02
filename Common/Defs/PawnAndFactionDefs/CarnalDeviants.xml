@@ -82,20 +82,101 @@
 		<pawnGroupMakers>
 			<li>
 				<kindDef>Combat</kindDef>
-				<commonality>100</commonality>
+				<commonality>50</commonality>
 				<options>
 					<Luxandra_CarnalDeviantStriker>20</Luxandra_CarnalDeviantStriker>
 					<Luxandra_CarnalAlphaLeader>3</Luxandra_CarnalAlphaLeader>
 				</options>
 			</li>
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>50</commonality>
+				<options>
+					<Luxandra_CarnalDeviantRunt>25</Luxandra_CarnalDeviantRunt>
+					<Luxandra_CarnalAlphaLeader>1</Luxandra_CarnalAlphaLeader>
+				</options>
+			</li>
 		</pawnGroupMakers>
-		<basicMemberKind>Colonist</basicMemberKind>
+		<basicMemberKind>Luxandra_CarnalDeviantRunt</basicMemberKind>
 	</FactionDef>
 
 
 	<!-- ============================== -->
 	<!-- Pawn types -->
 	<!-- ============================== -->
+	
+	<!-- RUNT - The weaklings -->
+	<PawnKindDef>
+	<defName>Luxandra_CarnalDeviantRunt</defName>
+	<label>carnal deviant runt</label>
+	<race>Human</race>
+	<combatPower>12</combatPower>
+	<invNutrition>0</invNutrition>
+	<itemQuality>Poor</itemQuality>
+	
+	<apparelMoney>0~0</apparelMoney>
+	<weaponMoney>0~0</weaponMoney>
+	
+	<specificApparelRequirements>
+		<li>
+			<bodyPartGroup>Torso</bodyPartGroup>
+			<requiredTag>Luxandra_PrimalForcedGear</requiredTag>
+		</li>
+	</specificApparelRequirements>
+	<apparelTags Inherit="False">
+		<li>Luxandra_PrimalForcedGear</li>
+	</apparelTags>
+	
+	<techHediffsChance>1.0</techHediffsChance>
+	<techHediffsMoney>1000~4000</techHediffsMoney>
+	<techHediffsRequired>
+		<li>Luxandra_EnthrallingTouch</li>
+		<li>Luxandra_EnthrallingTouch</li>
+	</techHediffsRequired>
+	
+	<skills>
+		<li>
+			<skill>Melee</skill>
+			<range>0~4</range> <!-- Pathetic fighters; they rely entirely on biting, scratching, and swarming -->
+		</li>
+	</skills>
+	
+	<backstoryFiltersOverride>
+		<li>
+			<categories>
+				<li>Luxandra_RaiderDeviantCategory</li>
+			</categories>
+		</li>
+	</backstoryFiltersOverride>
+	
+	<forcedTraits>
+		<li>
+			<def>Nymphomaniac</def>
+		</li>
+		<li>
+			<def>Rapist</def>
+		</li>
+		<li>
+			<def>Bisexual</def>
+		</li>
+		<li>
+			<def>Wimp</def>
+		</li>
+	</forcedTraits>
+	
+	<!-- Very low mental resilience due to constant pack abuse -->
+	<initialWillRange>1~3</initialWillRange>
+	<initialResistanceRange>2~6</initialResistanceRange>
+	
+	<minGenerationAge>18</minGenerationAge>
+	<maxGenerationAge>30</maxGenerationAge>
+	<chronologicalAgeRange>18~30</chronologicalAgeRange>
+	
+	<canStrip>false</canStrip>
+	<defaultFactionType>Luxandra_DeviantHordeFaction</defaultFactionType>
+</PawnKindDef>
+	
+	<!-- BRAWLERS - Regular soldiers -->
 	<PawnKindDef>
 		<defName>Luxandra_CarnalDeviantStriker</defName>
 		<label>Carnal deviant</label>
@@ -150,6 +231,7 @@
 		<isFighter>true</isFighter>
 	</PawnKindDef>
 	
+	<!-- ALPHA LEADER -->
 	<PawnKindDef>
 		<defName>Luxandra_CarnalAlphaLeader</defName>
 		<label>Carnal alpha</label>

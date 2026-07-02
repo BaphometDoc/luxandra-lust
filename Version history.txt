@@ -1,6 +1,6 @@
 0.9 - 
-- Added Amazon Ambush and Amazon Blood Trial event
-- 
+- Added Amazon Ambush and Amazon Blood Trial events
+- Added Deviant Hunger Swarm raid
 
 0.8 - 02/07/2026
 - Introducing the Luxandra's Favor gimmick. Gain favor with her (currently just via sex + pleasing her kink, more to come) and spend it to alter your fate or gain her blessings
