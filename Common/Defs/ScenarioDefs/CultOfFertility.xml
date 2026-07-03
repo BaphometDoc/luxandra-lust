@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ScenarioDef MayRequire="Ludeon.RimWorld.Royalty">
+		<defName>Luxandra_CultOfFertilityStart</defName>
+		<label>Cult of Fertility</label>
+		<scenario>
+			<name>Cult of Fertility</name>
+			<summary>A tribe who beseeched unlimited reproductive power and obtained it.</summary>
+			<description>Your tribe was struggling to continue their bloodline.
+The few people left gathered and raised their prayers to the goddess.
+Surely she would not abandon them. Surely she would listen.
+
+And she did. You felt it. Your bodies were rejuvenated. The old age scars may have not healed, but you were empowered to revitalize your bloodline.
+
+You do not have many years left on this life, but you will do what you can for the next generation to carry on your legacy.
+You gathered as many resources as you could to prepare for their arrival soon enough.
+
+Note: You start with plenty of resources and a permanent fertility blessing. Your colony will grow faster than your technology allows to support.			</description>
+			<playerFaction>
+				<def>PlayerFaction</def>
+				<factionDef>PlayerTribe</factionDef>
+			</playerFaction>
+			<surfaceLayer>
+				<def>SurfaceLayerFixed</def>
+				<layer>Surface</layer>
+				<settingsDef>Surface</settingsDef>
+				<hide>True</hide>
+				<tag>Surface</tag>
+				<connections>
+					<li>
+						<tag>Orbit</tag>
+						<zoomMode>ZoomOut</zoomMode>
+					</li>
+				</connections>
+			</surfaceLayer>
+			<parts>
+				<li Class="ScenPart_PlanetLayer">
+					<def>PlanetLayer</def>
+					<layer>Orbit</layer>
+					<settingsDef>Orbit</settingsDef>
+					<hide>True</hide>
+					<tag>Orbit</tag>
+					<connections>
+						<li>
+							<tag>Surface</tag>
+							<zoomMode>ZoomIn</zoomMode>
+						</li>
+					</connections>
+				</li>
+				<li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
+					<def>ConfigPage_ConfigureStartingPawns</def>
+					<pawnChoiceCount>8</pawnChoiceCount>
+					<pawnCount>6</pawnCount>
+				</li>
+				<li Class="ScenPart_PlayerPawnsArriveMethod">
+					<def>PlayerPawnsArriveMethod</def>
+				</li>
+				<li Class="ScenPart_PermaGameCondition">
+					<def>PermanentGameCondition</def>
+					<gameCondition>Luxandra_LustfulFertilityPulse</gameCondition>
+				</li>
+				<li Class="ScenPart_GameStartDialog">
+					<def>GameStartDialog</def>
+					<text>You raised a prayer to the goddess.
+
+You demanded unlimited fertility.
+
+You got what you asked for.
+
+Make her proud.					</text>
+					<closeSound>GameStartSting</closeSound>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Pemmican</thingDef>
+					<count>1500</count>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>MedicineHerbal</thingDef>
+					<count>50</count>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Kibble</thingDef>
+					<count>200</count>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Milk</thingDef>
+					<count>50</count>
+				</li>
+				<li Class="ScenPart_StartingAnimal">
+					<def>StartingAnimal</def>
+					<animalKind>Chicken</animalKind>
+					<count>5</count>
+					<bondToRandomPlayerPawnChance>1</bondToRandomPlayerPawnChance>
+				</li>
+				<li Class="ScenPart_ScatterThingsNearPlayerStart">
+					<def>ScatterThingsNearPlayerStart</def>
+					<thingDef>WoodLog</thingDef>
+					<count>700</count>
+					<allowRoofed>True</allowRoofed>
+				</li>
+				<li Class="ScenPart_ScatterThingsNearPlayerStart">
+					<def>ScatterThingsNearPlayerStart</def>
+					<thingDef>Steel</thingDef>
+					<count>700</count>
+					<allowRoofed>True</allowRoofed>
+				</li>
+				<li Class="ScenPart_CreateIncident">
+					<def>CreateIncident</def>
+					<incident>Luxandra_Inc_MaleExpansion</incident>
+					<intervalDays>26.5315723</intervalDays>
+					<minDays>1</minDays>
+					<maxDays>2</maxDays>
+				</li>
+				<li Class="ScenPart_CreateIncident">
+					<def>CreateIncident</def>
+					<incident>Luxandra_Inc_FemaleExpansion</incident>
+					<minDays>1</minDays>
+					<maxDays>2</maxDays>
+				</li>
+				<li Class="ScenPart_ForcedTrait">
+					<def>ForcedTrait</def>
+					<chance>1</chance>
+					<context>PlayerStarter</context>
+					<trait>Kind</trait>
+				</li>
+				<li Class="ScenPart_ForcedTrait">
+					<def>ForcedTrait</def>
+					<chance>1</chance>
+					<context>PlayerStarter</context>
+					<trait>Nerves</trait>
+					<degree>2</degree>
+				</li>
+				<li Class="ScenPart_PawnFilter_Age">
+					<def>PawnFilter_Age</def>
+					<allowedAgeRange>60~85</allowedAgeRange>
+				</li>
+			</parts>
+		</scenario>
+	</ScenarioDef>
+</Defs>

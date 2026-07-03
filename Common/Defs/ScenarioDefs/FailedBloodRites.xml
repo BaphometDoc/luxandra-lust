@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ScenarioDef>
+		<defName>Luxandra_AmazonStart</defName>
+		<label>Failed Blood Rites</label>
+		<scenario>
+			<name>Failed Blood Rites</name>
+			<summary>A group of Amazon Fledglings who failed their blood trial and got exiled.</summary>
+			<description>You were given a task: destroy that outpost and bring back their males.
+Defeat was not an option, you had to succeed or die trying, to prove that you were worthy of the tribe.
+
+And yet you failed. The tribe was not kind. They left you to die, promising that if the wilderness won't kill you, they themselves will come back to finish you off.
+
+It is recommended to use the Amazoness xenotype for the intended experience.
+Since you start naked with few resources, this is a difficult scenario.			</description>
+			<playerFaction>
+				<def>PlayerFaction</def>
+				<factionDef>Luxandra_PlayerAmazonTribe</factionDef>
+			</playerFaction>
+			<surfaceLayer>
+				<def>SurfaceLayerFixed</def>
+				<layer>Surface</layer>
+				<settingsDef>Surface</settingsDef>
+				<hide>True</hide>
+				<tag>Surface</tag>
+				<connections>
+					<li>
+						<tag>Orbit</tag>
+						<zoomMode>ZoomOut</zoomMode>
+					</li>
+				</connections>
+			</surfaceLayer>
+			<parts>
+				<li Class="ScenPart_PlanetLayer">
+					<def>PlanetLayer</def>
+					<layer>Orbit</layer>
+					<settingsDef>Orbit</settingsDef>
+					<hide>True</hide>
+					<tag>Orbit</tag>
+					<connections>
+						<li>
+							<tag>Surface</tag>
+							<zoomMode>ZoomIn</zoomMode>
+						</li>
+					</connections>
+				</li>
+				<li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
+					<def>ConfigPage_ConfigureStartingPawns</def>
+					<pawnChoiceCount>8</pawnChoiceCount>
+					<pawnCount>5</pawnCount>
+				</li>
+				<li Class="ScenPart_PlayerPawnsArriveMethod">
+					<def>PlayerPawnsArriveMethod</def>
+				</li>
+				<li Class="ScenPart_ForcedHediff">
+					<def>ForcedHediff</def>
+					<chance>1</chance>
+					<context>PlayerStarter</context>
+					<hediff>Malnutrition</hediff>
+					<severityRange>0.0586666688~0.117333338</severityRange>
+				</li>
+				<li Class="ScenPart_SetNeedLevel">
+					<def>SetNeedLevel</def>
+					<chance>1</chance>
+					<context>PlayerStarter</context>
+					<need>Food</need>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Pemmican</thingDef>
+					<count>400</count>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>MedicineHerbal</thingDef>
+					<count>40</count>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Gun_BoltActionRifle</thingDef>
+					<quality>Poor</quality>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Gun_Revolver</thingDef>
+					<quality>Poor</quality>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>MeleeWeapon_Knife</thingDef>
+					<stuff>Jade</stuff>
+					<count>2</count>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Pila</thingDef>
+					<quality>Good</quality>
+				</li>
+				<li Class="ScenPart_ScatterThingsNearPlayerStart">
+					<def>ScatterThingsNearPlayerStart</def>
+					<thingDef>WoodLog</thingDef>
+					<count>500</count>
+					<allowRoofed>True</allowRoofed>
+				</li>
+				<li Class="ScenPart_StartingResearch">
+					<def>StartingResearch</def>
+					<project>Stonecutting</project>
+				</li>
+				<li Class="ScenPart_StartingResearch">
+					<def>StartingResearch</def>
+					<project>DrugProduction</project>
+				</li>
+				<li Class="ScenPart_StartingResearch">
+					<def>StartingResearch</def>
+					<project>PackagedSurvivalMeal</project>
+				</li>
+				<li Class="ScenPart_StartingResearch">
+					<def>StartingResearch</def>
+					<project>LongBlades</project>
+				</li>
+				<li Class="ScenPart_StartingResearch">
+					<def>StartingResearch</def>
+					<project>Smithing</project>
+				</li>
+				<li Class="ScenPart_CreateIncident">
+					<def>CreateIncident</def>
+					<incident>Luxandra_Inc_AmazonBloodTrial</incident>
+					<intervalDays>39.6559372</intervalDays>
+					<minDays>10</minDays>
+					<maxDays>30</maxDays>
+					<repeat>True</repeat>
+				</li>
+				<li Class="ScenPart_CreateIncident">
+					<def>CreateIncident</def>
+					<incident>Luxandra_Inc_AphrodisiacFever</incident>
+					<intervalDays>35.2307014</intervalDays>
+					<minDays>15</minDays>
+					<maxDays>20</maxDays>
+				</li>
+				<li Class="ScenPart_ForcedTrait">
+					<def>ForcedTrait</def>
+					<chance>0.25</chance>
+					<context>PlayerStarter</context>
+					<trait>Wimp</trait>
+				</li>
+				<li Class="ScenPart_PawnFilter_Age">
+					<def>PawnFilter_Age</def>
+					<allowedAgeRange>16~20</allowedAgeRange>
+				</li>
+				<li Class="ScenPart_NoPossessions">
+					<def>NoPossessions</def>
+				</li>
+				<li Class="ScenPart_DisableMapGen">
+					<def>DisableExostriderRemains</def>
+				</li>
+				<li Class="ScenPart_Naked">
+					<def>Naked</def>
+					<chance>1</chance>
+					<context>PlayerStarter</context>
+				</li>
+				<li Class="ScenPart_ScatterThingsAnywhere">
+					<def>ScatterThingsAnywhere</def>
+					<thingDef>Steel</thingDef>
+					<count>600</count>
+					<allowRoofed>True</allowRoofed>
+				</li>
+			</parts>
+		</scenario>
+	</ScenarioDef>
+</Defs>

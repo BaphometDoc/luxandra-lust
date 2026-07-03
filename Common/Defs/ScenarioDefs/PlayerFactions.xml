@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<FactionDef ParentName="PlayerFactionBase">
+		<defName>Luxandra_PlayerAmazonTribe</defName>
+		<label>Amazon Escapees</label>
+		<description>A group of fleeing amazon fledglings.</description>
+		<isPlayer>true</isPlayer>
+		<categoryTag>Tribal</categoryTag>
+		<pawnSingular>amazon exile</pawnSingular>
+		<pawnsPlural>amazon exiles</pawnsPlural>
+		<basicMemberKind>Luxandra_Amazon_Fledgling</basicMemberKind>
+		<techLevel>Neolithic</techLevel>
+		<factionNameMaker>Luxandra_Amazon_FactionNameMaker</factionNameMaker>
+		<settlementNameMaker>NamerSettlementTribal</settlementNameMaker>
+		<allowedCultures>
+			<li>Corunan</li>
+			<li>Rustican</li>
+		</allowedCultures>
+		<requiredMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Supremacist</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Raider</li>
+			<li MayRequire="rjw.sexperience.ideology">Rapist</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibal</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudism</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">FemaleSupremacy</li>
+		</requiredMemes>
+		<disallowedPrecepts>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Disapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Abhorrent</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_CoveringAnythingButGroinDisapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">IdeoDiversity_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_Prohibited</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_SpouseOnly_Strict</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_SpouseOnly_Moderate</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_SpouseOnly_Mild</li>
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_NoRules</li>
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_Horrible</li>
+			<li MayRequire="rjw.sexperience.ideology">GenitalSize_NoRules</li>
+			<li MayRequire="rjw.sexperience.ideology">GenitalSize_Smaller_Better</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_IncestOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Abhorrent</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Horrible</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Disapproved</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_AnalOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_OralOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Promiscuous</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_PreciousF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_PreciousM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessM</li>
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Disapproved</li>
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Acceptable</li>
+			<li MayRequire="abscon.privacy.please">Infidelity_Heartbreaking</li>
+			<li MayRequire="abscon.privacy.please">Infidelity_Disapproved</li>
+		</disallowedPrecepts>
+		<backstoryFilters>
+			<li>
+				<categories>
+					<li>Tribal</li>
+				</categories>
+			</li>
+		</backstoryFilters>
+		<factionIconPath>World/WorldObjects/Expanding/CannibalTribe</factionIconPath>
+		<settlementTexturePath>World/WorldObjects/TribalSettlement</settlementTexturePath>
+		<forageabilityFactor>2.5</forageabilityFactor>
+		<startingResearchTags>
+			<li>TribalStart</li>
+		</startingResearchTags>
+		<startingTechprintsResearchTags>
+			<li>TribalStart</li>
+			<li>TribalStartTechprints</li>
+		</startingTechprintsResearchTags>
+		<apparelStuffFilter>
+			<thingDefs>
+				<li>Cloth</li>
+			</thingDefs>
+		</apparelStuffFilter>
+		<recipePrerequisiteTags>
+			<li>Tribal</li>
+		</recipePrerequisiteTags>
+    
+		<xenotypeSet Inherit="False">
+			<xenotypeChances>
+				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
+			</xenotypeChances>
+		</xenotypeSet>
+	</FactionDef>
+	
+	<FactionDef MayRequire="Ludeon.RimWorld.Royalty" ParentName="PlayerFactionBase">
+		<defName>Luxandra_TheRighteousFugitives</defName>
+		<label>Crusader fugitives</label>
+		<description>A group of Crusader fugitives.</description>
+		<pawnSingular>crusader fugitive</pawnSingular>
+		<pawnsPlural>crusader fugitives</pawnsPlural>
+		<basicMemberKind>Luxandra_Crusader_Conscript</basicMemberKind>
+		<allowedCultures>
+			<li>Astropolitan</li>
+		</allowedCultures>
+		<techLevel>Spacer</techLevel>
+		<startingResearchTags>
+			<li>ClassicStart</li>
+		</startingResearchTags>
+		<startingTechprintsResearchTags>
+			<li>ClassicStart</li>
+			<li>ClassicStartTechprints</li>
+		</startingTechprintsResearchTags>
+		<isPlayer>true</isPlayer>
+		<backstoryFilters>
+			<li>
+				<categories>
+					<li>ImperialCommon</li>
+				</categories>
+			</li>
+		</backstoryFilters>
+		<structureMemeWeights>
+			<Structure_OriginChristian MayRequire="Ludeon.RimWorld.Ideology">1</Structure_OriginChristian>
+		</structureMemeWeights>
+	
+		<requiredMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Guilty</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">FleshPurity</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">HumanPrimacy</li>
+		</requiredMemes>
+		<disallowedPrecepts>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Disapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Abhorrent</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Male_Mandatory</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_Mandatory</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_CoveringAnythingButGroinDisapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_FreeApproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_Free</li>
+      
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Acceptable</li>
+			<li MayRequire="rjw.sexperience.ideology">Rape_Acceptable</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Disapproved_CloseOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_IncestOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Free</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_AnalOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_OralOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Promiscuous</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_ShamefulF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_ShamefulM</li>
+	  
+			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Accepted</li>
+			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Essential</li>
+			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Sacred</li>
+			
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Approved</li>
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Acceptable</li>
+			<li MayRequire="abscon.privacy.please">Infidelity_Acceptable</li>
+		</disallowedPrecepts>
+    
+		<!-- World Customization -->
+		<settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
+    
+		<!-- Aesthetics matching the Empire style -->
+		<factionIconPath>World/WorldObjects/Expanding/Empire</factionIconPath>
+		<factionNameMaker>Luxandra_Crusader_FactionNameMaker</factionNameMaker>
+		<settlementNameMaker>Luxandra_Crusader_SettlementNameMaker</settlementNameMaker>
+		<colorSpectrum Inherit="False">
+			<li>(0.95, 0.95, 0.95)</li>
+			<li>(0.85, 0.85, 0.9)</li>
+		</colorSpectrum>
+		<apparelStuffFilter>
+			<thingDefs>
+				<li>Synthread</li>
+				<li>Hyperweave</li>
+				<li>Plasteel</li>
+				<li>Steel</li>
+			</thingDefs>
+		</apparelStuffFilter>
+	</FactionDef>
+</Defs>
