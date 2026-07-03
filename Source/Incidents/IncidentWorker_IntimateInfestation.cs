@@ -4,6 +4,7 @@ using rjw.Modules.Interactions;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -194,6 +195,14 @@ namespace LuxandraLust
                 LetterDefOf.NegativeEvent,
                 prioritizedPool.FirstOrDefault()
             );
+
+
+            if (CurrentKink == StorytellerKink.Implantation)
+            {
+                Messages.Message($"Luxandra saw {victim.NameShortColored} being ravaged by the insectoids and loved it. She gifts you 5 Favor.", MessageTypeDefOf.NeutralEvent);
+                GameComponent_LuxandraLust.Instance?.AddToFavorCounter(5);
+
+            }
             return true;
         }
 

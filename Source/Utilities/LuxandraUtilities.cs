@@ -202,7 +202,7 @@ namespace LuxandraLust
                     FilthMaker.TryMakeFilth(filthCell, map, filthDef, 1, FilthSourceFlags.Pawn);
                 }
             }
-            // 3. ADD THE MOODLET (Thought)
+            // Add the moodlet
             if (targetPawn.needs?.mood?.thoughts?.memories != null)
             {
                 ThoughtDef dreamThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_WetDreamMoodlet", false);
@@ -212,11 +212,17 @@ namespace LuxandraLust
                 }
             }
 
-            // 4. ADD THE SATISFACTION DEBUFF (Hediff)
+            // Add the hediff
             HediffDef dreamDebuff = DefDatabase<HediffDef>.GetNamed("Luxandra_DreamHangover", false);
             if (dreamDebuff != null)
             {
                 targetPawn.health.AddHediff(dreamDebuff);
+            }
+
+            if (CurrentKink == StorytellerKink.Cum && targetPawn.GetPenises().Any())
+            {
+                Messages.Message($"Luxandra saw {targetPawn.NameShortColored} cum in their sleep. She rewards you with 1 Favor for the show", MessageTypeDefOf.NeutralEvent);
+                GameComponent_LuxandraLust.Instance?.AddToFavorCounter(1);
             }
         }
 

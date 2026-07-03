@@ -1,8 +1,9 @@
-0.10 - 
+0.10 - 03/07/2026
 - Positive childbirth appraisals will grant Favor with Luxandra
-- I've totally fixed the genital size events this time
+- A few miscellaneous events will grant Favor with Luxandra if her correct kink is active (more to come over time)
 - You can now spend 10 favor to request a slave trader. If RJW Ero trader is loaded, it'll always be a erotic trader.
 - Added support for Incest, Futa and Implantation kinks (each require related submods or settings to be enabled to show up)
+- I've totally fixed the genital size events this time I swear
 - Added Intimate infestation event
 - Added Wet dreams event (lewd) in a few variations
 - Combat Extended Patches (imagine making CE patches in this time and age...)
