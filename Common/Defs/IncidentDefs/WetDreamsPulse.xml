@@ -4,10 +4,11 @@
 	<GameConditionDef>
 		<defName>Luxandra_WetDreamsPulse</defName>
 		<conditionClass>LuxandraLust.GameCondition_WetDreamsPulse</conditionClass>
-		<label>aphrodisiac psychic wave</label>
+		<label>psychic pleasure surge</label>
 		<description>A highly concentrated hormonal or psychic energy wave is pulsing across the local grid. Sleeping humanoids are suffering sudden, messy chemical overflows every few hours.</description>
 		<letterText>A strange pink mist or energy wave settles over the area...</letterText>
 		<letterDef>NegativeEvent</letterDef>
+        <canBePermanent>true</canBePermanent>
 	</GameConditionDef>
 
 	<!-- The incident -->
