@@ -38,7 +38,6 @@ Menstruation integration
 - mess with pawn ovulation
 
 RJW Insect integration
-- Insect eggs event
 - investation that warp-kidnap & cocoons a colonist
 
 Brothel Colony integration

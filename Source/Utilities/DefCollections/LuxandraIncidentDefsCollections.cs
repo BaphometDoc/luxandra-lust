@@ -48,6 +48,7 @@ namespace LuxandraLust
 
         // Disease, illnesses
         public static IncidentDef Luxandra_Inc_AphrodisiacFever;
+        public static IncidentDef Luxandra_Inc_IntimateInfestation;
 
         // Body part messing
         public static IncidentDef Luxandra_Inc_MaleExpansion;
@@ -393,6 +394,19 @@ namespace LuxandraLust
                    incidentType: LuxandraIncidentType.Neutral,
                    requiresMod: true,
                    modRequired: "RJW Genes"
+               ));
+            }
+            #endregion
+
+            #region RJW Insects
+            if (LuxandraModChecks.IsRJWInsectsActive())
+            {
+                _allIncidents.Add(new LuxandraIncidentDefs(
+                   incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IntimateInfestation,
+                   incidentType: LuxandraIncidentType.Negative,
+                   requiresMod: true,
+                   modRequired: "RJW Insects",
+                   pointBaseCost: 35
                ));
             }
             #endregion

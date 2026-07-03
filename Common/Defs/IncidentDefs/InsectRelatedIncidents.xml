@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <IncidentDef>
+    <defName>Luxandra_Inc_IntimateInfestation</defName>
+    <label>parasitic egg outbreak</label>
+    <workerClass>LuxandraLust.IncidentWorker_IntimateInfestation</workerClass>
+    <category>ThreatSmall</category>
+    <baseChance>0.0</baseChance>
+    <allowedBiomes /> 
+    <minRefireDays>15</minRefireDays>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+  
+    <HediffDef>
+    <defName>Luxandra_ImplantationInducedLethargy</defName>
+    <label>implantation-induced lethargy</label>
+    <description>This insectoid is completely exhausted by the assault, destroying its motor functions and neurological coordination.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.9, 0.4, 0.4)</defaultLabelColor>
+    <initialSeverity>1.0</initialSeverity>
+    <stages>
+      <li>
+        <label>terminal</label>
+        <painFactor>2.0</painFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <setMax>0.40</setMax>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <setMax>0.30</setMax>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.50</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ArmorRating_Blunt>-0.40</ArmorRating_Blunt>
+          <ArmorRating_Sharp>-0.40</ArmorRating_Sharp>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+  
+  </Defs>
