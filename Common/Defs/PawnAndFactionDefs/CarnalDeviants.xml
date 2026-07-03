@@ -45,6 +45,36 @@
 		<disallowedPrecepts>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Male_CoveringAnythingButGroinDisapproved</li>
 			<li MayRequire="Ludeon.RimWorld.Ideology">Nudity_Female_CoveringAnythingButGroinDisapproved</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_Prohibited</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_Horrible</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_SpouseOnly_Strict</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_SpouseOnly_Moderate</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Lovin_SpouseOnly_Mild</li>
+			
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_Holy</li>
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_Elevated</li>
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_Required</li>
+			<li MayRequire="rjw.sexperience.ideology">Pregnancy_Horrible</li>
+			<li MayRequire="rjw.sexperience.ideology">GenitalSize_Big_Better</li>
+			<li MayRequire="rjw.sexperience.ideology">GenitalSize_Smaller_Better</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Forbidden</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Disapproved</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_Disapproved_CloseOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Incestuos_IncestOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Abhorrent</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Horrible</li>
+			<li MayRequire="rjw.sexperience.ideology">Bestiality_Disapproved</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_VaginalOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_AnalOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_OralOnly</li>
+			<li MayRequire="rjw.sexperience.ideology">Sex_Promiscuous</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_PreciousF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_PreciousM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseF</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_ShamefulM</li>
+			<li MayRequire="rjw.sexperience.ideology">Virgin_ShamefulF</li>
+			
 			<li MayRequire="abscon.privacy.please">Exhibitionism_Disapproved</li>
 			<li MayRequire="abscon.privacy.please">Infidelity_Heartbreaking</li>
 			<li MayRequire="abscon.privacy.please">Infidelity_Disapproved</li>
