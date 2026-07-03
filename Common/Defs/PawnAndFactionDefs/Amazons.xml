@@ -319,6 +319,23 @@
 				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
 			</xenotypeChances>
 		</xenotypeSet>
+		<!-- Yep, CE patch. Imagine patching for CE -->
+		<modExtensions>
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<primaryMagazineCount>
+					<min>3</min>
+					<max>5</max>
+				</primaryMagazineCount>
+				<shieldMoney>
+					<min>100</min>
+					<max>150</max>
+				</shieldMoney>
+				<shieldTags>
+					<li>TribalShield</li>
+				</shieldTags>
+				<shieldChance>0.2</shieldChance>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 	
 	<!-- BRAWLER -->
@@ -400,6 +417,20 @@
 				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
 			</xenotypeChances>
 		</xenotypeSet>
+		<!-- Yep, CE patch. Imagine patching for CE -->
+		<modExtensions>
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<shieldMoney>
+					<min>1000</min>
+					<max>1500</max>
+				</shieldMoney>
+				<shieldTags>
+					<li>TribalShield</li>
+					<li>OutlanderShield</li>
+				</shieldTags>
+				<shieldChance>0.9</shieldChance>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 	
 	<!-- HUNTER -->
@@ -479,6 +510,15 @@
 				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
 			</xenotypeChances>
 		</xenotypeSet>
+		<!-- Yep, CE patch. Imagine patching for CE -->
+		<modExtensions>
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<primaryMagazineCount>
+					<min>5</min>
+					<max>8</max>
+				</primaryMagazineCount>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 	
 	<!-- ELITE ASSASSINS -->
@@ -568,6 +608,37 @@
 				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
 			</xenotypeChances>
 		</xenotypeSet>
+		<!-- Yep, CE patch. Imagine patching for CE -->
+		<modExtensions>
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<sidearms>
+					<li>
+						<generateChance>0.5</generateChance>
+						<sidearmMoney>
+							<min>200</min>
+							<max>550</max>
+						</sidearmMoney>
+						<weaponTags>
+							<li>CE_Sidearm_Melee</li>
+						</weaponTags>
+					</li>
+					<li>
+						<generateChance>0.15</generateChance>
+						<sidearmMoney>
+							<min>80</min>
+							<max>160</max>
+						</sidearmMoney>
+						<weaponTags>
+							<li>GrenadeSmoke</li>
+						</weaponTags>
+						<magazineCount>
+							<min>0</min>
+							<max>0</max>
+						</magazineCount>
+					</li>
+				</sidearms>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 	
 	<!-- SIREN -->
@@ -645,6 +716,13 @@
 					<VPE_Frostshaper>1~4|2~12</VPE_Frostshaper>
 				</unlockedPaths>
 			</li>
+			<!-- Yep, CE patch. Imagine patching for CE -->
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<primaryMagazineCount>
+					<min>3</min>
+					<max>5</max>
+				</primaryMagazineCount>
+			</li>
 		</modExtensions>
 		
 		<xenotypeSet MayRequire="Ludeon.RimWorld.Biotech">
@@ -718,6 +796,23 @@
 				<Luxandra_Amazoness>1.0</Luxandra_Amazoness>
 			</xenotypeChances>
 		</xenotypeSet>
+		<!-- Yep, CE patch. Imagine patching for CE -->
+		<modExtensions>
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<primaryMagazineCount>
+					<min>4</min>
+					<max>8</max>
+				</primaryMagazineCount>
+				<shieldMoney>
+					<min>500</min>
+					<max>1400</max>
+				</shieldMoney>
+				<shieldTags>
+					<li>OutlanderShield</li>
+				</shieldTags>
+				<shieldChance>0.9</shieldChance>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 	
 	<!-- BLOOD MOTHER -->
@@ -804,6 +899,21 @@
 				<unlockedPaths>
 					<VPE_Warlord>4~5|11~15</VPE_Warlord>
 				</unlockedPaths>
+			</li>
+			<!-- Yep, CE patch. Imagine patching for CE -->
+			<li MayRequire="CombatExtended.CombatExtendedMod" Class="CombatExtended.LoadoutPropertiesExtension">
+				<primaryMagazineCount>
+					<min>6</min>
+					<max>12</max>
+				</primaryMagazineCount>
+				<shieldMoney>
+					<min>500</min>
+					<max>1400</max>
+				</shieldMoney>
+				<shieldTags>
+					<li>OutlanderShield</li>
+				</shieldTags>
+				<shieldChance>0.9</shieldChance>
 			</li>
 		</modExtensions>
 		
