@@ -94,6 +94,10 @@
 			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Accepted</li>
 			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Essential</li>
 			<li MayRequire="calamabanana.rjw.brothelcolony">CB_Prostitution_Sacred</li>
+			
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Approved</li>
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Acceptable</li>
+			<li MayRequire="abscon.privacy.please">Infidelity_Acceptable</li>
 		</disallowedPrecepts>
     
 		<!-- World Customization -->

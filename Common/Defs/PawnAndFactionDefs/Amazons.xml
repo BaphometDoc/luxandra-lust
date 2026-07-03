@@ -81,6 +81,11 @@
 			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseF</li>
 			<li MayRequire="rjw.sexperience.ideology">Virgin_OnlyForSpouseM</li>
 			<li MayRequire="rjw.sexperience.ideology">Virgin_UselessM</li>
+			
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Disapproved</li>
+			<li MayRequire="abscon.privacy.please">Exhibitionism_Acceptable</li>
+			<li MayRequire="abscon.privacy.please">Infidelity_Heartbreaking</li>
+			<li MayRequire="abscon.privacy.please">Infidelity_Disapproved</li>
 		</disallowedPrecepts>
     
 		<!-- World Customization -->
