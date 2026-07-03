@@ -70,6 +70,9 @@ namespace LuxandraLust
         // Quests incidents
         public static IncidentDef Luxandra_Inc_BreakPrisonersContractQuest;
 
+        // Other random stuff
+        public static IncidentDef Luxandra_Inc_WetDreamIncident;
+
         static LuxandraIncidentDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(LuxandraIncidentDefOf));
@@ -264,6 +267,13 @@ namespace LuxandraLust
                 description: "A request to 'break' some prisoners.",
                 pointBaseCost: 40
             ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamIncident,
+                incidentType: LuxandraIncidentType.Neutral,
+                description: "A pawn will have an amazing dream.",
+                pointBaseCost: 5
+            ));
             #endregion
 
             #region Royalty
@@ -404,8 +414,8 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IntimateInfestation,
                    incidentType: LuxandraIncidentType.Negative,
+                   description: "Insectoids will assault a pawn and attempted to use them as seedbed.",
                    requiresMod: true,
-                   modRequired: "RJW Insects",
                    pointBaseCost: 35
                ));
             }

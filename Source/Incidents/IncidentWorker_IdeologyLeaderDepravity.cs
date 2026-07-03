@@ -76,7 +76,7 @@ namespace LuxandraLust
             // Tank their sex need
             if (leaderPawn.needs != null)
             {
-                var sexNeed = leaderPawn.needs.TryGetNeed<rjw.Need_Sex>();
+                var sexNeed = LuxandraUtilities.GetSexNeed(leaderPawn);
                 if (sexNeed != null)
                 {
                     sexNeed.CurLevel = 0f;

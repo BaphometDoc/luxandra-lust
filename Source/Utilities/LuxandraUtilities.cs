@@ -26,6 +26,21 @@ namespace LuxandraLust
         }
 
         /// <summary>
+        ///  Gets the sex need of a pawn
+        /// </summary>
+        /// <param name="pawn"></param>
+        public static Need_Sex GetSexNeed(Pawn pawn)
+        {
+            if (pawn == null || pawn.needs == null) return null;
+            var sexNeed = pawn.needs.TryGetNeed<Need_Sex>();
+            if (sexNeed != null)
+            {
+                return sexNeed;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Determines the average sex need of all the adult colonists and slaves in the colony
         /// </summary>
         public static float GetAverageColonySexNeed(Map map)
@@ -43,7 +58,7 @@ namespace LuxandraLust
 
             foreach (Pawn pawn in eligiblePawns)
             {
-                var sexNeed = pawn.needs.TryGetNeed<Need_Sex>();
+                var sexNeed = GetSexNeed(pawn);
                 if (sexNeed != null)
                 {
                     totalSexNeed += sexNeed.CurLevelPercentage;
@@ -145,7 +160,7 @@ namespace LuxandraLust
                 // If enabled, set their sex need to 0 to ensure they are ready to act on the mental state
                 if (tankSexNeed && pawn.needs != null)
                 {
-                    var sexNeed = pawn.needs.TryGetNeed<Need_Sex>();
+                    var sexNeed = GetSexNeed(pawn);
                     if (sexNeed != null)
                     {
                         sexNeed.CurLevel = 0f;

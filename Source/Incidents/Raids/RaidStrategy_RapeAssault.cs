@@ -129,7 +129,7 @@ namespace LuxandraLust
 
                 if (rageHediff == null || rageHediff.ageTicks < 12500) continue;
 
-                var sexNeed = raider.needs?.TryGetNeed<rjw.Need_Sex>();
+                var sexNeed = LuxandraUtilities.GetSexNeed(raider);
                 if (sexNeed != null && sexNeed.CurLevel >= 0.5f)
                 {
                     satisfiedRaiderCount++;

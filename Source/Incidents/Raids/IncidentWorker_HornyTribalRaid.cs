@@ -117,7 +117,7 @@ namespace LuxandraLust
 
                     if (pawn.needs != null)
                     {
-                        var sexNeed = pawn.needs.TryGetNeed<rjw.Need_Sex>();
+                        var sexNeed = LuxandraUtilities.GetSexNeed(pawn);
                         if (sexNeed != null)
                         {
                             sexNeed.CurLevel = 0f;

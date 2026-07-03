@@ -67,4 +67,16 @@
 		<minRefireDays>15</minRefireDays>
 		<letterDef>NegativeEvent</letterDef>
 	</IncidentDef>
+
+  <IncidentDef>
+    <defName>Luxandra_Inc_WetDreamIncident</defName>
+    <label>vivid dream</label>
+    <workerClass>LuxandraLust.IncidentWorker_WetDream</workerClass>
+    <category>Misc</category> 
+    <baseChance>1.5</baseChance>
+    <minRefireDays>2</minRefireDays>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+  </IncidentDef>
 </Defs>
