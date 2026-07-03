@@ -4,7 +4,7 @@
 - You can now spend 10 favor to request a slave trader. If RJW Ero trader is loaded, it'll always be a erotic trader.
 - Added support for Incest, Futa and Implantation kinks (each require related submods or settings to be enabled to show up)
 - Added Intimate infestation event
-- Added Wet dreams event (lewd)
+- Added Wet dreams event (lewd) in a few variations
 - Combat Extended Patches (imagine making CE patches in this time and age...)
 
 0.9 - 02/07/2026

@@ -74,11 +74,13 @@
     <Compile Include="Incidents\IncidentWorker_IntimateInfestation.cs" />
     <Compile Include="Incidents\IncidentWorker_WetDream.cs" />
     <Compile Include="Incidents\IncidentWorker_WetDreamsPulse.cs" />
+    <Compile Include="Incidents\MechClusters\IncidentWorker_WetDreamsPulseMechCluster.cs" />
     <Compile Include="Incidents\Raids\IncidentWorker_AmazonStealthAmbush.cs" />
     <Compile Include="Incidents\IncidentWorker_AphrodisiacFever.cs" />
     <Compile Include="Incidents\IncidentWorker_TheMilkGame.cs" />
     <Compile Include="Incidents\MechClusters\IncidentWorker_FertilityPulseMechCluster.cs" />
     <Compile Include="Incidents\Raids\IncidentWorker_InquisitionPurge.cs" />
+    <Compile Include="Incidents\Worksites\IncidentWorker_WetDreamsPulseSite.cs" />
     <Compile Include="Incidents\Worksites\IncidentWorker_FertilityPulseSite.cs" />
     <Compile Include="Utilities\LuxandraKinkTracker.cs" />
     <Compile Include="Configs\LuxandraEventConfigs.cs" />

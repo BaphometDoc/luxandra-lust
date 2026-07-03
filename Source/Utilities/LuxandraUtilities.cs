@@ -170,6 +170,57 @@ namespace LuxandraLust
         }
 
         /// <summary>
+        /// Causes a wet dream in the pawn and wakes them up
+        /// </summary>
+        public static void CauseWetDream(Pawn targetPawn, Map map)
+        {
+            // Locate and maximize their sex need
+            Need sexNeed = LuxandraUtilities.GetSexNeed(targetPawn);
+            if (sexNeed != null)
+            {
+                sexNeed.CurLevel = sexNeed.MaxLevel;
+            }
+
+            // Wake them up immediately!
+            if (targetPawn.jobs?.curJob != null && targetPawn.Awake() == false)
+            {
+                targetPawn.jobs.EndCurrentJob(Verse.AI.JobCondition.InterruptForced);
+            }
+
+            // Spawn a bunch of filth around the bed/sleeping spot
+            ThingDef filthDef = DefDatabase<ThingDef>.GetNamed("FilthCum", false)
+                ?? ThingDefOf.Filth_Slime; // Safe vanilla fallback so the script never breaks
+
+            int filthCount = Rand.RangeInclusive(4, 7);
+            IntVec3 centerPos = targetPawn.Position;
+
+            for (int i = 0; i < filthCount; i++)
+            {
+                // Radial radius of 1 means it spreads to the immediate tiles touching the bed
+                if (CellFinder.TryFindRandomReachableNearbyCell(centerPos, map, 1, TraverseParms.For(targetPawn), null, null, out IntVec3 filthCell))
+                {
+                    FilthMaker.TryMakeFilth(filthCell, map, filthDef, 1, FilthSourceFlags.Pawn);
+                }
+            }
+            // 3. ADD THE MOODLET (Thought)
+            if (targetPawn.needs?.mood?.thoughts?.memories != null)
+            {
+                ThoughtDef dreamThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_WetDreamMoodlet", false);
+                if (dreamThought != null)
+                {
+                    targetPawn.needs.mood.thoughts.memories.TryGainMemory(dreamThought);
+                }
+            }
+
+            // 4. ADD THE SATISFACTION DEBUFF (Hediff)
+            HediffDef dreamDebuff = DefDatabase<HediffDef>.GetNamed("Luxandra_DreamHangover", false);
+            if (dreamDebuff != null)
+            {
+                targetPawn.health.AddHediff(dreamDebuff);
+            }
+        }
+
+        /// <summary>
         /// Verifies if the sex act that just happened matches the current kink
         /// from the storyteller. (Return nulls if the sex actor is not a player humanlike)
         /// </summary>

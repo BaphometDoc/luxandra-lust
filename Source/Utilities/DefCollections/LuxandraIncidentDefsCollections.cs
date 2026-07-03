@@ -34,6 +34,8 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_FertilityPulseMechCluster;
 
         public static IncidentDef Luxandra_Inc_WetDreamsPulse;
+        public static IncidentDef Luxandra_Inc_WetDreamsPulseSite;
+        public static IncidentDef Luxandra_Inc_WetDreamsPulseMechCluster;
 
         public static IncidentDef Luxandra_Inc_RapistBreak;
 
@@ -178,6 +180,19 @@ namespace LuxandraLust
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulse,
                 incidentType: LuxandraIncidentType.Neutral,
                 description: "A average lasting condition that will occasionally wake up your colonists in a pleasurable way.",
+                pointBaseCost: 55
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulseSite,
+                incidentType: LuxandraIncidentType.Negative,
+                description: "A remote transmitter will cause a Wet Dreams Pulse on your map until you disable it"
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulseMechCluster,
+                incidentType: LuxandraIncidentType.Raid,
+                description: "A mech cluster will cause a Wet Dreams Pulse on your map until you destroy it",
                 pointBaseCost: 55
             ));
 

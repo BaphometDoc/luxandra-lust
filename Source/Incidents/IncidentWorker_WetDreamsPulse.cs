@@ -92,39 +92,7 @@ namespace LuxandraLust
 
                 foreach (Pawn pawn in candidates)
                 {
-                    // Max their sex need
-                    Need sexNeed = LuxandraUtilities.GetSexNeed(pawn);
-                    if (sexNeed != null) sexNeed.CurLevel = sexNeed.MaxLevel;
-
-                    // Wake them up
-                    pawn.jobs.EndCurrentJob(Verse.AI.JobCondition.InterruptForced);
-
-                    // Spurt mess around their bedding
-                    int filthCount = Rand.RangeInclusive(4, 7);
-                    for (int i = 0; i < filthCount; i++)
-                    {
-                        if (CellFinder.TryFindRandomReachableNearbyCell(pawn.Position, map, 1, TraverseParms.For(pawn), null, null, out IntVec3 filthCell))
-                        {
-                            FilthMaker.TryMakeFilth(filthCell, map, filthDef, 1, FilthSourceFlags.Pawn);
-                        }
-                    }
-
-                    // Add the moodlet
-                    if (pawn.needs?.mood?.thoughts?.memories != null)
-                    {
-                        ThoughtDef dreamThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_WetDreamMoodlet", false);
-                        if (dreamThought != null)
-                        {
-                            pawn.needs.mood.thoughts.memories.TryGainMemory(dreamThought);
-                        }
-                    }
-
-                    // Add the Hediff
-                    HediffDef dreamDebuff = DefDatabase<HediffDef>.GetNamed("Luxandra_DreamHangover", false);
-                    if (dreamDebuff != null)
-                    {
-                        pawn.health.AddHediff(dreamDebuff);
-                    }
+                    LuxandraUtilities.CauseWetDream(pawn, map);
 
                     affectedPawnsInThisPulse.Add(pawn);
                 }
