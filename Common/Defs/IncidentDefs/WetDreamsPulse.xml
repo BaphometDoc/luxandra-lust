@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<!-- Game Condition -->
+	<GameConditionDef>
+		<defName>Luxandra_WetDreamsPulse</defName>
+		<conditionClass>LuxandraLust.GameCondition_WetDreamsPulse</conditionClass>
+		<label>aphrodisiac psychic wave</label>
+		<description>A highly concentrated hormonal or psychic energy wave is pulsing across the local grid. Sleeping humanoids are suffering sudden, messy chemical overflows every few hours.</description>
+		<letterText>A strange pink mist or energy wave settles over the area...</letterText>
+		<letterDef>NegativeEvent</letterDef>
+	</GameConditionDef>
+
+	<!-- The incident -->
+	<IncidentDef>
+		<defName>Luxandra_Inc_WetDreamsPulse</defName>
+		<label>psychic pleasure surge</label>
+		<workerClass>LuxandraLust.IncidentWorker_WetDreamsPulse</workerClass>
+		<category>Misc</category>
+		<baseChance>0.6</baseChance>
+		<minRefireDays>20</minRefireDays>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+	</IncidentDef>
+  
+	<!-- Moodlet -->
+	<ThoughtDef>
+		<defName>Luxandra_WetDreamMoodlet</defName>
+		<durationDays>0.25</durationDays>
+		<stackLimit>3</stackLimit>
+		<stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+		<stages>
+			<li>
+				<label>vivid midnight fantasy</label>
+				<description>That dream felt so incredibly real... honestly, waking up is a bit depressing, but I'm still riding the high.</description>
+				<baseMoodEffect>3</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+  
+	<HediffDef>
+		<defName>Luxandra_DreamHangover</defName>
+		<label>dream-world standards</label>
+		<description>This pawn experienced an extraordinarily perfect intimate encounter in their sleep. Real life interactions feel deeply underwhelming by comparison right now.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.7, 0.7, 0.9)</defaultLabelColor>
+		<stages>
+			<li>
+				<statFactors>
+					<SexSatisfaction>0.5</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>15000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
+</Defs>

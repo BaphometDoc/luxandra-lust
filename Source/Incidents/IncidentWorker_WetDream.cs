@@ -60,6 +60,22 @@ namespace LuxandraLust
                     FilthMaker.TryMakeFilth(filthCell, map, filthDef, 1, FilthSourceFlags.Pawn);
                 }
             }
+            // 3. ADD THE MOODLET (Thought)
+            if (targetPawn.needs?.mood?.thoughts?.memories != null)
+            {
+                ThoughtDef dreamThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_WetDreamMoodlet", false);
+                if (dreamThought != null)
+                {
+                    targetPawn.needs.mood.thoughts.memories.TryGainMemory(dreamThought);
+                }
+            }
+
+            // 4. ADD THE SATISFACTION DEBUFF (Hediff)
+            HediffDef dreamDebuff = DefDatabase<HediffDef>.GetNamed("Luxandra_DreamHangover", false);
+            if (dreamDebuff != null)
+            {
+                targetPawn.health.AddHediff(dreamDebuff);
+            }
 
             // Send a silent/minor notification (Message instead of a giant aggressive Red Letter)
             Messages.Message(

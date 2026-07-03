@@ -33,6 +33,8 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_FertilityPulseSite;
         public static IncidentDef Luxandra_Inc_FertilityPulseMechCluster;
 
+        public static IncidentDef Luxandra_Inc_WetDreamsPulse;
+
         public static IncidentDef Luxandra_Inc_RapistBreak;
 
         // Raids
@@ -170,6 +172,13 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A mech cluster will cause a Fertility Pulse on your map until you destroy it",
                 pointBaseCost: 45
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulse,
+                incidentType: LuxandraIncidentType.Neutral,
+                description: "A average lasting condition that will occasionally wake up your colonists in a pleasurable way.",
+                pointBaseCost: 55
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
