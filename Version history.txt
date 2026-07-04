@@ -1,4 +1,9 @@
-0.10.1
+0.11 - in development
+- The bargain offer now will not trigger for quests, merchants, visitors, forced events (es, raids from quests), and events from luxandra's pool.
+- Added 2x3 and 3x3 versions of the altar
+- Removed the altar requisite of Complex Furniture research
+
+0.10.1 - 04/07/2026
 - Added a small safety net system to prevent the incidents from failing to load on particularly big modlists or slower machines
 - Added 3 starting Scenarios related to the mod systems
 

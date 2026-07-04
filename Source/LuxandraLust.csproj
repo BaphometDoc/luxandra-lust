@@ -108,7 +108,7 @@
     <Compile Include="Incidents\IncidentWorker_WhiteRain.cs" />
     <Compile Include="Configs\LuxandraModConfigs.cs" />
     <Compile Include="Patches\JobPatches.cs" />
-    <Compile Include="Patches\IncidentPatches.cs" />
+    <Compile Include="Patches\TryExecutePatches.cs" />
     <Compile Include="LuxandraLust.cs" />
     <Compile Include="Utilities\DefCollections\LuxandraIncidentDefsCollections.cs" />
     <Compile Include="Utilities\DefCollections\LuxandraFactionDefsCollections.cs" />

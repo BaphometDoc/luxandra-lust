@@ -65,12 +65,11 @@ namespace LuxandraLust
                     return true;
                 }
 
-                // Ignore quest threats as well as the weekly cycle from Luxandra herself
-                bool isFromQuest = parms.quest != null || parms.forced;
-                bool isFromLuxandraPool = LuxandraDefsCollections.AllIncidents.Select(i => i.IncidentDef).Contains(__instance.def);
-                if (isFromQuest || isFromLuxandraPool)
+                bool shouldRerollBeSkipped = ShouldRerollBeSkipped(__instance, parms);
+            
+                if(shouldRerollBeSkipped)
                 {
-                    LuxandraDebugActions.DebugLogMessage("Event is from quest or forced, skipping the reroll.");
+                    LuxandraDebugActions.DebugLogMessage("Letting the event go through.");
                     return true;
                 }
 
@@ -155,6 +154,51 @@ namespace LuxandraLust
             }
         }
 
+        /// <summary>
+        /// Determine if the event reroll should be skipped
+        /// Conditions: force, from quest, traders, visitors, from luxandra's pool
+        /// </summary>
+        private static bool ShouldRerollBeSkipped(IncidentWorker __instance, IncidentParms parms)
+        {
+
+            // Ignore forced events, they are either from quests or from the storyteller cycles
+            bool isForced = parms.forced;
+            if (isForced)
+            {
+                LuxandraDebugActions.DebugLogMessage("Event is forced, skipping the reroll.");
+                return true;
+            }
+
+            // Ignore quest events and quests to prevent softlocks
+            var def = __instance.def;
+            var eventType = def.category;
+            bool isFromQuest = parms.quest != null || eventType == IncidentCategoryDefOf.GiveQuest;
+            if (isFromQuest)
+            {
+                LuxandraDebugActions.DebugLogMessage("Event is from quest or forced, skipping the reroll.");
+                return true;
+            }
+
+            // Ignore trader and visitor events
+            bool isTrader = def == IncidentDefOf.TraderCaravanArrival || def == IncidentDefOf.OrbitalTraderArrival ||
+                            def == IncidentDefOf.TravelerGroup || def == IncidentDefOf.VisitorGroup;
+            if (isTrader)
+            {
+                LuxandraDebugActions.DebugLogMessage("Event is visitors or traders, skipping the reroll.");
+                return true;
+            }
+
+            // Ignore events from Luxandra's pool // TODO: Config
+            bool isFromLuxandraPool = __instance.def != null && LuxandraDefsCollections._isInitialized && 
+                                      LuxandraDefsCollections.AllIncidents.Select(i => i.IncidentDef).Contains(__instance.def);
+            if (isForced || isFromLuxandraPool)
+            {
+                LuxandraDebugActions.DebugLogMessage("Event is from Luxandra's pool, skipping the reroll.");
+                return true;
+            }
+
+            return false;
+        }
         private static void CreateLuxandraBargainWindow(IncidentWorker __instance, IncidentParms parms, int matchTypeCost, int randomTypeCost, int positiveSwapCost, int revealCost, bool isNegative, IncidentDef def, string title, bool hasPaidToReveal)
         {
             var liveComp = GameComponent_LuxandraLust.Instance;
