@@ -92,7 +92,7 @@
 	</FactionDef>
 	
 	<FactionDef MayRequire="Ludeon.RimWorld.Royalty" ParentName="PlayerFactionBase">
-		<defName>Luxandra_TheRighteousFugitives</defName>
+		<defName>Luxandra_PlayerCrusaderFaction</defName>
 		<label>Crusader fugitives</label>
 		<description>A group of Crusader fugitives.</description>
 		<pawnSingular>crusader fugitive</pawnSingular>

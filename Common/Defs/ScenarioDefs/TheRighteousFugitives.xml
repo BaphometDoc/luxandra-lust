@@ -10,10 +10,11 @@
 
 You stole what supplies you could find and jumped on the first available drop pod launchers you could find. Pray they do not find you...
 
+In this scenario, both the Empire and Crusaders are permanently hostile.
 Since you start with 2 pawns with abnormally high wealth, this can be a difficult scenario.</description>
 			<playerFaction>
 				<def>PlayerFaction</def>
-				<factionDef>Luxandra_PlayerAmazonTribe</factionDef>
+				<factionDef>Luxandra_PlayerCrusaderFaction</factionDef>
 			</playerFaction>
 			<surfaceLayer>
 			<def>SurfaceLayerFixed</def>
