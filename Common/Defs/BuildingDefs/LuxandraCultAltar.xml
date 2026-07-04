@@ -15,7 +15,7 @@
     <filthLeaving>Filth_RubbleRock</filthLeaving>
     <uiIconScale>0.8</uiIconScale>
     <uiIconOffset>(0, 0.04)</uiIconOffset>
-	<castEdgeShadows>true</castEdgeShadows>
+	<!-- <castEdgeShadows>true</castEdgeShadows> -->
     
     <!-- FIX 2: Enable material selection -->
     <stuffCategories>
