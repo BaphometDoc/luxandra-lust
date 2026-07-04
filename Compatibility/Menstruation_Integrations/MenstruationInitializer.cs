@@ -1,4 +1,6 @@
-﻿using LuxandraLust;
+﻿using HarmonyLib;
+using LuxandraLust;
+using System.Reflection;
 using Verse;
 
 namespace Luxandra_Menstruation_Integrations
@@ -18,6 +20,10 @@ namespace Luxandra_Menstruation_Integrations
             {
                 WombManipulation.ForceOvulationIfPossible(targetPawn);
             };
+
+            // ADD THIS: Automatically find and apply all [HarmonyPatch] classes in this namespace
+            var harmony = new Harmony("luxandralust.menstruation.bridge");
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
     }
 }

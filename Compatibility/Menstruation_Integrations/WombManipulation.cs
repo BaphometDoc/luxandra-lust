@@ -32,6 +32,7 @@ namespace Luxandra_Menstruation_Integrations
                 {
                     comp.ovarypower += 50;
                     LuxandraDebugActions.DebugLogMessage($"{pawn.Name}'s {comp.Def.defName} egg count increased by 50.");
+                    comp.RecoverOvary();
                 }
             }
         }

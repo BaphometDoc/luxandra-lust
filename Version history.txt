@@ -7,6 +7,7 @@
 - Added Intimate infestation event
 - Added Wet dreams event (lewd) in a few variations
 - Combat Extended Patches (imagine making CE patches in this time and age...)
+- Added 3 starting Scenarios
 
 0.9 - 02/07/2026
 - Added Amazon Ambush and Amazon Blood Trial events

@@ -263,4 +263,39 @@ namespace LuxandraLust
             base.End();
         }
     }
+
+    public class ThoughtWorker_MalePulseOpinion : ThoughtWorker
+    {
+        protected override ThoughtState CurrentSocialStateInternal(Pawn pawn, Pawn otherPawn)
+        {
+            // 1. Must be an adult male with the hediff
+            if (pawn.gender != Gender.Male || pawn.health?.hediffSet?.HasHediff(DefDatabase<HediffDef>.GetNamed("Luxandra_PulseAdultMale")) == false)
+                return false;
+
+            // 2. The person they are looking at must be female
+            if (otherPawn.gender == Gender.Female)
+            {
+                return true; // Apply the opinion boost/shift towards her!
+            }
+
+            return false;
+        }
+    }
+
+    // Females under the pulse viewing males
+    public class ThoughtWorker_FemalePulseOpinion : ThoughtWorker
+    {
+        protected override ThoughtState CurrentSocialStateInternal(Pawn pawn, Pawn otherPawn)
+        {
+            if (pawn.gender != Gender.Female || pawn.health?.hediffSet?.HasHediff(DefDatabase<HediffDef>.GetNamed("Luxandra_PulseAdultFemale")) == false)
+                return false;
+
+            if (otherPawn.gender == Gender.Male)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
 }

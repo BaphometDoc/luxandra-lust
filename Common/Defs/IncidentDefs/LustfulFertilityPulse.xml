@@ -181,4 +181,30 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+	
+	<!-- Social Opinion: Males toward Females -->
+	<ThoughtDef>
+		<defName>Luxandra_PulseMaleSocialThought</defName>
+		<thoughtClass>Thought_SituationalSocial</thoughtClass>
+		<workerClass>LuxandraLust.ThoughtWorker_MalePulseOpinion</workerClass>
+		<stages>
+			<li>
+				<label>desirable woman</label>
+				<baseOpinionOffset>40</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
+
+	<!-- Social Opinion: Females toward Males -->
+	<ThoughtDef>
+		<defName>Luxandra_PulseFemaleSocialThought</defName>
+		<thoughtClass>Thought_SituationalSocial</thoughtClass>
+		<workerClass>LuxandraLust.ThoughtWorker_FemalePulseOpinion</workerClass>
+		<stages>
+			<li>
+				<label>potential mate</label>
+				<baseOpinionOffset>40</baseOpinionOffset>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>

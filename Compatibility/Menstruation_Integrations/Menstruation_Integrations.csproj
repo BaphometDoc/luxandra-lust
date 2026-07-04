@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HarmonyPatches.cs" />
     <Compile Include="MenstruationInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WombManipulation.cs" />
