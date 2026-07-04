@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using RimWorld;
+using Verse;
 
 namespace LuxandraLust
 {
@@ -12,7 +13,7 @@ namespace LuxandraLust
             if (!__result) return;
 
             // Check if the thing being built is Luxandra's specific monument
-            if (__instance.PlacingDef?.defName == "Luxandra_SacredMonument")
+            if (IsLuxandraMonument(__instance.PlacingDef))
             {
                 // Only show the building if Luxandra is the active storyteller
                 if (!LuxandraStorytellerCheck.IsActive())
@@ -21,5 +22,14 @@ namespace LuxandraLust
                 }
             }
         }
+
+        private static bool IsLuxandraMonument (BuildableDef def)
+        {
+            if(def == null || def.defName == null) return false;
+
+            if (def.defName.Contains("Luxandra_SacredMonument")) return true;
+
+            return false;
+    }
     }
 }

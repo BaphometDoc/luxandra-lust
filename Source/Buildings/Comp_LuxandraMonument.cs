@@ -20,6 +20,7 @@ namespace LuxandraLust
 
             yield return new FloatMenuOption("Commune with Luxandra", () =>
             {
+                // If an interaction cell is defined, use it, otherwise target the building's center
                 IntVec3 targetCell = parent.InteractionCell.IsValid ? parent.InteractionCell : parent.Position;
                 Job job = JobMaker.MakeJob(JobDefOf.Goto, targetCell);
                 selPawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
@@ -28,7 +29,8 @@ namespace LuxandraLust
                 {
                     driver.AddFinishAction((Action) =>
                     {
-                        if (selPawn.Position.AdjacentTo8WayOrInside(parent.Position) && !selPawn.Downed && !selPawn.Dead)
+                        // FIX: Pass 'parent' (the Thing) instead of 'parent.Position' (the IntVec3)
+                        if (selPawn.Position.AdjacentTo8WayOrInside(parent) && !selPawn.Downed && !selPawn.Dead)
                         {
                             OpenRootDialogue(selPawn);
                         }

@@ -1,42 +1,123 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-  <ThingDef ParentName="SteleBase">
-    <defName>Luxandra_SacredMonument</defName>
-    <label>Monument of Luxandra</label>
+
+  <!-- 0. THE CORRECTED BASE TEMPLATE -->
+  <ThingDef ParentName="BuildingBase" Name="Luxandra_SacredMonumentBase" Abstract="True">
     <description>A grand monument dedicated to Luxandra. Can only be constructed while she guides your colony's fate.</description>
-  <size>(2,2)</size>
+    <category>Building</category>
+    <thingClass>Building</thingClass>
+    <selectable>true</selectable>
+    <designationCategory>Misc</designationCategory>
+    <uiOrder>3000</uiOrder>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>Filth_RubbleRock</filthLeaving>
+    <uiIconScale>0.8</uiIconScale>
+    <uiIconOffset>(0, 0.04)</uiIconOffset>
+	<castEdgeShadows>true</castEdgeShadows>
+    
+    <!-- FIX 2: Enable material selection -->
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Stony</li>
+    </stuffCategories>
+
+    <comps>
+      <li Class="LuxandraLust.CompProperties_LuxandraMonument"/>
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Artistic</li>
+          <li>Sex</li>
+        </focusTypes>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ========================================== -->
+  <!-- 1. THE 2x2 VERSION                         -->
+  <!-- ========================================== -->
+  <ThingDef ParentName="Luxandra_SacredMonumentBase">
+    <defName>Luxandra_SacredMonument</defName>
+    <label>Monument of Luxandra (Small)</label>
+    <size>(2,2)</size>
+    <rotatable>false</rotatable>
+    <costStuffCount>150</costStuffCount>
     <statBases>
       <MaxHitPoints>200</MaxHitPoints>
       <WorkToBuild>8000</WorkToBuild>
       <Beauty>50</Beauty>
       <MeditationFocusStrength>0.15</MeditationFocusStrength>
     </statBases>
-    <costStuffCount>150</costStuffCount>
-    <uiIconScale>0.8</uiIconScale>
-    <uiIconOffset>(0, 0.04)</uiIconOffset>
-    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
     <graphicData>
-            <texPath>Things/Buildings/LuxandraMonument</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
-            <drawSize>(4,4)</drawSize>
-      <drawOffset>(0,0,0.05)</drawOffset>
-      <shadowData>
-        <volume>(0.5, 0.6, 0.5)</volume>
-        <offset>(0, 0, -0.15)</offset>
-      </shadowData>
-      <damageData>
-        <rect>(0.1,0.1,1.9,1.9)</rect>
-      </damageData>
+      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(4,4)</drawSize>
     </graphicData>
-    <comps>
-	<li Class="LuxandraLust.CompProperties_LuxandraMonument"/>
-      <li Class="CompProperties_MeditationFocus">
-        <statDef>MeditationFocusStrength</statDef>
-        <focusTypes>
-          <li>Artistic</li>		  
-		  <li>Sex</li>
-        </focusTypes>
-      </li>
-    </comps>
   </ThingDef>
+
+  <!-- ========================================== -->
+  <!-- 2. THE 2x3 VERSION (Flippable)             -->
+  <!-- ========================================== -->
+  <ThingDef ParentName="Luxandra_SacredMonumentBase">
+    <defName>Luxandra_SacredMonument_Medium</defName>
+    <label>Monument of Luxandra (Medium 2x3)</label>
+    <size>(2,3)</size>
+    <rotatable>true</rotatable>
+    <costStuffCount>175</costStuffCount>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>10000</WorkToBuild>
+      <Beauty>75</Beauty>
+      <MeditationFocusStrength>0.18</MeditationFocusStrength>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(5,5)</drawSize>
+    </graphicData>
+  </ThingDef>
+  
+  <ThingDef ParentName="Luxandra_SacredMonumentBase">
+    <defName>Luxandra_SacredMonument_MediumRotated</defName>
+    <label>Monument of Luxandra (Medium 3x2)</label>
+    <size>(3,2)</size>
+    <rotatable>true</rotatable>
+    <costStuffCount>175</costStuffCount>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>10000</WorkToBuild>
+      <Beauty>75</Beauty>
+      <MeditationFocusStrength>0.18</MeditationFocusStrength>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(5,5)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <!-- ========================================== -->
+  <!-- 3. THE 3x3 VERSION                         -->
+  <!-- ========================================== -->
+  <ThingDef ParentName="Luxandra_SacredMonumentBase">
+    <defName>Luxandra_SacredMonument_Large</defName>
+    <label>Monument of Luxandra (Grand)</label>
+    <size>(3,3)</size>
+    <rotatable>false</rotatable>
+    <costStuffCount>200</costStuffCount>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Beauty>100</Beauty>
+      <MeditationFocusStrength>0.22</MeditationFocusStrength>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(6,6)</drawSize>
+    </graphicData>
+  </ThingDef>
+
 </Defs>
