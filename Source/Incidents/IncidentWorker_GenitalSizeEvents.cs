@@ -118,7 +118,7 @@ namespace LuxandraLust
     }
 
 
-    // Male Expansion Event (Penises +0.5)
+    // Male Expansion Event (Penises +0.3)
     public class IncidentWorker_MaleExpansion : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Male;
@@ -144,7 +144,7 @@ namespace LuxandraLust
         }
     }
 
-    // Male Reduction Event (Penises -0.5)
+    // Male Reduction Event (Penises -0.3)
     public class IncidentWorker_MaleReduction : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Male;
@@ -170,7 +170,7 @@ namespace LuxandraLust
         }
     }
 
-    // Female Expansion Event (Breasts +0.5)
+    // Female Expansion Event (Breasts +0.3)
     public class IncidentWorker_FemaleExpansion : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Female;
@@ -196,7 +196,7 @@ namespace LuxandraLust
         }
     }
 
-    // Female Reduction Event (Breasts -0.5)
+    // Female Reduction Event (Breasts -0.3)
     public class IncidentWorker_FemaleReduction : IncidentWorker_GenitalSizeChange
     {
         protected override Gender TargetGender => Gender.Female;
@@ -227,11 +227,11 @@ namespace LuxandraLust
     /// </summary>
     public class Hediff_IntimateGrowth : HediffWithComps
     {
-        private const float ChangeAmount = 0.5f;
+        private const float ChangeAmount = 0.3f;
         private const float MaxSeverity = 5.0f;
         private const float MinSeverity = 0.01f;
 
-        public override void PostAdd(DamageInfo? dinfo) // Increase by 0.5
+        public override void PostAdd(DamageInfo? dinfo) // Increase by 0.3
         {
             base.PostAdd(dinfo);
             LuxandraDebugActions.DebugLogMessage($"Genital growth hediff applied to {pawn.NameShortColored} parts.");
@@ -275,7 +275,7 @@ namespace LuxandraLust
             }
         }
 
-        // RESTORE OLD SIZES ON EXPIRATION (Decrease by 0.5)
+        // RESTORE OLD SIZES ON EXPIRATION (Decrease by 0.3)
         public override void PostRemoved()
         {
             base.PostRemoved();
@@ -319,11 +319,11 @@ namespace LuxandraLust
     /// </summary>
     public class Hediff_IntimateShrinking : HediffWithComps
     {
-        private const float ChangeAmount = 0.5f;
+        private const float ChangeAmount = 0.3f;
         private const float MaxSeverity = 5.0f;
         private const float MinSeverity = 0.01f;
 
-        public override void PostAdd(DamageInfo? dinfo) // Decrease by 0.5
+        public override void PostAdd(DamageInfo? dinfo) // Decrease by 0.3
         {
             base.PostAdd(dinfo);
             LuxandraDebugActions.DebugLogMessage($"Genital growth hediff applied to {pawn.NameShortColored} parts.");
@@ -368,7 +368,7 @@ namespace LuxandraLust
             }
         }
 
-        // RESTORE OLD SIZES ON EXPIRATION (Increase by 0.5)
+        // RESTORE OLD SIZES ON EXPIRATION (Increase by 0.3)
         public override void PostRemoved()
         {
             base.PostRemoved();
