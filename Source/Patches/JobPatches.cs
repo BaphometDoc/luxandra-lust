@@ -97,7 +97,7 @@ namespace LuxandraLust
             }
             catch (Exception ex)
             {
-                Log.Error($"[Luxandra] Critical exception tracking inside SexUtility.Aftersex Postfix: {ex}");
+                Log.Error($"[Luxandra Debug] Critical exception tracking inside SexUtility.Aftersex Postfix: {ex}");
             }
         }
 

@@ -217,7 +217,7 @@ namespace LuxandraLust
             DutyDef customDuty = DefDatabase<DutyDef>.GetNamed("Luxandra_BastardAssaultDuty", false);
             if (customDuty == null)
             {
-                Log.Error("[LuxandraLust] Crucial Error: Luxandra_BastardAssaultDuty missing from XML definitions!");
+                Log.Error("[Luxandra Debug] Crucial Error: Luxandra_BastardAssaultDuty missing from XML definitions!");
                 return;
             }
 

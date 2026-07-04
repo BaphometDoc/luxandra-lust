@@ -34,7 +34,7 @@ namespace LuxandraLust
             // Failsafe 1: Fallback to a hostile tribal faction
             if (deviantFaction == null)
             {
-                Log.Warning("[LuxandraLust] Carnal Deviantfaction not found, searching for hostile tribal fallback.");
+                Log.Warning("[Luxandra Debug] Carnal Deviantfaction not found, searching for hostile tribal fallback.");
 
                 deviantFaction = Find.FactionManager.AllFactionsListForReading
                     .FirstOrDefault(f => !f.IsPlayer && f.HostileTo(Faction.OfPlayer) && f.def.techLevel < TechLevel.Industrial);
@@ -43,7 +43,7 @@ namespace LuxandraLust
             //  Failsafe 2: Abort if absolutely no hostile tribal faction exists
             if (deviantFaction == null)
             {
-                Log.Error("[LuxandraLust] No Carnal Deviant faction OR hostile tribal faction found. Aborting Carnal Deviant raid.");
+                Log.Error("[Luxandra Debug] No Carnal Deviant faction OR hostile tribal faction found. Aborting Carnal Deviant raid.");
                 return false;
             }
 
@@ -57,14 +57,14 @@ namespace LuxandraLust
             PawnKindDef deviantKind = DefDatabase<PawnKindDef>.GetNamed("Luxandra_CarnalDeviantStriker", false);
             if (deviantKind == null)
             {
-                Log.Error("[LuxandraLust] Missing Luxandra_CarnalDeviantStriker PawnKindDef!");
+                Log.Error("[Luxandra Debug] Missing Luxandra_CarnalDeviantStriker PawnKindDef!");
                 return false;
             }
 
             var raidStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_DeviantHordeAssault", false);
             if (raidStrategy == null)
             {
-                Log.Warning("[LuxandraLust] Raid strategy not found, defaulting to immediate attack.");
+                Log.Warning("[Luxandra Debug] Raid strategy not found, defaulting to immediate attack.");
                 raidStrategy = RaidStrategyDefOf.ImmediateAttack;
             }
 

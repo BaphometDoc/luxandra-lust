@@ -280,7 +280,7 @@ namespace LuxandraLust
             IncidentDef incident = DefDatabase<IncidentDef>.GetNamed(incidentDefName, false);
             if (incident == null)
             {
-                Log.Error($"[LuxandraLust] Could not find incident definition named: {incidentDefName}");
+                Log.Error($"[Luxandra Debug] Could not find incident definition named: {incidentDefName}");
                 return;
             }
 

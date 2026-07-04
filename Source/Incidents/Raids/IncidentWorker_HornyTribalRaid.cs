@@ -149,12 +149,12 @@ namespace LuxandraLust
                 }
                 else
                 {
-                    Log.Warning("[LuxandraLust] Could not find the specified Rapist TraitDef to apply to raiders.");
+                    Log.Warning("[Luxandra Debug] Could not find the specified Rapist TraitDef to apply to raiders.");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error($"[LuxandraLust] Error executing rapist raid condition: {ex}");
+                Log.Error($"[Luxandra Debug] Error executing rapist raid condition: {ex}");
             }
 
             // Return true because the raid successfully happened

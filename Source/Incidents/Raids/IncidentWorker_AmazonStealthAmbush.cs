@@ -40,7 +40,7 @@ namespace LuxandraLust
 
             if (amazonFaction == null || infiltratorKind == null)
             {
-                Log.Warning("[LuxandraLust] Amazon Blood Trial incident failed: Missing faction or pawn kind definition.");
+                Log.Warning("[Luxandra Debug] Amazon Blood Trial incident failed: Missing faction or pawn kind definition.");
                 return false;
             }
 

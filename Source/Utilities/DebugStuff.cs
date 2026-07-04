@@ -16,7 +16,7 @@ namespace LuxandraLust
 
             if (component == null)
             {
-                Log.Error("[Luxandra] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
+                Log.Error("[Luxandra Debug] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
                 return;
             }
 
@@ -56,7 +56,7 @@ namespace LuxandraLust
 
             if (component == null)
             {
-                Log.Error("[Luxandra] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
+                Log.Error("[Luxandra Debug] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
                 return;
             }
 
@@ -102,7 +102,7 @@ namespace LuxandraLust
 
             if (component == null)
             {
-                Log.Error("[Luxandra] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
+                Log.Error("[Luxandra Debug] Cannot print counters: GameComponent_LuxandraLust is null (Are you currently in a game session?)");
                 return;
             }
 
@@ -192,7 +192,7 @@ namespace LuxandraLust
                 var comp = GameComponent_LuxandraLust.Instance;
                 if (comp == null)
                 {
-                    Log.Error("[Luxandra] Cannot modify counters: GameComponent_LuxandraLust is null.");
+                    Log.Error("[Luxandra Debug] Cannot modify counters: GameComponent_LuxandraLust is null.");
                     return;
                 }
 
@@ -205,7 +205,7 @@ namespace LuxandraLust
                 var comp = GameComponent_LuxandraLust.Instance;
                 if (comp == null)
                 {
-                    Log.Error("[Luxandra] Cannot modify counters: GameComponent_LuxandraLust is null.");
+                    Log.Error("[Luxandra Debug] Cannot modify counters: GameComponent_LuxandraLust is null.");
                     return;
                 }
 
@@ -269,7 +269,7 @@ namespace LuxandraLust
                 // Safety check in case one's trying to use this without Luxandra
                 string activeStoryteller = Find.Storyteller?.def?.defName ?? "None";
 
-                Messages.Message($"[Luxandra] Weekly event timer forced to 1 tick. Active Storyteller: {activeStoryteller}", MessageTypeDefOf.TaskCompletion, false);
+                Messages.Message($"[Luxandra Debug] Weekly event timer forced to 1 tick. Active Storyteller: {activeStoryteller}", MessageTypeDefOf.TaskCompletion, false);
                 Log.Message($"[Luxandra Debug] Set ticksUntilEvent to 1. Weekly event will fire soon. Current Storyteller: {activeStoryteller}.");
             }
             else
@@ -313,14 +313,14 @@ namespace LuxandraLust
             sb.AppendLine("==================================================");
             Log.Message(sb.ToString());
 
-            Messages.Message("[Luxandra] Audit complete. Check console for breakdown.", MessageTypeDefOf.TaskCompletion, false);
+            Messages.Message("[Luxandra Debug] Audit complete. Check console for breakdown.", MessageTypeDefOf.TaskCompletion, false);
         }
 
         #region Log stuff
         // Fallback logging method for when the GameComponent_LuxandraLust is not found for whatever reason
         private static void LogNullError()
         {
-            Log.Error("[Luxandra] Dev command failed: GameComponent_LuxandraLust was not found in the active game session.");
+            Log.Error("[Luxandra Debug] Dev command failed: GameComponent_LuxandraLust was not found in the active game session.");
         }
 
         /// <summary>

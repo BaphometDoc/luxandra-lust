@@ -50,6 +50,13 @@ namespace LuxandraLust
                     return true;
                 }
 
+                // FAILSAFE: Event list not loaded yet
+                if (!LuxandraDefsCollections._isInitialized)
+                {
+                    Log.Warning("Attempted to intercept a event before the event list was loaded. Skipping for safety.");
+                    return true;
+                }
+
                 // I bet there are weird people who'd do this so better safe than sorry
                 var anyEventEnabled = LuxandraEventCheck.IsAnyEventEnabled();
                 if (!anyEventEnabled)
@@ -112,7 +119,8 @@ namespace LuxandraLust
 
                 // This should catch like, 99% of the negative events. If something is negative but not configured as such, I blame
                 // the submod dev. If it's from Rimworld, I blame Tynan.
-                bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall || def == IncidentDefOf.RaidEnemy;
+                bool isNegative = eventType == IncidentCategoryDefOf.ThreatBig || eventType == IncidentCategoryDefOf.ThreatSmall ||
+                                        def == IncidentDefOf.RaidEnemy || eventType.defName == "GR_HybridRaid"; // VE Genetics raids
 
                 // Exit if the config says to only reroll negative events
                 if (rerollConditionConfig == 1 && !isNegative)
@@ -152,7 +160,7 @@ namespace LuxandraLust
             var liveComp = GameComponent_LuxandraLust.Instance;
             if (liveComp == null)
             {
-                Log.Error("[Luxandra] Cannot open window: GameComponent instance is null.");
+                Log.Error("[Luxandra Debug] Cannot open window: GameComponent instance is null.");
                 return;
             }
 

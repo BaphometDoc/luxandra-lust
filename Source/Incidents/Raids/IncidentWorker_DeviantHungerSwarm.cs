@@ -34,7 +34,7 @@ namespace LuxandraLust
 
             if (deviantFaction == null || runtKind == null)
             {
-                Log.Warning("[LuxandraLust] Deviant Hunger Swarm incident failed: Missing faction or pawn kind definition.");
+                Log.Warning("[Luxandra Debug] Deviant Hunger Swarm incident failed: Missing faction or pawn kind definition.");
                 return false;
             }
 

@@ -528,31 +528,44 @@ namespace LuxandraLust
         /// </summary>
         public static bool IsAnyEventEnabled(LuxandraIncidentType eventType = LuxandraIncidentType.Any)
         {
-            List<LuxandraIncidentDefs> incidentsToCheck = LuxandraDefsCollections.AllIncidents;
+            // Safety check in case it's still loading
+            if (!LuxandraDefsCollections._isInitialized)
+                return false;
 
-            switch (eventType)
+            try
             {
-                case LuxandraIncidentType.Positive:
-                    incidentsToCheck = LuxandraDefsCollections.PositiveIncidents;
-                    break;
-                case LuxandraIncidentType.Negative:
-                    incidentsToCheck = LuxandraDefsCollections.NegativeIncidents;
-                    break;
-                case LuxandraIncidentType.Neutral:
-                    incidentsToCheck = LuxandraDefsCollections.NeutralIncidents;
-                    break;
-                case LuxandraIncidentType.Quest:
-                    incidentsToCheck = LuxandraDefsCollections.Quests;
-                    break;
-                case LuxandraIncidentType.Raid:
-                    incidentsToCheck = LuxandraDefsCollections.Raids;
-                    break;
-                case LuxandraIncidentType.Any:
-                default:
-                    break;
-            }
+                List<LuxandraIncidentDefs> incidentsToCheck = LuxandraDefsCollections.AllIncidents;
 
-            return incidentsToCheck.Any(i => !LuxandraEventSettings.disabledEventNames.Contains(i.IncidentDef.defName));
+                switch (eventType)
+                {
+                    case LuxandraIncidentType.Positive:
+                        incidentsToCheck = LuxandraDefsCollections.PositiveIncidents;
+                        break;
+                    case LuxandraIncidentType.Negative:
+                        incidentsToCheck = LuxandraDefsCollections.NegativeIncidents;
+                        break;
+                    case LuxandraIncidentType.Neutral:
+                        incidentsToCheck = LuxandraDefsCollections.NeutralIncidents;
+                        break;
+                    case LuxandraIncidentType.Quest:
+                        incidentsToCheck = LuxandraDefsCollections.Quests;
+                        break;
+                    case LuxandraIncidentType.Raid:
+                        incidentsToCheck = LuxandraDefsCollections.Raids;
+                        break;
+                    case LuxandraIncidentType.Any:
+                    default:
+                        incidentsToCheck = LuxandraDefsCollections.AllIncidents;
+                        break;
+                }
+
+                return incidentsToCheck.Any(i => !LuxandraEventSettings.disabledEventNames.Contains(i.IncidentDef.defName));
+            }
+            catch
+            {
+                Log.Error("[Luxandra Debug] The cached incident collection failed to load. If you see this send a log to the dev.");
+                return false;
+            }
         }
     }
 }

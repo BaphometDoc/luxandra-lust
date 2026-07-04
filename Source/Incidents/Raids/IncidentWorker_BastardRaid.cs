@@ -71,7 +71,7 @@ namespace LuxandraLust
             }
             else
             {
-                Log.Warning("[LuxandraLust] IncidentWorker_BastardRaid could not find active faction. Defaulting routing.");
+                Log.Warning("[Luxandra Debug] IncidentWorker_BastardRaid could not find active faction. Defaulting routing.");
             }
 
             RaidStrategyDef customStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_RapeAndPillageAssault", false);

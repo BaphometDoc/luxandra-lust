@@ -85,17 +85,28 @@ namespace LuxandraLust
 
     public static class LuxandraDefsCollections
     {
+        public static bool _isInitialized = false;
 
         /// <summary>
-        // List of all incidents managed by the mod
-        // For usage in the rest of the mod
+        /// List of all incidents managed by the mod
+        /// For usage in the rest of the mod
         /// </summary>
         private static readonly List<LuxandraIncidentDefs> _allIncidents = new List<LuxandraIncidentDefs>();
 
         /// <summary>
-        /// All incidents available
+        /// All incidents available. Safe-checked to ensure data is loaded.
         /// </summary>
-        public static List<LuxandraIncidentDefs> AllIncidents => _allIncidents;
+        public static List<LuxandraIncidentDefs> AllIncidents
+        {
+            get
+            {
+                if (!_isInitialized)
+                {
+                    Log.Error("[Luxandra Debug] AllIncidents was accessed before initialization completed! This will cause errors downstream. Please send a log to the dev if you see this.");
+                }
+                return _allIncidents;
+            }
+        }
 
         /// <summary>
         /// Incidents that provide benefits to the player
@@ -134,6 +145,9 @@ namespace LuxandraLust
 
         public static void InizializeLuxandraIncidents()
         {
+            // Prevent double-initialization just in case
+            if (_isInitialized) return;
+
             #region Luxandra's base events
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
@@ -490,10 +504,13 @@ namespace LuxandraLust
             var modsWithMissingDefs = _allIncidents.Where(i => i.IncidentDef == null || i.IncidentDef.defName == "");
             if (modsWithMissingDefs.Count() > 0)
             {
-                Log.Warning($"[Luxandra Lust] Warning: {modsWithMissingDefs.Count()} events had missing defs. If this shown in your game, please contact the dev. He probably messed up.");
+                Log.Warning($"[Luxandra Debug] Warning: {modsWithMissingDefs.Count()} events had missing defs. If this shown in your game, please contact the dev. He probably messed up.");
                 foreach (var mod in modsWithMissingDefs)
                     _allIncidents.Remove(mod);
             }
+
+            // Initialization successful
+            _isInitialized = true;
         }
     }
 
