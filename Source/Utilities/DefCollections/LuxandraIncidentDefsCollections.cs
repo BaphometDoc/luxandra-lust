@@ -87,11 +87,16 @@ namespace LuxandraLust
     {
         public static bool _isInitialized = false;
 
-        /// <summary>
-        /// List of all incidents managed by the mod
-        /// For usage in the rest of the mod
-        /// </summary>
+        // Cached list of all incidents managed by the mod
+        // For usage in the rest of the mod
         private static readonly List<LuxandraIncidentDefs> _allIncidents = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _positiveIncidents = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _negativeIncidents = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _negativeIncidentsNoRaids = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _neutralIncidents = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _neutralIncidentsNoQuests = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _quests = new List<LuxandraIncidentDefs>();
+        private static List<LuxandraIncidentDefs> _raids = new List<LuxandraIncidentDefs>();
 
         /// <summary>
         /// All incidents available. Safe-checked to ensure data is loaded.
@@ -102,7 +107,7 @@ namespace LuxandraLust
             {
                 if (!_isInitialized)
                 {
-                    Log.Error("[Luxandra Debug] AllIncidents was accessed before initialization completed! This will cause errors downstream. Please send a log to the dev if you see this.");
+                    Log.Error("[Luxandra Lust] Notice: A system tried to read the incident database before initialization finished. If the game is still booting up, DO NOT PANIC—this will resolve itself automatically once loading completes. Please share this full log with the dev.");
                 }
                 return _allIncidents;
             }
@@ -111,37 +116,37 @@ namespace LuxandraLust
         /// <summary>
         /// Incidents that provide benefits to the player
         /// </summary>
-        public static List<LuxandraIncidentDefs> PositiveIncidents => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Positive).ToList();
+        public static List<LuxandraIncidentDefs> PositiveIncidents => _positiveIncidents;
 
         /// <summary>
         /// Incidents that harm or challenge the player (including raids)
         /// </summary>
-        public static List<LuxandraIncidentDefs> NegativeIncidents => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Negative || i.IncidentType == LuxandraIncidentType.Raid).ToList();
+        public static List<LuxandraIncidentDefs> NegativeIncidents => _negativeIncidents;
 
         /// <summary>
         /// Incidents that harm or challenge the player (excluding raids)
         /// </summary>
-        public static List<LuxandraIncidentDefs> NegativeIncidentsNoRaids => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Negative).ToList();
+        public static List<LuxandraIncidentDefs> NegativeIncidentsNoRaids => _negativeIncidentsNoRaids;
 
         /// <summary>
         /// Incidents that are not strictly good nor bad (including quests)
         /// </summary>
-        public static List<LuxandraIncidentDefs> NeutralIncidents => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Neutral || i.IncidentType == LuxandraIncidentType.Quest).ToList();
+        public static List<LuxandraIncidentDefs> NeutralIncidents => _neutralIncidents;
 
         /// <summary>
         /// Incidents that are not strictly good nor bad (excluding quests)
         /// </summary>
-        public static List<LuxandraIncidentDefs> NeutralIncidentsNoQuests => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Neutral).ToList();
+        public static List<LuxandraIncidentDefs> NeutralIncidentsNoQuests => _neutralIncidentsNoQuests;
 
         /// <summary>
         /// Quests
         /// </summary>
-        public static List<LuxandraIncidentDefs> Quests => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Quest).ToList();
+        public static List<LuxandraIncidentDefs> Quests => _quests;
 
         /// <summary>
         /// Incidents that cause raids
         /// </summary>
-        public static List<LuxandraIncidentDefs> Raids => _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Raid).ToList();
+        public static List<LuxandraIncidentDefs> Raids => _raids;
 
         public static void InizializeLuxandraIncidents()
         {
@@ -360,7 +365,7 @@ namespace LuxandraLust
                 _allIncidents.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderDepravity,
                     incidentType: LuxandraIncidentType.Negative,
-                    description: "Your ideology will gain several permanent sex related penalties and go on a rapist rage.",
+                    description: "Your ideology leader will gain several permanent sex related penalties and go on a rapist rage.",
                     requiresMod: true,
                     modRequired: "Ideology"
                 ));
@@ -508,6 +513,15 @@ namespace LuxandraLust
                 foreach (var mod in modsWithMissingDefs)
                     _allIncidents.Remove(mod);
             }
+
+            // Populate the remaining caches
+            _positiveIncidents = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Positive).ToList();
+            _negativeIncidents = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Negative || i.IncidentType == LuxandraIncidentType.Raid).ToList();
+            _negativeIncidentsNoRaids = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Negative).ToList();
+            _neutralIncidents = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Neutral || i.IncidentType == LuxandraIncidentType.Quest).ToList();
+            _neutralIncidentsNoQuests = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Neutral).ToList();
+            _quests = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Quest).ToList();
+            _raids = _allIncidents.Where(i => i.IncidentType == LuxandraIncidentType.Raid).ToList();
 
             // Initialization successful
             _isInitialized = true;

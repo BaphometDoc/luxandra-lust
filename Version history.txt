@@ -1,3 +1,7 @@
+0.10.1
+- Added a small safety net system to prevent the incidents from failing to load on particularly big modlists or slower machines
+- Added 3 starting Scenarios related to the mod systems
+
 0.10 - 03/07/2026
 - Positive childbirth appraisals will grant Favor with Luxandra
 - A few miscellaneous events will grant Favor with Luxandra if her correct kink is active (more to come over time)
@@ -7,7 +11,6 @@
 - Added Intimate infestation event
 - Added Wet dreams event (lewd) in a few variations
 - Combat Extended Patches (imagine making CE patches in this time and age...)
-- Added 3 starting Scenarios
 
 0.9 - 02/07/2026
 - Added Amazon Ambush and Amazon Blood Trial events

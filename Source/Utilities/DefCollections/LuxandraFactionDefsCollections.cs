@@ -1,6 +1,5 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Verse;
 
@@ -33,24 +32,39 @@ namespace LuxandraLust
 
     public static class LuxandraFactionDefsCollections
     {
+        private static bool _isInitialized = false;
+
         /// <summary>
         // List of all factions managed by the mod
         // For usage in the rest of the mod
         /// </summary>
         private static readonly List<LuxandraFactionDefs> _allFactions = new List<LuxandraFactionDefs>();
+        private static List<LuxandraFactionDefs> _allRaidingFactions = new List<LuxandraFactionDefs>();
 
         /// <summary>
         /// All factions available
         /// </summary>
-        public static ReadOnlyCollection<LuxandraFactionDefs> AllFactions => _allFactions.AsReadOnly();
+        public static List<LuxandraFactionDefs> AllFactions
+        {
+            get
+            {
+                if (!_isInitialized)
+                {
+                    Log.Error("[Luxandra Lust] Notice: A system tried to read the faction def database before initialization finished. If the game is still booting up, DO NOT PANIC—this will resolve itself automatically once loading completes. Please share this full log with the dev.");
+                }
+                return _allFactions;
+            }
+        }
 
         /// <summary>
-        /// All factions available capable of raiding
+        /// All factions available capable of raiding. Instant lookup, zero allocations!
         /// </summary>
-        public static IEnumerable<LuxandraFactionDefs> AllRaidingFactions => _allFactions.Where(f => f.CanSendRaids);
+        public static List<LuxandraFactionDefs> AllRaidingFactions => _allRaidingFactions;
 
         public static void InizializeLuxandraFactions()
         {
+            // Prevent double-initialization just in case
+            if (_isInitialized) return;
 
             _allFactions.Add(new LuxandraFactionDefs(
                 factionDef: LuxandraFactionDefOf.Luxandra_AmazonTribe,
@@ -69,6 +83,11 @@ namespace LuxandraLust
                     canSendRaids: true
                 ));
             }
+
+            _allRaidingFactions = _allFactions.Where(f => f.CanSendRaids).ToList();
+
+            // Initialization successful
+            _isInitialized = true;
         }
 
         public class LuxandraFactionDefs

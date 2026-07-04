@@ -57,56 +57,59 @@ namespace LuxandraLust
             Listing_Standard scrollListing = new Listing_Standard();
             scrollListing.Begin(viewRect);
 
-            if (!LuxandraDefsCollections.AllIncidents.Any())
+            if (!LuxandraDefsCollections._isInitialized)
             {
-                scrollListing.Label("If this box is empty on game load, check again in a few minutes. On big modlists it can take a while before all events are cached.");
+                scrollListing.Label("The incident database is still being loaded. Check again in a few minutes.");
             }
-
-            foreach (var eventWrapper in LuxandraDefsCollections.AllIncidents)
+            else
             {
-                if (eventWrapper.IncidentDef == null) continue;
-
-                string defName = eventWrapper.IncidentDef.defName;
-                string modSource = eventWrapper.ModRequired != "" ? $"({eventWrapper.ModRequired})" : "";
-                string label = eventWrapper.IncidentDef.label.CapitalizeFirst();
-
-                bool isEnabled = !disabledEventNames.Contains(defName);
-                bool previousState = isEnabled;
-
-                string modDescription = $"{label} {modSource}";
-                // If Devmode is on, show the def too
-                if (Prefs.DevMode)
+                foreach (var eventWrapper in LuxandraDefsCollections.AllIncidents)
                 {
-                    modDescription = modDescription + $" (def: {defName})";
-                }
+                    if (eventWrapper.IncidentDef == null) continue;
 
-                Rect rowRect = scrollListing.GetRect(26f);
+                    string defName = eventWrapper.IncidentDef.defName;
+                    string modSource = eventWrapper.ModRequired != "" ? $"({eventWrapper.ModRequired})" : "";
+                    string label = eventWrapper.IncidentDef.label.CapitalizeFirst();
 
-                // Tiny box on the left for the checkmark icon
-                Rect checkRect = new Rect(rowRect.x, rowRect.y, 24f, 24f);
+                    bool isEnabled = !disabledEventNames.Contains(defName);
+                    bool previousState = isEnabled;
 
-                // Carve out the remaining space to the right of the checkmark for the text label
-                Rect textRect = new Rect(rowRect.x + 30f, rowRect.y, rowRect.width - 30f, 24f);
+                    string modDescription = $"{label} {modSource}";
+                    // If Devmode is on, show the def too
+                    if (Prefs.DevMode)
+                    {
+                        modDescription = modDescription + $" (def: {defName})";
+                    }
 
-                // Draw the actual clickable check/cross widget on the left -- Using RJW one cause it's appropriate lol
-                //Widgets.Checkbox(checkRect.position, ref isEnabled, 24f);
-                rjw.MainTab.DesignatorCheckbox.Checkbox(checkRect.position, ref isEnabled, 24f);
+                    Rect rowRect = scrollListing.GetRect(26f);
 
-                // Draw the text label immediately next to it
-                Widgets.Label(textRect, $"{modDescription}");
+                    // Tiny box on the left for the checkmark icon
+                    Rect checkRect = new Rect(rowRect.x, rowRect.y, 24f, 24f);
 
-                // Add a tool-tip mouseover description box across the whole row area
-                if (Mouse.IsOver(rowRect) && !eventWrapper.ShortDescription.NullOrEmpty())
-                {
-                    TooltipHandler.TipRegion(rowRect, eventWrapper.ShortDescription);
-                }
+                    // Carve out the remaining space to the right of the checkmark for the text label
+                    Rect textRect = new Rect(rowRect.x + 30f, rowRect.y, rowRect.width - 30f, 24f);
 
-                if (isEnabled != previousState)
-                {
-                    if (isEnabled)
-                        disabledEventNames.Remove(defName);
-                    else
-                        disabledEventNames.Add(defName);
+                    // Draw the actual clickable check/cross widget on the left -- Using RJW one cause it's appropriate lol
+                    //Widgets.Checkbox(checkRect.position, ref isEnabled, 24f);
+                    rjw.MainTab.DesignatorCheckbox.Checkbox(checkRect.position, ref isEnabled, 24f);
+
+                    // Draw the text label immediately next to it
+                    Widgets.Label(textRect, $"{modDescription}");
+
+                    // Add a tool-tip mouseover description box across the whole row area
+                    if (Mouse.IsOver(rowRect) && !eventWrapper.ShortDescription.NullOrEmpty())
+                    {
+                        TooltipHandler.TipRegion(rowRect, eventWrapper.ShortDescription);
+                    }
+
+                    if (isEnabled != previousState)
+                    {
+                        if (isEnabled)
+                            disabledEventNames.Remove(defName);
+                        else
+                            disabledEventNames.Add(defName);
+                    }
+                    scrollListing.Gap(2f);
                 }
             }
 
