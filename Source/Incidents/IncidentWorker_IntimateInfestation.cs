@@ -59,11 +59,11 @@ namespace LuxandraLust
             int totalAdultCount = allAdults.Count;
             if (totalAdultCount == 0) return false;
 
-            // 2. 1 pawn for every 5 adults
+            // 1 pawn for every 5 adults
             int targetsToAffect = totalAdultCount / 5;
             if (targetsToAffect < 1) targetsToAffect = 1;
 
-            // 3. Hierarchical prioritization: Female Colonists -> Female Slaves -> Men
+            // Hierarchical prioritization: Female Colonists -> Female Slaves -> Men
             List<Pawn> prioritizedPool = allAdults.OrderBy(p =>
             {
                 if (p.gender == Gender.Female && p.IsColonist && !p.IsSlave) return 0;
@@ -116,6 +116,8 @@ namespace LuxandraLust
             Pawn originalBug = PawnGenerator.GeneratePawn(request);
             GenSpawn.Spawn(originalBug, spawnCell, map);
             bugs.Add(originalBug);
+
+            // TODO: Sound
 
             // Spawn a few locusts or megascarabs
             for (int i = 0; i < 3; i++)

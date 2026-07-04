@@ -79,4 +79,20 @@
       <li>Map_PlayerHome</li>
     </targetTags>
   </IncidentDef>
+
+  <IncidentDef>
+    <defName>Luxandra_Inc_StripQuake</defName>
+    <label>clothes-shaking tremor</label>
+    <workerClass>LuxandraLust.IncidentWorker_StripQuake</workerClass>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <baseChance>0.5</baseChance>
+    <minRefireDays>15</minRefireDays>
+    <letterLabel>Tremor</letterLabel>
+    <letterText>A sudden, localized structural vibration has rippled through the region. While it did no damage to foundations, it has shaken the apparel completely off every person on the map!</letterText>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+
 </Defs>

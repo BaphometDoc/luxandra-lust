@@ -76,6 +76,7 @@ namespace LuxandraLust
 
         // Other random stuff
         public static IncidentDef Luxandra_Inc_WetDreamIncident;
+        public static IncidentDef Luxandra_Inc_StripQuake;
 
         static LuxandraIncidentDefOf()
         {
@@ -317,6 +318,14 @@ namespace LuxandraLust
                 description: "A pawn will have an amazing dream.",
                 pointBaseCost: 5
             ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_StripQuake,
+                incidentType: LuxandraIncidentType.Neutral,
+                description: "A strong quake will strip every pawn on the map.",
+                pointBaseCost: 100
+            ));
+
             #endregion
 
             #region Royalty
