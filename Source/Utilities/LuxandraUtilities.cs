@@ -199,7 +199,9 @@ namespace LuxandraLust
                 // Radial radius of 1 means it spreads to the immediate tiles touching the bed
                 if (CellFinder.TryFindRandomReachableNearbyCell(centerPos, map, 1, TraverseParms.For(targetPawn), null, null, out IntVec3 filthCell))
                 {
-                    FilthMaker.TryMakeFilth(filthCell, map, filthDef, 1, FilthSourceFlags.Pawn);
+                    int filthPerSpawn = 1;
+                    if (LuxandraModSettings.allowFullCumStains) filthPerSpawn = 3;
+                    FilthMaker.TryMakeFilth(filthCell, map, filthDef, filthPerSpawn, FilthSourceFlags.Pawn);
                 }
             }
             // Add the moodlet

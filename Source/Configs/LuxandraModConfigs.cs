@@ -59,6 +59,10 @@ namespace LuxandraLust
         /// </summary>
         public static bool trackChildbirthAppraisalForAnimals = false;
         /// <summary>
+        /// Allows events that would spawn cum filth to spawn the full intended amount
+        /// </summary>
+        public static bool allowFullCumStains = false;
+        /// <summary>
         /// Removes the romance restrictions for close relatives
         /// </summary>
         public static bool removeRomanceRestrictions = false;
@@ -96,6 +100,7 @@ namespace LuxandraLust
                 enablePleasedNotification = true;
                 enableChildbirthAppraisal = true;
                 trackChildbirthAppraisalForAnimals = false;
+                allowFullCumStains = false;
                 removeRomanceRestrictions = false;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
@@ -117,6 +122,10 @@ namespace LuxandraLust
                 listingStandard.CheckboxLabeled("Enable Childbirth Appraisal for colony animals", ref trackChildbirthAppraisalForAnimals, "Births from colony animals will also be judged for your Bestiality affinity if birth humans.");
                 listingStandard.Gap(16f);
             }
+
+            // Enable Childbirth Appraisal
+            listingStandard.CheckboxLabeled("Allow Cum Stains Mass-Spawning", ref allowFullCumStains, "Allows events that are meant to spawn large amount of cum filth to spawn the full amount.\n\nThis can be laggy on slower machines or large colonies, use with caution.");
+            listingStandard.Gap(16f);
 
             // Enable Romance Patches
             listingStandard.CheckboxLabeled("Remove Close Relatives Romance Restrictions (requires restart)", ref removeRomanceRestrictions, "Removes the romance chance penalities related to incestuous relationships.");
@@ -265,6 +274,7 @@ namespace LuxandraLust
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
             Scribe_Values.Look(ref enableChildbirthAppraisal, "enableChildbirthAppraisal", true);
             Scribe_Values.Look(ref trackChildbirthAppraisalForAnimals, "trackChildbirthAppraisalForAnimals", false);
+            Scribe_Values.Look(ref allowFullCumStains, "allowFullCumStains", false);
             Scribe_Values.Look(ref removeRomanceRestrictions, "removeRomanceRestrictions", false);
         }
     }

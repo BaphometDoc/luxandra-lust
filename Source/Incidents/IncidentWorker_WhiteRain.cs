@@ -3,6 +3,7 @@ using rjw;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -88,11 +89,33 @@ namespace LuxandraLust
 
         private void ApplyBuildupToMap(Map map)
         {
+            // --- Map-wide Random Rain Drop Spawning ---
+            ThingDef filthDef = DefDatabase<ThingDef>.GetNamedSilentFail("Luxandra_FilthCumRain");
+
+            if (LuxandraModSettings.allowFullCumStains && filthDef != null)
+            {
+                int dropsToSpawn = Rand.Range(20, 30);
+
+                for (int d = 0; d < dropsToSpawn; d++)
+                {
+                    IntVec3 randomCell = CellFinder.RandomCell(map);
+
+                    // Only drop if it's outdoors, inside map bounds, and not on a solid wall/deep water
+                    if (!randomCell.Roofed(map) && randomCell.WalkableByAny(map))
+                    {
+                        int cumToSpawn = Rand.Range(1, 3);
+
+                        // Use RimWorld's native optimized filth spawner utility
+                        FilthMaker.TryMakeFilth(randomCell, map, filthDef, cumToSpawn);
+                    }
+                }
+            }
+
+            // --- Pawn Buildup Logic ---
             tempPawnList.Clear();
             tempPawnList.AddRange(map.mapPawns.AllPawnsSpawned);
 
             HediffDef buildupDef = HediffDef.Named("Luxandra_WhiteRainBuildup");
-            ThingDef filthDef = DefDatabase<ThingDef>.GetNamedSilentFail("Luxandra_FilthCumRain");
 
             // Skip this step for non-humans and non-colonyanimals if there's too many animals on the map to save on performance
             bool skipAnimals = tempPawnList.Where(p => !p.IsHumanLike() && !p.IsColonyAnimal).Count() > 50;
@@ -104,33 +127,46 @@ namespace LuxandraLust
                 // Check if they are outdoors and alive
                 if (pawn != null && !pawn.Dead && pawn.Spawned && !pawn.Position.Roofed(map))
                 {
-                    bool skipCurrentPawn = !pawn.IsHumanLike() && !pawn.IsColonyAnimal && skipAnimals;
+                    bool skipCurrentPawn = !pawn.IsHumanLike() && !pawn.IsColonyMech && !pawn.IsColonyAnimal && skipAnimals;
+
                     // Drop a mess right under their feet as they walk in the rain!
                     if (!skipCurrentPawn && filthDef != null && pawn.Position.InBounds(map) && pawn.Position.WalkableByAny(map))
                     {
-                        Filth existingFilth = pawn.Position.GetThingList(map).FirstOrDefault(t => t.def == filthDef) as Filth;
-                        if (existingFilth != null)
-                        {
-                            if (existingFilth.CanBeThickened) existingFilth.ThickenFilth();
-                        }
-                        else
-                        {
-                            Filth newFilth = (Filth)ThingMaker.MakeThing(filthDef);
-                            GenSpawn.Spawn(newFilth, pawn.Position, map);
-                        }
+                        FilthMaker.TryMakeFilth(pawn.Position, map, filthDef, count: 1);
                     }
 
                     // Only tick the hediff on humanlikes
                     if (pawn.RaceProps.Humanlike)
                     {
-                        // Apply the slow hediff buildup
+                        // Get the current severity BEFORE adjusting it (default to 0f if they don't have it yet)
+                        Hediff existingHediff = pawn.health.hediffSet.GetFirstHediffOfDef(buildupDef);
+                        float severityBefore = existingHediff != null ? existingHediff.Severity : 0f;
+
                         HealthUtility.AdjustSeverity(pawn, buildupDef, 0.015f);
 
-                        // Check for the 100% mental break snap
+                        // Get the new severity AFTER the adjustment
                         Hediff activeHediff = pawn.health.hediffSet.GetFirstHediffOfDef(buildupDef);
-                        if (activeHediff != null && activeHediff.Severity >= 1.0f)
+                        if (activeHediff != null)
                         {
-                            TriggerMentalBreak(pawn, activeHediff);
+                            float severityAfter = activeHediff.Severity;
+
+                            // Check if the tick pushed them past the specific 25%, 50%, or 75% thresholds
+                            bool crossedMilestone = severityBefore < 0.50f && severityAfter >= 0.50f;
+
+                            if (crossedMilestone)
+                            {
+                                if (CurrentKink == StorytellerKink.Cum)
+                                {
+                                    Messages.Message($"Luxandra saw {pawn.NameShortColored} being drenched in cum is enjoying it. She rewards you with 1 Favor.", MessageTypeDefOf.NeutralEvent);
+                                    GameComponent_LuxandraLust.Instance?.AddToFavorCounter(1);
+                                }
+                            }
+
+                            // 6. Check for the 100% mental break snap
+                            if (severityAfter >= 1.0f)
+                            {
+                                TriggerMentalBreak(pawn, activeHediff);
+                            }
                         }
                     }
                 }
@@ -147,6 +183,12 @@ namespace LuxandraLust
                 MentalStateDef rapistBreak = DefDatabase<MentalStateDef>.GetNamed("RandomRape", false);
                 if (rapistBreak != null && pawn.mindState.mentalStateHandler.TryStartMentalState(rapistBreak, null, true))
                 {
+                    if(CurrentKink == StorytellerKink.Cum || CurrentKink == StorytellerKink.Rape)
+                    {
+                        Messages.Message($"Luxandra saw {pawn.NameShortColored} snap after being drenched in cum and loved it. She rewards your bravery...or insanity... with 10 Favor.", MessageTypeDefOf.NeutralEvent);
+                        GameComponent_LuxandraLust.Instance?.AddToFavorCounter(10);
+                    }
+
                     Messages.Message(pawn.LabelCap + " has snapped from exposure to the white rain!", pawn, MessageTypeDefOf.NegativeEvent);
                     pawn.health.RemoveHediff(hediff); // Clear it so it stops checking
                 }

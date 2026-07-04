@@ -28,6 +28,7 @@
 		<label>Sticky cum puddle</label>
 		<filth>
 			<rainWashes>false</rainWashes>
+			<disappearsInDays>9~11</disappearsInDays>
 		</filth>
 	</ThingDef>
 
