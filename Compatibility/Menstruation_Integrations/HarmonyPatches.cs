@@ -53,7 +53,7 @@ namespace Luxandra_Menstruation_Integrations
         {
             if (PulseFertilityHelper.HasFertilityPulse(__instance))
             {
-                __result = 1.0f; // Force max ovulation chance
+                __result = System.Math.Max(50.0f, __result); ; // Force max ovulation chance
                 return false;    // Bypass age limits
             }
             return true;
@@ -67,7 +67,7 @@ namespace Luxandra_Menstruation_Integrations
         {
             if (PulseFertilityHelper.HasFertilityPulse(__instance))
             {
-                __result = 1.0f; // Force max implantation/conception chance
+                __result = System.Math.Max(50.0f, __result); // Force max implantation/conception chance
                 return false;    // Bypass age limits
             }
             return true;
@@ -84,6 +84,37 @@ namespace Luxandra_Menstruation_Integrations
             {
                 __result = true; // Force max implantation/conception chance
                 return false;    // Bypass age limits
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(HediffComp_Menstruation), "InterspeciesImplantFactor")]
+    public static class Patch_InterspeciesImplantFactor
+    {
+        public static bool Prefix(HediffComp_Menstruation __instance, object fertilizer, ref float __result)
+        {
+            // First check: does the mother/host have the pulse?
+            if (PulseFertilityHelper.HasFertilityPulse(__instance))
+            {
+                __result = System.Math.Max(1.0f, __result); // Disregard species type
+                return false;    // Bypass species limits
+            }
+            return true;
+        }
+    }
+
+
+    [HarmonyPatch(typeof(HediffComp_Menstruation), "CalculatedImplantChance")]
+    public static class Patch_GetFertilityChance
+    {
+        public static bool Prefix(HediffComp_Menstruation __instance, ref float __result)
+        {
+            // First check: does the mother/host have the pulse?
+            if (PulseFertilityHelper.HasFertilityPulse(__instance))
+            {
+                __result = System.Math.Max(50.0f, __result); // Disregard species type
+                return false;    // Bypass species limits
             }
             return true;
         }
