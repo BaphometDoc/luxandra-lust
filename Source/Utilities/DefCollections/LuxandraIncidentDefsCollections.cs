@@ -70,6 +70,7 @@ namespace LuxandraLust
 
         // Boons
         public static IncidentDef Luxandra_Inc_LustfulSupplies;
+        public static IncidentDef Luxandra_Inc_BustyCurse;
 
         // Quests incidents
         public static IncidentDef Luxandra_Inc_BreakPrisonersContractQuest;
@@ -303,6 +304,13 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Positive,
                 description: "A drop of supplies for your more exotic needs.",
                 pointBaseCost: 55
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+            incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BustyCurse,
+            incidentType: LuxandraIncidentType.Positive,
+            description: "One of your pawns wanted to touch tits. The monkey paw's finger curls...",
+            pointBaseCost: 15
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(

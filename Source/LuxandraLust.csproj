@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Buildings\Comp_LuxandraMonument.cs" />
+    <Compile Include="Incidents\IncidentWorker_BustyCurse.cs" />
     <Compile Include="Incidents\IncidentWorker_IntimateInfestation.cs" />
     <Compile Include="Incidents\IncidentWorker_StripQuake.cs" />
     <Compile Include="Incidents\IncidentWorker_WetDream.cs" />

@@ -97,6 +97,7 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+	
 	<ThoughtDef>
 		<defName>Luxandra_MaleReducedMood</defName>
 		<durationDays>3.0</durationDays>
@@ -120,4 +121,17 @@
 			</li>
 		</stages>
 	</ThoughtDef>
+
+	<ThoughtDef>
+		<defName>Luxandra_BustyCurse</defName>
+		<durationDays>3.0</durationDays>
+		<stages>
+			<li>
+				<label>Busty curse</label>
+				<description>I wished to touch a massive chest, this was not what I was expecting but... I kinda like it...</description>
+				<baseMoodEffect>5</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
 </Defs>

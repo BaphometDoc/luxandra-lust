@@ -95,4 +95,18 @@
     <letterDef>NegativeEvent</letterDef>
   </IncidentDef>
 
+  <IncidentDef>
+    <defName>Luxandra_Inc_BustyCurse</defName>
+    <label>busty curse</label>
+    <workerClass>LuxandraLust.IncidentWorker_BustyCurse</workerClass>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <baseChance>1.0</baseChance>
+    <minRefireDays>30</minRefireDays>
+    <letterLabel>Tits-Tastic Tremor</letterLabel>
+    <letterText>A pawn was heard expressing the desire to hold 'a giant pair of tits'. Luxandra must have heard them...</letterText>
+    <letterDef>NeutralEvent</letterDef>
+  </IncidentDef>
 </Defs>

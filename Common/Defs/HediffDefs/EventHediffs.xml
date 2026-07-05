@@ -97,4 +97,18 @@
       </li>
     </comps>
   </HediffDef>
+ 
+	<HediffDef>
+    <defName>Luxandra_BustyCurse</defName>
+    <label>busty curse</label>
+    <description>This man has developed a massive pair of breasts. Impressive.</description>
+    <hediffClass>LuxandraLust.Hediff_BustyCurse</hediffClass>
+    <defaultLabelColor>(0.8, 0.3, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+  </HediffDef>
 </Defs>
