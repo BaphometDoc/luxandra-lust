@@ -80,6 +80,7 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_ForbiddenLove;
         public static IncidentDef Luxandra_Inc_WetDreamIncident;
         public static IncidentDef Luxandra_Inc_StripQuake;
+        public static IncidentDef Luxandra_Inc_CumMeteor;
 
         static LuxandraIncidentDefOf()
         {
@@ -399,6 +400,14 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Neutral,
                 description: "A strong quake will strip every pawn on the map.",
                 pointBaseCost: 100
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_CumMeteor,
+                incidentType: LuxandraIncidentType.Negative,
+                description: "Literally what it says. They never saw it coming.",
+                pointBaseCost: 20,
+                kinks: new[] { StorytellerKink.Cum }
             ));
 
             #endregion
