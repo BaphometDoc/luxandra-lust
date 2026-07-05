@@ -1,10 +1,13 @@
+0.12
+- Added the Forbidden Love incident
+
 0.11 - 05/07/2026
 - The bargain offer now will not trigger for quests, merchants, visitors, forced events (es, raids from quests), and events from luxandra's pool.
 - Added 2x3 and 3x3 versions of the altar
 - Removed the altar requisite of Complex Furniture research
 - Added the option (off by default) to fully unleash cumstains. If enabled, mechanics that would spawn cum on map actually spawn the amount actually intended (it's a option cause some events will lag with that much filth on map on slower machines).
-- Added the strip quake event
-- Added the busty curse event
+- Added the strip quake incident
+- Added the busty curse incident
 - Significantly reduced the lustful supplies budget (this may be too low now, let me know if it feels too low or "right")
 
 0.10.1 - 04/07/2026

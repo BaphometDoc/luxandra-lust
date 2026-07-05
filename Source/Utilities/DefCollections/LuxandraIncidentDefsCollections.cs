@@ -76,6 +76,7 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_BreakPrisonersContractQuest;
 
         // Other random stuff
+        public static IncidentDef Luxandra_Inc_ForbiddenLove;
         public static IncidentDef Luxandra_Inc_WetDreamIncident;
         public static IncidentDef Luxandra_Inc_StripQuake;
 
@@ -318,6 +319,13 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Quest,
                 description: "A request to 'break' some prisoners.",
                 pointBaseCost: 40
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_ForbiddenLove,
+                incidentType: LuxandraIncidentType.Neutral,
+                description: "A couple of close relatives developed a forbidden relationship.",
+                pointBaseCost: 50
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(

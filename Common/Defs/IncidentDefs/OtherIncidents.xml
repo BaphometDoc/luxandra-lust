@@ -68,45 +68,58 @@
 		<letterDef>NegativeEvent</letterDef>
 	</IncidentDef>
 
-  <IncidentDef>
-    <defName>Luxandra_Inc_WetDreamIncident</defName>
-    <label>vivid dream</label>
-    <workerClass>LuxandraLust.IncidentWorker_WetDream</workerClass>
-    <category>Misc</category> 
-    <baseChance>1.5</baseChance>
-    <minRefireDays>2</minRefireDays>
-    <targetTags>
-      <li>Map_PlayerHome</li>
-    </targetTags>
-  </IncidentDef>
+	<IncidentDef>
+		<defName>Luxandra_Inc_WetDreamIncident</defName>
+		<label>vivid dream</label>
+		<workerClass>LuxandraLust.IncidentWorker_WetDream</workerClass>
+		<category>Misc</category>
+		<baseChance>1.5</baseChance>
+		<minRefireDays>2</minRefireDays>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+	</IncidentDef>
 
-  <IncidentDef>
-    <defName>Luxandra_Inc_StripQuake</defName>
-    <label>clothes-shaking tremor</label>
-    <workerClass>LuxandraLust.IncidentWorker_StripQuake</workerClass>
-    <category>Misc</category>
-    <targetTags>
-      <li>Map_PlayerHome</li>
-    </targetTags>
-    <baseChance>0.5</baseChance>
-    <minRefireDays>15</minRefireDays>
-    <letterLabel>Tremor</letterLabel>
-    <letterText>A sudden, localized structural vibration has rippled through the region. While it did no damage to foundations, it has shaken the apparel completely off every person on the map!</letterText>
-    <letterDef>NegativeEvent</letterDef>
-  </IncidentDef>
+	<IncidentDef>
+		<defName>Luxandra_Inc_StripQuake</defName>
+		<label>clothes-shaking tremor</label>
+		<workerClass>LuxandraLust.IncidentWorker_StripQuake</workerClass>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<baseChance>0.5</baseChance>
+		<minRefireDays>15</minRefireDays>
+		<letterLabel>Tremor</letterLabel>
+		<letterText>A sudden, localized structural vibration has rippled through the region. While it did no damage to foundations, it has shaken the apparel completely off every person on the map!</letterText>
+		<letterDef>NegativeEvent</letterDef>
+	</IncidentDef>
 
-  <IncidentDef>
-    <defName>Luxandra_Inc_BustyCurse</defName>
-    <label>busty curse</label>
-    <workerClass>LuxandraLust.IncidentWorker_BustyCurse</workerClass>
-    <category>Misc</category>
-    <targetTags>
-      <li>Map_PlayerHome</li>
-    </targetTags>
-    <baseChance>1.0</baseChance>
-    <minRefireDays>30</minRefireDays>
-    <letterLabel>Tits-Tastic Tremor</letterLabel>
-    <letterText>A pawn was heard expressing the desire to hold 'a giant pair of tits'. Luxandra must have heard them...</letterText>
-    <letterDef>NeutralEvent</letterDef>
-  </IncidentDef>
+	<IncidentDef>
+		<defName>Luxandra_Inc_BustyCurse</defName>
+		<label>busty curse</label>
+		<workerClass>LuxandraLust.IncidentWorker_BustyCurse</workerClass>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<baseChance>1.0</baseChance>
+		<minRefireDays>30</minRefireDays>
+		<letterLabel>Tits-Tastic Tremor</letterLabel>
+		<letterText>A pawn was heard expressing the desire to hold 'a giant pair of tits'. Luxandra must have heard them...</letterText>
+		<letterDef>NeutralEvent</letterDef>
+	</IncidentDef>
+	
+	<IncidentDef>
+		<defName>Luxandra_Inc_ForbiddenLove</defName>
+		<label>forbidden love</label>
+		<workerClass>LuxandraLust.IncidentWorker_ForbiddenLove</workerClass>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<baseChance>0.3</baseChance>
+		<minRefireDays>45</minRefireDays>
+		<letterDef>NeutralEvent</letterDef>
+	</IncidentDef>
 </Defs>
