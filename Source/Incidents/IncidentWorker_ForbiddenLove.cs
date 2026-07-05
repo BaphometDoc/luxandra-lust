@@ -3,6 +3,7 @@ using rjw;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -87,8 +88,18 @@ namespace LuxandraLust
                     {
                         isPregnant = true;
                         LuxandraDebugActions.DebugLogMessage("RJW pregnancy created successfully.");
-                        // TODO: proper menstruation integration
                     }
+                }
+
+                if (isPregnant && (CurrentKink == StorytellerKink.Incest || CurrentKink == StorytellerKink.Pregnancy))
+                {
+                    Messages.Message($"Luxandra cheers up for the fruit of {malePawn.NameShortColored} and {femalePawn.NameShortColored}'s forbidden love. She gifts you 5 Favor.", new LookTargets(new List<Pawn> { malePawn, femalePawn }), MessageTypeDefOf.NeutralEvent);
+                    GameComponent_LuxandraLust.Instance?.AddToFavorCounter(5);
+                }
+                else if (CurrentKink == StorytellerKink.Incest)
+                {
+                    Messages.Message($"Luxandra cheers up for {malePawn.NameShortColored} and {femalePawn.NameShortColored}'s forbidden love. She gifts you 1 Favor.", new LookTargets(new List<Pawn> { malePawn, femalePawn }), MessageTypeDefOf.NeutralEvent);
+                    GameComponent_LuxandraLust.Instance?.AddToFavorCounter(1);
                 }
 
                 if (isPregnant && LuxandraModChecks.IsMenstruationActive())

@@ -4,6 +4,7 @@ using rjw.Modules.Interactions;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -192,6 +193,13 @@ namespace LuxandraLust
                     }
                 }
             }
+
+            if (executedSuccessfully && CurrentKink == StorytellerKink.Breasts)
+            {
+                Messages.Message($"Luxandra loves your colonists' new oversized breasts! She gifts you 2 Favor.", MessageTypeDefOf.NeutralEvent);
+                GameComponent_LuxandraLust.Instance?.AddToFavorCounter(2);
+            }
+
             return executedSuccessfully;
         }
     }
@@ -218,6 +226,13 @@ namespace LuxandraLust
                     }
                 }
             }
+
+            if (executedSuccessfully && CurrentKink == StorytellerKink.Breasts)
+            {
+                Messages.Message($"Luxandra finds your colonists' flatter chests cute! She gifts you 1 Favor to cheer you up.", MessageTypeDefOf.NeutralEvent);
+                GameComponent_LuxandraLust.Instance?.AddToFavorCounter(1);
+            }
+
             return executedSuccessfully;
         }
     }

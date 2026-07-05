@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -99,7 +100,8 @@ namespace LuxandraLust
                     // Add a tool-tip mouseover description box across the whole row area
                     if (Mouse.IsOver(rowRect) && !eventWrapper.ShortDescription.NullOrEmpty())
                     {
-                        TooltipHandler.TipRegion(rowRect, eventWrapper.ShortDescription);
+                        var eventTooltip = eventWrapper.ShortDescription + DisplayRelatedKinks(eventWrapper);
+                        TooltipHandler.TipRegion(rowRect, eventTooltip);
                     }
 
                     if (isEnabled != previousState)
@@ -135,6 +137,20 @@ namespace LuxandraLust
             {
                 disabledEventNames = new List<string>();
             }
+        }
+
+        private static string DisplayRelatedKinks(LuxandraIncidentDefs incident)
+        {
+            if (incident.AssociatedKinks.Any())
+            {
+                var kinkStrings = incident.AssociatedKinks.Select(k => k.ToString());
+
+                string kinks = "\n\nAssociated Kinks: " + string.Join(" - ", kinkStrings);
+
+                return kinks;
+            }
+
+            return "";
         }
     }
 }

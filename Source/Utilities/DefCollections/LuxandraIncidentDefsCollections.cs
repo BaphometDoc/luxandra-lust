@@ -221,7 +221,7 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Negative,
                 description: "It's warm. It's sticky. You probably shouldn't go outside today.",
                 pointBaseCost: 40,
-                kinks: new[] { StorytellerKink.Cum }
+                kinks: new[] { StorytellerKink.Cum, StorytellerKink.Rape }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -290,7 +290,7 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A Carnal Deviant that will arrive with the support of the white rain to cause havoc",
                 pointBaseCost: 50,
-                kinks: new[] { StorytellerKink.Rape, StorytellerKink.Cum }
+                kinks: new[] { StorytellerKink.Cum, StorytellerKink.Rape }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
