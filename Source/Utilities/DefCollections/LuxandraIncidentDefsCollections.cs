@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -585,7 +586,12 @@ namespace LuxandraLust
         /// </summary>
         public string ModRequired { get; set; }
 
-        public LuxandraIncidentDefs(IncidentDef incidentDef, LuxandraIncidentType incidentType, string description = "", decimal? pointBaseCost = null, bool requiresMod = false, string modRequired = "")
+        /// <summary>
+        /// What kinks are associated with the event
+        /// </summary>
+        public StorytellerKink[] AssociatedKinks { get; }
+
+        public LuxandraIncidentDefs(IncidentDef incidentDef, LuxandraIncidentType incidentType, string description = "", decimal? pointBaseCost = null, bool requiresMod = false, string modRequired = "", StorytellerKink[] kinks = null)
         {
             this.IncidentDef = incidentDef;
             this.IncidentType = incidentType;
@@ -593,6 +599,7 @@ namespace LuxandraLust
             this.PointBaseCost = pointBaseCost;
             this.RequiresMod = requiresMod;
             this.ModRequired = modRequired;
+            this.AssociatedKinks = kinks ?? new StorytellerKink[0];
         }
     }
 }

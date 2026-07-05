@@ -1,6 +1,4 @@
 ﻿using RimWorld;
-using rjw;
-using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -100,66 +98,6 @@ namespace LuxandraLust
         /// Current active kink
         /// </summary>
         public static StorytellerKink CurrentKink = StorytellerKink.None;
-
-
-        /// <summary>
-        /// Rerolls Luxandra's current kink (optionally specify which to get)
-        /// </summary>
-        public static void RerollKink(bool forceSpecific = false, StorytellerKink forcedType = StorytellerKink.None)
-        {
-            if (forceSpecific)
-                CurrentKink = forcedType;
-
-            var validKinks = GetEnabledKinks();
-
-            CurrentKink = validKinks.RandomElement();
-
-            if (CurrentKink != StorytellerKink.None)
-                Messages.Message($"Luxandra's whims have shifted: She is now into {CurrentKink}.", MessageTypeDefOf.CautionInput, false);
-            else
-                Messages.Message($"Luxandra's whims have shifted: She is not into anything specific at the moment.", MessageTypeDefOf.CautionInput, false);
-        }
-
-        /// <summary>
-        /// Gets the kinks that are enabled based on the RJW settings and potential submods
-        /// </summary>
-        public static List<StorytellerKink> GetEnabledKinks()
-        {
-            List<StorytellerKink> validKinks = new List<StorytellerKink>();
-
-            validKinks.Add(StorytellerKink.None);
-
-            validKinks.Add(StorytellerKink.Pregnancy);
-            validKinks.Add(StorytellerKink.Anal);
-            validKinks.Add(StorytellerKink.Oral);
-            validKinks.Add(StorytellerKink.Masturbation);
-            validKinks.Add(StorytellerKink.Gay);
-            validKinks.Add(StorytellerKink.Lesbian);
-            validKinks.Add(StorytellerKink.Cum);
-            validKinks.Add(StorytellerKink.Breasts);
-
-            if (RJWSettings.bestiality_enabled)
-                validKinks.Add(StorytellerKink.Bestiality);
-
-            if (RJWSettings.rape_enabled)
-                validKinks.Add(StorytellerKink.Rape);
-
-            if (RJWSettings.necrophilia_enabled)
-                validKinks.Add(StorytellerKink.Necrophilia);
-
-            if (RJWPregnancySettings.insect_pregnancy_enabled || RJWPregnancySettings.insect_anal_pregnancy_enabled ||
-                RJWPregnancySettings.insect_oral_pregnancy_enabled || LuxandraModChecks.IsRJWInsectsActive())
-                validKinks.Add(StorytellerKink.Implantation);
-
-            if (LuxandraModChecks.IsSexperienceIdeologyActive() || LuxandraModSettings.removeRomanceRestrictions)
-                validKinks.Add(StorytellerKink.Incest);
-
-            if (RJWSettings.futa_natives_chance > 0 || RJWSettings.futa_nymph_chance > 0 || RJWSettings.futa_spacers_chance > 0 ||
-                RJWSettings.FemaleFuta || RJWSettings.GenderlessAsFuta)
-                validKinks.Add(StorytellerKink.Futa);
-
-            return validKinks;
-        }
 
         /// <summary>
         /// Subtracts the specified amount from the sex counter

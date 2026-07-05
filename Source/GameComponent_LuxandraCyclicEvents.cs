@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -13,6 +12,15 @@ namespace LuxandraLust
         public int ticksUntilEvent = 420000;
 
         public int ticksUntilKinkChange = 3600;
+
+        public static GameComponent_LuxandraCyclicEvents Instance
+        {
+            get
+            {
+                if (Current.Game == null) return null;
+                return Current.Game.GetComponent<GameComponent_LuxandraCyclicEvents>();
+            }
+        }
 
         public GameComponent_LuxandraCyclicEvents(Game game)
         {
@@ -40,7 +48,7 @@ namespace LuxandraLust
 
             if (ticksUntilKinkChange <= 0)
             {
-                TriggerKinkShift(); // Change Luxanna's kink, then reset the countdown
+                LuxandraKinkTracker.TriggerKinkShift(); // Change Luxanna's kink, then reset the countdown
             }
 
             ticksUntilEvent--;
@@ -49,23 +57,6 @@ namespace LuxandraLust
             {
                 TriggerWeeklyEvent();
                 ticksUntilEvent = TicksPerCycle; // Reset the 7-day countdown clock
-            }
-        }
-
-        private void TriggerKinkShift()
-        {
-            // Roll a new random phase
-            RerollKink();
-
-            // Roll a random day counter between 1 and 7 days
-            int randomDays = Rand.RangeInclusive(1, 7);
-
-            // Convert days to internal ticks (1 day = 60,000 ticks)
-            ticksUntilKinkChange = randomDays * GenDate.TicksPerDay;
-
-            if (LuxandraModSettings.enableLogging)
-            {
-                LuxandraDebugActions.DebugLogMessage($"Storyteller shifted phase to {CurrentKink}. Next shift scheduled in {randomDays} days ({ticksUntilKinkChange} ticks).");
             }
         }
 
@@ -202,7 +193,7 @@ namespace LuxandraLust
 
         public void ForceImmediateKinkShift()
         {
-            this.ticksUntilKinkChange = 1;
+            ticksUntilKinkChange = 1;
         }
 
 
