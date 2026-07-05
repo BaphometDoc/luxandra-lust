@@ -12,10 +12,23 @@
 	<letterDef>ThreatBig</letterDef>
 		<baseChance>0.1</baseChance>
   </IncidentDef>
+  
+  <IncidentDef>
+    <defName>Luxandra_Inc_StarvingAmazons</defName>
+    <label>starving Amazons assault</label>
+    <workerClass>LuxandraLust.IncidentWorker_StarvingAmazons</workerClass>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <pointsScaleable>true</pointsScaleable>
+	<category>ThreatBig</category>
+	<letterDef>ThreatBig</letterDef>
+		<baseChance>0.1</baseChance>
+  </IncidentDef>
 
   <IncidentDef>
     <defName>Luxandra_Inc_AmazonBloodTrial</defName>
-    <label>amazon blood trial</label>
+    <label>amazon Blood Trial</label>
     <workerClass>LuxandraLust.IncidentWorker_AmazonBloodTrial</workerClass>
     <targetTags>
       <li>Map_PlayerHome</li>

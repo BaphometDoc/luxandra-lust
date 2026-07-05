@@ -46,6 +46,7 @@ namespace LuxandraLust
         public static IncidentDef Luxandra_Inc_DeviantHungerSwarm;
         public static IncidentDef Luxandra_Inc_AmazonStealthAmbush;
         public static IncidentDef Luxandra_Inc_AmazonBloodTrial;
+        public static IncidentDef Luxandra_Inc_StarvingAmazons;
         [MayRequireRoyalty]
         public static IncidentDef Luxandra_Inc_InquisitionPurgeSappers;
 
@@ -308,8 +309,15 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AmazonBloodTrial,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "Young amazons are sent on a trial to prove their worth. They'll have your heads or die trying.",
+                description: "Young Amazons are sent on a trial to prove their worth. They'll have your heads or die trying.",
                 pointBaseCost: 35
+            ));
+
+            _allIncidents.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_StarvingAmazons,
+                incidentType: LuxandraIncidentType.Raid,
+                description: "A sizeable raid of starving Amazons assaults the colony in search for supply.",
+                pointBaseCost: 40
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
