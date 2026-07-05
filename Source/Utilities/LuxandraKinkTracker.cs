@@ -68,7 +68,7 @@ namespace LuxandraLust
                     flavorText = "Luxandra wants to see some good head action. Masterful tongue strokes, gentle sucking, and warm fluid exchanges, she craves it all.";
                     break;
                 case StorytellerKink.Bestiality:
-                    flavorText = "Luxandra thinks that nature has a lot to offer. Expecially huge cocks beyond human sizes, soft pussies with unfamiliar textures, and exciting knot action to be bound by.";
+                    flavorText = "Luxandra thinks that nature has a lot to offer. Huge cocks beyond human sizes, soft pussies with unfamiliar textures, and exciting knot action to be bound by.";
                     break;
                 case StorytellerKink.Rape:
                     flavorText = "Luxandra is bored of consensuality. She wants to see people taken by force. She loves when the other person cannot say no...";
