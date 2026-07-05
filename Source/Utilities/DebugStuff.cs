@@ -150,16 +150,6 @@ namespace LuxandraLust
             List<DebugMenuOption> options = new List<DebugMenuOption>();
 
             // --- ADD INCREMENT ACTIONS ---
-            options.Add(new DebugMenuOption("Add +50 Favor Points", DebugMenuOptionMode.Action, () =>
-            {
-                var comp = GameComponent_LuxandraLust.Instance;
-                if (comp == null) { LogNullError(); return; }
-
-                comp.AddToFavorCounter(50);
-                Messages.Message($"Added +50 Favor. New total: {comp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
-            }));
-
-            // --- ADD INCREMENT ACTIONS ---
             options.Add(new DebugMenuOption("Add +1 Sex Count", DebugMenuOptionMode.Action, () =>
             {
                 var comp = GameComponent_LuxandraLust.Instance;
@@ -234,6 +224,17 @@ namespace LuxandraLust
 
             // Open the dynamic layout popup window frame
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
+        }
+
+        // The [DebugAction] attribute registers this automatically into the Dev Menu!
+        [DebugAction("Luxandra Lust", "Add 50 Favor Points", false, false, actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void Add50Favor()
+        {
+            var comp = GameComponent_LuxandraLust.Instance;
+            if (comp == null) { LogNullError(); return; }
+
+            comp.AddToFavorCounter(50);
+            Messages.Message($"Added +50 Favor. New total: {comp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
         }
 
         // The [DebugAction] attribute registers this automatically into the Dev Menu!
@@ -314,6 +315,12 @@ namespace LuxandraLust
             Log.Message(sb.ToString());
 
             Messages.Message("[Luxandra Debug] Audit complete. Check console for breakdown.", MessageTypeDefOf.TaskCompletion, false);
+        }
+
+        [DebugAction("Luxandra Lust", "Recalculate Incident Pools", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.Playing)]
+        public static void ForceRecalculatePools()
+        {
+            LuxandraDefsCollections.ReinitializeIncidentPool();
         }
 
         #region Log stuff

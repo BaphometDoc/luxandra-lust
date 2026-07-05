@@ -152,6 +152,48 @@ namespace LuxandraLust
         /// </summary>
         public static List<LuxandraIncidentDefs> Raids => _raids;
 
+        #region Debug stuff
+        /// <summary>
+        /// Reset the event pool and recalculate it
+        /// </summary>
+        public static void ReinitializeIncidentPool()
+        {
+            // 1. Flip the flag so systems know we are in a mutating state
+            _isInitialized = false;
+
+            // 2. Clear the master list contents (handles the readonly constraint safely)
+            _allIncidents.Clear();
+
+            // 3. Wipe out the cached sub-lists by allocating empty lists
+            _positiveIncidents = new List<LuxandraIncidentDefs>();
+            _negativeIncidents = new List<LuxandraIncidentDefs>();
+            _negativeIncidentsNoRaids = new List<LuxandraIncidentDefs>();
+            _neutralIncidents = new List<LuxandraIncidentDefs>();
+            _neutralIncidentsNoQuests = new List<LuxandraIncidentDefs>();
+            _quests = new List<LuxandraIncidentDefs>();
+            _raids = new List<LuxandraIncidentDefs>();
+
+            InizializeLuxandraIncidents();
+            Log.Message($"[Luxandra Debug] Manual cache invalidation triggered. Active incident pools have been rebuilt based on current kink preferences.");
+            PrintLuxandraIncidentTotals();
+
+            Messages.Message("Luxandra incident pools successfully recalculated!", MessageTypeDefOf.TaskCompletion, false);
+        }
+
+        /// <summary>
+        /// Prints the amount of available incident per type
+        /// </summary>
+        public static void PrintLuxandraIncidentTotals()
+        {
+            Log.Message($"[Luxandra Lust] found {AllIncidents.Count} lustful events.");
+
+            LuxandraDebugActions.DebugLogMessage($"Positive incidents: {PositiveIncidents.Count}");
+            LuxandraDebugActions.DebugLogMessage($"Neutral incidents: {NeutralIncidents.Count} (including {Quests.Count} quests)");
+            LuxandraDebugActions.DebugLogMessage($"Negative incidents: {NegativeIncidents.Count} (including {Raids.Count} raids)");
+            LuxandraDebugActions.DebugLogMessage($"TOTAL: {AllIncidents.Count} incidents available.");
+        }
+        #endregion
+
         public static void InizializeLuxandraIncidents()
         {
             // Prevent double-initialization just in case
@@ -176,67 +218,77 @@ namespace LuxandraLust
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
                 incidentType: LuxandraIncidentType.Negative,
                 description: "It's warm. It's sticky. You probably shouldn't go outside today.",
-                pointBaseCost: 40
+                pointBaseCost: 40,
+                kinks: new[] { StorytellerKink.Cum }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse,
                 incidentType: LuxandraIncidentType.Neutral,
                 description: "A somewhat long lasting condition that will massively increase the fertility and libido of every human in the map.",
-                pointBaseCost: 55
+                pointBaseCost: 55,
+                kinks: new[] { StorytellerKink.Pregnancy }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseSite,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "A remote transmitter will cause a Fertility Pulse on your map until you disable it"
+                description: "A remote transmitter will cause a Fertility Pulse on your map until you disable it",
+                kinks: new[] { StorytellerKink.Pregnancy }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseMechCluster,
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A mech cluster will cause a Fertility Pulse on your map until you destroy it",
-                pointBaseCost: 45
+                pointBaseCost: 45,
+                kinks: new[] { StorytellerKink.Pregnancy }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulse,
                 incidentType: LuxandraIncidentType.Neutral,
                 description: "A average lasting condition that will occasionally wake up your colonists in a pleasurable way.",
-                pointBaseCost: 55
+                pointBaseCost: 55,
+                kinks: new[] { StorytellerKink.Cum }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulseSite,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "A remote transmitter will cause a Wet Dreams Pulse on your map until you disable it"
+                description: "A remote transmitter will cause a Wet Dreams Pulse on your map until you disable it",
+                kinks: new[] { StorytellerKink.Cum }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulseMechCluster,
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A mech cluster will cause a Wet Dreams Pulse on your map until you destroy it",
-                pointBaseCost: 55
+                pointBaseCost: 55,
+                kinks: new[] { StorytellerKink.Cum }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "One or more pawns go on a Random Rape mental break"
+                description: "One or more pawns go on a Random Rape mental break",
+                kinks: new[] { StorytellerKink.Rape }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A tribal raid with increased speed and sex drive",
-                pointBaseCost: 35
+                pointBaseCost: 35,
+                kinks: new[] { StorytellerKink.Rape }
              ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 incidentType: LuxandraIncidentType.Raid,
                 description: "A Carnal Deviant that will try to rape your colonists rather than kill them",
-                pointBaseCost: 35
+                pointBaseCost: 35,
+                kinks: new[] { StorytellerKink.Rape }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -284,7 +336,8 @@ namespace LuxandraLust
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
                 description: "Female colonist breasts will grow for a while.",
-                pointBaseCost: 25
+                pointBaseCost: 25,
+                kinks: new[] { StorytellerKink.Breasts }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -298,7 +351,8 @@ namespace LuxandraLust
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
                 description: "Female colonist breasts will shrink for a while.",
-                pointBaseCost: 15
+                pointBaseCost: 15,
+                kinks: new[] { StorytellerKink.Breasts }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -309,31 +363,35 @@ namespace LuxandraLust
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
-            incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BustyCurse,
-            incidentType: LuxandraIncidentType.Positive,
-            description: "One of your pawns wanted to touch tits. The monkey paw's finger curls...",
-            pointBaseCost: 15
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BustyCurse,
+                incidentType: LuxandraIncidentType.Positive,
+                description: "One of your pawns wanted to touch tits. The monkey paw's finger curls...",
+                pointBaseCost: 15,
+                kinks: new[] { StorytellerKink.Breasts, StorytellerKink.Futa }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BreakPrisonersContractQuest,
                 incidentType: LuxandraIncidentType.Quest,
                 description: "A request to 'break' some prisoners.",
-                pointBaseCost: 40
+                pointBaseCost: 40,
+                kinks: new[] { StorytellerKink.Rape }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_ForbiddenLove,
                 incidentType: LuxandraIncidentType.Neutral,
                 description: "A couple of close relatives developed a forbidden relationship.",
-                pointBaseCost: 50
+                pointBaseCost: 50,
+                kinks: new[] { StorytellerKink.Incest, StorytellerKink.Pregnancy }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamIncident,
                 incidentType: LuxandraIncidentType.Neutral,
                 description: "A pawn will have an amazing dream.",
-                pointBaseCost: 5
+                pointBaseCost: 5,
+                kinks: new[] { StorytellerKink.Cum }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(
@@ -362,7 +420,8 @@ namespace LuxandraLust
                     incidentType: LuxandraIncidentType.Negative,
                     description: "Your royal colonist will gain several permanent sex related penalties and go on a rapist rage.",
                     requiresMod: true,
-                    modRequired: "Royalty"
+                    modRequired: "Royalty",
+                    kinks: new[] { StorytellerKink.Rape }
                 ));
 
                 // Crusader events require Royalty
@@ -393,7 +452,8 @@ namespace LuxandraLust
                     incidentType: LuxandraIncidentType.Negative,
                     description: "Your ideology leader will gain several permanent sex related penalties and go on a rapist rage.",
                     requiresMod: true,
-                    modRequired: "Ideology"
+                    modRequired: "Ideology",
+                    kinks: new[] { StorytellerKink.Rape }
                 ));
             }
             #endregion
@@ -485,7 +545,8 @@ namespace LuxandraLust
                    incidentType: LuxandraIncidentType.Negative,
                    description: "Insectoids will assault a pawn and attempted to use them as seedbed.",
                    requiresMod: true,
-                   pointBaseCost: 35
+                   pointBaseCost: 35,
+                   kinks: new[] { StorytellerKink.Implantation }
                ));
             }
             #endregion
@@ -498,7 +559,8 @@ namespace LuxandraLust
                    incidentDef: unleashedBastardsRaid,
                    incidentType: LuxandraIncidentType.Raid,
                    description: "A stronger raid which will more easily try to rape your colonists.",
-                   requiresMod: true
+                   requiresMod: true,
+                   kinks: new[] { StorytellerKink.Rape }
                ));
             }
             #endregion
@@ -532,12 +594,28 @@ namespace LuxandraLust
             #endregion
 
             // A final cleanup, just in case any def was wrong or corrupted
-            var modsWithMissingDefs = _allIncidents.Where(i => i.IncidentDef == null || i.IncidentDef.defName == "");
-            if (modsWithMissingDefs.Count() > 0)
+            var incidentWithMissingDefs = _allIncidents.Where(i => i.IncidentDef == null || i.IncidentDef.defName == "");
+            if (incidentWithMissingDefs.Count() > 0)
             {
-                Log.Warning($"[Luxandra Debug] Warning: {modsWithMissingDefs.Count()} events had missing defs. If this shown in your game, please contact the dev. He probably messed up.");
-                foreach (var mod in modsWithMissingDefs)
-                    _allIncidents.Remove(mod);
+                Log.Warning($"[Luxandra Debug] Warning: {incidentWithMissingDefs.Count()} events had missing defs. If this shown in your game, please contact the dev. He probably messed up.");
+                foreach (var incident in incidentWithMissingDefs)
+                    _allIncidents.Remove(incident);
+            }
+
+            // Finally, remove all incidents with tags incompatible with the enabled kinks
+            foreach (var incident in _allIncidents)
+            {
+                int incidentsDisabledCauseKinks = 0;
+                bool shouldBeEnabled = AreRelatedKinksEnabled(incident);
+                if (!shouldBeEnabled)
+                {
+                    LuxandraDebugActions.DebugLogMessage($"Disabling {incident.IncidentDef.defName} since the necessary conditions aren't enabled");
+                    _allIncidents.Remove(incident);
+                    incidentsDisabledCauseKinks++;
+                }
+
+                if (incidentsDisabledCauseKinks > 0)
+                    Log.Message($"Disabled {incidentsDisabledCauseKinks} events due to detected kink conditions not found");
             }
 
             // Populate the remaining caches
@@ -551,6 +629,31 @@ namespace LuxandraLust
 
             // Initialization successful
             _isInitialized = true;
+        }
+
+        public static bool AreRelatedKinksEnabled(LuxandraIncidentDefs incident)
+        {
+            var tags = incident.AssociatedKinks;
+
+            if (tags.Contains(StorytellerKink.Bestiality) && !LuxandraKinkTracker.IsBestialityEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Rape) && !LuxandraKinkTracker.IsRapeEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Necrophilia) && !LuxandraKinkTracker.IsNecrophiliaEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Implantation) && !LuxandraKinkTracker.IsImplantationEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Incest) && !LuxandraKinkTracker.IsIncestEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Futa) && !LuxandraKinkTracker.IsFutaEnabled())
+                return false;
+
+            return true;
         }
     }
 

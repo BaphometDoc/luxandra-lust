@@ -19,13 +19,7 @@ namespace LuxandraLust
             LuxandraDefsCollections.InizializeLuxandraIncidents();
             if (showDetailedLog)
             {
-                // Use the public safe properties now, and swap out .Count() for .Count (performance win)
-                Log.Message($"[Luxandra Lust] found {LuxandraDefsCollections.AllIncidents.Count} lustful events.");
-
-                LuxandraDebugActions.DebugLogMessage($"Positive incidents: {LuxandraDefsCollections.PositiveIncidents.Count}");
-                LuxandraDebugActions.DebugLogMessage($"Neutral incidents: {LuxandraDefsCollections.NeutralIncidents.Count} (including {LuxandraDefsCollections.Quests.Count} quests)");
-                LuxandraDebugActions.DebugLogMessage($"Negative incidents: {LuxandraDefsCollections.NegativeIncidents.Count} (including {LuxandraDefsCollections.Raids.Count} raids)");
-                LuxandraDebugActions.DebugLogMessage($"TOTAL: {LuxandraDefsCollections.AllIncidents.Count} incidents available.");
+                LuxandraDefsCollections.PrintLuxandraIncidentTotals();
             }
 
             // Initialize the factions
