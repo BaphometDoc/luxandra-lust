@@ -25,7 +25,7 @@ namespace Luxandra_Menstruation_Integrations
                 WombManipulation.UpdateMenstruationWombGraphic(targetPawn);
             };
 
-            // ADD THIS: Automatically find and apply all [HarmonyPatch] classes in this namespace
+            // Automatically find and apply all [HarmonyPatch] classes in this namespace
             var harmony = new Harmony("luxandralust.menstruation.bridge");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
