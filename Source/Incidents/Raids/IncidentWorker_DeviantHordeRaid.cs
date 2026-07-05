@@ -4,10 +4,6 @@ using Verse;
 
 namespace LuxandraLust
 {
-    // These totally arent basically RJW nymphs
-    // No, really, this used to be a Nymph horde, but RJW just fucks (he he) anything that has "nymph" in their name so... deviants it is.
-
-    // NOTE: with the rapist raider AI actually working, this is kinda obsolete, should probably just convert it to something more interesting.
     public class IncidentWorker_DeviantHordeRaid : IncidentWorker_RaidEnemy
     {
         protected override bool CanFireNowSub(IncidentParms parms)
@@ -20,6 +16,12 @@ namespace LuxandraLust
             }
 
             Map map = (Map)parms.target;
+
+            GameConditionDef whiteRainDef = DefDatabase<GameConditionDef>.GetNamed("Luxandra_WhiteRain", false);
+            // Check if the white rain is already there
+            if (map.gameConditionManager.ConditionIsActive(whiteRainDef))
+                return false;
+
             // Need at least 1 humanlike adult pawn to even try
             return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));
         }
@@ -28,13 +30,13 @@ namespace LuxandraLust
         {
             Map map = (Map)parms.target;
 
-            LuxandraDebugActions.DebugLogMessage("Attempting to generate a Carnal Deviant raid.");
+            LuxandraDebugActions.DebugLogMessage("Attempting to generate a Deviant Horde raid.");
             Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(LuxandraFactionDefOf.Luxandra_DeviantHordeFaction);
 
             // Failsafe 1: Fallback to a hostile tribal faction
             if (deviantFaction == null)
             {
-                Log.Warning("[Luxandra Debug] Carnal Deviantfaction not found, searching for hostile tribal fallback.");
+                Log.Warning("[Luxandra Debug] Carnal Deviant faction not found, searching for hostile tribal fallback.");
 
                 deviantFaction = Find.FactionManager.AllFactionsListForReading
                     .FirstOrDefault(f => !f.IsPlayer && f.HostileTo(Faction.OfPlayer) && f.def.techLevel < TechLevel.Industrial);
@@ -51,22 +53,16 @@ namespace LuxandraLust
 
             if (parms.points <= 0f)
             {
-                parms.points = StorytellerUtility.DefaultThreatPointsNow(map);
+                parms.points = StorytellerUtility.DefaultThreatPointsNow(map) * 2 / 3;
             }
 
-            PawnKindDef deviantKind = DefDatabase<PawnKindDef>.GetNamed("Luxandra_CarnalDeviantStriker", false);
-            if (deviantKind == null)
-            {
-                Log.Error("[Luxandra Debug] Missing Luxandra_CarnalDeviantStriker PawnKindDef!");
-                return false;
-            }
-
-            var raidStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_DeviantHordeAssault", false);
-            if (raidStrategy == null)
-            {
-                Log.Warning("[Luxandra Debug] Raid strategy not found, defaulting to immediate attack.");
-                raidStrategy = RaidStrategyDefOf.ImmediateAttack;
-            }
+            // Changed to Immediate Attack as now the threat comes from the rain instead
+            //var raidStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_RapeAndPillageAssault", false);
+            //if (raidStrategy == null)
+            //{
+            //    Log.Warning("[Luxandra Debug] Raid strategy not found, defaulting to immediate attack.");
+            //    raidStrategy = RaidStrategyDefOf.ImmediateAttack;
+            //}
 
             IncidentParms raidParms = new IncidentParms
             {
@@ -74,16 +70,34 @@ namespace LuxandraLust
                 points = parms.points,
                 faction = deviantFaction,
                 forced = true,
+                canKidnap = false,
+                canSteal = false,
+                canTimeoutOrFlee = false,
                 pawnGroupKind = PawnGroupKindDefOf.Combat,
-                raidStrategy = raidStrategy,
+                raidStrategy = RaidStrategyDefOf.ImmediateAttack,
                 raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkInGroups,
                 customLetterLabel = "Raid (Deviant Horde)",
-                customLetterText = "A horde of completely naked primal humans are entering the area from the map edge! Driven by a carnal frenzy, they are advancing directly onto your colony. Run, or be ready for what is to come...",
+                customLetterText = "A horde of primal humans are entering the area from the map edge! They arrived chanting some profane rite, and you hear the clouds rumbling. Yet it is not rain what they bring... Take cover, or be ready for what is to come...",
                 customLetterDef = LetterDefOf.ThreatBig,
                 sendLetter = true
             };
 
-            return IncidentDefOf.RaidEnemy.Worker.TryExecute(parms);
+            int durationTicks = 30000;
+            GameConditionDef whiteRainDef = DefDatabase<GameConditionDef>.GetNamed("Luxandra_WhiteRain", false);
+
+            if (whiteRainDef != null)
+            {
+                // Cause a 12 hour white rain
+                GameCondition condition = GameConditionMaker.MakeCondition(whiteRainDef, durationTicks);
+                map.gameConditionManager.RegisterCondition(condition);
+                LuxandraDebugActions.DebugLogMessage("Successfully triggered 12-hour White Rain for the horde.");
+            }
+            else
+            {
+                Log.Warning("[Luxandra Debug] Missing Luxandra_WhiteRain GameConditionDef. Skipping condition spawn.");
+            }
+
+            return IncidentDefOf.RaidEnemy.Worker.TryExecute(raidParms);
         }
     }
 }

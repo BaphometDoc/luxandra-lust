@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -24,75 +23,53 @@ namespace LuxandraLust
             return map.mapPawns.FreeColonistsAndPrisonersSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));
         }
 
-        #region Overrides for the event letter
-        protected override string GetLetterLabel(IncidentParms parms)
-        {
-            if (!this.def.letterLabel.NullOrEmpty())
-            {
-                return this.def.letterLabel.Formatted(parms.faction.NameColored).Resolve();
-            }
-            return base.GetLetterLabel(parms);
-        }
-
-        protected override string GetLetterText(IncidentParms parms, List<Pawn> outPawns)
-        {
-            if (!this.def.letterText.NullOrEmpty())
-            {
-                return this.def.letterText.Formatted(parms.faction.NameColored).Resolve();
-            }
-            return base.GetLetterText(parms, outPawns);
-        }
-
-        protected override LetterDef GetLetterDef()
-        {
-            if (this.def.letterDef != null)
-            {
-                return this.def.letterDef;
-            }
-            return base.GetLetterDef();
-        }
-        #endregion
-
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            // If Fantasy Race is loaded and there is the hostile faction, use that faction for the raid. Otherwise, default to a tribal raid.
-            Faction targetFactionInstance = Find.FactionManager.AllFactions
-                .FirstOrDefault(f => f.def.defName == "EFR_FantasyTribeHostile");
+            Map map = (Map)parms.target;
 
-            if (targetFactionInstance != null)
-            {
-                parms.faction = targetFactionInstance;
-            }
-            else
-            {
-                Faction fallbackFaction = Find.FactionManager.AllFactions
-                    .FirstOrDefault(f => f.HostileTo(Faction.OfPlayer) &&
-                                         (int)f.def.techLevel < (int)TechLevel.Industrial &&
-                                         !f.Hidden);
+            Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(LuxandraFactionDefOf.Luxandra_DeviantHordeFaction);
 
-                if (fallbackFaction != null)
-                {
-                    parms.faction = fallbackFaction;
-                    LuxandraDebugActions.DebugLogMessage("'EFR_FantasyTribeHostile' not found. Falling back to active hostile low tech faction: " + fallbackFaction.Name);
-                }
-                else
-                {
-                    // If absolutely no hostile tribals exist, let vanilla pick a random hostile faction so the raid doesn't break
-                    Log.Warning("[Luxandra Debug] Could not find 'EFR_FantasyTribeHostile' or any fallback hostile low tech faction. Allowing vanilla faction assignment.");
-                }
+            // Failsafe 1: Fallback to a hostile tribal faction
+            if (deviantFaction == null)
+            {
+                Log.Warning("[Luxandra Debug] Carnal Deviant faction not found, searching for hostile tribal fallback.");
+
+                deviantFaction = Find.FactionManager.AllFactionsListForReading
+                    .FirstOrDefault(f => !f.IsPlayer && f.HostileTo(Faction.OfPlayer) && f.def.techLevel < TechLevel.Industrial);
             }
 
-            // Assign a raid strategy
-            if (parms.raidStrategy == null)
+            //  Failsafe 2: Abort if absolutely no hostile tribal faction exists
+            if (deviantFaction == null)
             {
-                parms.raidStrategy = RaidStrategyDefOf.ImmediateAttack;
-            }
-            if (parms.raidArrivalMode == null)
-            {
-                parms.raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkIn;
+                Log.Error("[Luxandra Debug] No Carnal Deviant faction OR hostile tribal faction found. Aborting Carnal Deviant raid.");
+                return false;
             }
 
-            bool raidSuccessful = base.TryExecuteWorker(parms);
+            RaidStrategyDef raidStrategy = RaidStrategyDefOf.ImmediateAttack;
+            RaidStrategyDef customStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_RapeAndPillageAssault", false);
+            if (customStrategy != null)
+                raidStrategy = customStrategy;
+
+            var points = StorytellerUtility.DefaultThreatPointsNow(map);
+
+            IncidentParms raidParms = new IncidentParms
+            {
+                target = map,
+                points = points,
+                faction = deviantFaction,
+                forced = true,
+                canKidnap = false,
+                canSteal = false,
+                pawnGroupKind = PawnGroupKindDefOf.Combat,
+                raidStrategy = raidStrategy,
+                raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkInGroups,
+                customLetterLabel = "Raid (Carnal Deviants)",
+                customLetterText = "A horde of primal humans are entering the area from the map edge! Their war cry clarified their intentions: they are not interested so much in your loots or lives, but rather in all of your colonists' orifices. Brace yourself!",
+                customLetterDef = LetterDefOf.ThreatBig,
+                sendLetter = true
+            };
+
+            bool raidSuccessful = base.TryExecuteWorker(raidParms);
 
             if (!raidSuccessful)
             {
@@ -100,65 +77,32 @@ namespace LuxandraLust
                 return false;
             }
 
-            try
+            // All player controlled pawns become horny
+            List<Pawn> playerControlledPawns = map.mapPawns.FreeColonistsSpawned
+                .Concat(map.mapPawns.SlavesOfColonySpawned)
+                .ToList();
+
+            ThoughtDef customMoodlet = ThoughtDef.Named("Luxandra_WarCry_Panic");
+
+            foreach (Pawn pawn in playerControlledPawns)
             {
-                Map map = (Map)parms.target;
+                if (pawn == null || pawn.Dead) continue;
 
-                // All player controlled pawns become horny
-                List<Pawn> playerControlledPawns = map.mapPawns.FreeColonistsSpawned
-                    .Concat(map.mapPawns.SlavesOfColonySpawned)
-                    .ToList();
-
-                ThoughtDef customMoodlet = ThoughtDef.Named("Luxandra_WarCry_Panic");
-
-                foreach (Pawn pawn in playerControlledPawns)
+                if (pawn.needs != null)
                 {
-                    if (pawn == null || pawn.Dead) continue;
-
-                    if (pawn.needs != null)
+                    var sexNeed = LuxandraUtilities.GetSexNeed(pawn);
+                    if (sexNeed != null)
                     {
-                        var sexNeed = LuxandraUtilities.GetSexNeed(pawn);
-                        if (sexNeed != null)
-                        {
-                            sexNeed.CurLevel = 0f;
-                        }
-                    }
-
-                    if (customMoodlet != null && pawn.needs?.mood?.thoughts?.memories != null)
-                    {
-                        pawn.needs.mood.thoughts.memories.TryGainMemory(customMoodlet);
+                        sexNeed.CurLevel = 0f;
                     }
                 }
 
-                // All raiders become rapists
-                List<Pawn> incomingRaiders = map.mapPawns.AllPawnsSpawned
-                    .Where(p => p.Faction == parms.faction && !p.Dead && LuxandraUtilities.IsAdult(p))
-                    .ToList();
-                TraitDef targetTrait = TraitDef.Named("Rapist");
-
-                if (targetTrait != null)
+                if (customMoodlet != null && pawn.needs?.mood?.thoughts?.memories != null)
                 {
-                    foreach (Pawn raider in incomingRaiders)
-                    {
-                        if (raider.story?.traits != null && !raider.story.traits.HasTrait(targetTrait))
-                        {
-                            Trait newTrait = new Trait(targetTrait, 0, forced: true);
-                            raider.story.traits.GainTrait(newTrait);
-                        }
-                    }
-                }
-                else
-                {
-                    Log.Warning("[Luxandra Debug] Could not find the specified Rapist TraitDef to apply to raiders.");
+                    pawn.needs.mood.thoughts.memories.TryGainMemory(customMoodlet);
                 }
             }
-            catch (Exception ex)
-            {
-                Log.Error($"[Luxandra Debug] Error executing rapist raid condition: {ex}");
-            }
 
-            // Return true because the raid successfully happened
-            LuxandraDebugActions.DebugLogMessage("Horny raid successfully started for the faction " + parms.faction.Name);
             return true;
         }
     }

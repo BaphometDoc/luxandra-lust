@@ -287,9 +287,9 @@ namespace LuxandraLust
             _allIncidents.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A Carnal Deviant that will try to rape your colonists rather than kill them",
-                pointBaseCost: 35,
-                kinks: new[] { StorytellerKink.Rape }
+                description: "A Carnal Deviant that will arrive with the support of the white rain to cause havoc",
+                pointBaseCost: 50,
+                kinks: new[] { StorytellerKink.Rape, StorytellerKink.Cum }
             ));
 
             _allIncidents.Add(new LuxandraIncidentDefs(

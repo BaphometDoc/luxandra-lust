@@ -77,9 +77,9 @@ namespace LuxandraLust
                 graph.AddTransition(naturalExitTransition);
 
 
-                // --- 2. FAILSAFE: NO DAMAGE FOR 5 HOURS (12500 Ticks) ---
+                // --- 2. FAILSAFE: NO DAMAGE FOR 8 HOURS (20000 Ticks) ---
                 Transition stalemateTransition = new Transition(customToil, escapeToil);
-                stalemateTransition.AddTrigger(new Trigger_TicksPassedAndNoRecentHarm(12500));
+                stalemateTransition.AddTrigger(new Trigger_TicksPassedAndNoRecentHarm(20000));
 
                 stalemateTransition.AddPreAction(new TransitionAction_Message("The attackers got bored of the situation and are withdrawing.", MessageTypeDefOf.NeutralEvent));
                 graph.AddTransition(stalemateTransition);

@@ -4,6 +4,8 @@
 - Masturbation is no longer gay
 - The event list now is properly filtered for enabled kinks on game load. In order to prevent mid-game performance issue, it doesn't get dynamically recalculated midgame (requires to close and reopen the game), but you can force a reload with a new dev option. (This mostly applies to bestiality, rape and necrophilia that fully depend on if you have them enabled in RJW or not, as the others mainly rely on the presence or not of submods like RJW insects or incest mods)
 - Added cumpilation integration, events that involve sizeable quantities of cum will also drench the victim in cum
+- Updated the Horny Tribal raid in what essentially is the current Deviant Horde (deviant raid with rapist AI)
+- Updated the Deviant Horde raid. Now they come bringing the white rain with them and with a direct assault AI, but to compensate for the added danger the raid is smaller.
 
 0.11 - 05/07/2026
 - The bargain offer now will not trigger for quests, merchants, visitors, forced events (es, raids from quests), and events from luxandra's pool.

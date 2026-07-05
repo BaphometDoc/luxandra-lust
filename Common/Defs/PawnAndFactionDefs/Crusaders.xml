@@ -150,7 +150,6 @@
 		</maxPawnCostPerTotalPointsCurve>
     
 		<disallowedRaidStrategies>
-			<li>Luxandra_DeviantHordeAssault</li>
 			<li>Luxandra_RapeAndPillageAssault</li>
 		</disallowedRaidStrategies>
   
