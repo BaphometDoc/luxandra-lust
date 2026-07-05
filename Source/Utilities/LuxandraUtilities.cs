@@ -304,12 +304,12 @@ namespace LuxandraLust
                     break;
                 // Kink = Gay: both partners are men
                 case StorytellerKink.Gay:
-                    if (actor.gender == Gender.Male && partner.gender == Gender.Male)
+                    if (actor.gender == Gender.Male && partner.gender == Gender.Male && props.sexType != xxx.rjwSextype.Masturbation)
                         return true;
                     break;
                 // Kink = Lesbian: both partners are women
                 case StorytellerKink.Lesbian:
-                    if (actor.gender == Gender.Female && partner.gender == Gender.Female)
+                    if (actor.gender == Gender.Female && partner.gender == Gender.Female && props.sexType != xxx.rjwSextype.Masturbation)
                         return true;
                     break;
                 // Kink = Cum: anything that involves a man and one of part used is a penis

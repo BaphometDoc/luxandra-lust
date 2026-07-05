@@ -1,5 +1,6 @@
 0.12
 - Added the Forbidden Love incident
+- Masturbation is no longer gay
 
 0.11 - 05/07/2026
 - The bargain offer now will not trigger for quests, merchants, visitors, forced events (es, raids from quests), and events from luxandra's pool.
