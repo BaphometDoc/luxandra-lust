@@ -4,6 +4,8 @@
 - Removed the altar requisite of Complex Furniture research
 - Added the option (off by default) to fully unleash cumstains. If enabled, mechanics that would spawn cum on map actually spawn the amount actually intended (it's a option cause some events will lag with that much filth on map on slower machines).
 - Added the strip quake event
+- Added the busty curse event
+- Significantly reduced the lustful supplies budget (this may be too low now, let me know if it feels too low or "right")
 
 0.10.1 - 04/07/2026
 - Added a small safety net system to prevent the incidents from failing to load on particularly big modlists or slower machines

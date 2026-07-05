@@ -13,8 +13,8 @@ namespace LuxandraLust
             new CurvePoint(0f, 150f),        // Under 30k (starts flat at 150)
             new CurvePoint(30000f, 150f),   // 30k wealth = 150 budget
             new CurvePoint(80000f, 400f),   // 80k wealth = 400 budget
-            new CurvePoint(150000f, 1000f), // 150k wealth = 1000 budget
-            new CurvePoint(300000f, 2500f)  // 300k wealth = 2500 budget (capped max)
+            new CurvePoint(150000f, 800f), // 150k wealth = 800 budget
+            new CurvePoint(300000f, 1000f)  // 300k wealth = 1000 budget (capped max)
         };
 
         protected override bool CanFireNowSub(IncidentParms parms)
@@ -43,13 +43,14 @@ namespace LuxandraLust
                 hornyMultiplier = 0.75f;
             float modifiedWealth = rawColonyWealth * hornyMultiplier;
 
-            float totalMarketValueBudget = WealthToBudgetCurve.Evaluate(modifiedWealth) * 25; // Go partying brother
+            float totalMarketValueBudget = WealthToBudgetCurve.Evaluate(modifiedWealth) * 5; // Go partying brother
             LuxandraDebugActions.DebugLogMessage($"Attempted to create a lustful drop pod for wealth equal to {rawColonyWealth}. (Horny modifier: {hornyMultiplier})");
+            LuxandraDebugActions.DebugLogMessage($"Total budget available: {totalMarketValueBudget}");
 
             // Possible drops and their values
             List<ThingCountDef> possibleDrops = new List<ThingCountDef>();
-            possibleDrops.Add(new ThingCountDef(ThingDefOf.Beer.defName, 20f)); // Some drinks to get you going
-            possibleDrops.Add(new ThingCountDef(ThingDefOf.MedicineHerbal.defName, 20f)); // Some meds to help you recover from the beer you just drank
+            possibleDrops.Add(new ThingCountDef(ThingDefOf.Beer.defName, 25f)); // Some drinks to get you going
+            possibleDrops.Add(new ThingCountDef(ThingDefOf.MedicineHerbal.defName, 40f)); // Some meds to help you recover from the beer you just drank
 
             // RJW stuff (RimJobWorld is required by this mod, it can't not be on)
             possibleDrops.Add(new ThingCountDef("Condom", 20f)); // Condoms!
