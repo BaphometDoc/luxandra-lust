@@ -144,6 +144,10 @@ namespace LuxandraLust
 
                         HealthUtility.AdjustSeverity(pawn, buildupDef, 0.015f);
 
+                        // If cumpilation is active: strat drenching the pawn in cum;
+                        if (LuxandraModChecks.IsCumpilationActive())
+                            CumpilationIntegration.DrenchInCumFromNothing(pawn, 0.1f);
+
                         // Get the new severity AFTER the adjustment
                         Hediff activeHediff = pawn.health.hediffSet.GetFirstHediffOfDef(buildupDef);
                         if (activeHediff != null)
@@ -162,7 +166,7 @@ namespace LuxandraLust
                                 }
                             }
 
-                            // 6. Check for the 100% mental break snap
+                            // Check for the 100% mental break snap
                             if (severityAfter >= 1.0f)
                             {
                                 TriggerMentalBreak(pawn, activeHediff);

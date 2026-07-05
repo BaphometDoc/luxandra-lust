@@ -1,5 +1,8 @@
 <Solution>
   <Folder Name="/Compatibility/">
+    <Project Path="../Compatibility/Cumpilation_Integrations/Cumpilation_Integrations.csproj" Id="3dbc6244-3297-45e2-b97e-b11d60bfa54c">
+      <BuildDependency Project="LuxandraLust.csproj" />
+    </Project>
     <Project Path="../Compatibility/Menstruation_Integrations/Menstruation_Integrations.csproj" Id="213b13fe-9ff1-4dd1-a0bf-a28ffa21a862" />
   </Folder>
   <Project Path="LuxandraLust.csproj" Id="e2bff170-795e-4121-a3d5-348e1afaf8af" />

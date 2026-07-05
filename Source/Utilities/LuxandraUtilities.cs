@@ -221,6 +221,13 @@ namespace LuxandraLust
                 targetPawn.health.AddHediff(dreamDebuff);
             }
 
+            if (LuxandraModChecks.IsCumpilationActive())
+            {
+                LuxandraDebugActions.DebugLogMessage($"Cumpilation active: Attempting to make {targetPawn.Name} wet themselves.");
+                float cumQuantity = Rand.Range(0.2f, 0.5f);
+                CumpilationIntegration.CauseSelfCum(targetPawn, cumQuantity);
+            }
+
             if (CurrentKink == StorytellerKink.Cum && targetPawn.GetPenises().Any())
             {
                 Messages.Message($"Luxandra saw {targetPawn.NameShortColored} cum in their sleep. She rewards you with 1 Favor for the show", MessageTypeDefOf.NeutralEvent);

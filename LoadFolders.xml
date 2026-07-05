@@ -4,5 +4,6 @@
     <li>Common</li>
 
     <li IfModActive="rjw.menstruation">Compatibility/Menstruation_Integrations</li>
+    <li IfModActive="vegapnk.cumpilation">Compatibility/Cumpilation_Integrations</li>
   </v1.6>
 </LoadFolders>

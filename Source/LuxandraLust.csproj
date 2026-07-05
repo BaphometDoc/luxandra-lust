@@ -85,6 +85,7 @@
     <Compile Include="Incidents\Raids\IncidentWorker_InquisitionPurge.cs" />
     <Compile Include="Incidents\Worksites\IncidentWorker_WetDreamsPulseSite.cs" />
     <Compile Include="Incidents\Worksites\IncidentWorker_FertilityPulseSite.cs" />
+    <Compile Include="ModIntegrations\Cumpilation.cs" />
     <Compile Include="Utilities\LuxandraKinkTracker.cs" />
     <Compile Include="Configs\LuxandraEventConfigs.cs" />
     <Compile Include="ModIntegrations\Menstruation.cs" />
