@@ -24,6 +24,8 @@ namespace LuxandraLust
             return colonistsAvailable.Any() && colonistsAvailable.Count() > 2;
         }
 
+        #region Utility methods
+
         private PawnKindDef GenerateRandomInsectDef()
         {
             var maxRoll = ModsConfig.OdysseyActive ? 4 : 3;
@@ -43,17 +45,91 @@ namespace LuxandraLust
             }
         }
 
+        private static bool IsPawnValidForInfestation(Pawn pawn)
+        {
+            LuxandraDebugActions.DebugLogMessage($"Examining if {pawn.NameShortColored} can be infested.");
+            // Valid pawn
+            if (pawn == null) return false;
+            // Humanlike, adult, alive
+            if (!pawn.RaceProps.Humanlike || !LuxandraUtilities.IsAdult(pawn) || pawn.Dead) return false;
+            if (pawn.gender == Gender.Female)
+            {
+                if (LuxandraUtilities.IsPregnant(pawn))
+                {
+                    LuxandraDebugActions.DebugLogMessage($"Pregnant woman: checking if anus.");
+                    return pawn.GetAnuses().Any();
+                }
+                else
+                {
+                    LuxandraDebugActions.DebugLogMessage($"Non pregnant woman: checking if vagina.");
+                    return pawn.GetVaginas().Any();
+                }
+            }
+            else
+            {
+                LuxandraDebugActions.DebugLogMessage($"Male: checking if anus.");
+                return pawn.GetAnuses().Any();
+            }
+        }
+
+        private BodyPartRecord GetAppropriateBodyPart(Pawn pawn)
+        {
+            LuxandraDebugActions.DebugLogMessage($"Determining what bodypart to infest for {pawn.NameShortColored}.");
+            if (pawn?.RaceProps?.body?.AllParts == null) return null;
+            BodyPartRecord bodyPart = null;
+
+            // Females: if not pregnant, get their vagina, else their anus
+            if (pawn.gender == Gender.Female)
+            {
+                var anuses = pawn.GetAnuses();
+                if (LuxandraUtilities.IsPregnant(pawn))
+                {
+                    LuxandraDebugActions.DebugLogMessage($"Pregnant woman: checking if anus.");
+                    if (anuses.Any())
+                        bodyPart = anuses.FirstOrDefault().BodyPart;
+                }
+                else
+                {
+                    LuxandraDebugActions.DebugLogMessage($"Non pregnant woman: checking if vagina.");
+                    var vaginas = pawn.GetVaginas();
+                    if (vaginas.Any())
+                        bodyPart = vaginas.FirstOrDefault().BodyPart;
+                    else if (anuses.Any())
+                        bodyPart = anuses.FirstOrDefault().BodyPart;
+                }
+            }
+            // Males: their anus
+            else
+            {
+                LuxandraDebugActions.DebugLogMessage($"Male: checking if anus.");
+                var anuses = pawn.GetAnuses();
+                if (anuses.Any())
+                    bodyPart = anuses.FirstOrDefault().BodyPart;
+            }
+
+            // Fallback, if somehow no vagina nor anus, the stomach
+            if (bodyPart == null)
+            {
+                LuxandraDebugActions.DebugLogMessage($"Nothing valid was found, looking for stomach.");
+                var stomach = pawn.health.hediffSet.GetNotMissingParts().FirstOrDefault(p => p.def.defName == "Stomach");
+            }
+
+            return bodyPart;
+        }
+
+        #endregion
+
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;
             if (map == null) return false;
 
             List<Pawn> allAdults = map.mapPawns.FreeAdultColonistsSpawned
-                .Where(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p) && !p.Dead)
+                .Where(p => IsPawnValidForInfestation(p))
                 .ToList();
 
             List<Pawn> slaves = map.mapPawns.SlavesOfColonySpawned
-                .Where(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p) && !p.Dead)
+                .Where(p => IsPawnValidForInfestation(p))
                 .ToList();
 
             if (slaves.Count > 0)
@@ -66,6 +142,8 @@ namespace LuxandraLust
             int targetsToAffect = totalAdultCount / 5;
             if (targetsToAffect < 1) targetsToAffect = 1;
 
+            // Filter pawns so they have a valid vagina or anus.
+
             // Hierarchical prioritization: Female Colonists -> Female Slaves -> Men
             List<Pawn> prioritizedPool = allAdults.OrderBy(p =>
             {
@@ -75,7 +153,11 @@ namespace LuxandraLust
                 return 3;
             }).ToList();
 
-            if (prioritizedPool.Count == 0) return false;
+            if (prioritizedPool.Count == 0)
+            {
+                LuxandraDebugActions.DebugLogMessage($"No valid pawn was found.");
+                return false;
+            }
             var victim = prioritizedPool.First();
 
             // Pick the insect to spawn
@@ -152,7 +234,8 @@ namespace LuxandraLust
             var comp = new HediffComp_Ovipositor();
 
             LuxandraDebugActions.DebugLogMessage($"Attempting to infest {victim.NameShortColored} for the Intimate infestation");
-            BodyPartRecord targetPart = GetInfestationTargetPart(victim);
+            BodyPartRecord targetPart = GetAppropriateBodyPart(victim);
+            LuxandraDebugActions.DebugLogMessage($"Bodypart targetted: ${targetPart.def}");
 
             // Immobilize the victim
             HediffDef cocoon = DefDatabase<HediffDef>.GetNamed("RJW_Cocoon", false);
@@ -175,8 +258,6 @@ namespace LuxandraLust
 
             if (targetPart != null)
             {
-                LuxandraDebugActions.DebugLogMessage($"Bodypart targetted: {targetPart.def}");
-
                 // Prepare the hediff
                 HediffDef_InsectEgg egg = validEggs.First();
                 LuxandraDebugActions.DebugLogMessage($"Attempting to implant {egg.defName} in {victim.NameShortColored}'s {targetPart.def}");
@@ -242,27 +323,6 @@ namespace LuxandraLust
                 return addedEgg;
             }
             else return null;
-        }
-
-        // Helper method to look up specialized biological targets safely
-        private BodyPartRecord GetInfestationTargetPart(Pawn pawn)
-        {
-            if (pawn?.RaceProps?.body?.AllParts == null) return null;
-
-            // Default to anus.
-            var targetPart = pawn.GetAnuses().FirstOrDefault().BodyPart;
-
-            // For non pregnant females, hit the vagina instead. Kink is a kink after all.
-            // Ignore pregnant ones as RJW would terminate the regular pregnancy after implanting
-            // and that's very likely to just piss off the player.
-            if (pawn.gender == Gender.Female && !LuxandraUtilities.IsPregnant(pawn))
-            {
-                var vagina = pawn.GetLewdParts().Vaginas?[0].BodyPart;
-                if (vagina != null)
-                    targetPart = vagina;
-            }
-
-            return targetPart;
         }
     }
 }
