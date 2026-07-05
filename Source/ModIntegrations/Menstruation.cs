@@ -9,6 +9,8 @@ namespace LuxandraLust
 
         public static Action<Pawn> ForceOvulation = null;
 
+        public static Action<Pawn> UpdateMenstruationWombGraphic = null;
+
         /// <summary>
         /// Induces ovulation state if possible and restores a decent
         /// amount of eggs in the ovaries
@@ -26,6 +28,17 @@ namespace LuxandraLust
             if (ForceOvulation != null)
             {
                 ForceOvulation.Invoke(pawn);
+            }
+        }
+
+        public static void UpdateMenstruationWithNewPregnancy(Pawn mother)
+        {
+            if (mother == null)
+                return;
+
+            if (UpdateMenstruationWombGraphic != null)
+            {
+                UpdateMenstruationWombGraphic.Invoke(mother);
             }
         }
     }

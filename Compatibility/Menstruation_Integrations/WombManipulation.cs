@@ -1,5 +1,6 @@
 ﻿using LuxandraLust;
 using RJW_Menstruation;
+using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
@@ -82,6 +83,22 @@ namespace Luxandra_Menstruation_Integrations
                 {
                     LuxandraDebugActions.DebugLogMessage($"{pawn.Name}'s already had eggs in her womb.");
                 }
+            }
+        }
+
+        public static void UpdateMenstruationWombGraphic(Pawn mother)
+        {
+            if (mother == null)
+            {
+                LuxandraDebugActions.DebugLogMessage($"Attempted to recalculate womb graphic in a null pawn.");
+                return;
+            }
+
+            IEnumerable<HediffComp_Menstruation> menstruationParts = mother.GetMenstruationComps();
+            foreach (HediffComp_Menstruation comp in menstruationParts)
+            {
+                _ = comp.Pregnancy;
+                comp.TakeLoosePregnancy();
             }
         }
     }

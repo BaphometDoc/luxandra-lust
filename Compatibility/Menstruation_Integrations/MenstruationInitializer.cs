@@ -10,7 +10,6 @@ namespace Luxandra_Menstruation_Integrations
     {
         static MenstruationInitializer()
         {
-            // We assign an anonymous function that accepts the incoming pawn
             MenstruationIntegration.IncreaseOvaryPower = (Pawn targetPawn) =>
             {
                 WombManipulation.ReplenishOvaryPower(targetPawn);
@@ -19,6 +18,11 @@ namespace Luxandra_Menstruation_Integrations
             MenstruationIntegration.ForceOvulation = (Pawn targetPawn) =>
             {
                 WombManipulation.ForceOvulationIfPossible(targetPawn);
+            };
+
+            MenstruationIntegration.UpdateMenstruationWombGraphic = (Pawn targetPawn) =>
+            {
+                WombManipulation.UpdateMenstruationWombGraphic(targetPawn);
             };
 
             // ADD THIS: Automatically find and apply all [HarmonyPatch] classes in this namespace

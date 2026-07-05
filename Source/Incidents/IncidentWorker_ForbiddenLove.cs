@@ -90,6 +90,11 @@ namespace LuxandraLust
                         // TODO: proper menstruation integration
                     }
                 }
+
+                if (isPregnant && LuxandraModChecks.IsMenstruationActive())
+                {
+                    MenstruationIntegration.UpdateMenstruationWithNewPregnancy(femalePawn);
+                }
             }
 
             string letterText = $"A scandalous secret has unraveled. It turns out {malePawn.NameShortColored} and his {relationName}, {femalePawn.NameShortColored}, have been harboring a forbidden romantic obsession with one another.\n\n";
