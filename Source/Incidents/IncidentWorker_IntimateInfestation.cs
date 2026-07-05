@@ -14,11 +14,14 @@ namespace LuxandraLust
         {
             if (!base.CanFireNowSub(parms)) return false;
 
-            if (!LuxandraModChecks.IsRJWInsectsActive() || !LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_IntimateInfestation.defName))
+            if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_IntimateInfestation.defName))
                 return false;
 
             Map map = (Map)parms.target;
-            return map.mapPawns.FreeAdultColonistsSpawned.Any(p => p.RaceProps.Humanlike && LuxandraUtilities.IsAdult(p));
+
+            // At least 3 colonists must be available
+            var colonistsAvailable = map.mapPawns.FreeAdultColonistsSpawned.Where(p => p.RaceProps.Humanlike && !p.Downed && !p.Dead && LuxandraUtilities.IsAdult(p));
+            return colonistsAvailable.Any() && colonistsAvailable.Count() > 2;
         }
 
         private PawnKindDef GenerateRandomInsectDef()
@@ -57,7 +60,7 @@ namespace LuxandraLust
                 allAdults.AddRange(slaves);
 
             int totalAdultCount = allAdults.Count;
-            if (totalAdultCount == 0) return false;
+            if (totalAdultCount == 0 || totalAdultCount < 3) return false;
 
             // 1 pawn for every 5 adults
             int targetsToAffect = totalAdultCount / 5;
@@ -208,7 +211,7 @@ namespace LuxandraLust
             );
 
 
-            if (CurrentKink == StorytellerKink.Implantation)
+            if (CurrentKink == StorytellerKink.Implantation || CurrentKink == StorytellerKink.Bestiality)
             {
                 Messages.Message($"Luxandra saw {victim.NameShortColored} being ravaged by the insectoids and loved it. She gifts you 5 Favor.", MessageTypeDefOf.NeutralEvent);
                 GameComponent_LuxandraLust.Instance?.AddToFavorCounter(5);

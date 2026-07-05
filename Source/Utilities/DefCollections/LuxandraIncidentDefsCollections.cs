@@ -563,7 +563,7 @@ namespace LuxandraLust
                    description: "Insectoids will assault a pawn and attempted to use them as seedbed.",
                    requiresMod: true,
                    pointBaseCost: 35,
-                   kinks: new[] { StorytellerKink.Implantation }
+                   kinks: new[] { StorytellerKink.Implantation, StorytellerKink.Bestiality }
                ));
             }
             #endregion
