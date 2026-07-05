@@ -157,7 +157,7 @@ namespace LuxandraLust
                             {
                                 if (CurrentKink == StorytellerKink.Cum)
                                 {
-                                    Messages.Message($"Luxandra saw {pawn.NameShortColored} being drenched in cum is enjoying it. She rewards you with 1 Favor.", MessageTypeDefOf.NeutralEvent);
+                                    Messages.Message($"Luxandra saw {pawn.NameShortColored} being drenched in cum and is enjoying it. She rewards you with 1 Favor.", MessageTypeDefOf.NeutralEvent);
                                     GameComponent_LuxandraLust.Instance?.AddToFavorCounter(1);
                                 }
                             }
@@ -183,7 +183,7 @@ namespace LuxandraLust
                 MentalStateDef rapistBreak = DefDatabase<MentalStateDef>.GetNamed("RandomRape", false);
                 if (rapistBreak != null && pawn.mindState.mentalStateHandler.TryStartMentalState(rapistBreak, null, true))
                 {
-                    if(CurrentKink == StorytellerKink.Cum || CurrentKink == StorytellerKink.Rape)
+                    if (CurrentKink == StorytellerKink.Cum || CurrentKink == StorytellerKink.Rape)
                     {
                         Messages.Message($"Luxandra saw {pawn.NameShortColored} snap after being drenched in cum and loved it. She rewards your bravery...or insanity... with 10 Favor.", MessageTypeDefOf.NeutralEvent);
                         GameComponent_LuxandraLust.Instance?.AddToFavorCounter(10);
