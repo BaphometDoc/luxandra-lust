@@ -412,6 +412,25 @@ namespace LuxandraLust
         }
 
         /// <summary>
+        /// Checks if the pawn has the Masochist trait
+        /// </summary>
+        public static bool IsMasochist(Pawn pawn)
+        {
+            if (pawn == null) return false;
+
+            TraitDef masochistTraitDef = DefDatabase<TraitDef>.GetNamed("Masochist", errorOnFail: false);
+            if (masochistTraitDef != null && pawn.story?.traits != null)
+            {
+                Trait activeMasochistTrait = pawn.story.traits.allTraits
+                    .FirstOrDefault(t => t.def == masochistTraitDef);
+
+                if (activeMasochistTrait != null) return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Counts how many living free colonists on the specified map possess a specific Trait.
         /// </summary>
         public static int CountColonistsWithTraitOnMap(Map map, TraitDef traitDef)

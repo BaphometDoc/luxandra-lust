@@ -156,6 +156,15 @@ namespace LuxandraLust
             if (cocoon != null)
                 victim.health.AddHediff(cocoon);
 
+            // Give the victim a moodlet as well
+            ThoughtDef customMoodlet = ThoughtDef.Named("Luxandra_InsectoidAssaultMood");
+            if (LuxandraUtilities.IsMasochist(victim))
+                customMoodlet = ThoughtDef.Named("Luxandra_InsectoidAssaultMoodMasochist");
+
+            if (customMoodlet != null && victim.needs?.mood?.thoughts?.memories != null)
+            {
+                victim.needs.mood.thoughts.memories.TryGainMemory(customMoodlet);
+            }
 
             string letterText = $"Out of nowhere, several insects burst out of the ground and assaulted {victim.Name}! " +
                                $"The insects have spun a cocoon on them immobilizing them, and proceeded to assault their orifices." +

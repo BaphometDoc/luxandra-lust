@@ -134,4 +134,31 @@
 		</stages>
 	</ThoughtDef>
 	
+	<ThoughtDef>
+		<defName>Luxandra_InsectoidAssaultMood</defName>
+		<thoughtClass>Thought_Memory</thoughtClass>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Insectoid vile assault</label>
+				<description>I got trapped in a sticky cocoon, then they violated me and laid eggs inside me. Gross...</description>
+				<baseMoodEffect>-15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>Luxandra_InsectoidAssaultMoodMasochist</defName>
+		<thoughtClass>Thought_Memory</thoughtClass>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Insectoid vile assault</label>
+				<description>I got trapped in a sticky cocoon, then they violated me and laid eggs inside me. Hot...</description>
+				<baseMoodEffect>15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
 </Defs>
