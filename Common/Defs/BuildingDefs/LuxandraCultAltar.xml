@@ -51,7 +51,7 @@
       <MeditationFocusStrength>0.15</MeditationFocusStrength>
     </statBases>
     <graphicData>
-      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <texPath>Things/Buildings/Luxandra_Altar</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(4,4)</drawSize>
     </graphicData>
@@ -73,7 +73,7 @@
       <MeditationFocusStrength>0.18</MeditationFocusStrength>
     </statBases>
     <graphicData>
-      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <texPath>Things/Buildings/Luxandra_Altar</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(5,5)</drawSize>
     </graphicData>
@@ -92,7 +92,7 @@
       <MeditationFocusStrength>0.18</MeditationFocusStrength>
     </statBases>
     <graphicData>
-      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <texPath>Things/Buildings/Luxandra_Altar</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(5,5)</drawSize>
     </graphicData>
@@ -114,7 +114,7 @@
       <MeditationFocusStrength>0.22</MeditationFocusStrength>
     </statBases>
     <graphicData>
-      <texPath>Things/Buildings/LuxandraMonument</texPath>
+      <texPath>Things/Buildings/Luxandra_Altar</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(6,6)</drawSize>
     </graphicData>

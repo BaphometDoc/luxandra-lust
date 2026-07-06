@@ -1,4 +1,5 @@
 0.13
+- The monument is an actual statue of Luxandra now! Thanks LordHades for the beautiful design.
 
 0.12 - 06/07/2027
 - Added the Forbidden Love incident
