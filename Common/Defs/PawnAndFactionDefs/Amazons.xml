@@ -256,6 +256,7 @@
 		<combatPower>45</combatPower>
 		<invNutrition>1.0</invNutrition>
 		<itemQuality>Poor</itemQuality>
+		<fixedGender>Female</fixedGender>
 	
 		<skills>
 			<li>
@@ -346,6 +347,7 @@
 		<combatPower>110</combatPower>
 		<invNutrition>1.5</invNutrition>
 		<itemQuality>Normal</itemQuality>
+		<fixedGender>Female</fixedGender>
 		<skills>
 			<li>
 				<skill>Melee</skill>
@@ -441,6 +443,7 @@
 		<combatPower>95</combatPower>
 		<invNutrition>1.5</invNutrition>
 		<itemQuality>Normal</itemQuality>
+		<fixedGender>Female</fixedGender>
 		<skills>
 			<li>
 				<skill>Shooting</skill>
@@ -529,6 +532,7 @@
 		<combatPower>220</combatPower>
 		<invNutrition>2.0</invNutrition>
 		<itemQuality>Excellent</itemQuality>
+		<fixedGender>Female</fixedGender>
 		<skills>
 			<li>
 				<skill>Melee</skill>
@@ -649,6 +653,7 @@
 		<combatPower>140</combatPower>
 		<invNutrition>1.5</invNutrition>
 		<itemQuality>Good</itemQuality>
+		<fixedGender>Female</fixedGender>
 		<requiredWorkTags>
 			<li>Violent</li>
 		</requiredWorkTags>
@@ -740,6 +745,7 @@
 		<combatPower>85</combatPower>
 		<invNutrition>2.0</invNutrition>
 		<itemQuality>Normal</itemQuality>
+		<fixedGender>Female</fixedGender>
 		<skills>
 			<li>
 				<skill>Shooting</skill>
@@ -824,6 +830,7 @@
 		<combatPower>220</combatPower>
 		<invNutrition>2.5</invNutrition>
 		<itemQuality>Excellent</itemQuality>
+		<fixedGender>Female</fixedGender>
 		<skills>
 			<li>
 				<skill>Melee</skill>
