@@ -60,11 +60,12 @@ namespace LuxandraLust
             }
         }
 
-        private bool CheckIfEventIsAvailable(IncidentDef incident, IncidentParms parms)
+        private bool CheckIfEventIsAvailable(IncidentDef incident, Map map)
         {
             try
             {
-                bool canFire = incident.Worker.CanFireNow(parms);
+                IncidentParms temporaryParms = StorytellerUtility.DefaultParmsNow(incident.category, map);
+                bool canFire = incident.Worker.CanFireNow(temporaryParms);
                 bool isEnabled = LuxandraEventCheck.IsEnabled(incident.defName);
                 return canFire && isEnabled;
             }
@@ -82,14 +83,6 @@ namespace LuxandraLust
             Map targetMap = Find.CurrentMap;
             if (targetMap == null) return;
 
-            float threatPoints = StorytellerUtility.DefaultThreatPointsNow(targetMap) * 0.85f;
-            IncidentParms parms = new IncidentParms
-            {
-                target = targetMap,
-                points = threatPoints,
-                forced = true,
-            };
-
             // TODO: Scale events based on the recent sexual activites
 
             // How horny have we been this week?
@@ -97,37 +90,28 @@ namespace LuxandraLust
             LuxandraDebugActions.DebugLogMessage($"Colony Average Sex Need: {averageSexNeed * 100f}%");
 
             List<IncidentDef> completeEventPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.AllIncidents);
-            completeEventPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
+            List<IncidentDef> filteredPool = completeEventPool;
 
-            // Doublecheck the settings as I can't edit the CanFireNow of other mod events
-            var totalPool = completeEventPool.Where(e => CheckIfEventIsAvailable(e, parms)).ToList();
-            if (totalPool.Count == 0)
-            {
-                LuxandraDebugActions.DebugLogMessage($"There were no valid events in the event pool. Skipping...");
-                return;
-            }
-            LuxandraDebugActions.DebugLogMessage($"Event pool contains {totalPool.Count} elements.");
-
-            List<IncidentDef> filteredPool = totalPool;
+            LuxandraDebugActions.DebugLogMessage($"Event pool contains {completeEventPool.Count} elements.");
 
             string letterText = "";
             string letterLabel = "Luxandra's Cycle: ";
             ThoughtDef moodletToApply = null;
 
-            if (averageSexNeed > 0.75f)
+            if (averageSexNeed > 0.80f)
             {
                 LuxandraDebugActions.DebugLogMessage("Happy mood: selecting positive event.");
-                filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.PositiveEvent).ToList();
+                filteredPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.PositiveIncidents);
 
                 // Flavor text and moodlet for high satisfaction
                 letterLabel += "Pleasure & Favor";
                 letterText = "Luxandra smiles upon your settlement. Pleased by the overwhelming passion and satisfaction echoing from your colonists, she rewards them with a wave of vital energy...\n\n";
                 moodletToApply = DefDatabase<ThoughtDef>.GetNamed("Luxandra_SatisfiedCycle", errorOnFail: false);
             }
-            else if (averageSexNeed < 0.25f)
+            else if (averageSexNeed < 0.35f)
             {
                 LuxandraDebugActions.DebugLogMessage("Negative mood: selecting negative event.");
-                filteredPool = totalPool.Where(e => e.letterDef == LetterDefOf.NegativeEvent || e.letterDef == LetterDefOf.ThreatBig).ToList();
+                filteredPool = LuxandraUtilities.ExtractIncidentsFromCollection(LuxandraDefsCollections.NegativeIncidents);
 
                 // Flavor text and moodlet for low satisfaction
                 letterLabel += "Boredom & Spite";
@@ -142,11 +126,20 @@ namespace LuxandraLust
                 letterText = "Luxandra glances down at your settlement, idly spinning the wheel of fate to disrupt your colonists' mundane routines...\n\n";
             }
 
+            filteredPool.RemoveAll(e => e == null); // Clean up potentially bugged events, i'm paranoic i know
+            filteredPool = filteredPool.Where(e => CheckIfEventIsAvailable(e, targetMap)).ToList();
+
             // Failsafe
             if (filteredPool == null || filteredPool.Count == 0)
             {
-                LuxandraDebugActions.DebugLogMessage("No event found in the selected pool, swapping to global sexual pool.");
-                filteredPool = totalPool;
+                // This should really not happen but i'll make it look like it's intentional
+                LuxandraDebugActions.DebugLogMessage($"No event found in the selected pool, skipping the cycle. Determined type: {letterLabel}");
+
+                letterLabel += "Unusual Convergence";
+                letterText = "Luxandra spun the wheel of fate to add some spice to your colonists' life, yet fate stayed silent. An unusual situation indeed...\n\n";
+
+                Find.LetterStack.ReceiveLetter(letterLabel, letterText, LetterDefOf.NeutralEvent);
+                return;
             }
 
             IncidentDef chosenIncident = filteredPool.RandomElement();
