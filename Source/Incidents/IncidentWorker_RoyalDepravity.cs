@@ -18,7 +18,7 @@ namespace LuxandraLust
             }
 
             return map.mapPawns.FreeColonistsSpawned.Any(p =>
-                LuxandraUtilities.IsAdult(p) && !p.Dead &&
+                LuxandraUtilities.IsAdult(p) && !p.Dead && !p.Downed &&
                 p.royalty != null && p.royalty.AllTitlesInEffectForReading.Count > 0
             );
         }
@@ -29,7 +29,7 @@ namespace LuxandraLust
 
             // Locate the adult player pawn with the highest structural title seniority score
             Pawn targetNoble = map.mapPawns.FreeColonistsSpawned
-                .Where(p => LuxandraUtilities.IsAdult(p) && !p.Dead && p.royalty?.MostSeniorTitle != null)
+                .Where(p => LuxandraUtilities.IsAdult(p) && !p.Dead && !p.Downed && p.royalty?.MostSeniorTitle != null)
                 .OrderByDescending(p => p.royalty.MostSeniorTitle.def.seniority)
                 .FirstOrDefault();
 

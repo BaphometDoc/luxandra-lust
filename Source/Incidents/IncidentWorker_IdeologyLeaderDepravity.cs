@@ -29,6 +29,7 @@ namespace LuxandraLust
 
             return leaderPawn != null &&
                    !leaderPawn.Dead &&
+                   !leaderPawn.Downed &&
                    leaderPawn.Spawned &&
                    leaderPawn.Map == map &&
                    LuxandraUtilities.IsAdult(leaderPawn);
@@ -50,7 +51,7 @@ namespace LuxandraLust
             LuxandraDebugActions.DebugLogMessage($"Attempted to execute Spiritual Depravity for {leaderPawn.NameShortColored}.");
 
             // Fallback check
-            if (leaderPawn == null || leaderPawn.Map != map || leaderPawn.Dead) return false;
+            if (leaderPawn == null || leaderPawn.Map != map || leaderPawn.Dead || leaderPawn.Downed) return false;
 
             if (leaderPawn.story?.traits != null)
             {
