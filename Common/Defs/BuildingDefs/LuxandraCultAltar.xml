@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+    <!-- <DesignatorDropdownGroupDef> -->
+        <!-- <defName>Luxandra_Altars</defName> -->
+    <!-- </DesignatorDropdownGroupDef> -->
 
 	<ThingDef ParentName="BuildingBase" Name="Luxandra_SacredMonumentBase" Abstract="True">
 		<description>A grand monument dedicated to Luxandra. Can only be constructed while she guides your colony's fate.</description>
@@ -36,6 +39,7 @@
 				</focusTypes>
 			</li>
 		</comps>
+        <!-- <designatorDropdown>Luxandra_Altars</designatorDropdown> -->
 	</ThingDef>
 
 	<!-- ========================================== -->

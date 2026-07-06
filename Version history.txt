@@ -3,7 +3,7 @@
 0.12.1 - 06/07/2027
 - The monument is an actual statue of Luxandra now! Thanks LordHades for the beautiful design.
 - The monument can also now be minified and moved
-- Slightly updated the Amazoness xenotype, moved some genes around so they're actually playable in the scenario instead of fully relying on getting a good early capture (now has -2 total metabolism without menstruation, 0 with it, it's heavily recommended to use RJW genes with it, if anything for the female-only gene) - doesn't break ongoing saves, simply already existing amazons will keep the old xenotype with newly spawned ones having the new
+- Slightly updated the Amazoness xenotype, moved some genes around so they're actually playable in the scenario instead of fully relying on getting a good early capture
 - Reworked the logic for the weekly event cycle a bit, should produce neutral/negative results more often unless your colony is properly sexually satisfied, and there should be a bit more efficient filtering of "events that are actually possible and havent happened recently".
 
 0.12 - 06/07/2027
