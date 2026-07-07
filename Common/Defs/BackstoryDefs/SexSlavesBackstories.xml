@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+	<BackstoryDef>
+		<defName>Luxandra_vatgrown_sex_slave</defName>
+		<baseDesc>[PAWN_nameDef] was made to be a sex toy, rather than a human. During [PAWN_possessive] growing period, [PAWN_pronoun] was taught plenty of social and sex related skills to satisfy any demands of its owners.</baseDesc>
+		<title>Vat-Grown Carnal Thrall</title>
+		<titleShort>Carnal Thrall</titleShort>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<identifier>Luxandra_vatgrown_sex_slave</identifier>
+		<slot>Childhood</slot>
+		<spawnCategories>
+			<li>Slave</li>
+			<li>Luxandra_SlavesCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>8</Social>
+			<Sex MayRequire="rjw.sexperience">8</Sex>
+		</skillGains>
+		<workDisables>Violent</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>Luxandra_tender</defName>
+		<baseDesc>[PAWN_nameDef] has a pair of charming eyes, and [PAWN_possessive] voice is soft and sweet. Due to [PAWN_possessive] previous nurse job, [PAWN_pronoun] tends people quite well.</baseDesc>
+		<title>Tender Carnal Thrall</title>
+		<titleShort>Carnal Thrall</titleShort>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<identifier>Luxandra_tender</identifier>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>Slave</li>
+			<li>Luxandra_SlavesCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Medicine>8</Medicine>
+		</skillGains>
+		<workDisables>Animals, Artistic, Hauling, Violent, ManualSkilled</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>Luxandra_chatty</defName>
+		<baseDesc>No one can be more loquacious than [PAWN_nameDef]. [PAWN_pronoun] has a flexible tongue, a sharp mind, and hot lips.</baseDesc>
+		<title>Chatty Carnal Thrall</title>
+		<titleShort>Carnal Thrall</titleShort>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<identifier>Luxandra_chatty</identifier>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>Slave</li>
+			<li>Luxandra_SlavesCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>8</Social>
+		</skillGains>
+		<workDisables>Animals, Artistic, Caring, Violent, ManualDumb, ManualSkilled</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>Luxandra_broken</defName>
+		<baseDesc>[PAWN_nameDef] suffered some terrible things, [PAWN_pronoun] looks rather emaciated.</baseDesc>
+		<title>Broken Carnal Thrall</title>
+		<titleShort>Carnal Thrall</titleShort>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<identifier>Luxandra_broken</identifier>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>Slave</li>
+			<li>Tribal</li>
+			<li>Luxandra_SlavesCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Social>-4</Social>
+			<Intellectual>4</Intellectual>
+			<Artistic>4</Artistic>
+		</skillGains>
+		<workDisables>Cleaning, Animals, Caring, Violent, ManualSkilled</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+		<bodyTypeGlobal>Thin</bodyTypeGlobal>
+		<bodyTypeFemale>Thin</bodyTypeFemale>
+		<bodyTypeMale>Thin</bodyTypeMale>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>Luxandra_homekeeper</defName>
+		<baseDesc>[PAWN_nameDef] was trained to be a housekeeper. Would you like dinner? A bath? Or perhaps... [PAWN_possessive]?</baseDesc>
+		<title>Homekeeper Carnal Thrall</title>
+		<titleShort>Carnal Thrall</titleShort>
+		<ignoreIllegalLabelCharacterConfigError>False</ignoreIllegalLabelCharacterConfigError>
+		<identifier>Luxandra_homekeeper</identifier>
+		<slot>Adulthood</slot>
+		<spawnCategories>
+			<li>Slave</li>
+			<li>Luxandra_SlavesCategory</li>
+		</spawnCategories>
+		<skillGains>
+			<Cooking>4</Cooking>
+		</skillGains>
+		<workDisables>Animals, Violent, Artistic, Crafting, PlantWork, Mining, Intellectual</workDisables>
+		<requiredWorkTags>None</requiredWorkTags>
+	</BackstoryDef>
+
+</Defs>

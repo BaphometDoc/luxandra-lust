@@ -51,25 +51,169 @@ namespace LuxandraLust
             DiaNode rootNode = new DiaNode(text);
 
             // Option: Pray for a blessing (open list)
-            DiaOption prayOption = new DiaOption("Pray for a blessing");
+            DiaOption prayOption = new DiaOption("Pray for a blessing.");
             prayOption.action = () => OpenIncidentSelectionDialogue(pawn);
             rootNode.options.Add(prayOption);
 
-            if (ModsConfig.IdeologyActive)
-            {
-                // Option: Summon a slaver (open list)
-                DiaOption slaverOption = new DiaOption("Request the visit of a slaver");
-                slaverOption.action = () => OpenRequestSlaverDialogue(pawn);
-                rootNode.options.Add(slaverOption);
-            }
+            // Option: Request more people (open list)
+            DiaOption peopleOption = new DiaOption("Request more people.");
+            peopleOption.action = () => OpenPeopleRequestDialogue(pawn);
+            rootNode.options.Add(peopleOption);
 
             // Option: Leave
-            DiaOption leaveOption = new DiaOption("Leave");
+            DiaOption leaveOption = new DiaOption("Leave.");
             leaveOption.resolveTree = true;
             rootNode.options.Add(leaveOption);
 
             ShowDialog(rootNode, "Communing with Luxandra");
         }
+        #endregion
+
+        #region Request people
+
+        private void OpenPeopleRequestDialogue(Pawn pawn)
+        {
+            if (LuxandraComp == null) return;
+            string text = $"\"<color=#D4AF37>Luxandra</color>:\n\nYou require more people? Are you feeling lonely, or do you have more... spicy plans?\"";
+
+            DiaNode rootSelectionNode = new DiaNode(text);
+
+            // Option: Request a sex slave
+            DiaOption prayOption = new DiaOption("Request a obedient servant.");
+            prayOption.action = () => OpenRequestSexSlaveDialogue(pawn);
+            rootSelectionNode.options.Add(prayOption);
+
+            if (ModsConfig.IdeologyActive)
+            {
+                // Option: Summon a slaver (open list)
+                DiaOption slaverOption = new DiaOption("Request the visit of a slaver.");
+                slaverOption.action = () => OpenRequestSlaverDialogue(pawn);
+                rootSelectionNode.options.Add(slaverOption);
+            }
+
+            // Option: Leave
+            // Add a back button inside the sub-menu to return to our main category listing
+            DiaOption subMenuBack = new DiaOption("No, choose something else.");
+            subMenuBack.action = () => OpenRootDialogue(pawn);
+            rootSelectionNode.options.Add(subMenuBack);
+
+            ShowDialog(rootSelectionNode, "Request more people");
+        }
+        #endregion
+
+        #region Sex Slave Request
+        private void OpenRequestSexSlaveDialogue(Pawn pawn)
+        {
+            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou require an obedient thrall? Oh my, you naughty person, I wonder what <i>incredible things</i> you have in store for them...\"");
+
+            DiaOption maleSlaveOption = new DiaOption("(50 Favor) Yes, I would like a male servant.");
+            if (LuxandraComp.colonyFavorPoints < 50)
+            {
+                maleSlaveOption.Disable($"Requires {50} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+            }
+            maleSlaveOption.action = () => OpenSexSlaveConfirmationDialogue(pawn, Gender.Male);
+            rootSelectionNode.options.Add(maleSlaveOption);
+
+            DiaOption femaleSlaveOption = new DiaOption("(50 Favor) Yes, I would like a female servant.");
+            if (LuxandraComp.colonyFavorPoints < 50)
+            {
+                femaleSlaveOption.Disable($"Requires {50} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+            }
+            femaleSlaveOption.action = () => OpenSexSlaveConfirmationDialogue(pawn, Gender.Female);
+            rootSelectionNode.options.Add(femaleSlaveOption);
+
+            // Add a back button inside the sub-menu to return to our main category listing
+            DiaOption subMenuBack = new DiaOption("No, choose something else.");
+            subMenuBack.action = () => OpenRootDialogue(pawn);
+            rootSelectionNode.options.Add(subMenuBack);
+
+            ShowDialog(rootSelectionNode, "Request a servant");
+        }
+
+
+        private void OpenSexSlaveConfirmationDialogue(Pawn pawn, Gender gender)
+        {
+            string genderText = gender == Gender.Male ? "male" : "female";
+            string text = $"Are you sure you want to spend 50 Favor to request a obedient {genderText} servant?\n\nYou would have {LuxandraComp.colonyFavorPoints - 50} left after the request.";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            DiaOption yesOption = new DiaOption("Yes, request it.");
+
+            yesOption.action = () =>
+            {
+                // 1. Point to the specific gendered PawnKindDef you set up in XML
+                string targetDefName = (gender == Gender.Male)
+                    ? "Luxandra_Submissive_Male"
+                    : "Luxandra_Submissive_Female";
+
+                PawnKindDef submissiveKind = DefDatabase<PawnKindDef>.GetNamed(targetDefName, false);
+
+                if (submissiveKind == null)
+                {
+                    Log.Error($"[Luxandra] Failed to execute request: {targetDefName} could not be found in the database.");
+                    return;
+                }
+
+                var map = pawn.Map ?? Find.CurrentMap;
+
+                LuxandraDebugActions.DebugLogMessage($"Attempting to generate {gender} sex slave.");
+
+                // 2. Draft the generation parameters. 
+                // Setting the faction to OfPlayer ensures they join the colony instantly on landing.
+                PawnGenerationRequest request = new PawnGenerationRequest(
+                    submissiveKind,
+                    faction: null,
+                    context: PawnGenerationContext.NonPlayer,
+                    forceGenerateNewPawn: true
+                );
+
+                // Generate the pawn, purge his gear, and stun them
+                Pawn generatedPawn = PawnGenerator.GeneratePawn(request);
+                generatedPawn.apparel?.DestroyAll();
+
+                // Apply Anesthetic (Whole body/Null part)
+                HediffDef anestheticDef = HediffDefOf.Anesthetic;
+                if (anestheticDef != null)
+                    generatedPawn.health.AddHediff(anestheticDef, null, null);
+
+                // Apply Bliss Lobotomy if Anomaly is running
+                if (ModsConfig.AnomalyActive)
+                {
+                    HediffDef blissLobotomyDef = HediffDefOf.BlissLobotomy;
+                    if (blissLobotomyDef != null)
+                    {
+                        LuxandraDebugActions.DebugLogMessage($"Lobotomizing the sex slave.");
+                        BodyPartRecord brain = generatedPawn.health.hediffSet.GetBrain();
+                        if (brain != null)
+                            generatedPawn.health.AddHediff(blissLobotomyDef, brain, null);
+                    }
+                }
+
+                // Define the drop cell and drop it
+                if (!DropCellFinder.TryFindDropSpotNear(pawn.Position, map, out IntVec3 dropSpot, false, false, false))
+                {
+                    dropSpot = DropCellFinder.RandomDropSpot(map);
+                }
+
+                ActiveTransporterInfo activeTransporterInfo = new ActiveTransporterInfo();
+                activeTransporterInfo.innerContainer.TryAdd(generatedPawn);
+                DropPodUtility.MakeDropPodAt(dropSpot, map, activeTransporterInfo);
+
+                LuxandraComp.PayForLuxandraServices(50);
+                Messages.Message($"Your request to Luxandra consumed 50 Favor to summon a {genderText} slave.", MessageTypeDefOf.TaskCompletion, false);
+            };
+
+            yesOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(yesOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenRequestSexSlaveDialogue(pawn);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Confirm {genderText} thrall request");
+        }
+
         #endregion
 
         #region Request Slave Traders
@@ -89,7 +233,7 @@ namespace LuxandraLust
             rootSelectionNode.options.Add(slaverOption);
 
             // Add a back button inside the sub-menu to return to our main category listing
-            DiaOption subMenuBack = new DiaOption("No, choose something else");
+            DiaOption subMenuBack = new DiaOption("No, choose something else.");
             subMenuBack.action = () => OpenRootDialogue(pawn);
             rootSelectionNode.options.Add(subMenuBack);
 
@@ -103,7 +247,7 @@ namespace LuxandraLust
 
             DiaNode confirmNode = new DiaNode(text);
 
-            DiaOption yesOption = new DiaOption("Yes, request it");
+            DiaOption yesOption = new DiaOption("Yes, request it.");
 
             bool failedToFindTrader = false;
 
@@ -176,7 +320,7 @@ namespace LuxandraLust
             yesOption.resolveTree = true; // This finishes the interaction entirely
             confirmNode.options.Add(yesOption);
 
-            DiaOption noOption = new DiaOption("No, choose something else");
+            DiaOption noOption = new DiaOption("No, choose something else.");
             noOption.action = () => OpenRequestSlaverDialogue(pawn);
             confirmNode.options.Add(noOption);
 
@@ -277,7 +421,7 @@ namespace LuxandraLust
                 subMenuBack.action = () => ShowDialog(rootSelectionNode, "Select a Blessing");
                 subMenuNode.options.Add(subMenuBack);
 
-                // 2. Create the main menu option that links to this sub-node
+                // Create the main menu option that links to this sub-node
                 DiaOption categoryOption = new DiaOption(category.Name);
 
                 if (!anyEventAvailable)
@@ -331,7 +475,7 @@ namespace LuxandraLust
             yesOption.resolveTree = true; // This finishes the interaction entirely
             confirmNode.options.Add(yesOption);
 
-            DiaOption noOption = new DiaOption("No, choose something else");
+            DiaOption noOption = new DiaOption("No, choose something else.");
             noOption.action = () => OpenIncidentSelectionDialogue(pawn);
             confirmNode.options.Add(noOption);
 
