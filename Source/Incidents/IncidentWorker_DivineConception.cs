@@ -100,7 +100,7 @@ namespace LuxandraLust
                 letterLabel,
                 letterText,
                 LetterDefOf.PositiveEvent,
-                new TargetInfo(femalePawn.Position, map)
+                femalePawn
             );
             return true;
         }

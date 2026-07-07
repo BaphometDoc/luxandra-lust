@@ -157,4 +157,16 @@
     <baseChance>0.10</baseChance>
     <allowedBiomes />
   </IncidentDef>
+  
+  <IncidentDef>
+    <defName>Luxandra_Inc_ForbiddenConception</defName>
+    <label>forbidden conception</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>LuxandraLust.IncidentWorker_ForbiddenConception</workerClass>
+    <baseChance>0.10</baseChance>
+    <allowedBiomes />
+  </IncidentDef>
 </Defs>
