@@ -100,6 +100,9 @@ namespace LuxandraLust
                 case StorytellerKink.Futa:
                     flavorText = "Luxandra loves the best of both worlds. She enjoys seeing women with massive dicks, and men with enormous breasts hiding their vagina behind their throbbing cocks. The combination of both worlds is a true delight for her.";
                     break;
+                case StorytellerKink.Mechanophilia:
+                    flavorText = "Luxandra thinks you should fist the androids, as long as you are careful with the gears. After all, the metallic texture of our robotic friends are a unique experience on your skin... or inside you...";
+                    break;
             }
 
             return $"Current Obsession: {phaseName}\n\n{flavorText}";
@@ -141,6 +144,9 @@ namespace LuxandraLust
             if (IsFutaEnabled())
                 validKinks.Add(StorytellerKink.Futa);
 
+            if (IsMechanophiliaEnabled())
+                validKinks.Add(StorytellerKink.Mechanophilia);
+
             return validKinks;
         }
 
@@ -164,11 +170,11 @@ namespace LuxandraLust
         }
 
         /// <summary>
-        /// Valid condition: RJW bestiality option enabled
+        /// Valid condition: RJW bestiality option enabled or ElToroMechanoids loaded
         /// </summary>
         public static bool IsBestialityEnabled()
         {
-            if (RJWSettings.bestiality_enabled)
+            if (RJWSettings.bestiality_enabled || LuxandraModChecks.IsElToroBestialityActive())
                 return true;
 
             return false;
@@ -226,6 +232,17 @@ namespace LuxandraLust
         {
             if (RJWSettings.futa_natives_chance > 0 || RJWSettings.futa_nymph_chance > 0 || RJWSettings.futa_spacers_chance > 0 ||
                 RJWSettings.FemaleFuta || RJWSettings.GenderlessAsFuta)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Valid condition: RJW option enabled or ElToroMechanoids loaded
+        /// </summary>
+        public static bool IsMechanophiliaEnabled()
+        {
+            if (LuxandraModChecks.IsElToroMechanoidsActive() || RJWSettings.mechanophilia_enabled)
                 return true;
 
             return false;

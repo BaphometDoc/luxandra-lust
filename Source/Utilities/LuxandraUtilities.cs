@@ -236,6 +236,42 @@ namespace LuxandraLust
         }
 
         /// <summary>
+        /// Check if the pawn has robotic genitals (aka is an android)
+        /// </summary>
+        public static bool HasRoboticBodyPart(Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.hediffs == null) return false;
+
+            // Iterate through the pawn's active health conditions
+            foreach (Hediff hediff in pawn.health.hediffSet.hediffs)
+            {
+                // Ensure the hediff is a physical added/implanted body part
+                if (hediff is Hediff_AddedPart || hediff is Hediff_Implant)
+                {
+                    // Fetch the physical item that was used to install this part
+                    ThingDef sourceItem = hediff.def.spawnThingOnRemoved;
+
+                    // Fallback: Check if RJW or VREA uses direct def mapping
+                    if (sourceItem == null)
+                    {
+                        sourceItem = DefDatabase<ThingDef>.GetNamedSilentFail(hediff.def.defName);
+                    }
+
+                    // Match against the parent category
+                    if (sourceItem?.thingCategories != null)
+                    {
+                        if (sourceItem.thingCategories.Any(c => c.defName == "VREA_BodyPartsAndroid"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Verifies if the sex act that just happened matches the current kink
         /// from the storyteller. (Return nulls if the sex actor is not a player humanlike)
         /// </summary>
@@ -345,6 +381,11 @@ namespace LuxandraLust
                 // Kink = Futa: chicks with dicks, and men with pussyes and/or breasts
                 case StorytellerKink.Futa:
                     if (GenderHelper.GetSex(actor) == GenderHelper.Sex.Futa || GenderHelper.GetSex(actor) == GenderHelper.Sex.Trap || GenderHelper.GetSex(partner) == GenderHelper.Sex.Futa || GenderHelper.GetSex(partner) == GenderHelper.Sex.Trap)
+                        return true;
+                    break;
+                // Kink = Mechanophilia: androids, mechs
+                case StorytellerKink.Mechanophilia:
+                    if ((actor.mechanitor?.OverseenPawns.Count > 0 && partner.IsColonyMech) || actor.RaceProps.IsMechanoid || partner.RaceProps.IsMechanoid || HasRoboticBodyPart(actor) || HasRoboticBodyPart(partner))
                         return true;
                     break;
             }

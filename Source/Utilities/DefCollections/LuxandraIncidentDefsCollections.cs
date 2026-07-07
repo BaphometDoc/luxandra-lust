@@ -701,6 +701,9 @@ namespace LuxandraLust
             if (tags.Contains(StorytellerKink.Futa) && !LuxandraKinkTracker.IsFutaEnabled())
                 return false;
 
+            if (tags.Contains(StorytellerKink.Mechanophilia) && !LuxandraKinkTracker.IsMechanophiliaEnabled())
+                return false;
+
             return true;
         }
     }
