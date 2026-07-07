@@ -647,6 +647,13 @@ namespace LuxandraLust
             }
 
             int incidentsDisabledCauseKinks = 0;
+            if (LuxandraModSettings.enableLogging)
+            {
+                var enabledKinks = LuxandraKinkTracker.GetEnabledKinks();
+                var listOfEnabledKinks = string.Join(" - ", enabledKinks);
+
+                LuxandraDebugActions.DebugLogMessage($"{enabledKinks.Count} kinks enabled: {listOfEnabledKinks}");
+            }
             // Finally, remove all incidents with tags incompatible with the enabled kinks
             foreach (var incident in temporaryList)
             {
