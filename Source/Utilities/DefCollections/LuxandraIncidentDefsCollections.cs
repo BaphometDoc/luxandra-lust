@@ -80,6 +80,7 @@ namespace LuxandraLust
 
         // Other random stuff
         public static IncidentDef Luxandra_Inc_ForbiddenLove;
+        public static IncidentDef Luxandra_Inc_DivineConception;
         public static IncidentDef Luxandra_Inc_WetDreamIncident;
         public static IncidentDef Luxandra_Inc_StripQuake;
         public static IncidentDef Luxandra_Inc_CumMeteor;
@@ -402,6 +403,14 @@ namespace LuxandraLust
                 description: "A couple of close relatives developed a forbidden relationship.",
                 pointBaseCost: 50,
                 kinks: new[] { StorytellerKink.Incest, StorytellerKink.Pregnancy }
+            ));
+
+            temporaryList.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DivineConception,
+                incidentType: LuxandraIncidentType.Positive,
+                description: "A woman is suddently found pregnant. Who is the father?.",
+                pointBaseCost: 75,
+                kinks: new[] { StorytellerKink.Pregnancy }
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(

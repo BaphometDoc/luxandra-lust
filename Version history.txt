@@ -3,6 +3,7 @@
 - Updated the event database build logic since it was actually crashing in some cases
 - Added the possibility to request sex slaves from Luxandra. They are expensive (50 honor) but pretty much obedient to anything you'll ask them to do (read: Masochists, extremely unlikely to rebel, incapable of violence, but differently from nymphs, they are not hypersexual so can also actually do some work)
 - Said sex slaves can also arrive in a rare drop pod
+- Added Divine Conception and Forbidden Conception events
 
 0.12.1 - 06/07/2027
 - The monument is an actual statue of Luxandra now! Thanks LordHades for the beautiful design.

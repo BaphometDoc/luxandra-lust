@@ -146,4 +146,15 @@
 		<allowedBiomes/>
 	</IncidentDef>
   
+  <IncidentDef>
+    <defName>Luxandra_Inc_DivineConception</defName>
+    <label>divine conception</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>LuxandraLust.IncidentWorker_DivineConception</workerClass>
+    <baseChance>0.10</baseChance>
+    <allowedBiomes />
+  </IncidentDef>
 </Defs>
