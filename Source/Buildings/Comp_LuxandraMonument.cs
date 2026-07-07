@@ -29,7 +29,7 @@ namespace LuxandraLust
                 {
                     driver.AddFinishAction((Action) =>
                     {
-                        // FIX: Pass 'parent' (the Thing) instead of 'parent.Position' (the IntVec3)
+                        // If the building center is too far, use the pawn instead
                         if (selPawn.Position.AdjacentTo8WayOrInside(parent) && !selPawn.Downed && !selPawn.Dead)
                         {
                             OpenRootDialogue(selPawn);
@@ -98,7 +98,8 @@ namespace LuxandraLust
 
         private void OpenSlaverConfirmationDialogue(Pawn pawn)
         {
-            string text = $"Are you sure you want to spend 10 Favor to request the visit a Slave Trader?\n\nYou would have {LuxandraComp.colonyFavorPoints - 10} left after the request.";
+            string text = $"Are you sure you want to spend 10 Favor to request the visit a Slave Trader?\n\nYou would have {LuxandraComp.colonyFavorPoints - 10} left after the request." +
+                           "\n\n\n\n<i>Dev note: Summoning merchants can occasionally fail due to Rimworld innate issues. It is recommended to save the game if you don't want to risk to occasionally waste the points without any trader showing up.</i>";
 
             DiaNode confirmNode = new DiaNode(text);
 
