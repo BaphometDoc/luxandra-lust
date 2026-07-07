@@ -76,6 +76,7 @@
     <Compile Include="Incidents\IncidentWorker_ForbiddenLove.cs" />
     <Compile Include="Incidents\IncidentWorker_IntimateInfestation.cs" />
     <Compile Include="Incidents\IncidentWorker_StripQuake.cs" />
+    <Compile Include="Incidents\IncidentWorker_ThrallPodCrash.cs" />
     <Compile Include="Incidents\IncidentWorker_WetDream.cs" />
     <Compile Include="Incidents\IncidentWorker_WetDreamsPulse.cs" />
     <Compile Include="Incidents\MechClusters\IncidentWorker_WetDreamsPulseMechCluster.cs" />

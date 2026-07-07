@@ -72,6 +72,7 @@ namespace LuxandraLust
 
         // Boons
         public static IncidentDef Luxandra_Inc_LustfulSupplies;
+        public static IncidentDef Luxandra_Inc_ThrallPodCrash;
         public static IncidentDef Luxandra_Inc_BustyCurse;
 
         // Quests incidents
@@ -371,6 +372,12 @@ namespace LuxandraLust
                 incidentType: LuxandraIncidentType.Positive,
                 description: "A drop of supplies for your more exotic needs.",
                 pointBaseCost: 55
+            ));
+
+            temporaryList.Add(new LuxandraIncidentDefs(
+                incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_ThrallPodCrash,
+                incidentType: LuxandraIncidentType.Positive,
+                description: "A submissive slave will crash in your base."
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(

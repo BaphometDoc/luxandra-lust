@@ -11,16 +11,15 @@
 		<initialWillRange>1~3</initialWillRange>
 		<initialResistanceRange>1~10</initialResistanceRange>
     
-	<fixedChildBackstories>
-      <li>Luxandra_vatgrown_sex_slave</li>
-    </fixedChildBackstories>
-    
-    <fixedAdultBackstories>
-      <li>Luxandra_tender</li>
-      <li>Luxandra_chatty</li>
-      <li>Luxandra_broken</li>
-      <li>Luxandra_homekeeper</li>
-    </fixedAdultBackstories>
+		<fixedChildBackstories>
+			<li>Luxandra_vatgrown_sex_slave</li>
+		</fixedChildBackstories>
+		<fixedAdultBackstories>
+			<li>Luxandra_tender</li>
+			<li>Luxandra_chatty</li>
+			<li>Luxandra_broken</li>
+			<li>Luxandra_homekeeper</li>
+		</fixedAdultBackstories>
 	
 		<skills>
 			<li MayRequire="rjw.sexperience">
@@ -28,8 +27,6 @@
 				<range>15~20</range>
 			</li>
 		</skills>
-    
-		<!-- Enforce the core mental profile -->
 		<forcedTraits>
 			<li>Nudist</li>
 			<li>Masochist</li>
@@ -67,37 +64,37 @@
 	
 	<!-- Xenotype -->
 	
-  <XenotypeDef>
-    <defName>Luxandra_CarnalThrall</defName>
-    <label>carnal thrall</label>
-    <description>A custom-tailored genetic lineage engineered strictly for domestic submission and compliance. They lack any capacity for violence or self-preservation, shifting all biological priority toward resilience, aesthetic appeal, and absolute docility.</description>
-    <iconPath>UI/Icons/Xenotypes/CarnalSlaves</iconPath>
-    <inheritable>false</inheritable>
-    <genes>
-      <!-- ================= Core Vanilla Genes ================= -->
-      <li>StrongStomach</li>
-      <li>Aggression_DeadCalm</li>
-      <li>ViolenceDisabled</li>
-      <li>Beauty_Pretty</li>
-      <li>Body_Standard</li>
-      <li>Body_Thin</li>
-      <!-- ================= Alpha Genes ================= -->
-      <li MayRequire="sarg.alphagenes">AG_ReducedRaidPresence</li>
-      <li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_Low</li>
-      <li MayRequire="sarg.alphagenes">AG_HardBones</li>
-      <li MayRequire="sarg.alphagenes">AG_FrailSkin</li>
-      <li MayRequire="sarg.alphagenes">AG_InnerPeace</li>
-      <li MayRequire="sarg.alphagenes">AlphaGenes_ExoticOrganism</li>
-      <!-- ================= RJW Genes ================= -->
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_bisexual</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_demonic_genitalia</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_big_male_genitalia</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_big_breasts</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_basic_rut</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_inflatable</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_elasticity</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_unbreakable</li>
-      <li MayRequire="Vegapnk.rjw.genes">rjw_genes_electric_satisfaction</li>
-    </genes>
-  </XenotypeDef>
+	<XenotypeDef>
+		<defName>Luxandra_CarnalThrall</defName>
+		<label>carnal thrall</label>
+		<description>A custom-tailored genetic lineage engineered strictly for domestic submission and compliance. They lack any capacity for violence or self-preservation, shifting all biological priority toward resilience, aesthetic appeal, and absolute docility.</description>
+		<iconPath>UI/Icons/Xenotypes/CarnalSlaves</iconPath>
+		<inheritable>false</inheritable>
+		<genes>
+			<!-- ================= Core Vanilla Genes ================= -->
+			<li>StrongStomach</li>
+			<li>Aggression_DeadCalm</li>
+			<li>ViolenceDisabled</li>
+			<li>Beauty_Pretty</li>
+			<li>Body_Standard</li>
+			<li>Body_Thin</li>
+			<!-- ================= Alpha Genes ================= -->
+			<li MayRequire="sarg.alphagenes">AG_ReducedRaidPresence</li>
+			<li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_Low</li>
+			<li MayRequire="sarg.alphagenes">AG_HardBones</li>
+			<li MayRequire="sarg.alphagenes">AG_FrailSkin</li>
+			<li MayRequire="sarg.alphagenes">AG_InnerPeace</li>
+			<li MayRequire="sarg.alphagenes">AlphaGenes_ExoticOrganism</li>
+			<!-- ================= RJW Genes ================= -->
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_bisexual</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_demonic_genitalia</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_big_male_genitalia</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_big_breasts</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_basic_rut</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_inflatable</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_elasticity</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_unbreakable</li>
+			<li MayRequire="Vegapnk.rjw.genes">rjw_genes_electric_satisfaction</li>
+		</genes>
+	</XenotypeDef>
 </Defs>

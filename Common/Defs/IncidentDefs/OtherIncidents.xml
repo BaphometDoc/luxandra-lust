@@ -133,4 +133,17 @@
 			<li>Map_PlayerHome</li>
 		</targetTags>
 	</IncidentDef>
+	
+	<IncidentDef>
+		<defName>Luxandra_Inc_ThrallPodCrash</defName>
+		<label>thrall pod crash</label>
+		<category>Misc</category>
+		<targetTags>
+			<li>Map_PlayerHome</li>
+		</targetTags>
+		<workerClass>LuxandraLust.IncidentWorker_ThrallPodCrash</workerClass>
+		<baseChance>0.05</baseChance>
+		<allowedBiomes/>
+	</IncidentDef>
+  
 </Defs>
