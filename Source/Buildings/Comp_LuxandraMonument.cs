@@ -122,9 +122,9 @@ namespace LuxandraLust
             femaleSlaveOption.action = () => OpenSexSlaveConfirmationDialogue(pawn, Gender.Female);
             rootSelectionNode.options.Add(femaleSlaveOption);
 
-            // Add a back button inside the sub-menu to return to our main category listing
+            // Add a back button inside the sub-menu to people request section
             DiaOption subMenuBack = new DiaOption("No, choose something else.");
-            subMenuBack.action = () => OpenRootDialogue(pawn);
+            subMenuBack.action = () => OpenPeopleRequestDialogue(pawn);
             rootSelectionNode.options.Add(subMenuBack);
 
             ShowDialog(rootSelectionNode, "Request a servant");
@@ -172,6 +172,23 @@ namespace LuxandraLust
                 Pawn generatedPawn = PawnGenerator.GeneratePawn(request);
                 generatedPawn.apparel?.DestroyAll();
 
+                // Clear any health issue the pawn may have. Only the best for our followers
+                for (int i = generatedPawn.health.hediffSet.hediffs.Count - 1; i >= 0; i--)
+                {
+                    Hediff h = generatedPawn.health.hediffSet.hediffs[i];
+
+                    // Identify chronic diseases, injuries, addictions, and toxicities
+                    if (h is Hediff_Injury || h is Hediff_Addiction ||
+                        h.def.isBad || h.def.makesSickThought)
+                    {
+                        // Double check it's not a vital modded added part
+                        if (!(h is Hediff_AddedPart))
+                        {
+                            generatedPawn.health.RemoveHediff(h);
+                        }
+                    }
+                }
+
                 // Apply Anesthetic (Whole body/Null part)
                 HediffDef anestheticDef = HediffDefOf.Anesthetic;
                 if (anestheticDef != null)
@@ -199,6 +216,21 @@ namespace LuxandraLust
                 ActiveTransporterInfo activeTransporterInfo = new ActiveTransporterInfo();
                 activeTransporterInfo.innerContainer.TryAdd(generatedPawn);
                 DropPodUtility.MakeDropPodAt(dropSpot, map, activeTransporterInfo);
+
+                // With sexperience they're always virgin even if for any reason they wouldn't be
+                if (LuxandraModChecks.IsSexperienceActive())
+                {
+                    TraitDef virginTraitDef = DefDatabase<TraitDef>.GetNamedSilentFail("Virgin");
+                    if (virginTraitDef != null)
+                    {
+                        // Add the trait if they don't have it
+                        if (!generatedPawn.story.traits.HasTrait(virginTraitDef))
+                        {
+                            Trait virginTrait = new Trait(virginTraitDef, 0, forced: true);
+                            generatedPawn.story.traits.GainTrait(virginTrait);
+                        }
+                    }
+                }
 
                 LuxandraComp.PayForLuxandraServices(50);
                 Messages.Message($"Your request to Luxandra consumed 50 Favor to summon a {genderText} slave.", MessageTypeDefOf.TaskCompletion, false);
@@ -232,9 +264,9 @@ namespace LuxandraLust
             slaverOption.action = () => OpenSlaverConfirmationDialogue(pawn);
             rootSelectionNode.options.Add(slaverOption);
 
-            // Add a back button inside the sub-menu to return to our main category listing
+            // Add a back button inside the sub-menu to people request section
             DiaOption subMenuBack = new DiaOption("No, choose something else.");
-            subMenuBack.action = () => OpenRootDialogue(pawn);
+            subMenuBack.action = () => OpenPeopleRequestDialogue(pawn);
             rootSelectionNode.options.Add(subMenuBack);
 
             ShowDialog(rootSelectionNode, "Request the visit of a slaver");

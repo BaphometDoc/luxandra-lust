@@ -30,9 +30,6 @@
 		<forcedTraits>
 			<li>Nudist</li>
 			<li>Masochist</li>
-			<li MayRequire="rjw.sexperience">
-				<def>Virgin</def>
-			</li>
 		</forcedTraits>
 
 		<apparelMoney>0~0</apparelMoney>
