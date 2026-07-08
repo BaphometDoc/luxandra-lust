@@ -47,32 +47,14 @@ namespace LuxandraLust
             if (!LuxandraUtilities.IsPregnant(femalePawn) && LuxandraUtilities.IsAdult(femalePawn))
             {
                 LuxandraDebugActions.DebugLogMessage("Pawn not pregnant, creating hediff...");
-                if (RJWPregnancySettings.UseVanillaPregnancy)
-                {
-                    LuxandraDebugActions.DebugLogMessage("Attempting to create Biotech pregnancy.");
-                    // Create the pregnancy
-                    Hediff_Pregnant hediff_Pregnant = (Hediff_Pregnant)HediffMaker.MakeHediff(HediffDefOf.PregnantHuman, femalePawn, null);
-                    GeneSet inheritedGeneSet = PregnancyUtility.GetInheritedGeneSet(femalePawn, femalePawn, out _);
-                    hediff_Pregnant.SetParents(femalePawn, femalePawn, inheritedGeneSet);
-                    if (hediff_Pregnant != null)
-                    {
-                        hediff_Pregnant.Severity = 0.05f;
-                    }
 
+                LuxandraDebugActions.DebugLogMessage("Attempting to create pregnancy.");
+                PregnancyHelper.AddPregnancyHediff(femalePawn, femalePawn);
+
+                if (LuxandraUtilities.IsPregnant(femalePawn))
+                {
                     isPregnant = true;
-                    LuxandraDebugActions.DebugLogMessage("Biotech pregnancy created successfully.");
-                }
-                else
-                {
-
-                    LuxandraDebugActions.DebugLogMessage("Attempting to create RJW pregnancy.");
-                    PregnancyHelper.AddPregnancyHediff(femalePawn, femalePawn);
-
-                    if (LuxandraUtilities.IsPregnant(femalePawn))
-                    {
-                        isPregnant = true;
-                        LuxandraDebugActions.DebugLogMessage("RJW pregnancy created successfully.");
-                    }
+                    LuxandraDebugActions.DebugLogMessage("RJW pregnancy created successfully.");
                 }
 
                 if (isPregnant && (CurrentKink == StorytellerKink.Pregnancy))

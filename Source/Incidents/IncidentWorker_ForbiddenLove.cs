@@ -64,24 +64,10 @@ namespace LuxandraLust
             if (!LuxandraUtilities.IsPregnant(femalePawn) && LuxandraUtilities.IsAdult(femalePawn) && LuxandraUtilities.IsAdult(malePawn))
             {
                 LuxandraDebugActions.DebugLogMessage("Pawn not pregnant, creating hediff...");
-                if (RJWPregnancySettings.UseVanillaPregnancy)
-                {
-                    LuxandraDebugActions.DebugLogMessage("Attempting to create Biotech pregnancy.");
-                    // Create the pregnancy
-                    Hediff_Pregnant hediff_Pregnant = (Hediff_Pregnant)HediffMaker.MakeHediff(HediffDefOf.PregnantHuman, femalePawn, null);
-                    GeneSet inheritedGeneSet = PregnancyUtility.GetInheritedGeneSet(malePawn, femalePawn, out _);
-                    hediff_Pregnant.SetParents(femalePawn, malePawn, inheritedGeneSet);
-                    if (hediff_Pregnant != null)
-                    {
-                        hediff_Pregnant.Severity = 0.05f;
-                    }
 
-                    isPregnant = true;
-                    LuxandraDebugActions.DebugLogMessage("Biotech pregnancy created successfully.");
-                }
-                else if (PregnancyHelper.isFertile(femalePawn) && PregnancyHelper.isFertile(malePawn))
+                if (PregnancyHelper.isFertile(femalePawn) && PregnancyHelper.isFertile(malePawn))
                 {
-                    LuxandraDebugActions.DebugLogMessage("Attempting to create RJW pregnancy.");
+                    LuxandraDebugActions.DebugLogMessage("Attempting to create pregnancy.");
                     PregnancyHelper.AddPregnancyHediff(femalePawn, malePawn);
 
                     if (LuxandraUtilities.IsPregnant(femalePawn))
