@@ -61,7 +61,11 @@ namespace LuxandraLust
         /// <summary>
         /// Allows events that would spawn cum filth to spawn the full intended amount
         /// </summary>
-        public static bool allowFullCumStains = false;
+        public static bool allowFullCumStains = true;
+        /// <summary>
+        /// Allows Luxandra's Monument to change shape to match her current kink
+        /// </summary>
+        public static bool enableMonumentKinkShift = true;
         /// <summary>
         /// Removes the romance restrictions for close relatives
         /// </summary>
@@ -100,7 +104,8 @@ namespace LuxandraLust
                 enablePleasedNotification = true;
                 enableChildbirthAppraisal = true;
                 trackChildbirthAppraisalForAnimals = false;
-                allowFullCumStains = false;
+                allowFullCumStains = true;
+                enableMonumentKinkShift = true;
                 removeRomanceRestrictions = false;
 
                 SoundDefOf.Click.PlayOneShotOnCamera();
@@ -118,13 +123,17 @@ namespace LuxandraLust
 
             if (enableChildbirthAppraisal)
             {
-                // Enable Childbirth Appraisal
+                // Enable Childbirth Appraisal for colony animals
                 listingStandard.CheckboxLabeled("Enable Childbirth Appraisal for colony animals", ref trackChildbirthAppraisalForAnimals, "Births from colony animals will also be judged for your Bestiality affinity if birth humans.");
                 listingStandard.Gap(16f);
             }
 
-            // Enable Childbirth Appraisal
+            // Enable Full Cumstains
             listingStandard.CheckboxLabeled("Allow Cum Stains Mass-Spawning", ref allowFullCumStains, "Allows events that are meant to spawn large amount of cum filth to spawn the full amount.\n\nThis can be laggy on slower machines or large colonies, use with caution.");
+            listingStandard.Gap(16f);
+
+            // Enable Monument's Kink Shift
+            listingStandard.CheckboxLabeled("Enable Luxandra's Monument's Kink Affinity (NSFW)", ref enableMonumentKinkShift, "Allows Luxandra's Monument to change shape to match her current active kink.\n\nIf disabled, it stays in its No Kink form. (Reload the save to apply properly)");
             listingStandard.Gap(16f);
 
             // Enable Romance Patches
@@ -274,7 +283,7 @@ namespace LuxandraLust
             Scribe_Values.Look(ref weeklyCycleDays, "weeklyCycleDays", 7);
             Scribe_Values.Look(ref enableChildbirthAppraisal, "enableChildbirthAppraisal", true);
             Scribe_Values.Look(ref trackChildbirthAppraisalForAnimals, "trackChildbirthAppraisalForAnimals", false);
-            Scribe_Values.Look(ref allowFullCumStains, "allowFullCumStains", false);
+            Scribe_Values.Look(ref allowFullCumStains, "allowFullCumStains", true);
             Scribe_Values.Look(ref removeRomanceRestrictions, "removeRomanceRestrictions", false);
         }
     }

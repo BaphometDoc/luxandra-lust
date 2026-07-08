@@ -11,6 +11,9 @@ namespace LuxandraLust
         [HarmonyPostfix]
         public static void Postfix(Thing __instance, ref Graphic __result)
         {
+            if (!LuxandraModSettings.enableMonumentKinkShift)
+                return;
+
             var comp = __instance.TryGetComp<Comp_LuxandraMonument>();
             if (comp != null && __instance.def != null)
             {
