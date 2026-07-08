@@ -267,11 +267,11 @@ namespace LuxandraLust
     {
         protected override ThoughtState CurrentSocialStateInternal(Pawn pawn, Pawn otherPawn)
         {
-            // 1. Must be an adult male with the hediff
+            // Must be an adult male with the hediff
             if (pawn.gender != Gender.Male || pawn.health?.hediffSet?.HasHediff(DefDatabase<HediffDef>.GetNamed("Luxandra_PulseAdultMale")) == false)
                 return false;
 
-            // 2. The person they are looking at must be female
+            // The person they are looking at must be female
             if (otherPawn.gender == Gender.Female)
             {
                 return true; // Apply the opinion boost/shift towards her!

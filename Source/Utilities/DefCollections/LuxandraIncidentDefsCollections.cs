@@ -163,13 +163,13 @@ namespace LuxandraLust
         /// </summary>
         public static void ReinitializeIncidentPool()
         {
-            // 1. Flip the flag so systems know we are in a mutating state
+            // Flip the flag so systems know we are in a mutating state
             _isInitialized = false;
 
-            // 2. Clear the master list contents (handles the readonly constraint safely)
+            // Clear the master list contents (handles the readonly constraint safely)
             _allIncidents.Clear();
 
-            // 3. Wipe out the cached sub-lists by allocating empty lists
+            // Wipe out the cached sub-lists by allocating empty lists
             _positiveIncidents = new List<LuxandraIncidentDefs>();
             _negativeIncidents = new List<LuxandraIncidentDefs>();
             _negativeIncidentsNoRaids = new List<LuxandraIncidentDefs>();

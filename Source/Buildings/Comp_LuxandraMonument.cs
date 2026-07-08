@@ -15,20 +15,23 @@ namespace LuxandraLust
         private GameComponent_LuxandraLust LuxandraComp => GameComponent_LuxandraLust.Instance;
         public Dictionary<StorytellerKink, Graphic> graphicCache = new Dictionary<StorytellerKink, Graphic>();
 
+        /// <summary>
+        /// Lets the statue know the kink is changed so must change look
+        /// </summary>
         public void Notify_KinkChanged()
         {
             if (this.parent == null) return;
 
-            // 1. Clear RimWorld's internal cached graphic reference for this specific building instance
+            // Clear RimWorld's internal cached graphic reference for this specific building instance
             // This forces it to evaluate the Graphic property getter fresh next frame
             this.parent.Notify_ColorChanged();
 
-            // 2. Tell the map renderer that the pixels on this tile are dirty and must be redrawn
+            // Tell the map renderer that the pixels on this tile are dirty and must be redrawn
             if (this.parent.Spawned)
             {
                 this.parent.Map.mapDrawer.MapMeshDirty(this.parent.Position, MapMeshFlagDefOf.Things);
 
-                // Optional visual flare to hide the sudden snap
+                // TODO Visual flare to hide the sudden snap that I need to get working at some point
                 //MoteMaker.MakeStaticMote(this.parent.Position, this.parent.Map, ThingDefOf.Mote_PowerBeam);
             }
         }
@@ -754,16 +757,16 @@ namespace LuxandraLust
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            // 1. Let vanilla components draw their own gizmos first (like deconstruction or minifying)
+            // Let vanilla components draw their own gizmos first (like deconstruction or minifying)
             foreach (Gizmo gizmo in base.CompGetGizmosExtra())
             {
                 yield return gizmo;
             }
 
-            // 2. Make sure our data component actually exists before drawing the button
+            // Make sure component actually exists before drawing the button
             if (LuxandraComp != null)
             {
-                // 3. Create a standard command button
+                // Create a standard command button
                 Command_Action favorGizmo = new Command_Action();
 
                 favorGizmo.defaultLabel = "Check Favor";
