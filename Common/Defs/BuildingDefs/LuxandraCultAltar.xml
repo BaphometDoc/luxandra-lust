@@ -18,6 +18,14 @@
 		<filthLeaving>Filth_RubbleRock</filthLeaving>
 		<uiIconScale>0.8</uiIconScale>
 		<uiIconOffset>(0, 0.04)</uiIconOffset>
+    
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Stony</li>
+		</stuffCategories>
+		<costList>
+			<Luxandra_HeartOfLust>1</Luxandra_HeartOfLust>
+		</costList>
 	
 		<thingCategories>
 			<li>BuildingsMisc</li>
@@ -33,14 +41,6 @@
 				<glowRadius>10</glowRadius>
 				<glowColor>(255, 182, 193, 0)</glowColor>
 			</li>
-		</comps>
-    
-		<stuffCategories>
-			<li>Metallic</li>
-			<li>Stony</li>
-		</stuffCategories>
-
-		<comps>
 			<li Class="LuxandraLust.CompProperties_LuxandraMonument"/>
 			<li Class="CompProperties_MeditationFocus">
 				<statDef>MeditationFocusStrength</statDef>
