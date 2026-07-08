@@ -91,6 +91,11 @@ Make her proud.					</text>
 					<thingDef>Milk</thingDef>
 					<count>50</count>
 				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Luxandra_HeartOfLust</thingDef>
+					<count>2</count>
+				</li>
 				<li Class="ScenPart_StartingAnimal">
 					<def>StartingAnimal</def>
 					<animalKind>Chicken</animalKind>

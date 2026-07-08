@@ -1,3 +1,5 @@
+0.15 - in dev...
+
 0.14 - 08/07/2026
 - Added Mechanophilia kink (tracks sex with mechanoids or VE androids)
 - Added Tentacles kink (tracks sex with the few entities that can, and mimics from onahole at some point)
@@ -6,7 +8,7 @@
 - Added the option to trade 100 Cum for 10 Favor
 - Added the option to request healing from Luxandra for 50 Favor (this is effectively a Healing Mech Serum effect)
 - We actually have real art for Luxandra now! Thanks ScorchedRose9
-- The statue now requires a exotic Heart of Lust component to be built. This is available from (most) exotic merchants and can be found as quest reward.
+- The statue now requires a exotic Heart of Lust component to be built. This is available from (most) exotic merchants and can be found as quest reward. (The Cult and Amazon scenarios start with some)
 - The statue of Luxandra now emits some light, is minifiable, and also has another special cool feature (albeith not finished, but there as preview - can be turned off from options).
 - Added partial Traditional Chinese translation by baphomet6044 / 美好的一天，夥計。
 

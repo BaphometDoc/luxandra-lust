@@ -118,6 +118,11 @@ Since you start naked with few resources, this is a difficult scenario.</descrip
 					<thingDef>Pila</thingDef>
 					<quality>Good</quality>
 				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+					<def>StartingThing_Defined</def>
+					<thingDef>Luxandra_HeartOfLust</thingDef>
+					<count>1</count>
+				</li>
 				<li Class="ScenPart_ScatterThingsNearPlayerStart">
 					<def>ScatterThingsNearPlayerStart</def>
 					<thingDef>WoodLog</thingDef>
