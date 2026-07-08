@@ -4,6 +4,7 @@
 - Ghouls and Creepjoiners can't be targetted by events anymore (should fix some crash situations)
 - Added a linkable to the altar. Fill the offering with cum (Used Condoms, or Cum from Cumpilation) to trade it for rewards.
 - Added the option to trade 100 Cum for 10 Favor
+- Added the option to request healing from Luxandra for 50 Favor (this is effectively a Healing Mech Serum effect)
 - We actually have a non AI art for Luxandra now! Thanks ScorchedRose9
 - Added partial Traditional Chinese translation by baphomet6044 / 美好的一天，夥計。
 

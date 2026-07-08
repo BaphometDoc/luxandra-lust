@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace LuxandraLust
 {
@@ -117,10 +118,15 @@ namespace LuxandraLust
 
             DiaNode rootNode = new DiaNode(text);
 
-            // Option: Pray for a blessing (open list)
+            // Option: Request a blessing (open list)
             DiaOption prayOption = new DiaOption("Pray for a blessing.");
-            prayOption.action = () => OpenIncidentSelectionDialogue(pawn);
+            prayOption.action = () => OpenBlessingSelectionDialogue(pawn);
             rootNode.options.Add(prayOption);
+
+            // Option: Request a event (open list)
+            DiaOption eventOption = new DiaOption("Request a event.");
+            eventOption.action = () => OpenIncidentSelectionDialogue(pawn);
+            rootNode.options.Add(eventOption);
 
             // Option: Request more people (open list)
             DiaOption peopleOption = new DiaOption("Request more people.");
@@ -210,6 +216,70 @@ namespace LuxandraLust
         }
         #endregion
 
+        #region Request Blessings
+        private void OpenBlessingSelectionDialogue(Pawn pawn)
+        {
+            DiaNode rootSelectionNode = new DiaNode($"<color=#D4AF37>Luxandra</color>:\n\nYou request my aid? Are you facing dire challenges, or are you just feeling lonely?");
+
+            bool enableHealing = true;
+            HealthUtility.TryGetWorstHealthCondition(pawn, out var hediff, out var bodyPart);
+            if (hediff == null && bodyPart == null)
+                enableHealing = false;
+
+            DiaOption healingOption = new DiaOption("(50 Favor) Request healing.");
+            if (LuxandraComp.colonyFavorPoints < 50)
+            {
+                healingOption.Disable($"Requires {50} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+            }
+            else if (enableHealing == false)
+            {
+                healingOption.Disable($"{pawn.NameShortColored} is not injured.");
+            }
+            healingOption.action = () => OpenHealingConfirmationDialogue(pawn);
+            rootSelectionNode.options.Add(healingOption);
+
+            // Add a back button inside the sub-menu to people request section
+            DiaOption subMenuBack = new DiaOption("No, choose something else.");
+            subMenuBack.action = () => OpenPeopleRequestDialogue(pawn);
+            rootSelectionNode.options.Add(subMenuBack);
+
+            ShowDialog(rootSelectionNode, "Pray for a blessing");
+        }
+
+        private void OpenHealingConfirmationDialogue(Pawn pawn)
+        {
+            HealthUtility.TryGetWorstHealthCondition(pawn, out var hediff, out var bodyPart);
+            string injuryName = hediff != null ? hediff.Label : bodyPart != null ? bodyPart.Label : "";
+            string text = $"Are you sure you want to spend 50 Favor to request healing {injuryName} for {pawn.NameFullColored}?\n\nYou would have {LuxandraComp.colonyFavorPoints - 50} left after the request.";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            DiaOption yesOption = new DiaOption("Yes, request it.");
+
+            yesOption.action = () =>
+            {
+                TaggedString taggedString = HealthUtility.FixWorstHealthCondition(pawn);
+
+                // 5. Add a nice thematic feedback message and sound effect
+                SoundDefOf.MechSerumUsed.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+
+                MoteMaker.MakeStaticMote(pawn.Position, pawn.Map, ThingDefOf.Mote_Bestow);
+
+                LuxandraComp.PayForLuxandraServices(50);
+                Messages.Message($"{pawn.NameShortColored} has received Luxandra's healing embrace. Their {injuryName} is cured in exchange for 50 Favor.", pawn, MessageTypeDefOf.PositiveEvent);
+            };
+
+            yesOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(yesOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenBlessingSelectionDialogue(pawn);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Request healing");
+        }
+        #endregion
+
         #region Request people
 
         private void OpenPeopleRequestDialogue(Pawn pawn)
@@ -240,7 +310,6 @@ namespace LuxandraLust
 
             ShowDialog(rootSelectionNode, "Request more people");
         }
-        #endregion
 
         #region Sex Slave Request
         private void OpenRequestSexSlaveDialogue(Pawn pawn)
@@ -500,6 +569,8 @@ namespace LuxandraLust
         }
 
         #endregion
+
+        #endregion Request people
 
         #region Request incidents
         private string DetermineSectionFlavorText(LuxandraIncidentType incidentType)
