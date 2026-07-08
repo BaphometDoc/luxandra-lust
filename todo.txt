@@ -4,7 +4,7 @@ List of features proposed
 Already existing mechanics updates to do
 - either the reroll or weekly cycle should decide events based on the type of sexual activity the colony has
 - Add more events involving the 3 factions
-- Statue should require a exotic component to obtain from exotic traders or a early "raid slave camp" quest
+- Early "raid slave camp" quest to acquire the Heart of Lust
 
 Various potential events
 - gender flip! (a classic)
