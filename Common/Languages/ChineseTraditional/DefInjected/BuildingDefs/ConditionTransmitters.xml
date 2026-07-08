@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Luxandra_FertilityPulseTransmitter -->
+  <Luxandra_FertilityPulseTransmitter.label>繁殖脈衝發信器</Luxandra_FertilityPulseTransmitter.label>
+  <Luxandra_FertilityPulseTransmitter.description>一座古老而低鳴作響的機械族原型裝置。它會利用局部精神頻率，向整片區域廣播強烈的繁殖過載訊號。</Luxandra_FertilityPulseTransmitter.description>
+
+  <!-- Luxandra_WetDreamsPulseTransmitter -->
+  <Luxandra_WetDreamsPulseTransmitter.label>春夢誘發器</Luxandra_WetDreamsPulseTransmitter.label>
+  <Luxandra_WetDreamsPulseTransmitter.description>一座古老而低鳴作響的機械族原型裝置。它會利用局部精神頻率，使區域內的人形生物在強烈感官刺激中醒來。</Luxandra_WetDreamsPulseTransmitter.description>
+
+</LanguageData>
