@@ -92,7 +92,8 @@ namespace LuxandraLust
             Incest,
             Implantation,
             Futa,
-            Mechanophilia
+            Mechanophilia,
+            Tentacles
         }
 
         /// <summary>

@@ -388,6 +388,11 @@ namespace LuxandraLust
                     if ((actor.mechanitor?.OverseenPawns.Count > 0 && partner.IsColonyMech) || actor.RaceProps.IsMechanoid || partner.RaceProps.IsMechanoid || HasRoboticBodyPart(actor) || HasRoboticBodyPart(partner))
                         return true;
                     break;
+                // Kink = Tentacles: Mimics from onahole, anomalies
+                case StorytellerKink.Tentacles:
+                    if (actor.IsEntity || partner.IsEntity || actor.def.defName == "Onahole_Mimic" || partner.def.defName == "Onahole_Mimic")
+                        return true;
+                    break;
             }
 
             return null;

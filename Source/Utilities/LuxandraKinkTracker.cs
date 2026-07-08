@@ -102,6 +102,9 @@ namespace LuxandraLust
             if (IsMechanophiliaEnabled())
                 validKinks.Add(StorytellerKink.Mechanophilia);
 
+            if (IsTentaclePornEnabled())
+                validKinks.Add(StorytellerKink.Tentacles);
+
             return validKinks;
         }
 
@@ -203,5 +206,12 @@ namespace LuxandraLust
             return false;
         }
 
+        public static bool IsTentaclePornEnabled()
+        {
+            if (LuxandraModChecks.IsForbiddenAnomaliesActive() || LuxandraModChecks.IsOnaholeActive() || LuxandraModChecks.IsDreadbedActive())
+                return true;
+
+            return false;
+        }
     }
 }
