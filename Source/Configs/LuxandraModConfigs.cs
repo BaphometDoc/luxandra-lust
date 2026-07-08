@@ -80,8 +80,7 @@ namespace LuxandraLust
             listingStandard.maxOneColumn = true;
             Rect outRect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height - 50f);
 
-            // Define the total height of the scroll area
-            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, dynamicContentHeight); // -16f prevents horizontal bar clipping
+            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, dynamicContentHeight);
 
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, true);
 
@@ -90,12 +89,16 @@ namespace LuxandraLust
             // Debug logging toggle
             if (Prefs.DevMode)
             {
-                listingStandard.CheckboxLabeled("Enable Debug Logging", ref enableLogging, "Shows most actions in the log. Very spammy, only for debugging.");
+                listingStandard.CheckboxLabeled(
+                    "Luxandra_Setting_EnableLogging_Label".Translate(),
+                    ref enableLogging,
+                    "Luxandra_Setting_EnableLogging_Desc".Translate()
+                );
                 listingStandard.Gap(12f);
             }
 
             // Reset
-            if (listingStandard.ButtonText("Reset to Default"))
+            if (listingStandard.ButtonText("Luxandra_Setting_Reset_Button".Translate()))
             {
                 enableLogging = false;
                 eventRerollCondition = 1;
@@ -114,37 +117,61 @@ namespace LuxandraLust
             listingStandard.Gap(16f);
 
             // Satisfaction notification toggle
-            listingStandard.CheckboxLabeled("Show Satisfaction Notifications", ref enablePleasedNotification, "Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks.\n\n(can be spammy in large colonies)");
+            listingStandard.CheckboxLabeled(
+                "Luxandra_Setting_ShowNotifications_Label".Translate(),
+                ref enablePleasedNotification,
+                "Luxandra_Setting_ShowNotifications_Desc".Translate()
+            );
             listingStandard.Gap(16f);
 
             // Enable Childbirth Appraisal
-            listingStandard.CheckboxLabeled("Enable Childbirth Appraisal", ref enableChildbirthAppraisal, "Enables the judging of children birth.\nLuxandra will compare the conception method with your colony beliefs (ideology > genes > traits) and either bless or curse you based on if they match.\n\n(She will judge Bestiality, then Prostitution, and then Rape)");
+            listingStandard.CheckboxLabeled(
+                "Luxandra_Setting_ChildbirthAppraisal_Label".Translate(),
+                ref enableChildbirthAppraisal,
+                "Luxandra_Setting_ChildbirthAppraisal_Desc".Translate()
+            );
             listingStandard.Gap(16f);
 
             if (enableChildbirthAppraisal)
             {
                 // Enable Childbirth Appraisal for colony animals
-                listingStandard.CheckboxLabeled("Enable Childbirth Appraisal for colony animals", ref trackChildbirthAppraisalForAnimals, "Births from colony animals will also be judged for your Bestiality affinity if birth humans.");
+                listingStandard.CheckboxLabeled(
+                    "Luxandra_Setting_AnimalAppraisal_Label".Translate(),
+                    ref trackChildbirthAppraisalForAnimals,
+                    "Luxandra_Setting_AnimalAppraisal_Desc".Translate()
+                );
                 listingStandard.Gap(16f);
             }
 
             // Enable Full Cumstains
-            listingStandard.CheckboxLabeled("Allow Cum Stains Mass-Spawning", ref allowFullCumStains, "Allows events that are meant to spawn large amount of cum filth to spawn the full amount.\n\nThis can be laggy on slower machines or large colonies, use with caution.");
+            listingStandard.CheckboxLabeled(
+                "Luxandra_Setting_AllowCumStains_Label".Translate(),
+                ref allowFullCumStains,
+                "Luxandra_Setting_AllowCumStains_Desc".Translate()
+            );
             listingStandard.Gap(16f);
 
             // Enable Monument's Kink Shift
-            listingStandard.CheckboxLabeled("Enable Luxandra's Monument's Kink Affinity (NSFW)", ref enableMonumentKinkShift, "Allows Luxandra's Monument to change shape to match her current active kink.\n\nIf disabled, it stays in its No Kink form. (Reload the save to apply properly)");
+            listingStandard.CheckboxLabeled(
+                "Luxandra_Setting_MonumentKinkShift_Label".Translate(),
+                ref enableMonumentKinkShift,
+                "Luxandra_Setting_MonumentKinkShift_Desc".Translate()
+            );
             listingStandard.Gap(16f);
 
             // Enable Romance Patches
-            listingStandard.CheckboxLabeled("Remove Close Relatives Romance Restrictions (requires restart)", ref removeRomanceRestrictions, "Removes the romance chance penalities related to incestuous relationships.");
+            listingStandard.CheckboxLabeled(
+                "Luxandra_Setting_RemoveRomanceRestrictions_Label".Translate(),
+                ref removeRomanceRestrictions,
+                "Luxandra_Setting_RemoveRomanceRestrictions_Desc".Translate()
+            );
             listingStandard.Gap(16f);
 
             // Weekly interval modifier
-            listingStandard.Label($"Storyteller Special Cycle Interval: {weeklyCycleDays} Days");
+            listingStandard.Label("Luxandra_Setting_CycleInterval_Label".Translate(weeklyCycleDays));
             weeklyCycleDays = Mathf.RoundToInt(listingStandard.Slider(weeklyCycleDays, 1f, 15f));
 
-            listingStandard.Label("Determines how frequently Luxandra will review your colony's satisfaction levels and deliver a special cyclic event.");
+            listingStandard.Label("Luxandra_Setting_CycleInterval_Desc".Translate());
             listingStandard.Gap(24f);
 
             if (Current.Game != null)
@@ -162,7 +189,7 @@ namespace LuxandraLust
                     else if (Prefs.DevMode)
                     {
                         float daysRemaining = (float)cycleComponent.ticksUntilEvent / 60000f;
-                        listingStandard.Label($"<color=cyan>  • Current active countdown: {daysRemaining:F1} days remaining.</color>");
+                        listingStandard.Label("Luxandra_Setting_Countdown_Dev".Translate(daysRemaining.ToString("F1")));
                         listingStandard.Gap(24f);
                     }
                 }
@@ -173,62 +200,66 @@ namespace LuxandraLust
             float labelWidth = 200f;
             float buttonWidth = 200f;
 
-            string[] conditionOptions = { "Disabled", "Only Negative", "All Events" };
-            DrawSettingRowWithButon(listingStandard, "Reroll condition:", conditionOptions,
+            // Translatable options array
+            string[] conditionOptions = {
+        "Luxandra_Setting_Reroll_Opt_Disabled".Translate(),
+        "Luxandra_Setting_Reroll_Opt_Negative".Translate(),
+        "Luxandra_Setting_Reroll_Opt_All".Translate()
+    };
+
+            DrawSettingRowWithButon(
+                listingStandard,
+                "Luxandra_Setting_RerollCondition_Label".Translate(),
+                conditionOptions,
                 eventRerollCondition,
                 (val) => eventRerollCondition = val,
                 labelWidth, buttonWidth,
-                "Determines what events Luxandra will reroll based on your sex acts.");
+                "Luxandra_Setting_RerollCondition_Desc".Translate()
+            );
 
             bool showRerollSettings = eventRerollCondition != 0;
 
-            // Hide the settings if the reroll is disabled
             if (showRerollSettings)
             {
                 // Sexual reroll threshold
-                listingStandard.Label($"Satisfaction Target Multiplier: {eventRerollThresholdMultiplier.ToString("0.0")}x");
+                listingStandard.Label("Luxandra_Setting_ThresholdMultiplier_Label".Translate(eventRerollThresholdMultiplier.ToString("0.0")));
 
                 eventRerollThresholdMultiplier = listingStandard.Slider(eventRerollThresholdMultiplier, 0.1f, 2.0f);
 
-                listingStandard.Label("Adjusts how strictly Luxandra demands satisfaction. Lower values make her easier to please; higher values require intense management.");
+                listingStandard.Label("Luxandra_Setting_ThresholdMultiplier_Desc1".Translate());
                 listingStandard.Gap(6f);
-                listingStandard.Label("With default settings a colony with normal sex activity should be able to consistently please her every 2 events on average.");
+                listingStandard.Label("Luxandra_Setting_ThresholdMultiplier_Desc2".Translate());
                 listingStandard.Gap(24f);
 
                 if (Prefs.DevMode)
                 {
-                    // Preview it if there's an actual game running
                     if (Current.Game != null && Find.CurrentMap != null && Find.CurrentMap.mapPawns != null)
                     {
                         try
                         {
-                            int adultColonists = Find.CurrentMap.mapPawns.FreeColonistsSpawned
-                                .Count(p => LuxandraUtilities.IsAdult(p));
-                            int adultSlaves = Find.CurrentMap.mapPawns.SlavesOfColonySpawned
-                                .Count(p => LuxandraUtilities.IsAdult(p));
-
+                            int adultColonists = Find.CurrentMap.mapPawns.FreeColonistsSpawned.Count(p => LuxandraUtilities.IsAdult(p));
+                            int adultSlaves = Find.CurrentMap.mapPawns.SlavesOfColonySpawned.Count(p => LuxandraUtilities.IsAdult(p));
                             int baseThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
                             int finalThreshold = System.Math.Max(1, Mathf.RoundToInt(baseThreshold));
 
-                            listingStandard.Label("<color=cyan>Live Active Colony Preview:</color>");
-                            listingStandard.Label($"  • Spawned Adult Colonists: <color=cyan>{adultColonists}</color>");
-                            listingStandard.Label($"  • Spawned Adult Slaves: <color=cyan>{adultSlaves}</color>");
-                            listingStandard.Label($"  • Base Formula Metric: <color=cyan>{baseThreshold}</color>");
-                            listingStandard.Label($"  • Final Active Target Threshold: <color=cyan><b>{finalThreshold}</b></color>");
+                            listingStandard.Label("Luxandra_Setting_Preview_Header".Translate());
+                            listingStandard.Label("Luxandra_Setting_Preview_Colonists".Translate(adultColonists));
+                            listingStandard.Label("Luxandra_Setting_Preview_Slaves".Translate(adultSlaves));
+                            listingStandard.Label("Luxandra_Setting_Preview_BaseMetric".Translate(baseThreshold));
+                            listingStandard.Label("Luxandra_Setting_Preview_FinalTarget".Translate(finalThreshold));
                         }
                         catch (System.Exception ex)
                         {
-                            // Just in case anything goes wrong with the map data check
-                            listingStandard.Label($"Preview Error: {ex.Message}</color>");
+                            listingStandard.Label("Luxandra_Setting_Preview_Error".Translate(ex.Message));
                         }
                     }
                     else
                     {
-                        listingStandard.Label("Live Preview: Load a save game file to see your active colony threshold preview.");
+                        listingStandard.Label("Luxandra_Setting_Preview_NoGame".Translate());
                     }
                 }
-
             }
+
             float totalHeightUsed = listingStandard.CurHeight;
 
             listingStandard.End();
