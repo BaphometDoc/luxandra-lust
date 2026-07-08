@@ -21,4 +21,6 @@ For more details, check the wiki page<br>
 https://rjw.miraheze.org/wiki/Luxandra_Lust/1.6
 
 
+Storyteller art by ScorchedRose9 - https://linktr.ee/Scorched_Rose9
+Monument art by LordHades
 Altar art by Gerrymon

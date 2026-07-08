@@ -2,6 +2,7 @@
 - Added Mechanophilia kink (tracks sex with mechanoids or VE androids)
 - Added a linkable to the altar. Fill the offering with cum (Used Condoms, or Cum from Cumpilation) to trade it for rewards.
 - Added the option to trade 100 Cum for 10 Favor
+- We actually have a non AI art for Luxandra now! Thanks ScorchedRose9
 
 0.13 - 07/07/2027
 - Updated the event database build logic since it was actually crashing in some cases
