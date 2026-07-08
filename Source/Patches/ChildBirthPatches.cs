@@ -71,14 +71,11 @@ namespace LuxandraLust
                 return;
             }
 
-            // Base header tag for all letters
-            string letterBase = "Luxandra's Appraisal";
-
             bool isMotherPlayerOwned = mother.Faction.IsPlayer || mother.IsSlaveOfColony;
             bool isMotherWhore = rjw.xxx.is_whore(mother);
             bool isFatherPlayerOwned = father != null && (father.Faction.IsPlayer || father.IsSlaveOfColony);
 
-            bool childFromProstitution = LuxandraModChecks.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned; // Don't even track this if brothel colony isnt active
+            bool childFromProstitution = LuxandraModChecks.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned;
             bool childFromZoophilia = mother.IsHumanLike() && father.IsAnimal();
             bool childFromRape = !(isMotherPlayerOwned && isFatherPlayerOwned) && !isMotherWhore;
 
@@ -90,82 +87,78 @@ namespace LuxandraLust
             //                      Logic for blessings and punishment.
             // ===============================================================================
 
-            // Is the human child from a animal mother and the setting is enabled
+            // Is the human child from an animal mother and the setting is enabled
             if (mother.IsAnimal() && baby.IsHumanLike() && LuxandraModSettings.trackChildbirthAppraisalForAnimals)
             {
-                // Colony is zoophile - Luxandra is pleased
                 if (isColonyZoophile)
                 {
                     ApplyPleasureBlessing(map, mother, father,
-                         $"{letterBase}: Feral Devotion",
-                         $"Luxandra has appraised the birth of {mother.LabelShortCap}'s miracle. By guiding your human seed into the wild beasts of the world, your colony has shattered the boundaries of standard flesh to prove true to its carnal doctrine. She rewards your raw fidelity with a grand ecstasy.");
+                         "Luxandra_Letter_FeralDevotion_Title".Translate(),
+                         "Luxandra_Letter_FeralDevotion_AnimalMother_Desc".Translate(mother.LabelShortCap));
                     return;
                 }
-                // Colony was not zoophile - Luxandra is angry
                 else
                 {
                     ApplyDegradationPunishment(map,
-                          $"{letterBase}: Primal Contamination",
-                          $"Luxandra has appraised the birth of {mother.LabelShortCap}'s unnatural newborn with profound disdain. A man of your colony has willingly surrendered his humanity to an animal, leaving a stain of bestial violation upon your community. A heavy fog descends upon your minds, dragging your consciousness down to match the beast you so eagerly defiled.");
+                          "Luxandra_Letter_PrimalContamination_Title".Translate(),
+                          "Luxandra_Letter_PrimalContamination_Desc".Translate(mother.LabelShortCap));
                     return;
                 }
             }
 
-            // Is the child is from animals (if father is an animal, all other precepts don't matter)
+            // Is the child from animals
             if (childFromZoophilia)
             {
-                // Colony is zoophile - Luxandra is pleased
                 if (isColonyZoophile)
                 {
                     ApplyPleasureBlessing(map, mother, father,
-                        $"{letterBase}: Feral Devotion",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. By embracing the wild, beastial lineage of the father, your colony has proven true to its carnal doctrine. She rewards your raw fidelity.");
+                        "Luxandra_Letter_FeralDevotion_Title".Translate(),
+                        "Luxandra_Letter_FeralDevotion_HumanMother_Desc".Translate(mother.LabelShort));
                     return;
                 }
-                // Colony was not zoophile - Luxandra is angry
                 else
                 {
                     ApplyDegradationPunishment(map,
-                        $"{letterBase}: Primal Contamination",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with profound disdain. An bestial violation has stained your community. A heavy fog descends upon your minds, dragging your consciousness down to match the beast you so eagerly defiled.");
+                        "Luxandra_Letter_PrimalContamination_Title".Translate(),
+                        "Luxandra_Letter_PrimalContamination_HumanMother_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
 
-            // Colony is zoophile and the child was a normal child - Luxandra is angry
+            // Colony is zoophile and the child was a normal child
             if (isColonyZoophile && !childFromZoophilia)
             {
                 TriggerManhunterPunishment(map,
-                             $"{letterBase}: Domestic Defiance",
-                             $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn and finds it lacking. You have defaulted to sterile, civilized normalcy. To break your domestic complacency, she commands the wild to correct your path.");
+                             "Luxandra_Letter_DomesticDefiance_Title".Translate(),
+                             "Luxandra_Letter_DomesticDefiance_Desc".Translate(mother.LabelShort));
                 return;
             }
 
             // Is the child from a whore
             if (isMotherWhore)
             {
-                // Colony is repopulationist and the child is from prostitution - Luxandra is pleased
+                // Colony is repopulationist and the child is from prostitution
                 if (isColonyRepopulating && childFromProstitution)
                 {
                     ApplyPleasureBlessing(map, mother, father,
-                        $"{letterBase}: Commercial Fertility",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. By generating life through the sacred transactional exchange of the flesh, your colony honors her carnal marketplace. She grants a swelling gift of physical beauty across your colonists, ensuring they remain happy and pleasing to look upon.");
+                        "Luxandra_Letter_CommercialFertility_Title".Translate(),
+                        "Luxandra_Letter_CommercialFertility_Desc".Translate(mother.LabelShort));
                     return;
                 }
-                // Colony is repopulationist and the child is not from prostitution - Luxandra is angry
+                // Colony is repopulationist and the child is not from prostitution
                 else if (isColonyRepopulating)
                 {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName, //TODO: Change to amazons
-                        $"{letterBase}: Insular Hoarding",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with sharp irritation. You waste your seed on insular, domestic comfort rather than using your bodies to populate and subvert the neighboring factions. To punish your selfish prudeness and break your hoarders' mentality, a deviant tribal horde descends to forcibly open your gates.");
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
+                        "Luxandra_Letter_InsularHoarding_Title".Translate(),
+                        "Luxandra_Letter_InsularHoarding_Desc".Translate(mother.LabelShort));
                     return;
                 }
-                // Child was from prostitution, and colony is not repopulationist - Luxandra is angry
+                // Child was from prostitution, and colony is not repopulationist
                 else if (childFromProstitution)
                 {
                     TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName,
-                        $"{letterBase}: Untracked Contagion",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn with disgust. You have allowed your colony's lineage to be compromised by a commercialized union of unknown origin and health. To correct this careless breeding, she unleashes a burning fever across your community.");
+                        "Luxandra_Letter_UntrackedContagion_Title".Translate(),
+                        "Luxandra_Letter_UntrackedContagion_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
@@ -173,37 +166,35 @@ namespace LuxandraLust
             // The child was from rape
             if (childFromRape)
             {
-                // Colony supports rape - Luxandra is pleased
                 if (isColonyRapist)
                 {
                     ApplyPleasureBlessing(map, mother, father,
-                        $"{letterBase}: Sovereign Dominion",
-                        $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. The product of absolute subjection and forceful conquest validates your creed of total authority. Your dominance is rewarded.");
+                        "Luxandra_Letter_SovereignDominion_Title".Translate(),
+                        "Luxandra_Letter_SovereignDominion_Desc".Translate(mother.LabelShort));
                     return;
                 }
-                // The colony does not support rape - Luxandra is angry
                 else
                 {
                     TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName,
-                   $"{letterBase}: Fractured Order",
-                   $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. A violent, undisciplined acts has fractured your civilized vows. She unleashes the White Rain to show you what it truly means to lose control over your instincts.");
+                        "Luxandra_Letter_FracturedOrder_Title".Translate(),
+                        "Luxandra_Letter_FracturedOrder_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
 
-            // Colony is rapist, but the child was  was agreed between colonists - Luxandra is angry
+            // Colony is rapist, but the child was agreed between colonists
             if (isColonyRapist && !childFromRape)
             {
                 TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
-                     $"{letterBase}: Insipid Consent",
-                     $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn and rejects it. Your colonists chose soft, mutual compromise over absolute dominion. She sends a horde of true deviants to ruthlessly remind what your duty was.");
+                     "Luxandra_Letter_InsipidConsent_Title".Translate(),
+                     "Luxandra_Letter_InsipidConsent_Desc".Translate(mother.LabelShort));
                 return;
             }
 
-            // The colony has no special affinity and the child was agreed between colonists - Luxandra is pleased
+            // The colony has no special affinity and the child was agreed between colonists
             ApplyPleasureBlessing(map, mother, father,
-                $"{letterBase}: Sanctified Union",
-                $"Luxandra has appraised the birth of {mother.LabelShort}'s newborn. Your commitment to your community's continuity is recognized. She blesses your dedication to a pure and disciplined order.");
+                "Luxandra_Letter_SanctifiedUnion_Title".Translate(),
+                "Luxandra_Letter_SanctifiedUnion_Desc".Translate(mother.LabelShort));
             return;
         }
 
