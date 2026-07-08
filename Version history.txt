@@ -1,4 +1,4 @@
-0.14 - in dev...
+0.14 - 08/07/2026
 - Added Mechanophilia kink (tracks sex with mechanoids or VE androids)
 - Added Tentacles kink (tracks sex with the few entities that can, and mimics from onahole at some point)
 - Ghouls and Creepjoiners can't be targetted by events anymore (should fix some crash situations)
@@ -10,19 +10,19 @@
 - The statue of Luxandra now emits some light, is minifiable, and also has another special cool feature (albeith not finished, but there as preview - can be turned off from options).
 - Added partial Traditional Chinese translation by baphomet6044 / 美好的一天，夥計。
 
-0.13 - 07/07/2027
+0.13 - 07/07/2026
 - Updated the event database build logic since it was actually crashing in some cases
 - Added the possibility to request sex thralls from Luxandra. They are expensive (50 honor) but pretty much obedient to anything you'll ask them to do
 - Said sex thralls can also arrive in a rare drop pod
 - Added Divine Conception and Forbidden Conception events
 
-0.12.1 - 06/07/2027
+0.12.1 - 06/07/2026
 - The monument is an actual statue of Luxandra now! Thanks LordHades for the beautiful design.
 - The monument can also now be minified and moved
 - Slightly updated the Amazoness xenotype, moved some genes around so they're actually playable in the scenario instead of fully relying on getting a good early capture
 - Reworked the logic for the weekly event cycle a bit, should produce neutral/negative results more often unless your colony is properly sexually satisfied, and there should be a bit more efficient filtering of "events that are actually possible and havent happened recently".
 
-0.12 - 06/07/2027
+0.12 - 06/07/2026
 - Added the Forbidden Love incident
 - Added the Cum Meteor incident. It's exactly what you think it is.
 - Masturbation is no longer gay
