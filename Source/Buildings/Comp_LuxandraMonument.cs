@@ -39,6 +39,73 @@ namespace LuxandraLust
             });
         }
 
+        #region Cum management
+
+        /// <summary>
+        /// Finds the offering attachment
+        /// </summary>
+        private Thing GetOfferingBuilding()
+        {
+            CompAffectedByFacilities facilityComp = this.parent.GetComp<CompAffectedByFacilities>();
+            if (facilityComp == null)
+            {
+                LuxandraDebugActions.DebugLogMessage("Failed to find altar comps. Impossible to calculate cum stored.");
+                return null;
+            }
+
+            List<Thing> linkedBuildings = facilityComp.LinkedFacilitiesListForReading;
+            if (linkedBuildings == null || linkedBuildings.Count == 0)
+            {
+                LuxandraDebugActions.DebugLogMessage("No altar connected. Impossible to calculate cum stored.");
+                return null;
+            }
+
+            // Currently only a single offering building can be linked
+            return linkedBuildings[0];
+        }
+
+        /// <summary>
+        /// Finds the attached tribute pedestal, checks its current sacrifice amount, and drains a specified portion.
+        /// </summary>
+        public bool TryConsumeTribute(Thing building, float amountToDrain)
+        {
+            //if (building.def.defName == "Luxandra_TributePedestal")
+            //{
+            // Grab the fuel system component
+            CompRefuelable fuelComp = building.TryGetComp<CompRefuelable>();
+            if (fuelComp != null)
+            {
+                // Current level check (e.g., how much total fluid is stored)
+                float currentTributeLevel = fuelComp.Fuel;
+
+                // Verify if there is enough to fulfill the blessing cost
+                if (currentTributeLevel >= amountToDrain)
+                {
+                    // "Drain" the item count out of existence
+                    fuelComp.ConsumeFuel(amountToDrain);
+
+                    // Throw a nice visual text notification over the pedestal showing the drain
+                    MoteMaker.ThrowText(building.DrawPos, building.Map, $"-{amountToDrain} Cum", 3f);
+
+                    return true; // Success!
+                }
+            }
+            // }
+
+            return false; // Not enough tribute found, or pedestal missing
+        }
+
+        public float CheckCurrentAvailableCum(Thing building)
+        {
+            // Grab the fuel system component
+            CompRefuelable fuelComp = building.TryGetComp<CompRefuelable>();
+            if (fuelComp != null)
+                return fuelComp.Fuel;
+
+            return 0f;
+        }
+        #endregion
+
         #region The root window
         private void OpenRootDialogue(Pawn pawn)
         {
@@ -60,12 +127,86 @@ namespace LuxandraLust
             peopleOption.action = () => OpenPeopleRequestDialogue(pawn);
             rootNode.options.Add(peopleOption);
 
+            var tributeBuilding = GetOfferingBuilding();
+            if (tributeBuilding != null)
+            {
+                // Option: Offer a tribute (open list)
+                DiaOption tributeOption = new DiaOption("Offer a tribute.");
+                tributeOption.action = () => OfferTributeDialogue(pawn, tributeBuilding);
+                rootNode.options.Add(tributeOption);
+            }
+
             // Option: Leave
             DiaOption leaveOption = new DiaOption("Leave.");
             leaveOption.resolveTree = true;
             rootNode.options.Add(leaveOption);
 
             ShowDialog(rootNode, "Communing with Luxandra");
+        }
+        #endregion
+
+        #region Cum Tribute
+        private void OfferTributeDialogue(Pawn pawn, Thing tributeBuilding)
+        {
+            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou want to offer me a tribute? Material offerings, to prove your devotion?");
+
+            DiaOption cumForFavorOption = new DiaOption("(Gain Favor) I will offer our fertile fluids to gain your divine favor.");
+
+            var fluidTotal = CheckCurrentAvailableCum(tributeBuilding);
+            if (fluidTotal < 100)
+            {
+                cumForFavorOption.Disable($"\nRequires at least {100} Cum (You have {fluidTotal}).");
+            }
+            cumForFavorOption.action = () => OpenCumForFavorDialogue(pawn, tributeBuilding);
+            rootSelectionNode.options.Add(cumForFavorOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenRootDialogue(pawn);
+            rootSelectionNode.options.Add(noOption);
+
+            ShowDialog(rootSelectionNode, $"Offer a tribute");
+        }
+
+        private void OpenCumForFavorDialogue(Pawn pawn, Thing tributeBuilding)
+        {
+            int fluidTotalBase100 = (int)(CheckCurrentAvailableCum(tributeBuilding) / 100) * 100;
+            int favorGranted = fluidTotalBase100 / 10;
+            string text = $"Offering {fluidTotalBase100} will grant you {favorGranted} Favor.\n\nYou would have {LuxandraComp.colonyFavorPoints + favorGranted} after the offering.";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            if (fluidTotalBase100 >= 200)
+            {
+                DiaOption offer100CumOption = new DiaOption("Offer 100 Cum for 10 Favor.");
+
+                offer100CumOption.action = () =>
+                {
+                    TryConsumeTribute(tributeBuilding, 100);
+                    LuxandraComp.AddToFavorCounter(10);
+                    Messages.Message($"Luxandra accepts your offering and blesses you with {10} Favor. New total: {LuxandraComp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
+                };
+
+                offer100CumOption.resolveTree = true; // This finishes the interaction entirely
+                confirmNode.options.Add(offer100CumOption);
+            }
+
+            DiaOption allOfItOption = new DiaOption($"Offer all the Cum she will take ({fluidTotalBase100} for {favorGranted} Favor).");
+
+            allOfItOption.action = () =>
+            {
+                TryConsumeTribute(tributeBuilding, favorGranted * 10);
+                LuxandraComp.AddToFavorCounter(favorGranted);
+                Messages.Message($"Luxandra accepts your offering and blesses you with {favorGranted} Favor. New total: {LuxandraComp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
+            };
+
+            allOfItOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(allOfItOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenRequestSexSlaveDialogue(pawn);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Offer Cum for Favor");
         }
         #endregion
 
@@ -104,7 +245,7 @@ namespace LuxandraLust
         #region Sex Slave Request
         private void OpenRequestSexSlaveDialogue(Pawn pawn)
         {
-            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou require an obedient thrall? Oh my, you naughty person, I wonder what <i>incredible things</i> you have in store for them...\"");
+            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou require an obedient thrall? Oh my, you naughty person, I wonder what <i>incredible things</i> you have in store for them...");
 
             DiaOption maleSlaveOption = new DiaOption("(50 Favor) Yes, I would like a male servant.");
             if (LuxandraComp.colonyFavorPoints < 50)
@@ -129,7 +270,6 @@ namespace LuxandraLust
 
             ShowDialog(rootSelectionNode, "Request a servant");
         }
-
 
         private void OpenSexSlaveConfirmationDialogue(Pawn pawn, Gender gender)
         {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <!-- <DesignatorDropdownGroupDef> -->
-        <!-- <defName>Luxandra_Altars</defName> -->
-    <!-- </DesignatorDropdownGroupDef> -->
+	<!-- <DesignatorDropdownGroupDef> -->
+	<!-- <defName>Luxandra_Altars</defName> -->
+	<!-- </DesignatorDropdownGroupDef> -->
 
 	<ThingDef ParentName="BuildingBase" Name="Luxandra_SacredMonumentBase" Abstract="True">
 		<description>A grand monument dedicated to Luxandra. Can only be constructed while she guides your colony's fate.</description>
@@ -23,6 +23,17 @@
 			<li>BuildingsMisc</li>
 		</thingCategories>
 		<minifiedDef>MinifiedThing</minifiedDef>
+		<comps>
+			<li Class="CompProperties_AffectedByFacilities">
+				<linkableFacilities>
+					<li>Luxandra_TributePedestal</li>
+				</linkableFacilities>
+			</li>
+			<li Class="CompProperties_Glower">
+				<glowRadius>10</glowRadius>
+				<glowColor>(255, 182, 193, 0)</glowColor>
+			</li>
+		</comps>
     
 		<stuffCategories>
 			<li>Metallic</li>
@@ -39,7 +50,7 @@
 				</focusTypes>
 			</li>
 		</comps>
-        <!-- <designatorDropdown>Luxandra_Altars</designatorDropdown> -->
+		<!-- <designatorDropdown>Luxandra_Altars</designatorDropdown> -->
 	</ThingDef>
 
 	<!-- ========================================== -->

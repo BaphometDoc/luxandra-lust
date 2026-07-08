@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="BuildingBase">
+		<defName>Luxandra_TributePedestal</defName>
+		<label>Luxandra's tribute pedestal</label>
+		<description>A specialized repository designed to hold intimate fluids to offer to Luxandra. Building this near her allows to offer cum in exchange for greater blessings.</description>
+		<graphicData>
+			<texPath>Things/Buildings/Luxandra_Pedestal</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(2,2)</drawSize>
+		</graphicData>
+		<category>Building</category>
+		<thingClass>Building</thingClass>
+		<surfaceType>Item</surfaceType>
+		<uiOrder>3001</uiOrder>
+		<selectable>true</selectable>
+		<rotatable>false</rotatable>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>PassThroughOnly</passability>
+		<fillPercent>0.2</fillPercent>
+		<statBases>
+			<MaxHitPoints>100</MaxHitPoints>
+			<WorkToBuild>1200</WorkToBuild>
+			<Flammability>0.5</Flammability>
+			<MeditationFocusStrength>0.15</MeditationFocusStrength>
+			<Mass>25</Mass>
+		</statBases>
+		<size>(1,1)</size>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Stony</li>
+		</stuffCategories>
+		<minifiedDef>MinifiedThing</minifiedDef>
+		<thingCategories>
+			<li>BuildingsMisc</li>
+		</thingCategories>
+		<placeWorkers>
+			<li>PlaceWorker_ShowFacilitiesConnections</li>
+		</placeWorkers>
+
+
+		<comps>
+			<li Class="CompProperties_Refuelable">
+				<fuelCapacity>500.0</fuelCapacity>
+				<fuelFilter>
+					<thingDefs>
+						<li MayRequire="vegapnk.cumpilation">Cumpilation_Cum</li>
+						<li>UsedCondom</li>
+					</thingDefs>
+				</fuelFilter>
+				<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+				<showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+				<functionsInVacuum>false</functionsInVacuum>
+				<initialFuelPercent>0</initialFuelPercent>
+				<showFuelGizmo>true</showFuelGizmo>
+				<drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
+				<fuelLabel>Cum level</fuelLabel>
+				<canEjectFuel>false</canEjectFuel>
+				<outOfFuelMessage>Requires intimate fluids</outOfFuelMessage>
+				
+			</li>
+			<li Class="CompProperties_Facility">
+				<linkableBuildings>
+					<li>Luxandra_SacredMonument</li>
+					<li>Luxandra_SacredMonument_Medium</li>
+					<li>Luxandra_SacredMonument_MediumRotated</li>
+					<li>Luxandra_SacredMonument_Large</li>
+				</linkableBuildings>
+				<mustBePlacedAdjacent>true</mustBePlacedAdjacent>
+				<maxSimultaneous>1</maxSimultaneous>
+			</li>
+			<li Class="CompProperties_MeditationFocus">
+				<statDef>MeditationFocusStrength</statDef>
+				<focusTypes>
+					<li>Artistic</li>
+					<li>Sex</li>
+				</focusTypes>
+			</li>
+		</comps>
+		<designationCategory>Misc</designationCategory>
+	</ThingDef>
+</Defs>
