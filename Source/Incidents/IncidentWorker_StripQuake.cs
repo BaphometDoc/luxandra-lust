@@ -17,7 +17,7 @@ namespace LuxandraLust
             if (map == null || map.mapPawns.FreeColonistsSpawnedCount == 0)
                 return false;
 
-            // 2. Find any spawned humans who are NOT player-controlled and NOT hostile to the player
+            // Find any spawned humans who are NOT player-controlled and NOT hostile to the player
             // This should catch friendly traders, visitors, allies, and neutral guests.
             var friendlyGuestsOnMap = map.mapPawns.AllHumanlikeSpawned.Where(p =>
                 !p.IsPlayerControlled &&
@@ -44,8 +44,8 @@ namespace LuxandraLust
             {
                 Pawn pawn = colonists[i];
 
-                // Target absolutely all humanlikes (Colonists, Raiders, Strangers, Prisoners alike)
-                if (pawn != null && pawn.Spawned && pawn.RaceProps.Humanlike && !pawn.IsColonyMech)
+                // Target all adult humanlikes (Colonists, Raiders, Strangers, Prisoners alike)
+                if (pawn != null && pawn.Spawned && pawn.RaceProps.Humanlike && LuxandraUtilities.IsAdult(pawn) && !pawn.IsColonyMech)
                 {
                     if (pawn.apparel != null && pawn.apparel.WornApparelCount > 0)
                     {
