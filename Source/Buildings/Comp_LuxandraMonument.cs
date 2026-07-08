@@ -6,12 +6,32 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.Sound;
+using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
     public class Comp_LuxandraMonument : ThingComp
     {
         private GameComponent_LuxandraLust LuxandraComp => GameComponent_LuxandraLust.Instance;
+        public Dictionary<StorytellerKink, Graphic> graphicCache = new Dictionary<StorytellerKink, Graphic>();
+
+        public void Notify_KinkChanged()
+        {
+            if (this.parent == null) return;
+
+            // 1. Clear RimWorld's internal cached graphic reference for this specific building instance
+            // This forces it to evaluate the Graphic property getter fresh next frame
+            this.parent.Notify_ColorChanged();
+
+            // 2. Tell the map renderer that the pixels on this tile are dirty and must be redrawn
+            if (this.parent.Spawned)
+            {
+                this.parent.Map.mapDrawer.MapMeshDirty(this.parent.Position, MapMeshFlagDefOf.Things);
+
+                // Optional visual flare to hide the sudden snap
+                //MoteMaker.MakeStaticMote(this.parent.Position, this.parent.Map, ThingDefOf.Mote_PowerBeam);
+            }
+        }
 
         // This function tells RimWorld what to show when right-clicking the building
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)

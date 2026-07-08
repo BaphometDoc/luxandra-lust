@@ -35,6 +35,26 @@ namespace LuxandraLust
             // Roll a new random phase
             RerollKink();
 
+            // Update the monuments
+            for (int m = 0; m < Find.Maps.Count; m++)
+            {
+                Map currentMap = Find.Maps[m];
+                if (currentMap == null) continue;
+
+                // Grab everything on this specific map that has a component
+                var buildings = currentMap.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
+
+                for (int i = 0; i < buildings.Count; i++)
+                {
+                    // Fast component check—if it's a regular wall, this returns null instantly
+                    var comp = buildings[i].TryGetComp<Comp_LuxandraMonument>();
+                    if (comp != null)
+                    {
+                        comp.Notify_KinkChanged();
+                    }
+                }
+            }
+
             // Roll a random day counter between 1 and 7 days
             int randomDays = Rand.RangeInclusive(1, 7);
 

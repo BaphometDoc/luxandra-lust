@@ -5,7 +5,8 @@
 - Added a linkable to the altar. Fill the offering with cum (Used Condoms, or Cum from Cumpilation) to trade it for rewards.
 - Added the option to trade 100 Cum for 10 Favor
 - Added the option to request healing from Luxandra for 50 Favor (this is effectively a Healing Mech Serum effect)
-- We actually have a non AI art for Luxandra now! Thanks ScorchedRose9
+- We actually have real art for Luxandra now! Thanks ScorchedRose9
+- The statue of Luxandra now emits some light, is minifiable, and also has another special cool feature (albeith not finished, but there as preview - can be turned off from options).
 - Added partial Traditional Chinese translation by baphomet6044 / 美好的一天，夥計。
 
 0.13 - 07/07/2027
