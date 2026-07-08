@@ -50,7 +50,7 @@ namespace LuxandraLust
             var eligiblePawns = map.mapPawns.AllPawnsSpawned.Where(p =>
                 p.RaceProps != null && p.RaceProps.Humanlike && !p.Dead &&
                 (p.IsColonist || p.IsSlave) &&
-                LuxandraUtilities.IsAdult(p)
+                IsAdult(p)
             );
 
             float totalSexNeed = 0f;
@@ -399,11 +399,15 @@ namespace LuxandraLust
         }
 
         /// <summary>
-        /// Determines if the pawn is adult (or youth if RJW has the check enabled)
+        /// Determines if the pawn is a living adult (or youth if RJW has the check enabled)
         /// </summary>
         public static bool IsAdult(Pawn pawn)
         {
             if (pawn == null)
+                return false;
+
+            // Dodge ghouls and similar things too as they break
+            if (pawn.IsGhoul || pawn.IsEntity)
                 return false;
 
             var allowYouth = rjw.RJWSettings.AllowYouthSex;
