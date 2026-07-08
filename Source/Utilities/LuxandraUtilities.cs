@@ -410,6 +410,11 @@ namespace LuxandraLust
             if (pawn.IsGhoul || pawn.IsEntity)
                 return false;
 
+            // This lifestage check fucks up sometimes, so i'm just throwing a hard 16+
+            // regardless of every other setting.
+            if (pawn.ageTracker.AgeBiologicalYears < 16)
+                return false;
+
             var allowYouth = rjw.RJWSettings.AllowYouthSex;
 
             AgeCategory ageCategory = pawn.GetAgeCategory();
