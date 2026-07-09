@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<JobDef>
+		<defName>Luxandra_OfferCumTribute</defName>
+		<driverClass>LuxandraLust.JobDriver_OfferCumTribute</driverClass>
+		<reportString>completing sacred tribute.</reportString>
+		<allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+		<playerInterruptible>false</playerInterruptible>
+		<casualInterruptible>false</casualInterruptible>
+	</JobDef>
+
+</Defs>

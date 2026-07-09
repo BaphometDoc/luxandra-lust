@@ -10,7 +10,7 @@
 			<drawSize>(2,2)</drawSize>
 		</graphicData>
 		<category>Building</category>
-		<thingClass>Building</thingClass>
+		<thingClass>LuxandraLust.Building_TributePedestal</thingClass>
 		<surfaceType>Item</surfaceType>
 		<uiOrder>3001</uiOrder>
 		<selectable>true</selectable>
