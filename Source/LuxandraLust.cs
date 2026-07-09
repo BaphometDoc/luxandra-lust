@@ -11,11 +11,38 @@ namespace LuxandraLust
     }
 
     #region enums
+    /// <summary>
+    /// Support levels for depravities
+    /// </summary>
     public enum DepravitySupportLevel
     {
         Hated = 0,
         Accepted,
         Required
+    }
+
+    /// <summary>
+    /// Luxandra's Kinks
+    /// </summary>
+    public enum StorytellerKink
+    {
+        None = 0,
+        Pregnancy,
+        Anal,
+        Oral,
+        Bestiality,
+        Rape,
+        Masturbation,
+        Necrophilia,
+        Gay,
+        Lesbian,
+        Cum,
+        Breasts,
+        Incest,
+        Implantation,
+        Futa,
+        Mechanophilia,
+        Tentacles
     }
     #endregion
 
@@ -79,31 +106,6 @@ namespace LuxandraLust
         public int necrophiliaSexActionCounterForCycle = 0;
 
         public int kinkPleasedCounter = 0;
-
-
-        /// <summary>
-        /// Luxandra's Kinks
-        /// </summary>
-        public enum StorytellerKink
-        {
-            None,
-            Pregnancy,
-            Anal,
-            Oral,
-            Bestiality,
-            Rape,
-            Masturbation,
-            Necrophilia,
-            Gay,
-            Lesbian,
-            Cum,
-            Breasts,
-            Incest,
-            Implantation,
-            Futa,
-            Mechanophilia,
-            Tentacles
-        }
 
         /// <summary>
         /// Current active kink
