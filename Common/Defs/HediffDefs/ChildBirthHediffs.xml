@@ -19,6 +19,11 @@
 				<showRemainingTime>true</showRemainingTime>
 			</li>
 		</comps>
+		<stages>
+			<li>
+				<becomeVisible>true</becomeVisible>
+			</li>
+		</stages>
 	</HediffDef>
 
 	<ThoughtDef>
@@ -105,7 +110,6 @@
 		</comps>
 		<stages>
 			<li>
-				<label>Primitive fog</label>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
