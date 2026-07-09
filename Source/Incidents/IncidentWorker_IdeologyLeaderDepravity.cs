@@ -53,25 +53,28 @@ namespace LuxandraLust
             // Fallback check
             if (leaderPawn == null || leaderPawn.Map != map || leaderPawn.Dead || leaderPawn.Downed) return false;
 
-            if (leaderPawn.story?.traits != null)
-            {
-                TraitDef rapistTraitDef = DefDatabase<TraitDef>.GetNamed("Rapist", errorOnFail: false);
-                if (rapistTraitDef != null && !leaderPawn.story.traits.HasTrait(rapistTraitDef))
-                {
-                    leaderPawn.story.traits.GainTrait(new Trait(rapistTraitDef));
-                }
 
-                TraitDef nymphoTraitDef = DefDatabase<TraitDef>.GetNamed("Nymphomaniac", errorOnFail: false);
-                if (nymphoTraitDef != null && !leaderPawn.story.traits.HasTrait(nymphoTraitDef))
-                {
-                    leaderPawn.story.traits.GainTrait(new Trait(nymphoTraitDef));
-                }
-            }
-
-            ThoughtDef depravityThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_IdeologyDepravityMoodlet", errorOnFail: false);
-            if (depravityThought != null && leaderPawn.needs?.mood?.thoughts?.memories != null)
+            // They shall now become beautiful. If they aren't already, anyway
+            TraitDef beautyTraitDef = DefDatabase<TraitDef>.GetNamed("Beauty", errorOnFail: false);
+            if (beautyTraitDef != null && leaderPawn.story?.traits != null)
             {
-                leaderPawn.needs.mood.thoughts.memories.TryGainMemory(depravityThought);
+                Trait activeBeautyTrait = leaderPawn.story.traits.allTraits
+                    .FirstOrDefault(t => t.def == beautyTraitDef);
+
+                if (activeBeautyTrait == null)
+                {
+                    // They don't have it, so give them degree 2 (Beautiful)
+                    leaderPawn.story.traits.GainTrait(new Trait(beautyTraitDef, 2, forced: true));
+                }
+                // If they have it, but it's only degree 1 (Pretty), upgrade it!
+                else if (activeBeautyTrait.Degree == 1)
+                {
+                    // Remove the old "Pretty" instance first to prevent UI duplication bugs
+                    leaderPawn.story.traits.allTraits.Remove(activeBeautyTrait);
+
+                    // Re-grant as degree 2 (Beautiful)
+                    leaderPawn.story.traits.GainTrait(new Trait(beautyTraitDef, 2, forced: true));
+                }
             }
 
             // Tank their sex need
@@ -82,6 +85,19 @@ namespace LuxandraLust
                 {
                     sexNeed.CurLevel = 0f;
                 }
+            }
+
+            // Add the hediff
+            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_HubristicGlow", false);
+            if (hediffDef != null)
+            {
+                Hediff hediff = HediffMaker.MakeHediff(hediffDef, leaderPawn, null);
+                HediffComp_Disappears disappearComp = hediff.TryGetComp<HediffComp_Disappears>();
+                if (disappearComp != null)
+                {
+                    disappearComp.ticksToDisappear = 120000;
+                }
+                leaderPawn.health.AddHediff(hediff, null, null, null);
             }
 
             // Also send them raping. They earned it (kinda)

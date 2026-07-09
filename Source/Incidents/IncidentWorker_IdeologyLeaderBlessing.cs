@@ -92,6 +92,19 @@ namespace LuxandraLust
             if (sexParts.Penises != null && !sexParts.Penises.EnumerableNullOrEmpty())
                 LuxandraUtilities.EnlargeSexPart(leaderPawn, sexParts.Penises);
 
+            // Add the hediff
+            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_DivineKiss", false);
+            if (hediffDef != null)
+            {
+                Hediff hediff = HediffMaker.MakeHediff(hediffDef, leaderPawn, null);
+                HediffComp_Disappears disappearComp = hediff.TryGetComp<HediffComp_Disappears>();
+                if (disappearComp != null)
+                {
+                    disappearComp.ticksToDisappear = 120000;
+                }
+                leaderPawn.health.AddHediff(hediff, null, null, null);
+            }
+
             string label = "Spiritual Radiance";
             string text = $"Luxandra has reached out to touch the mind (and not only that!) of your guide! {leaderPawn.LabelShort} has experienced a surge of euphoric clarity, transforming their vision of the faith into a passionate beacon of bliss and devotion.";
 

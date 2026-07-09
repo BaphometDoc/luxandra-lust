@@ -67,10 +67,17 @@ namespace LuxandraLust
             if (sexParts.Penises != null && !sexParts.Penises.EnumerableNullOrEmpty())
                 LuxandraUtilities.EnlargeSexPart(targetNoble, sexParts.Penises);
 
-            ThoughtDef luxuryThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_RoyalLuxuryMoodlet", errorOnFail: false);
-            if (luxuryThought != null && targetNoble.needs?.mood?.thoughts?.memories != null)
+            // Add the hediff
+            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_DivineKiss", false);
+            if (hediffDef != null)
             {
-                targetNoble.needs.mood.thoughts.memories.TryGainMemory(luxuryThought);
+                Hediff hediff = HediffMaker.MakeHediff(hediffDef, targetNoble, null);
+                HediffComp_Disappears disappearComp = hediff.TryGetComp<HediffComp_Disappears>();
+                if (disappearComp != null)
+                {
+                    disappearComp.ticksToDisappear = 120000;
+                }
+                targetNoble.health.AddHediff(hediff, null, null, null);
             }
 
             string titleText = "Royal Luxury";

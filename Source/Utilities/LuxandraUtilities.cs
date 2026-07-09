@@ -104,10 +104,10 @@ namespace LuxandraLust
                 if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
                 {
                     float currentSeverity = naturalPart.Severity;
-                    float changeAmount = 0.5f;
+                    float changeAmount = 0.25f;
 
                     // Calculates adjustments trying to not exceed the severity limits
-                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + changeAmount, 3.0f);
+                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + changeAmount, 5.0f);
 
                     if (newSeverity != currentSeverity)
                     {
