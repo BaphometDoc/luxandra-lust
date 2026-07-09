@@ -209,8 +209,8 @@ namespace LuxandraLust
                 var comp = GameComponent_LuxandraLust.Instance;
                 if (comp == null) { LogNullError(); return; }
 
-                comp.ResetSexCountersForRerolls();
-                Messages.Message("All Luxandra Lust counters for rerolls have been reset to 0.", MessageTypeDefOf.CautionInput, false);
+                comp.ResetSexCounters();
+                Messages.Message("All Luxandra Lust counters for sex have been reset to 0.", MessageTypeDefOf.CautionInput, false);
             }));
 
             options.Add(new DebugMenuOption("Reset All Cycle Sex Counters", DebugMenuOptionMode.Action, () =>

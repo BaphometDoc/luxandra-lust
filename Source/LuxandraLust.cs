@@ -128,7 +128,6 @@ namespace LuxandraLust
         public void RegisterSexAction(bool satisfiedKink = false)
         {
             sexActionCounter++;
-            colonyFavorPoints++;
             sexActionCounterForCycle++;
 
             if (satisfiedKink)
@@ -158,9 +157,9 @@ namespace LuxandraLust
             necrophiliaSexActionCounterForCycle++;
         }
 
-        public void ResetSexCountersForRerolls()
+        public void ResetSexCounters()
         {
-            colonyFavorPoints = 0;
+            sexActionCounter = 0;
             impureSexActionCounter = 0;
             rapeSexActionCounter = 0;
             bestialitySexActionCounter = 0;
