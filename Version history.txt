@@ -3,6 +3,7 @@
 - Added Incest to the Childbirth judgement (will be considered "required" if Incest only is active, Close Relatives Only will be considered "accepted")
 - Slightly reworked favor gain. You don't passively gain Favor anymore from pawns just having sex, only if they fulfil Luxandra's current kink. Main "controlled" way to obtain Favor is now to offer cum, or purposely take actions that fulfil her kinks (es, making your pawns get drenched in cum during white rain if she's on cum kink)
 - To compensate, several costs for requesting Luxandra's intervention from the monument has decreased a bit. The cost for rerolling events  however stays the same for now (accepting feedback on if this now feels too high or ok)
+- You can now offer cum to reroll Luxandra's current kink (to a random one or a specific one)
 
 0.14 - 08/07/2026
 - Added Mechanophilia kink (tracks sex with mechanoids or VE androids)

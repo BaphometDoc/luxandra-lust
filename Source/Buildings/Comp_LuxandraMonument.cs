@@ -188,6 +188,15 @@ namespace LuxandraLust
             cumForFavorOption.action = () => OpenCumForFavorDialogue(pawn, tributeBuilding);
             rootSelectionNode.options.Add(cumForFavorOption);
 
+            DiaOption changeKinkOption = new DiaOption("I request you to change your current obsession.");
+
+            if (fluidTotal < 50)
+            {
+                changeKinkOption.Disable($"\nRequires at least {50} Cum (You have {fluidTotal}).");
+            }
+            changeKinkOption.action = () => OpenKinkSelectionDialogue(pawn, tributeBuilding);
+            rootSelectionNode.options.Add(changeKinkOption);
+
             DiaOption noOption = new DiaOption("No, choose something else.");
             noOption.action = () => OpenRootDialogue(pawn);
             rootSelectionNode.options.Add(noOption);
@@ -195,6 +204,82 @@ namespace LuxandraLust
             ShowDialog(rootSelectionNode, $"Offer a tribute");
         }
 
+        #region Change current kink
+        private void OpenKinkSelectionDialogue(Pawn pawn, Thing tributeBuilding)
+        {
+            DiaNode rootSelectionNode = new DiaNode($"<color=#D4AF37>Luxandra</color>:\n\nMy my, you would dare ask me to change my preferences? And what sort of thing would you propose, my dearest subject?");
+
+            var fluidTotal = CheckCurrentAvailableCum(tributeBuilding);
+            var availableKinks = LuxandraKinkTracker.GetEnabledKinks().Where(k => k != StorytellerKink.None);
+
+            DiaOption randomKinkNode = new DiaOption($"(25 Cum) Change to anything you'd like");
+
+            if (fluidTotal < 25)
+            {
+                randomKinkNode.Disable($"Requires {25} Cum. You have {fluidTotal}.");
+            }
+
+            randomKinkNode.action = () => ConfirmKinkRerollDialogue(pawn, tributeBuilding, StorytellerKink.None);
+            rootSelectionNode.options.Add(randomKinkNode);
+
+            foreach (var kink in availableKinks)
+            {
+                DiaOption kinkNode = new DiaOption($"(50 Cum) I wish you to appreciate {kink}");
+
+                if (fluidTotal < 50)
+                {
+                    kinkNode.Disable($"Requires {50} Cum. You have {fluidTotal}).");
+                }
+
+                kinkNode.action = () => ConfirmKinkRerollDialogue(pawn, tributeBuilding, kink);
+                rootSelectionNode.options.Add(kinkNode);
+            }
+
+            // Main menu "Go Back" button
+            DiaOption backOption = new DiaOption("Go Back");
+            backOption.action = () => OfferTributeDialogue(pawn, tributeBuilding);
+            rootSelectionNode.options.Add(backOption);
+
+            ShowDialog(rootSelectionNode, "Select a Kink to request");
+        }
+
+        private void ConfirmKinkRerollDialogue(Pawn pawn, Thing tributeBuilding, StorytellerKink kinkChosen)
+        {
+            string flavorTextKey = $"Luxandra_KinkFlavor_{kinkChosen}";
+            string flavorText = flavorTextKey.Translate();
+
+            int cost = kinkChosen == StorytellerKink.None ? 25 : 50;
+            string text = kinkChosen == StorytellerKink.None ?
+                "Do you want to request a new random preference for Luxandra?" :
+                $"A thought forms in your head... \"{flavorText}\"";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            DiaOption confirmOption = new DiaOption($"(Offer {cost} Cum) Yes, this is what I desire.");
+
+            confirmOption.action = () =>
+            {
+                TryConsumeTribute(tributeBuilding, cost);
+                if (kinkChosen == StorytellerKink.None)
+                    LuxandraKinkTracker.TriggerKinkShift();
+                else
+                    LuxandraKinkTracker.TriggerKinkShift(true, kinkChosen);
+                Messages.Message($"Luxandra accepts your offering and alters her preferences for a while.", MessageTypeDefOf.NeutralEvent, false);
+            };
+
+            confirmOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(confirmOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenKinkSelectionDialogue(pawn, tributeBuilding);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Offer Cum to request a kink change");
+        }
+
+        #endregion
+
+        #region Cum for favor
         private void OpenCumForFavorDialogue(Pawn pawn, Thing tributeBuilding)
         {
             int fluidTotalBase100 = (int)(CheckCurrentAvailableCum(tributeBuilding) / 100) * 100;
@@ -231,12 +316,14 @@ namespace LuxandraLust
             confirmNode.options.Add(allOfItOption);
 
             DiaOption noOption = new DiaOption("No, choose something else.");
-            noOption.action = () => OpenRequestSexSlaveDialogue(pawn);
+            noOption.action = () => OfferTributeDialogue(pawn, tributeBuilding);
             confirmNode.options.Add(noOption);
 
             ShowDialog(confirmNode, $"Offer Cum for Favor");
         }
         #endregion
+
+        #endregion Cum Tribute
 
         #region Request Blessings
         private void OpenBlessingSelectionDialogue(Pawn pawn)

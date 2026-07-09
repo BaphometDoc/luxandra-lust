@@ -30,10 +30,10 @@ namespace LuxandraLust
             return $"Luxandra's current kink: {phaseName}";
         }
 
-        public static void TriggerKinkShift()
+        public static void TriggerKinkShift(bool forceSpecific = false, StorytellerKink forcedType = StorytellerKink.None)
         {
             // Roll a new random phase
-            RerollKink();
+            RerollKink(forceSpecific, forcedType);
 
             // Update the monuments
             for (int m = 0; m < Find.Maps.Count; m++)
@@ -136,10 +136,12 @@ namespace LuxandraLust
         {
             if (forceSpecific)
                 CurrentKink = forcedType;
-
-            var validKinks = GetEnabledKinks();
-
-            CurrentKink = validKinks.RandomElement();
+            else
+            {
+                var validKinks = GetEnabledKinks();
+                validKinks.Remove(CurrentKink);
+                CurrentKink = validKinks.RandomElement(); //TODO: Weightings?
+            }
 
             if (CurrentKink != StorytellerKink.None)
                 Messages.Message($"Luxandra's whims have shifted: She is now into {CurrentKink}.", MessageTypeDefOf.CautionInput, false);
