@@ -10,6 +10,15 @@ namespace LuxandraLust
         public LuxandraLust() { }
     }
 
+    #region enums
+    public enum DepravitySupportLevel
+    {
+        Hated = 0,
+        Accepted,
+        Required
+    }
+    #endregion
+
     public class GameComponent_LuxandraLust : GameComponent
     {
         public static GameComponent_LuxandraLust Instance

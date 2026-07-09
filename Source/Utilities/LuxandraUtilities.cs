@@ -410,6 +410,7 @@ namespace LuxandraLust
             if (pawn.IsGhoul || pawn.IsEntity)
                 return false;
 
+            // TODO: Alien race / Android support
             // This lifestage check fucks up sometimes, so i'm just throwing a hard 16+
             // regardless of every other setting.
             if (pawn.ageTracker.AgeBiologicalYears < 16)
@@ -565,6 +566,135 @@ namespace LuxandraLust
 
             // Use RimWorld's built-in rapid list tracker method to check for the meme
             return playerIdeo.HasMeme(memeDef);
+        }
+
+        /// <summary>
+        /// Determines the colony support for Bestiality
+        /// </summary>
+        public static DepravitySupportLevel DetermineBestialitySupport(Map map)
+        {
+            // Ideology - tecnically this would require sexperience-ideology, but those are going to
+            // just be false if it's not loaded anyway. Manages to catch similar mods as well if someone
+            // is degenerate enough
+            if (ModsConfig.IdeologyActive)
+            {
+                MemeDef zoophileMeme = DefDatabase<MemeDef>.GetNamed("Zoophile", false);
+                PreceptDef bestialityAccepted = DefDatabase<PreceptDef>.GetNamed("Bestiality_Acceptable", false);
+                PreceptDef bestialityVenerated = DefDatabase<PreceptDef>.GetNamed("Bestiality_OnlyVenerated", false);
+                PreceptDef bestialityBonded = DefDatabase<PreceptDef>.GetNamed("Bestiality_BondOnly", false);
+                PreceptDef bestialityHonorable = DefDatabase<PreceptDef>.GetNamed("Bestiality_Honorable", false);
+
+                // TODO: special cases for only venerated, only bonded, and the various bestial pregnancy precepts
+                if (PlayerFactionHasPrecept(bestialityHonorable))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasMeme(zoophileMeme) ||
+                   PlayerFactionHasPrecept(bestialityAccepted) ||
+                   PlayerFactionHasPrecept(bestialityVenerated) ||
+                   PlayerFactionHasPrecept(bestialityBonded) ||
+                   PlayerFactionHasPrecept(bestialityHonorable))
+                {
+                    return DepravitySupportLevel.Accepted;
+                }
+            }
+
+            var localColonists = map.mapPawns.FreeColonists;
+
+            // Biotech - same as above but for RJW genes
+            if (ModsConfig.BiotechActive)
+            {
+                GeneDef zoophileGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_zoophile", false);
+                int zoophileGeneColonists = CountColonistsWithGeneOnMap(map, zoophileGene);
+
+                if (zoophileGeneColonists == localColonists.Count)
+                    return DepravitySupportLevel.Required;
+            }
+
+            // Traits
+
+            TraitDef zoophileTrait = DefDatabase<TraitDef>.GetNamed("Zoophile", false);
+            int zoophileColonists = CountColonistsWithTraitOnMap(map, zoophileTrait);
+
+            if (zoophileColonists == localColonists.Count)
+                return DepravitySupportLevel.Required;
+
+            return DepravitySupportLevel.Hated;
+        }
+
+        /// <summary>
+        /// Determines the colony support for Rape
+        /// </summary>
+        public static DepravitySupportLevel DetermineRapistSupport(Map map)
+        {
+            if (ModsConfig.IdeologyActive)
+            {
+                MemeDef rapistMeme = DefDatabase<MemeDef>.GetNamed("Rapist", false);
+                PreceptDef rapeAccepted = DefDatabase<PreceptDef>.GetNamed("Rape_Acceptable", false);
+                PreceptDef rapeHonorable = DefDatabase<PreceptDef>.GetNamed("Rape_Honorable", false);
+
+                if (PlayerFactionHasPrecept(rapeHonorable))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasMeme(rapistMeme) ||
+                   PlayerFactionHasPrecept(rapeAccepted) ||
+                   PlayerFactionHasPrecept(rapeHonorable))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+            }
+
+            var localColonists = map.mapPawns.FreeColonists;
+
+            // Biotech - same as above but for RJW genes
+            if (ModsConfig.BiotechActive)
+            {
+                GeneDef rapistGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_rapist", false);
+                int rapistGeneColonists = CountColonistsWithGeneOnMap(map, rapistGene);
+
+                if (rapistGeneColonists == localColonists.Count)
+                    return DepravitySupportLevel.Required;
+            }
+
+            // Traits
+
+            TraitDef rapistTrait = DefDatabase<TraitDef>.GetNamed("Rapist", false);
+            int rapistColonists = CountColonistsWithTraitOnMap(map, rapistTrait);
+
+            if (rapistColonists == localColonists.Count)
+                return DepravitySupportLevel.Required;
+
+            return DepravitySupportLevel.Hated;
+        }
+
+        /// <summary>
+        /// Determines the colony support for Brothel Colony's Repopulation
+        /// </summary>
+        public static DepravitySupportLevel DetermineRepopulationSupport(Map map)
+        {
+            // Ideology + Brothel Colony
+            if (ModsConfig.IdeologyActive && LuxandraModChecks.IsBrothelColonyActive())
+            {
+                MemeDef repopulationMeme = DefDatabase<MemeDef>.GetNamed("CB_Repopulationist", false);
+                PreceptDef repopulationKindness = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Kindness", false);
+                PreceptDef repopulationGreed = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Greed", false);
+                PreceptDef repopulationDuty = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Duty", false);
+
+                if (PlayerFactionHasPrecept(repopulationDuty))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasMeme(repopulationMeme) ||
+                   PlayerFactionHasPrecept(repopulationKindness) ||
+                   PlayerFactionHasPrecept(repopulationGreed) ||
+                   PlayerFactionHasPrecept(repopulationDuty))
+                {
+                    return DepravitySupportLevel.Accepted;
+                }
+            }
+
+            return DepravitySupportLevel.Hated;
         }
     }
 

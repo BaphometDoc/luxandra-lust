@@ -75,127 +75,114 @@ namespace LuxandraLust
             bool isMotherWhore = rjw.xxx.is_whore(mother);
             bool isFatherPlayerOwned = father != null && (father.Faction.IsPlayer || father.IsSlaveOfColony);
 
-            bool childFromProstitution = LuxandraModChecks.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned;
-            bool childFromZoophilia = mother.IsHumanLike() && father.IsAnimal();
+            bool childFromZoophilia = (mother.IsHumanLike() && father.IsAnimal()) || (mother.IsAnimal() && baby.IsHumanLike() && LuxandraModSettings.trackChildbirthAppraisalForAnimals);
             bool childFromRape = !(isMotherPlayerOwned && isFatherPlayerOwned) && !isMotherWhore;
+            bool childFromProstitution = LuxandraModChecks.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned;
 
-            bool isColonyRepopulating = DetermineRepopulationSupport(map);
-            bool isColonyZoophile = DetermineBestialitySupport(map);
-            bool isColonyRapist = DetermineRapistSupport(map);
+            DepravitySupportLevel bestialitySupport = LuxandraUtilities.DetermineBestialitySupport(map);
+            DepravitySupportLevel rapeSupport = LuxandraUtilities.DetermineRapistSupport(map);
+            DepravitySupportLevel repopulationSupport = LuxandraUtilities.DetermineRepopulationSupport(map);
+
+            // Tracks whether the birth broke any rules or fulfilled requirements
+            bool brokeHatedRule = false;
+            bool fulfilledAnyRequired = false;
+            bool missingARequiredPrecept = false;
+
+            // Determine if any required types are set across the colony
+            bool bestialityRequired = bestialitySupport == DepravitySupportLevel.Required;
+            bool rapeRequired = rapeSupport == DepravitySupportLevel.Required;
+            bool prostitutionRequired = repopulationSupport == DepravitySupportLevel.Required;
+            bool anyPreceptRequired = bestialityRequired || rapeRequired || prostitutionRequired;
+
+            // Evaluate Bestiality Precept
+            if (bestialitySupport == DepravitySupportLevel.Hated && childFromZoophilia) brokeHatedRule = true;
+            if (bestialityRequired && childFromZoophilia) fulfilledAnyRequired = true;
+
+            // Evaluate Rape Precept
+            if (rapeSupport == DepravitySupportLevel.Hated && childFromRape) brokeHatedRule = true;
+            if (rapeRequired && childFromRape) fulfilledAnyRequired = true;
+
+            // Evaluate Prostitution Precept
+            if (repopulationSupport == DepravitySupportLevel.Hated && childFromProstitution) brokeHatedRule = true;
+            if (prostitutionRequired && childFromProstitution) fulfilledAnyRequired = true;
+
+            // If the colony demands specific types of births, but this birth didn't match ANY of them
+            if (anyPreceptRequired && !fulfilledAnyRequired)
+            {
+                missingARequiredPrecept = true;
+            }
 
             // ===============================================================================
-            //                      Logic for blessings and punishment.
+            //                                  Logic execution 
             // ===============================================================================
 
-            // Is the human child from an animal mother and the setting is enabled
-            if (mother.IsAnimal() && baby.IsHumanLike() && LuxandraModSettings.trackChildbirthAppraisalForAnimals)
+            // PRIORITY 1: Direct Hated Violations
+            if (brokeHatedRule)
             {
-                if (isColonyZoophile)
+                if (childFromZoophilia && bestialitySupport == DepravitySupportLevel.Hated)
                 {
-                    ApplyPleasureBlessing(map, mother, father,
-                         "Luxandra_Letter_FeralDevotion_Title".Translate(),
-                         "Luxandra_Letter_FeralDevotion_AnimalMother_Desc".Translate(mother.LabelShortCap));
+                    ApplyDegradationPunishment(map, "Luxandra_Letter_PrimalContamination_Title".Translate(), "Luxandra_Letter_PrimalContamination_HumanMother_Desc".Translate(mother.LabelShort));
                     return;
                 }
-                else
+                if (childFromProstitution && repopulationSupport == DepravitySupportLevel.Hated)
                 {
-                    ApplyDegradationPunishment(map,
-                          "Luxandra_Letter_PrimalContamination_Title".Translate(),
-                          "Luxandra_Letter_PrimalContamination_Desc".Translate(mother.LabelShortCap));
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName, "Luxandra_Letter_UntrackedContagion_Title".Translate(), "Luxandra_Letter_UntrackedContagion_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (childFromRape && rapeSupport == DepravitySupportLevel.Hated)
+                {
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName, "Luxandra_Letter_FracturedOrder_Title".Translate(), "Luxandra_Letter_FracturedOrder_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
 
-            // Is the child from animals
-            if (childFromZoophilia)
+            // PRIORITY 2: Required Fulfillments (Blessings)
+            if (fulfilledAnyRequired)
             {
-                if (isColonyZoophile)
+                if (childFromZoophilia && bestialityRequired)
                 {
-                    ApplyPleasureBlessing(map, mother, father,
-                        "Luxandra_Letter_FeralDevotion_Title".Translate(),
-                        "Luxandra_Letter_FeralDevotion_HumanMother_Desc".Translate(mother.LabelShort));
+                    ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_FeralDevotion_Title".Translate(), "Luxandra_Letter_FeralDevotion_HumanMother_Desc".Translate(mother.LabelShort));
                     return;
                 }
-                else
+                if (childFromProstitution && prostitutionRequired)
                 {
-                    ApplyDegradationPunishment(map,
-                        "Luxandra_Letter_PrimalContamination_Title".Translate(),
-                        "Luxandra_Letter_PrimalContamination_HumanMother_Desc".Translate(mother.LabelShort));
+                    ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_CommercialFertility_Title".Translate(), "Luxandra_Letter_CommercialFertility_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (childFromRape && rapeRequired)
+                {
+                    ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_SovereignDominion_Title".Translate(), "Luxandra_Letter_SovereignDominion_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
 
-            // Colony is zoophile and the child was a normal child
-            if (isColonyZoophile && !childFromZoophilia)
+            // PRIORITY 3: Failed Requirements (Punishments for ordinary births when a depravity was required)
+            if (missingARequiredPrecept)
             {
-                TriggerManhunterPunishment(map,
-                             "Luxandra_Letter_DomesticDefiance_Title".Translate(),
-                             "Luxandra_Letter_DomesticDefiance_Desc".Translate(mother.LabelShort));
+                if (bestialityRequired)
+                {
+                    TriggerManhunterPunishment(map, "Luxandra_Letter_DomesticDefiance_Title".Translate(), "Luxandra_Letter_DomesticDefiance_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (prostitutionRequired)
+                {
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName, "Luxandra_Letter_InsularHoarding_Title".Translate(), "Luxandra_Letter_InsularHoarding_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (rapeRequired)
+                {
+                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName, "Luxandra_Letter_InsipidConsent_Title".Translate(), "Luxandra_Letter_InsipidConsent_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+            }
+
+            // PRIORITY 4: Pure Colony Success
+            bool isColonyPure = (bestialitySupport == DepravitySupportLevel.Hated && rapeSupport == DepravitySupportLevel.Hated && repopulationSupport == DepravitySupportLevel.Hated);
+            if (isColonyPure && !brokeHatedRule)
+            {
+                ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_SanctifiedUnion_Title".Translate(), "Luxandra_Letter_SanctifiedUnion_Desc".Translate(mother.LabelShort));
                 return;
             }
-
-            // Is the child from a whore
-            if (isMotherWhore)
-            {
-                // Colony is repopulationist and the child is from prostitution
-                if (isColonyRepopulating && childFromProstitution)
-                {
-                    ApplyPleasureBlessing(map, mother, father,
-                        "Luxandra_Letter_CommercialFertility_Title".Translate(),
-                        "Luxandra_Letter_CommercialFertility_Desc".Translate(mother.LabelShort));
-                    return;
-                }
-                // Colony is repopulationist and the child is not from prostitution
-                else if (isColonyRepopulating)
-                {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
-                        "Luxandra_Letter_InsularHoarding_Title".Translate(),
-                        "Luxandra_Letter_InsularHoarding_Desc".Translate(mother.LabelShort));
-                    return;
-                }
-                // Child was from prostitution, and colony is not repopulationist
-                else if (childFromProstitution)
-                {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName,
-                        "Luxandra_Letter_UntrackedContagion_Title".Translate(),
-                        "Luxandra_Letter_UntrackedContagion_Desc".Translate(mother.LabelShort));
-                    return;
-                }
-            }
-
-            // The child was from rape
-            if (childFromRape)
-            {
-                if (isColonyRapist)
-                {
-                    ApplyPleasureBlessing(map, mother, father,
-                        "Luxandra_Letter_SovereignDominion_Title".Translate(),
-                        "Luxandra_Letter_SovereignDominion_Desc".Translate(mother.LabelShort));
-                    return;
-                }
-                else
-                {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName,
-                        "Luxandra_Letter_FracturedOrder_Title".Translate(),
-                        "Luxandra_Letter_FracturedOrder_Desc".Translate(mother.LabelShort));
-                    return;
-                }
-            }
-
-            // Colony is rapist, but the child was agreed between colonists
-            if (isColonyRapist && !childFromRape)
-            {
-                TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
-                     "Luxandra_Letter_InsipidConsent_Title".Translate(),
-                     "Luxandra_Letter_InsipidConsent_Desc".Translate(mother.LabelShort));
-                return;
-            }
-
-            // The colony has no special affinity and the child was agreed between colonists
-            ApplyPleasureBlessing(map, mother, father,
-                "Luxandra_Letter_SanctifiedUnion_Title".Translate(),
-                "Luxandra_Letter_SanctifiedUnion_Desc".Translate(mother.LabelShort));
-            return;
         }
 
         // ==========================================
@@ -262,6 +249,7 @@ namespace LuxandraLust
             parms.target = map;
 
             parms.points = StorytellerUtility.DefaultThreatPointsNow(map);
+            parms.forced = true;
 
             manhunter.Worker.TryExecute(parms);
         }
@@ -280,144 +268,9 @@ namespace LuxandraLust
             IncidentParms parms = StorytellerUtility.DefaultParmsNow(incident.category, map);
             parms.target = map;
             parms.points = StorytellerUtility.DefaultThreatPointsNow(map);
+            parms.forced = true;
 
             incident.Worker.TryExecute(parms);
-        }
-
-
-        // ==========================================
-        // UTILITIES
-        // ==========================================
-
-        private static bool DetermineBestialitySupport(Map map)
-        {
-            // Ideology - tecnically this would require sexperience-ideology, but those are going to
-            // just be false if it's not loaded anyway. Manages to catch similar mods as well if someone
-            // is degenerate enough
-            if (ModsConfig.IdeologyActive)
-            {
-                MemeDef zoophileMeme = DefDatabase<MemeDef>.GetNamed("Zoophile", false);
-                PreceptDef bestialityAccepted = DefDatabase<PreceptDef>.GetNamed("Bestiality_Acceptable", false);
-                PreceptDef bestialityVenerated = DefDatabase<PreceptDef>.GetNamed("Bestiality_OnlyVenerated", false);
-                PreceptDef bestialityBonded = DefDatabase<PreceptDef>.GetNamed("Bestiality_BondOnly", false);
-                PreceptDef bestialityHonorable = DefDatabase<PreceptDef>.GetNamed("Bestiality_Honorable", false);
-
-                if (LuxandraUtilities.PlayerFactionHasMeme(zoophileMeme) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(bestialityAccepted) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(bestialityVenerated) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(bestialityBonded) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(bestialityHonorable))
-                {
-                    return true;
-                }
-            }
-
-            var localColonists = map.mapPawns.FreeColonists;
-
-            // Biotech - same as above but for RJW genes
-            if (ModsConfig.BiotechActive)
-            {
-                GeneDef zoophileGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_zoophile", false);
-                int zoophileGeneColonists = LuxandraUtilities.CountColonistsWithGeneOnMap(map, zoophileGene);
-
-                if (zoophileGeneColonists > localColonists.Count * 2 / 3)
-                    return true;
-            }
-
-            // Traits
-
-            TraitDef zoophileTrait = DefDatabase<TraitDef>.GetNamed("Zoophile", false);
-            int zoophileColonists = LuxandraUtilities.CountColonistsWithTraitOnMap(map, zoophileTrait);
-
-            if (zoophileColonists > localColonists.Count * 2 / 3)
-                return true;
-
-            return false;
-        }
-
-        private static bool DetermineRapistSupport(Map map)
-        {
-            // Ideology - tecnically this would require sexperience-ideology, but those are going to
-            // just be false if it's not loaded anyway. Manages to catch similar mods as well if someone
-            // is degenerate enough
-            if (ModsConfig.IdeologyActive)
-            {
-                MemeDef rapistMeme = DefDatabase<MemeDef>.GetNamed("Rapist", false);
-                PreceptDef rapeAccepted = DefDatabase<PreceptDef>.GetNamed("Rape_Acceptable", false);
-                PreceptDef rapeHonorable = DefDatabase<PreceptDef>.GetNamed("Rape_Honorable", false);
-
-                if (LuxandraUtilities.PlayerFactionHasMeme(rapistMeme) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(rapeAccepted) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(rapeHonorable))
-                {
-                    return true;
-                }
-            }
-
-            var localColonists = map.mapPawns.FreeColonists;
-
-            // Biotech - same as above but for RJW genes
-            if (ModsConfig.BiotechActive)
-            {
-                GeneDef rapistGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_rapist", false);
-                int rapistGeneColonists = LuxandraUtilities.CountColonistsWithGeneOnMap(map, rapistGene);
-
-                if (rapistGeneColonists > localColonists.Count * 2 / 3)
-                    return true;
-            }
-
-            // Traits
-
-            TraitDef rapistTrait = DefDatabase<TraitDef>.GetNamed("Rapist", false);
-            int rapistColonists = LuxandraUtilities.CountColonistsWithTraitOnMap(map, rapistTrait);
-
-            if (rapistColonists > localColonists.Count * 2 / 3)
-                return true;
-
-            return false;
-        }
-
-        // Brothel Colony Repopulation - Player has the meme and one of Kindness, Greed or Duty
-        private static bool DetermineRepopulationSupport(Map map)
-        {
-            // Ideology + Brothel Colony
-            if (ModsConfig.IdeologyActive && LuxandraModChecks.IsBrothelColonyActive())
-            {
-                MemeDef repopulationMeme = DefDatabase<MemeDef>.GetNamed("CB_Repopulationist", false);
-                PreceptDef repopulationKindness = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Kindness", false);
-                PreceptDef repopulationGreed = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Greed", false);
-                PreceptDef repopulationDuty = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Duty", false);
-
-                if (LuxandraUtilities.PlayerFactionHasMeme(repopulationMeme) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(repopulationKindness) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(repopulationGreed) ||
-                   LuxandraUtilities.PlayerFactionHasPrecept(repopulationDuty))
-                {
-                    return true;
-                }
-            }
-
-            var localColonists = map.mapPawns.FreeColonists;
-
-            // Biotech - same as above but for RJW genes
-            if (ModsConfig.BiotechActive)
-            {
-                GeneDef zoophileGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_zoophile", false);
-                int zoophileGeneColonists = LuxandraUtilities.CountColonistsWithGeneOnMap(map, zoophileGene);
-
-                if (zoophileGeneColonists > localColonists.Count * 2 / 3)
-                    return true;
-            }
-
-            // Traits
-
-            TraitDef zoophileTrait = DefDatabase<TraitDef>.GetNamed("Zoophile", false);
-            int zoophileColonists = LuxandraUtilities.CountColonistsWithTraitOnMap(map, zoophileTrait);
-
-            if (zoophileColonists > localColonists.Count * 2 / 3)
-                return true;
-
-            return false;
         }
     }
 }

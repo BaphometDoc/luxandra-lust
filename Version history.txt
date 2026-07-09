@@ -1,4 +1,5 @@
 0.15 - in dev...
+- Reworked the Childbirth judgement logic. Now it will mainly look at extreme ideology (hated or required tier) to determine the result, or if the ENTIRE colony is rapist or zoophile. "Accepted" tier of precepts will be neutral (never punished nor rewarded). Regular childbirths will only be rewarded if the colony hates all major depravities and will only be punished if any depravity is required.
 
 0.14 - 08/07/2026
 - Added Mechanophilia kink (tracks sex with mechanoids or VE androids)
