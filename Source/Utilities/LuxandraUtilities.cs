@@ -236,42 +236,6 @@ namespace LuxandraLust
         }
 
         /// <summary>
-        /// Check if the pawn has robotic genitals (aka is an android)
-        /// </summary>
-        public static bool HasRoboticBodyPart(Pawn pawn)
-        {
-            if (pawn?.health?.hediffSet?.hediffs == null) return false;
-
-            // Iterate through the pawn's active health conditions
-            foreach (Hediff hediff in pawn.health.hediffSet.hediffs)
-            {
-                // Ensure the hediff is a physical added/implanted body part
-                if (hediff is Hediff_AddedPart || hediff is Hediff_Implant)
-                {
-                    // Fetch the physical item that was used to install this part
-                    ThingDef sourceItem = hediff.def.spawnThingOnRemoved;
-
-                    // Fallback: Check if RJW or VREA uses direct def mapping
-                    if (sourceItem == null)
-                    {
-                        sourceItem = DefDatabase<ThingDef>.GetNamedSilentFail(hediff.def.defName);
-                    }
-
-                    // Match against the parent category
-                    if (sourceItem?.thingCategories != null)
-                    {
-                        if (sourceItem.thingCategories.Any(c => c.defName == "VREA_BodyPartsAndroid"))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Verifies if the sex act that just happened matches the current kink
         /// from the storyteller. (Return nulls if the sex actor is not a player humanlike)
         /// </summary>
@@ -385,7 +349,7 @@ namespace LuxandraLust
                     break;
                 // Kink = Mechanophilia: androids, mechs
                 case StorytellerKink.Mechanophilia:
-                    if ((actor.mechanitor?.OverseenPawns.Count > 0 && partner.IsColonyMech) || actor.RaceProps.IsMechanoid || partner.RaceProps.IsMechanoid || HasRoboticBodyPart(actor) || HasRoboticBodyPart(partner))
+                    if ((actor.mechanitor?.OverseenPawns.Count > 0 && partner.IsColonyMech) || actor.RaceProps.IsMechanoid || partner.RaceProps.IsMechanoid || IsAndroid(actor) || IsAndroid(partner))
                         return true;
                     break;
                 // Kink = Tentacles: Mimics from onahole, anomalies
@@ -409,7 +373,7 @@ namespace LuxandraLust
         /// <summary>
         /// Determines if the pawn is a living adult (or youth if RJW has the check enabled)
         /// </summary>
-        public static bool IsAdult(Pawn pawn)
+        public static bool IsAdult(Pawn pawn, bool countAndroids = true)
         {
             if (pawn == null)
                 return false;
@@ -418,7 +382,11 @@ namespace LuxandraLust
             if (pawn.IsGhoul || pawn.IsEntity)
                 return false;
 
-            // TODO: Alien race / Android support
+            // Androids always count as adults
+            if (countAndroids && IsAndroid(pawn))
+                return true;
+
+            // TODO: Alien race
             // This lifestage check fucks up sometimes, so i'm just throwing a hard 16+
             // regardless of every other setting.
             if (pawn.ageTracker.AgeBiologicalYears < 16)
@@ -492,6 +460,21 @@ namespace LuxandraLust
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks if it's an android
+        /// </summary>
+        public static bool IsAndroid(Pawn pawn)
+        {
+            // TODO: Other "android" types
+
+            // If no biotech, this is false regardless
+            if (!ModsConfig.BiotechActive)
+                return false;
+
+            GeneDef androidBodyGene = DefDatabase<GeneDef>.GetNamed("VREA_SyntheticBody", false);
+            return pawn != null && !pawn.Dead && pawn.genes?.HasActiveGene(androidBodyGene) == true;
         }
 
         /// <summary>
