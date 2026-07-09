@@ -399,6 +399,14 @@ namespace LuxandraLust
         }
 
         /// <summary>
+        /// Determines if the pawns are blood related
+        /// </summary>
+        public static bool ArePawnsBloodRelated(Pawn pA, Pawn pB)
+        {
+            return pA.relations.FamilyByBlood.Contains(pB);
+        }
+
+        /// <summary>
         /// Determines if the pawn is a living adult (or youth if RJW has the check enabled)
         /// </summary>
         public static bool IsAdult(Pawn pawn)
@@ -689,6 +697,32 @@ namespace LuxandraLust
                    PlayerFactionHasPrecept(repopulationKindness) ||
                    PlayerFactionHasPrecept(repopulationGreed) ||
                    PlayerFactionHasPrecept(repopulationDuty))
+                {
+                    return DepravitySupportLevel.Accepted;
+                }
+            }
+
+            return DepravitySupportLevel.Hated;
+        }
+
+        /// <summary>
+        /// Determines the colony support for incestuous relationships
+        /// </summary>
+        public static DepravitySupportLevel DetermineIncestSupport(Map map)
+        {
+            // Ideology
+            if (ModsConfig.IdeologyActive)
+            {
+                PreceptDef incestRequired = DefDatabase<PreceptDef>.GetNamed("Incestuos_IncestOnly", false);
+                PreceptDef incestFree = DefDatabase<PreceptDef>.GetNamed("Incestuos_Free", false);
+                PreceptDef incestPassable = DefDatabase<PreceptDef>.GetNamed("Incestuos_Disapproved_CloseOnly", false);
+
+                if (PlayerFactionHasPrecept(incestRequired))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasPrecept(incestFree) ||
+                   PlayerFactionHasPrecept(incestPassable))
                 {
                     return DepravitySupportLevel.Accepted;
                 }

@@ -78,10 +78,12 @@ namespace LuxandraLust
             bool childFromZoophilia = (mother.IsHumanLike() && father.IsAnimal()) || (mother.IsAnimal() && baby.IsHumanLike() && LuxandraModSettings.trackChildbirthAppraisalForAnimals);
             bool childFromRape = !(isMotherPlayerOwned && isFatherPlayerOwned) && !isMotherWhore;
             bool childFromProstitution = LuxandraModChecks.IsBrothelColonyActive() && isMotherWhore && !isFatherPlayerOwned;
+            bool childFromIncest = LuxandraUtilities.ArePawnsBloodRelated(mother, father);
 
             DepravitySupportLevel bestialitySupport = LuxandraUtilities.DetermineBestialitySupport(map);
             DepravitySupportLevel rapeSupport = LuxandraUtilities.DetermineRapistSupport(map);
             DepravitySupportLevel repopulationSupport = LuxandraUtilities.DetermineRepopulationSupport(map);
+            DepravitySupportLevel incestSupport = LuxandraUtilities.DetermineIncestSupport(map);
 
             // Tracks whether the birth broke any rules or fulfilled requirements
             bool brokeHatedRule = false;
@@ -92,7 +94,8 @@ namespace LuxandraLust
             bool bestialityRequired = bestialitySupport == DepravitySupportLevel.Required;
             bool rapeRequired = rapeSupport == DepravitySupportLevel.Required;
             bool prostitutionRequired = repopulationSupport == DepravitySupportLevel.Required;
-            bool anyPreceptRequired = bestialityRequired || rapeRequired || prostitutionRequired;
+            bool incestRequired = incestSupport == DepravitySupportLevel.Required;
+            bool anyPreceptRequired = bestialityRequired || rapeRequired || prostitutionRequired || incestRequired;
 
             // Evaluate Bestiality Precept
             if (bestialitySupport == DepravitySupportLevel.Hated && childFromZoophilia) brokeHatedRule = true;
@@ -105,6 +108,10 @@ namespace LuxandraLust
             // Evaluate Prostitution Precept
             if (repopulationSupport == DepravitySupportLevel.Hated && childFromProstitution) brokeHatedRule = true;
             if (prostitutionRequired && childFromProstitution) fulfilledAnyRequired = true;
+
+            // Evaluate Incest Precept
+            if (incestSupport == DepravitySupportLevel.Hated && childFromIncest) brokeHatedRule = true;
+            if (incestRequired && childFromIncest) fulfilledAnyRequired = true;
 
             // If the colony demands specific types of births, but this birth didn't match ANY of them
             if (anyPreceptRequired && !fulfilledAnyRequired)
@@ -121,17 +128,32 @@ namespace LuxandraLust
             {
                 if (childFromZoophilia && bestialitySupport == DepravitySupportLevel.Hated)
                 {
-                    ApplyDegradationPunishment(map, "Luxandra_Letter_PrimalContamination_Title".Translate(), "Luxandra_Letter_PrimalContamination_HumanMother_Desc".Translate(mother.LabelShort));
+                    ApplyDegradationPunishment(map,
+                        "Luxandra_Letter_PrimalContamination_Title".Translate(),
+                        "Luxandra_Letter_PrimalContamination_HumanMother_Desc".Translate(mother.LabelShort));
                     return;
                 }
                 if (childFromProstitution && repopulationSupport == DepravitySupportLevel.Hated)
                 {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName, "Luxandra_Letter_UntrackedContagion_Title".Translate(), "Luxandra_Letter_UntrackedContagion_Desc".Translate(mother.LabelShort));
+                    TriggerIncidentPunishment(map,
+                        LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever.defName,
+                        "Luxandra_Letter_UntrackedContagion_Title".Translate(),
+                        "Luxandra_Letter_UntrackedContagion_Desc".Translate(mother.LabelShort));
                     return;
                 }
                 if (childFromRape && rapeSupport == DepravitySupportLevel.Hated)
                 {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName, "Luxandra_Letter_FracturedOrder_Title".Translate(), "Luxandra_Letter_FracturedOrder_Desc".Translate(mother.LabelShort));
+                    TriggerIncidentPunishment(map,
+                        LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain.defName,
+                        "Luxandra_Letter_FracturedOrder_Title".Translate(),
+                        "Luxandra_Letter_FracturedOrder_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (childFromIncest && incestSupport == DepravitySupportLevel.Hated)
+                {
+                    ApplyBrokenDesirePunishment(map,
+                        "Luxandra_Letter_ForbiddenBlood_Title".Translate(),
+                        "Luxandra_Letter_ForbiddenBlood_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
@@ -141,17 +163,30 @@ namespace LuxandraLust
             {
                 if (childFromZoophilia && bestialityRequired)
                 {
-                    ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_FeralDevotion_Title".Translate(), "Luxandra_Letter_FeralDevotion_HumanMother_Desc".Translate(mother.LabelShort));
+                    ApplyPleasureBlessing(map, mother, father,
+                        "Luxandra_Letter_FeralDevotion_Title".Translate(),
+                        "Luxandra_Letter_FeralDevotion_HumanMother_Desc".Translate(mother.LabelShort));
                     return;
                 }
                 if (childFromProstitution && prostitutionRequired)
                 {
-                    ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_CommercialFertility_Title".Translate(), "Luxandra_Letter_CommercialFertility_Desc".Translate(mother.LabelShort));
+                    ApplyPleasureBlessing(map, mother, father,
+                        "Luxandra_Letter_CommercialFertility_Title".Translate(),
+                        "Luxandra_Letter_CommercialFertility_Desc".Translate(mother.LabelShort));
                     return;
                 }
                 if (childFromRape && rapeRequired)
                 {
-                    ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_SovereignDominion_Title".Translate(), "Luxandra_Letter_SovereignDominion_Desc".Translate(mother.LabelShort));
+                    ApplyPleasureBlessing(map, mother, father,
+                        "Luxandra_Letter_SovereignDominion_Title".Translate(),
+                        "Luxandra_Letter_SovereignDominion_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (childFromIncest && incestRequired)
+                {
+                    ApplyPleasureBlessing(map, mother, father,
+                        "Luxandra_Letter_SacredLineage_Title".Translate(), //TODO
+                        "Luxandra_Letter_SacredLineage_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
@@ -161,23 +196,42 @@ namespace LuxandraLust
             {
                 if (bestialityRequired)
                 {
-                    TriggerManhunterPunishment(map, "Luxandra_Letter_DomesticDefiance_Title".Translate(), "Luxandra_Letter_DomesticDefiance_Desc".Translate(mother.LabelShort));
+                    TriggerManhunterPunishment(map,
+                        "Luxandra_Letter_DomesticDefiance_Title".Translate(),
+                        "Luxandra_Letter_DomesticDefiance_Desc".Translate(mother.LabelShort));
                     return;
                 }
                 if (prostitutionRequired)
                 {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName, "Luxandra_Letter_InsularHoarding_Title".Translate(), "Luxandra_Letter_InsularHoarding_Desc".Translate(mother.LabelShort));
+                    TriggerIncidentPunishment(map,
+                        LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
+                        "Luxandra_Letter_InsularHoarding_Title".Translate(),
+                        "Luxandra_Letter_InsularHoarding_Desc".Translate(mother.LabelShort));
                     return;
                 }
                 if (rapeRequired)
                 {
-                    TriggerIncidentPunishment(map, LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName, "Luxandra_Letter_InsipidConsent_Title".Translate(), "Luxandra_Letter_InsipidConsent_Desc".Translate(mother.LabelShort));
+                    TriggerIncidentPunishment(map,
+                        LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid.defName,
+                        "Luxandra_Letter_InsipidConsent_Title".Translate(),
+                        "Luxandra_Letter_InsipidConsent_Desc".Translate(mother.LabelShort));
+                    return;
+                }
+                if (incestRequired)
+                {
+                    ApplyForcedDesirePunishment(map,
+                        "Luxandra_Letter_ExogamousBetrayal_Title".Translate(),
+                        "Luxandra_Letter_ExogamousBetrayal_Desc".Translate(mother.LabelShort));
                     return;
                 }
             }
 
             // PRIORITY 4: Pure Colony Success
-            bool isColonyPure = (bestialitySupport == DepravitySupportLevel.Hated && rapeSupport == DepravitySupportLevel.Hated && repopulationSupport == DepravitySupportLevel.Hated);
+            bool isColonyPure = (bestialitySupport == DepravitySupportLevel.Hated &&
+                                       rapeSupport == DepravitySupportLevel.Hated &&
+                               repopulationSupport == DepravitySupportLevel.Hated &&
+                                     incestSupport == DepravitySupportLevel.Hated);
+
             if (isColonyPure && !brokeHatedRule)
             {
                 ApplyPleasureBlessing(map, mother, father, "Luxandra_Letter_SanctifiedUnion_Title".Translate(), "Luxandra_Letter_SanctifiedUnion_Desc".Translate(mother.LabelShort));
@@ -208,11 +262,10 @@ namespace LuxandraLust
             }
 
             // Target Parents for the massive buffs
-            if (mother != null && !mother.Dead && mother.IsHumanLike()) mother.health.AddHediff(parentalBlessing);
+            if (mother != null && !mother.Dead && mother.IsHumanLike())
+                mother.health.AddHediff(parentalBlessing);
             if (father != null && !father.Dead && father.IsHumanLike() && father.Map == map)
-            {
                 father.health.AddHediff(parentalBlessing);
-            }
 
             string parentNames = mother.NameShortColored;
             if (father != null)
@@ -226,6 +279,38 @@ namespace LuxandraLust
         {
             Find.LetterStack.ReceiveLetter(title, text, LetterDefOf.NegativeEvent);
             HediffDef punishmentHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_BestialDegradation", false);
+
+            List<Pawn> adults = map.mapPawns.FreeColonists;
+            for (int i = 0; i < adults.Count; i++)
+            {
+                Pawn p = adults[i];
+                if (p != null && !p.Dead && p.DevelopmentalStage.Adult() && !p.IsSlave)
+                {
+                    p.health.AddHediff(punishmentHediff);
+                }
+            }
+        }
+
+        private static void ApplyBrokenDesirePunishment(Map map, string title, string text)
+        {
+            Find.LetterStack.ReceiveLetter(title, text, LetterDefOf.NegativeEvent);
+            HediffDef punishmentHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_ColdRevulsion", false);
+
+            List<Pawn> adults = map.mapPawns.FreeColonists;
+            for (int i = 0; i < adults.Count; i++)
+            {
+                Pawn p = adults[i];
+                if (p != null && !p.Dead && p.DevelopmentalStage.Adult() && !p.IsSlave)
+                {
+                    p.health.AddHediff(punishmentHediff);
+                }
+            }
+        }
+
+        private static void ApplyForcedDesirePunishment(Map map, string title, string text)
+        {
+            Find.LetterStack.ReceiveLetter(title, text, LetterDefOf.NegativeEvent);
+            HediffDef punishmentHediff = DefDatabase<HediffDef>.GetNamed("Luxandra_WhippingGaze", false);
 
             List<Pawn> adults = map.mapPawns.FreeColonists;
             for (int i = 0; i < adults.Count; i++)

@@ -33,6 +33,17 @@
   <Luxandra_Letter_InsipidConsent_Title>Luxandra's Appraisal: Insipid Consent</Luxandra_Letter_InsipidConsent_Title>
   <Luxandra_Letter_InsipidConsent_Desc>Luxandra has appraised the birth of {0}'s newborn and rejects it. Your colonists chose soft, mutual compromise over absolute dominion. She sends a horde of true deviants to ruthlessly remind what your duty was.</Luxandra_Letter_InsipidConsent_Desc>
 
+  <!-- Incest Paths -->
+  <Luxandra_Letter_SacredLineage_Title>Luxandra's Appraisal: Sacred Lineage</Luxandra_Letter_SacredLineage_Title>
+  <Luxandra_Letter_SacredLineage_Desc>Luxandra has appraised the birth of {0}'s newborn. By weaving your family's blood back into itself, you have rejected the chaotic diluting of the outside world to preserve a pure, concentrated form.</Luxandra_Letter_SacredLineage_Desc>
+
+ <Luxandra_Letter_ForbiddenBlood_Title>Luxandra's Appraisal: Forbidden Blood</Luxandra_Letter_ForbiddenBlood_Title>
+  <Luxandra_Letter_ForbiddenBlood_Desc>Luxandra has appraised the birth of {0}'s newborn with disgust. By bringing forth a child born of the forbidden and overlapping bloodlines you have crossed the one line you vowed to never cross. In her displeasure, she has reached into the minds of the offenders and extinguished their fires. The thought of intimacy now brings only a sickening, ash-like numbness. You will regret ever allowing your base desires to cross that forbidden line.</Luxandra_Letter_ForbiddenBlood_Desc>
+
+  <Luxandra_Letter_ExogamousBetrayal_Title>Luxandra's Appraisal: Exogamous Betrayal</Luxandra_Letter_ExogamousBetrayal_Title>
+  <Luxandra_Letter_ExogamousBetrayal_Desc>Luxandra has appraised the birth of {0}'s newborn and rejects it. You were explicitly commanded to breed within the sacred bloodline, yet you have chosen to look outward. Luxandra is thoroughly unamused by your domestic defiance. If you will not follow willingly, she will force your hands. A suffocating pressure fills the minds of your colonists, turning their blood to liquid fire and sending their desires into a desperate frenzy.</Luxandra_Letter_ExogamousBetrayal_Desc>
+  
+
   <!-- Default Pure Path -->
   <Luxandra_Letter_SanctifiedUnion_Title>Luxandra's Appraisal: Sanctified Union</Luxandra_Letter_SanctifiedUnion_Title>
   <Luxandra_Letter_SanctifiedUnion_Desc>Luxandra has appraised the birth of {0}'s newborn. Your commitment to your community's continuity is recognized. She blesses your dedication to a pure and disciplined order.</Luxandra_Letter_SanctifiedUnion_Desc>
