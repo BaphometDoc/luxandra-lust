@@ -6,7 +6,6 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.Sound;
-using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -655,9 +654,9 @@ namespace LuxandraLust
                 // Generate the submenu
                 foreach (var luxIncident in categoryIncidents)
                 {
-                    // Calculation for base event costs: sexual threshold / 50
+                    // Calculation for base event costs: sexual threshold / 25
                     decimal masterThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
-                    decimal multiplier = luxIncident.PointBaseCost.Value / 50m;
+                    decimal multiplier = luxIncident.PointBaseCost.Value / 25m;
                     int cost = (int)Math.Ceiling(masterThreshold * multiplier);
 
                     string label = $"({cost} Favor) {luxIncident.IncidentDef.LabelCap}";
