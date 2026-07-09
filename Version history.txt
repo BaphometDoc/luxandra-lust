@@ -1,3 +1,5 @@
+0.16 - in progress
+
 0.15 - 09/07/2026
 - Reworked the Childbirth judgement logic. Now it will mainly look at extreme ideology (hated or required tier) to determine the result, or if the ENTIRE colony is rapist or zoophile. "Accepted" tier of precepts will be neutral (never punished nor rewarded). Regular childbirths will only be rewarded if the colony hates all major depravities and will only be punished if any depravity is required.
 - Added Incest to the Childbirth judgement (will be considered "required" if Incest only is active, Close Relatives Only will be considered "accepted")

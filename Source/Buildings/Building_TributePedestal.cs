@@ -120,6 +120,15 @@ namespace LuxandraLust
                                 cumMultiplier = 1.5f;
                         }
 
+                        if (LuxandraModChecks.IsSexperienceActive())
+                        {
+                            SkillDef sexSkillDef = DefDatabase<SkillDef>.GetNamedSilentFail("Sex");
+                            var sexSkill = this.pawn.skills.GetSkill(sexSkillDef);
+
+                            if (sexSkill != null)
+                                cumAmount = 5 + sexSkill.GetLevel();
+                        }
+
                         refuelComp?.Refuel(cumAmount * cumMultiplier);
 
                         Messages.Message($"Luxandra accepts {this.pawn.LabelShort}'s intimate tribute.", MessageTypeDefOf.PositiveEvent);
@@ -129,23 +138,7 @@ namespace LuxandraLust
                         if (refractoryDef != null && !this.pawn.health.hediffSet.HasHediff(refractoryDef))
                             this.pawn.health.AddHediff(refractoryDef);
 
-                        // Spawn some cum on the floor to celebrate
-                        ThingDef filthDef = DefDatabase<ThingDef>.GetNamed("FilthCum", false)
-                            ?? ThingDefOf.Filth_Slime; // Safe vanilla fallback so the script never breaks
-
-                        int filthCount = Rand.RangeInclusive(3, 5);
-                        IntVec3 centerPos = pedestal.Position;
-
-                        for (int i = 0; i < filthCount; i++)
-                        {
-                            // Radial radius of 1 means it spreads to the immediate tiles touching the bed
-                            if (CellFinder.TryFindRandomReachableNearbyCell(centerPos, this.Map, 1, TraverseParms.For(this.pawn), null, null, out IntVec3 filthCell))
-                            {
-                                int filthPerSpawn = 1;
-                                if (LuxandraModSettings.allowFullCumStains) filthPerSpawn = 3;
-                                FilthMaker.TryMakeFilth(filthCell, this.Map, filthDef, filthPerSpawn, FilthSourceFlags.Pawn);
-                            }
-                        }
+                        MoteMaker.ThrowText(pedestal.DrawPos, pedestal.Map, $"+{cumAmount * cumMultiplier} Cum", 3f);
                     }
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
