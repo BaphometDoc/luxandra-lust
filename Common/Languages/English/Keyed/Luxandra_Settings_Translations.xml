@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  
+  <Luxandra_Setting_Reset_Button>Reset to Default</Luxandra_Setting_Reset_Button>
+
+  <Luxandra_Setting_EnableLogging_Label>Enable Debug Logging</Luxandra_Setting_EnableLogging_Label>
+  <Luxandra_Setting_EnableLogging_Desc>Shows most actions in the log. Very spammy, only for debugging.</Luxandra_Setting_EnableLogging_Desc>
+
+  <Luxandra_Setting_ShowNotifications_Label>Show Satisfaction Notifications</Luxandra_Setting_ShowNotifications_Label>
+  <Luxandra_Setting_ShowNotifications_Desc>Shows the top-screen notification alerts when your colony successfully satisfies Luxandra's kinks.\n\n(can be spammy in large colonies)</Luxandra_Setting_ShowNotifications_Desc>
+
+  <Luxandra_Setting_ChildbirthAppraisal_Label>Enable Childbirth Appraisal</Luxandra_Setting_ChildbirthAppraisal_Label>
+  <Luxandra_Setting_ChildbirthAppraisal_Desc>Enables the judging of children birth.\nLuxandra will compare the conception method with your colony beliefs (ideology > genes > traits) and either bless or curse you based on if they match.\n\n(She will judge Bestiality, then Prostitution, and then Rape)</Luxandra_Setting_ChildbirthAppraisal_Desc>
+  
+  <Luxandra_Setting_AnimalAppraisal_Label>Enable Childbirth Appraisal for colony animals</Luxandra_Setting_AnimalAppraisal_Label>
+  <Luxandra_Setting_AnimalAppraisal_Desc>Births from colony animals will also be judged for your Bestiality affinity if birth humans.</Luxandra_Setting_AnimalAppraisal_Desc>
+
+  <Luxandra_Setting_AllowCumStains_Label>Allow Cum Stains Mass-Spawning</Luxandra_Setting_AllowCumStains_Label>
+  <Luxandra_Setting_AllowCumStains_Desc>Allows events that are meant to spawn large amount of cum filth to spawn the full amount.\n\nThis can be laggy on slower machines or large colonies, use with caution.</Luxandra_Setting_AllowCumStains_Desc>
+
+  <Luxandra_Setting_MonumentKinkShift_Label>Enable Luxandra's Monument's Kink Affinity (NSFW)</Luxandra_Setting_MonumentKinkShift_Label>
+  <Luxandra_Setting_MonumentKinkShift_Desc>Allows Luxandra's Monument to change shape to match her current active kink.\n\nIf disabled, it stays in its No Kink form. (Reload the save to apply properly)</Luxandra_Setting_MonumentKinkShift_Desc>
+
+  <Luxandra_Setting_RemoveRomanceRestrictions_Label>Remove Close Relatives Romance Restrictions (requires restart)</Luxandra_Setting_RemoveRomanceRestrictions_Label>
+  <Luxandra_Setting_RemoveRomanceRestrictions_Desc>Removes the romance chance penalities related to incestuous relationships.</Luxandra_Setting_RemoveRomanceRestrictions_Desc>
+
+  <Luxandra_Setting_CycleInterval_Label>Storyteller Special Cycle Interval: {0} Days</Luxandra_Setting_CycleInterval_Label>
+  <Luxandra_Setting_CycleInterval_Desc>Determines how frequently Luxandra will review your colony's satisfaction levels and deliver a special cyclic event.</Luxandra_Setting_CycleInterval_Desc>
+  <Luxandra_Setting_Countdown_Dev>&lt;color=cyan&gt;  • Current active countdown: {0} days remaining.&lt;/color&gt;</Luxandra_Setting_Countdown_Dev>
+
+  <Luxandra_Setting_RerollCondition_Label>Reroll condition:</Luxandra_Setting_RerollCondition_Label>
+  <Luxandra_Setting_RerollCondition_Desc>Determines what events Luxandra will reroll based on your sex acts.</Luxandra_Setting_RerollCondition_Desc>
+  <Luxandra_Setting_Reroll_Opt_Disabled>Disabled</Luxandra_Setting_Reroll_Opt_Disabled>
+  <Luxandra_Setting_Reroll_Opt_Negative>Only Negative</Luxandra_Setting_Reroll_Opt_Negative>
+  <Luxandra_Setting_Reroll_Opt_All>All Events</Luxandra_Setting_Reroll_Opt_All>
+
+  <Luxandra_Setting_ThresholdMultiplier_Label>Satisfaction Target Multiplier: {0}x</Luxandra_Setting_ThresholdMultiplier_Label>
+  <Luxandra_Setting_ThresholdMultiplier_Desc1>Adjusts how strictly Luxandra demands satisfaction. Lower values make her easier to please; higher values require intense management.</Luxandra_Setting_ThresholdMultiplier_Desc1>
+  <Luxandra_Setting_ThresholdMultiplier_Desc2>With default settings a colony with normal sex activity should be able to consistently please her every 2 events on average.</Luxandra_Setting_ThresholdMultiplier_Desc2>
+
+  <Luxandra_Setting_Preview_Header>&lt;color=cyan&gt;Live Active Colony Preview:&lt;/color&gt;</Luxandra_Setting_Preview_Header>
+  <Luxandra_Setting_Preview_Colonists>  • Spawned Adult Colonists: &lt;color=cyan&gt;{0}&lt;/color&gt;</Luxandra_Setting_Preview_Colonists>
+  <Luxandra_Setting_Preview_Slaves>  • Spawned Adult Slaves: &lt;color=cyan&gt;{0}&lt;/color&gt;</Luxandra_Setting_Preview_Slaves>
+  <Luxandra_Setting_Preview_BaseMetric>  • Base Formula Metric: &lt;color=cyan&gt;{0}&lt;/color&gt;</Luxandra_Setting_Preview_BaseMetric>
+  <Luxandra_Setting_Preview_FinalTarget>  • Final Active Target Threshold: &lt;color=cyan&gt;&lt;b&gt;{0}&lt;/b&gt;&lt;/color&gt;</Luxandra_Setting_Preview_FinalTarget>
+  <Luxandra_Setting_Preview_Error>&lt;color=red&gt;Preview Error: {0}&lt;/color&gt;</Luxandra_Setting_Preview_Error>
+  <Luxandra_Setting_Preview_NoGame>Live Preview: Load a save game file to see your active colony threshold preview.</Luxandra_Setting_Preview_NoGame>
+
+</LanguageData>

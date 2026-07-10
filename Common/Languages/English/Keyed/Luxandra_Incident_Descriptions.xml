@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Settings sentences -->
+  <Luxandra_UI_ToggleEvents_Label>Toggle Luxandra's Storyteller Active Events. (Hover for details)</Luxandra_UI_ToggleEvents_Label>
+  <Luxandra_UI_ToggleEvents_Tooltip>The events from this mod will be disabled completely unless forced via dev mode. Events from other mods will not be able to be rolled by Luxandra's special pools, but may still show up in regular random storyteller events.</Luxandra_UI_ToggleEvents_Tooltip>
+
+  <Luxandra_UI_DatabaseLoading_Label>The incident database is still being loaded. Check again in a few minutes.</Luxandra_UI_DatabaseLoading_Label>
+
+  <!-- Base Events Descriptions -->
+  <Luxandra_Inc_HornyRushFemale_Desc>Causes a surge of speed and libido in female colonists.</Luxandra_Inc_HornyRushFemale_Desc>
+  <Luxandra_Inc_HornyRushMale_Desc>Causes a surge of speed and libido in male colonists.</Luxandra_Inc_HornyRushMale_Desc>
+  <Luxandra_Inc_WhiteRain_Desc>It's warm. It's sticky. You probably shouldn't go outside today.</Luxandra_Inc_WhiteRain_Desc>
+  <Luxandra_Inc_LustfulFertilityPulse_Desc>A somewhat long lasting condition that will massively increase the fertility and libido of every human in the map.</Luxandra_Inc_LustfulFertilityPulse_Desc>
+  <Luxandra_Inc_FertilityPulseSite_Desc>A remote transmitter will cause a Fertility Pulse on your map until you disable it.</Luxandra_Inc_FertilityPulseSite_Desc>
+  <Luxandra_Inc_FertilityPulseMechCluster_Desc>A mech cluster will cause a Fertility Pulse on your map until you destroy it.</Luxandra_Inc_FertilityPulseMechCluster_Desc>
+  <Luxandra_Inc_WetDreamsPulse_Desc>A average lasting condition that will occasionally wake up your colonists in a pleasurable way.</Luxandra_Inc_WetDreamsPulse_Desc>
+  <Luxandra_Inc_WetDreamsPulseSite_Desc>A remote transmitter will cause a Wet Dreams Pulse on your map until you disable it.</Luxandra_Inc_WetDreamsPulseSite_Desc>
+  <Luxandra_Inc_WetDreamsPulseMechCluster_Desc>A mech cluster will cause a Wet Dreams Pulse on your map until you destroy it.</Luxandra_Inc_WetDreamsPulseMechCluster_Desc>
+  <Luxandra_Inc_RapistBreak_Desc>One or more pawns go on a Random Rape mental break.</Luxandra_Inc_RapistBreak_Desc>
+  <Luxandra_Inc_HornyTribalRaid_Desc>A tribal raid with increased speed and sex drive.</Luxandra_Inc_HornyTribalRaid_Desc>
+  <Luxandra_Inc_DeviantHordeRaid_Desc>A Carnal Deviant that will arrive with the support of the white rain to cause havoc.</Luxandra_Inc_DeviantHordeRaid_Desc>
+  <Luxandra_Inc_DeviantHungerSwarm_Desc>A horde of hungry Deviants is approaching your colony to find food.</Luxandra_Inc_DeviantHungerSwarm_Desc>
+  <Luxandra_Inc_AmazonStealthAmbush_Desc>An elite assassin squad of Amazons attempts to kill your most valuable pawn... or male.</Luxandra_Inc_AmazonStealthAmbush_Desc>
+  <Luxandra_Inc_AmazonBloodTrial_Desc>Young Amazons are sent on a trial to prove their worth. They'll have your heads or die trying.</Luxandra_Inc_AmazonBloodTrial_Desc>
+  <Luxandra_Inc_StarvingAmazons_Desc>A sizeable raid of starving Amazons assaults the colony in search for supply.</Luxandra_Inc_StarvingAmazons_Desc>
+  <Luxandra_Inc_TheMilkGame_Desc>A gift of milk, but someone will come for the newly fed cattles...</Luxandra_Inc_TheMilkGame_Desc>
+  <Luxandra_Inc_AphrodisiacFever_Desc>A disease that heals only via sex.</Luxandra_Inc_AphrodisiacFever_Desc>
+  <Luxandra_Inc_MaleExpansion_Desc>Male colonist penises will grow for a while.</Luxandra_Inc_MaleExpansion_Desc>
+  <Luxandra_Inc_FemaleExpansion_Desc>Female colonist breasts will grow for a while.</Luxandra_Inc_FemaleExpansion_Desc>
+  <Luxandra_Inc_MaleReduction_Desc>Male colonist penises will shrink for a while.</Luxandra_Inc_MaleReduction_Desc>
+  <Luxandra_Inc_FemaleReduction_Desc>Female colonist breasts will shrink for a while.</Luxandra_Inc_FemaleReduction_Desc>
+  <Luxandra_Inc_LustfulSupplies_Desc>A drop of supplies for your more exotic needs.</Luxandra_Inc_LustfulSupplies_Desc>
+  <Luxandra_Inc_ThrallPodCrash_Desc>A submissive slave will crash in your base.</Luxandra_Inc_ThrallPodCrash_Desc>
+  <Luxandra_Inc_BustyCurse_Desc>One of your pawns wanted to touch tits. The monkey paw's finger curls...</Luxandra_Inc_BustyCurse_Desc>
+  <Luxandra_Inc_BreakPrisonersContractQuest_Desc>A request to 'break' some prisoners.</Luxandra_Inc_BreakPrisonersContractQuest_Desc>
+  <Luxandra_Inc_ForbiddenLove_Desc>A couple of close relatives developed a forbidden relationship.</Luxandra_Inc_ForbiddenLove_Desc>
+  <Luxandra_Inc_DivineConception_Desc>A woman is suddently found pregnant. Who is the father?.</Luxandra_Inc_DivineConception_Desc>
+  <Luxandra_Inc_ForbiddenConception_Desc>A woman is suddently found pregnant. And the father does not look like being human.</Luxandra_Inc_ForbiddenConception_Desc>
+  <Luxandra_Inc_WetDreamIncident_Desc>A pawn will have an amazing dream.</Luxandra_Inc_WetDreamIncident_Desc>
+  <Luxandra_Inc_StripQuake_Desc>A strong quake will strip every pawn on the map.</Luxandra_Inc_StripQuake_Desc>
+  <Luxandra_Inc_CumMeteor_Desc>Literally what it says. They never saw it coming.</Luxandra_Inc_CumMeteor_Desc>
+
+  <!-- DLC/Modded Event Descriptions -->
+  <Luxandra_Inc_RoyalLuxury_Desc>Your royal colonist will become beautiful and well liked.</Luxandra_Inc_RoyalLuxury_Desc>
+  <Luxandra_Inc_RoyalDepravity_Desc>Your royal colonist will  become beautiful but hated by people and go on a rapist rage.</Luxandra_Inc_RoyalDepravity_Desc>
+  <Luxandra_Inc_InquisitionPurgeSappers_Desc>A group of crusaders took the 'burn the infidels' motto very literally.</Luxandra_Inc_InquisitionPurgeSappers_Desc>
+  <Luxandra_Inc_IdeoLeaderBlessing_Desc>Your ideology leader become beautiful and well liked.</Luxandra_Inc_IdeoLeaderBlessing_Desc>
+  <Luxandra_Inc_IdeoLeaderDepravity_Desc>Your ideology leader will become beautiful but hated by people and go on a rapist rage.</Luxandra_Inc_IdeoLeaderDepravity_Desc>
+  <Luxandra_Inc_IntimateInfestation_Desc>Insectoids will assault a pawn and attempted to use them as seedbed.</Luxandra_Inc_IntimateInfestation_Desc>
+  <Luxandra_Inc_UnleashedBastardsRaid_Desc>A stronger raid which will more easily try to rape your colonists.</Luxandra_Inc_UnleashedBastardsRaid_Desc>
+
+</LanguageData>
