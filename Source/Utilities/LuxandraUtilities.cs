@@ -740,6 +740,9 @@ namespace LuxandraLust
                 // Small failsafe just in case
                 if (defName == null || defName == "" || defName == " ") return false;
 
+                // This should cover those weird edge cases where this is null
+                if (LuxandraEventSettings.disabledEventNames == null || LuxandraEventSettings.disabledEventNames.Empty()) return true;
+
                 return !LuxandraEventSettings.disabledEventNames.Contains(defName);
             }
             catch
