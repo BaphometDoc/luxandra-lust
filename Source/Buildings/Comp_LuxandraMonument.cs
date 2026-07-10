@@ -349,7 +349,7 @@ namespace LuxandraLust
 
             // Add a back button inside the sub-menu to people request section
             DiaOption subMenuBack = new DiaOption("No, choose something else.");
-            subMenuBack.action = () => OpenPeopleRequestDialogue(pawn);
+            subMenuBack.action = () => OpenRootDialogue(pawn);
             rootSelectionNode.options.Add(subMenuBack);
 
             ShowDialog(rootSelectionNode, "Pray for a blessing");
