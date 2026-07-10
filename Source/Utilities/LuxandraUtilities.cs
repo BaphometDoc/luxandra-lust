@@ -735,10 +735,18 @@ namespace LuxandraLust
         /// </summary>
         public static bool IsEnabled(string defName)
         {
-            // Small failsafe just in case
-            if (defName == null || defName == "" || defName == " ") return false;
+            try
+            {
+                // Small failsafe just in case
+                if (defName == null || defName == "" || defName == " ") return false;
 
-            return !LuxandraEventSettings.disabledEventNames.Contains(defName);
+                return !LuxandraEventSettings.disabledEventNames.Contains(defName);
+            }
+            catch
+            {
+                Log.Warning($"[Luxandra Debug] Failed to check if {defName} is enabled. If you see this (expecially more than once) please send a log to the dev.");
+                return false;
+            }
         }
 
         /// <summary>
