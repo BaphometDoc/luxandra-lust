@@ -297,4 +297,42 @@ namespace LuxandraLust
             return false;
         }
     }
+
+    // Hediff management to remove it when the pawns leave the map
+    public class HediffCompProperties_FertilityPulseCheck : HediffCompProperties
+    {
+        public GameConditionDef conditionDef;
+
+        public HediffCompProperties_FertilityPulseCheck()
+        {
+            this.compClass = typeof(HediffComp_FertilityPulseCheck);
+        }
+    }
+
+    public class HediffComp_FertilityPulseCheck : HediffComp
+    {
+        public HediffCompProperties_FertilityPulseCheck Props => (HediffCompProperties_FertilityPulseCheck)this.props;
+
+        // Match the condition's scan interval for perfect alignment and maximum performance
+        private const int CheckInterval = 2500;
+
+        public override void CompPostTick(ref float severityAdjustment)
+        {
+            base.CompPostTick(ref severityAdjustment);
+
+            if (Pawn.IsHashIntervalTick(CheckInterval))
+            {
+                Map currentMap = Pawn.Map;
+
+                // If the pawn isn't on a map (e.g., traveling in a gravship), do nothing yet.
+                if (currentMap == null) return;
+
+                // If they are on a map, but the condition is NOT running on this map remove it
+                if (Props.conditionDef != null && !currentMap.gameConditionManager.ConditionIsActive(Props.conditionDef))
+                {
+                    Pawn.health.RemoveHediff(this.parent);
+                }
+            }
+        }
+    }
 }
