@@ -7,7 +7,7 @@
 	<HediffDef>
 		<defName>Luxandra_ColonyPleasureBlessing</defName>
 		<label>Blessed Ecstasy</label>
-		<description>Your actions have brought joy to Luxanna. Her divine favor manifests as a mental bliss across the entire colony.</description>
+		<description>Your actions have brought joy to Luxandra. Her divine favor manifests as a mental bliss across the entire colony.</description>
 		<hediffClass>HediffWithComps</hediffClass>
 		<defaultLabelColor>(0.85, 0.45, 0.85)</defaultLabelColor>
 		<scenarioCanAdd>false</scenarioCanAdd>
@@ -82,7 +82,7 @@
 		<validWhileDespawned>true</validWhileDespawned>
 		<stages>
 			<li>
-				<label>Luxanna's Chosen Vessel</label>
+				<label>Luxandra's Chosen Vessel</label>
 				<description>I have brought life into this world exactly as she desired. The physical and mental pleasure of her acknowledgment is overwhelming.</description>
 				<baseMoodEffect>30</baseMoodEffect>
 			</li>
