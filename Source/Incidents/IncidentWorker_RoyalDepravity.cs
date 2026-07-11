@@ -37,28 +37,50 @@ namespace LuxandraLust
 
             LuxandraDebugActions.DebugLogMessage($"Attempted to execute Royal Depravity for  {targetNoble.NameShortColored}.");
 
-            // Welp, now they're a nymphomaniac rapist. Unfortunate. Maybe they already were...
-            if (targetNoble.story?.traits != null)
+            // They shall now become beautiful. If they aren't already, anyway
+            TraitDef beautyTraitDef = DefDatabase<TraitDef>.GetNamed("Beauty", errorOnFail: false);
+            if (beautyTraitDef != null && targetNoble.story?.traits != null)
             {
-                // Fetch Rapist Trait
-                TraitDef rapistTraitDef = DefDatabase<TraitDef>.GetNamed("Rapist", errorOnFail: false);
-                if (rapistTraitDef != null && !targetNoble.story.traits.HasTrait(rapistTraitDef))
-                {
-                    targetNoble.story.traits.GainTrait(new Trait(rapistTraitDef));
-                }
+                Trait activeBeautyTrait = targetNoble.story.traits.allTraits
+                    .FirstOrDefault(t => t.def == beautyTraitDef);
 
-                // Fetch Hypersexual (Nymphomaniac) Trait
-                TraitDef nymphoTraitDef = DefDatabase<TraitDef>.GetNamed("Nymphomaniac", errorOnFail: false);
-                if (nymphoTraitDef != null && !targetNoble.story.traits.HasTrait(nymphoTraitDef))
+                if (activeBeautyTrait == null)
                 {
-                    targetNoble.story.traits.GainTrait(new Trait(nymphoTraitDef));
+                    // They don't have it, so give them degree 2 (Beautiful)
+                    targetNoble.story.traits.GainTrait(new Trait(beautyTraitDef, 2, forced: true));
+                }
+                // If they have it, but it's only degree 1 (Pretty), upgrade it!
+                else if (activeBeautyTrait.Degree == 1)
+                {
+                    // Remove the old "Pretty" instance first to prevent UI duplication bugs
+                    targetNoble.story.traits.allTraits.Remove(activeBeautyTrait);
+
+                    // Re-grant as degree 2 (Beautiful)
+                    targetNoble.story.traits.GainTrait(new Trait(beautyTraitDef, 2, forced: true));
                 }
             }
 
-            ThoughtDef depravityThought = DefDatabase<ThoughtDef>.GetNamed("Luxandra_RoyalDepravityMoodlet", errorOnFail: false);
-            if (depravityThought != null && targetNoble.needs?.mood?.thoughts?.memories != null)
+            // Tank their sex need
+            if (targetNoble.needs != null)
             {
-                targetNoble.needs.mood.thoughts.memories.TryGainMemory(depravityThought);
+                var sexNeed = LuxandraUtilities.GetSexNeed(targetNoble);
+                if (sexNeed != null)
+                {
+                    sexNeed.CurLevel = 0f;
+                }
+            }
+
+            // Add the hediff
+            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamed("Luxandra_HubristicGlow", false);
+            if (hediffDef != null)
+            {
+                Hediff hediff = HediffMaker.MakeHediff(hediffDef, targetNoble, null);
+                HediffComp_Disappears disappearComp = hediff.TryGetComp<HediffComp_Disappears>();
+                if (disappearComp != null)
+                {
+                    disappearComp.ticksToDisappear = 120000;
+                }
+                targetNoble.health.AddHediff(hediff, null, null, null);
             }
 
             // Also send them raping. They earned it (kinda)

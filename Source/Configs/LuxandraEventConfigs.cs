@@ -41,26 +41,24 @@ namespace LuxandraLust
             // --- SECTION 1: HEADER ---
             Listing_Standard headerListing = new Listing_Standard();
             headerListing.Begin(inRect);
-            Rect labelRect = headerListing.Label("Toggle Luxandra's Storyteller Active Events. (Hover for details)");
-            TooltipHandler.TipRegion(labelRect, "The events from this mod will be disabled completely unless forced via dev mode. Events from other mods will not be able to be rolled by Luxandra's special pools, but may still show up in regular random storyteller events.");
+            Rect labelRect = headerListing.Label("Luxandra_UI_ToggleEvents_Label".Translate());
+            TooltipHandler.TipRegion(labelRect, "Luxandra_UI_ToggleEvents_Tooltip".Translate());
             headerListing.Gap(10f);
             headerListing.End();
 
             // --- SECTION 2: THE SCROLL VIEW CONTAINER ---
             Rect outRect = new Rect(inRect.x, inRect.y + 40f, inRect.width, inRect.height - 140f);
-
             float totalViewHeight = (LuxandraDefsCollections.AllIncidents.Count * 26f) + 10f;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, totalViewHeight);
 
             // Begin the scroll area window context
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
-
             Listing_Standard scrollListing = new Listing_Standard();
             scrollListing.Begin(viewRect);
 
             if (!LuxandraDefsCollections._isInitialized)
             {
-                scrollListing.Label("The incident database is still being loaded. Check again in a few minutes.");
+                scrollListing.Label("Luxandra_UI_DatabaseLoading_Label".Translate());
             }
             else
             {

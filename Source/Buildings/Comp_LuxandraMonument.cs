@@ -5,12 +5,35 @@ using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace LuxandraLust
 {
     public class Comp_LuxandraMonument : ThingComp
     {
         private GameComponent_LuxandraLust LuxandraComp => GameComponent_LuxandraLust.Instance;
+        public Dictionary<StorytellerKink, Graphic> graphicCache = new Dictionary<StorytellerKink, Graphic>();
+
+        /// <summary>
+        /// Lets the statue know the kink is changed so must change look
+        /// </summary>
+        public void Notify_KinkChanged()
+        {
+            if (this.parent == null) return;
+
+            // Clear RimWorld's internal cached graphic reference for this specific building instance
+            // This forces it to evaluate the Graphic property getter fresh next frame
+            this.parent.Notify_ColorChanged();
+
+            // Tell the map renderer that the pixels on this tile are dirty and must be redrawn
+            if (this.parent.Spawned)
+            {
+                this.parent.Map.mapDrawer.MapMeshDirty(this.parent.Position, MapMeshFlagDefOf.Things);
+
+                // TODO Visual flare to hide the sudden snap that I need to get working at some point
+                //MoteMaker.MakeStaticMote(this.parent.Position, this.parent.Map, ThingDefOf.Mote_PowerBeam);
+            }
+        }
 
         // This function tells RimWorld what to show when right-clicking the building
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
@@ -39,6 +62,73 @@ namespace LuxandraLust
             });
         }
 
+        #region Cum management
+
+        /// <summary>
+        /// Finds the offering attachment
+        /// </summary>
+        private Thing GetOfferingBuilding()
+        {
+            CompAffectedByFacilities facilityComp = this.parent.GetComp<CompAffectedByFacilities>();
+            if (facilityComp == null)
+            {
+                LuxandraDebugActions.DebugLogMessage("Failed to find altar comps. Impossible to calculate cum stored.");
+                return null;
+            }
+
+            List<Thing> linkedBuildings = facilityComp.LinkedFacilitiesListForReading;
+            if (linkedBuildings == null || linkedBuildings.Count == 0)
+            {
+                LuxandraDebugActions.DebugLogMessage("No altar connected. Impossible to calculate cum stored.");
+                return null;
+            }
+
+            // Currently only a single offering building can be linked
+            return linkedBuildings[0];
+        }
+
+        /// <summary>
+        /// Finds the attached tribute pedestal, checks its current sacrifice amount, and drains a specified portion.
+        /// </summary>
+        public bool TryConsumeTribute(Thing building, float amountToDrain)
+        {
+            //if (building.def.defName == "Luxandra_TributePedestal")
+            //{
+            // Grab the fuel system component
+            CompRefuelable fuelComp = building.TryGetComp<CompRefuelable>();
+            if (fuelComp != null)
+            {
+                // Current level check (e.g., how much total fluid is stored)
+                float currentTributeLevel = fuelComp.Fuel;
+
+                // Verify if there is enough to fulfill the blessing cost
+                if (currentTributeLevel >= amountToDrain)
+                {
+                    // "Drain" the item count out of existence
+                    fuelComp.ConsumeFuel(amountToDrain);
+
+                    // Throw a nice visual text notification over the pedestal showing the drain
+                    MoteMaker.ThrowText(building.DrawPos, building.Map, $"-{amountToDrain} Cum", 3f);
+
+                    return true; // Success!
+                }
+            }
+            // }
+
+            return false; // Not enough tribute found, or pedestal missing
+        }
+
+        public float CheckCurrentAvailableCum(Thing building)
+        {
+            // Grab the fuel system component
+            CompRefuelable fuelComp = building.TryGetComp<CompRefuelable>();
+            if (fuelComp != null)
+                return fuelComp.Fuel;
+
+            return 0f;
+        }
+        #endregion
+
         #region The root window
         private void OpenRootDialogue(Pawn pawn)
         {
@@ -50,15 +140,29 @@ namespace LuxandraLust
 
             DiaNode rootNode = new DiaNode(text);
 
-            // Option: Pray for a blessing (open list)
+            // Option: Request a blessing (open list)
             DiaOption prayOption = new DiaOption("Pray for a blessing.");
-            prayOption.action = () => OpenIncidentSelectionDialogue(pawn);
+            prayOption.action = () => OpenBlessingSelectionDialogue(pawn);
             rootNode.options.Add(prayOption);
+
+            // Option: Request a event (open list)
+            DiaOption eventOption = new DiaOption("Request a event.");
+            eventOption.action = () => OpenIncidentSelectionDialogue(pawn);
+            rootNode.options.Add(eventOption);
 
             // Option: Request more people (open list)
             DiaOption peopleOption = new DiaOption("Request more people.");
             peopleOption.action = () => OpenPeopleRequestDialogue(pawn);
             rootNode.options.Add(peopleOption);
+
+            var tributeBuilding = GetOfferingBuilding();
+            if (tributeBuilding != null)
+            {
+                // Option: Offer a tribute (open list)
+                DiaOption tributeOption = new DiaOption("Offer a tribute.");
+                tributeOption.action = () => OfferTributeDialogue(pawn, tributeBuilding);
+                rootNode.options.Add(tributeOption);
+            }
 
             // Option: Leave
             DiaOption leaveOption = new DiaOption("Leave.");
@@ -66,6 +170,222 @@ namespace LuxandraLust
             rootNode.options.Add(leaveOption);
 
             ShowDialog(rootNode, "Communing with Luxandra");
+        }
+        #endregion
+
+        #region Cum Tribute
+        private void OfferTributeDialogue(Pawn pawn, Thing tributeBuilding)
+        {
+            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou want to offer me a tribute? Material offerings, to prove your devotion?");
+
+            DiaOption cumForFavorOption = new DiaOption("(Gain Favor) I will offer our fertile fluids to gain your divine favor.");
+
+            var fluidTotal = CheckCurrentAvailableCum(tributeBuilding);
+            if (fluidTotal < 100)
+            {
+                cumForFavorOption.Disable($"\nRequires at least {100} Cum (You have {fluidTotal}).");
+            }
+            cumForFavorOption.action = () => OpenCumForFavorDialogue(pawn, tributeBuilding);
+            rootSelectionNode.options.Add(cumForFavorOption);
+
+            DiaOption changeKinkOption = new DiaOption("I request you to change your current obsession.");
+
+            if (fluidTotal < 50)
+            {
+                changeKinkOption.Disable($"\nRequires at least {50} Cum (You have {fluidTotal}).");
+            }
+            changeKinkOption.action = () => OpenKinkSelectionDialogue(pawn, tributeBuilding);
+            rootSelectionNode.options.Add(changeKinkOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenRootDialogue(pawn);
+            rootSelectionNode.options.Add(noOption);
+
+            ShowDialog(rootSelectionNode, $"Offer a tribute");
+        }
+
+        #region Change current kink
+        private void OpenKinkSelectionDialogue(Pawn pawn, Thing tributeBuilding)
+        {
+            DiaNode rootSelectionNode = new DiaNode($"<color=#D4AF37>Luxandra</color>:\n\nMy my, you would dare ask me to change my preferences? And what sort of thing would you propose, my dearest subject?");
+
+            var fluidTotal = CheckCurrentAvailableCum(tributeBuilding);
+            var availableKinks = LuxandraKinkTracker.GetEnabledKinks().Where(k => k != StorytellerKink.None);
+
+            DiaOption randomKinkNode = new DiaOption($"(25 Cum) Change to anything you'd like");
+
+            if (fluidTotal < 25)
+            {
+                randomKinkNode.Disable($"Requires {25} Cum. You have {fluidTotal}.");
+            }
+
+            randomKinkNode.action = () => ConfirmKinkRerollDialogue(pawn, tributeBuilding, StorytellerKink.None);
+            rootSelectionNode.options.Add(randomKinkNode);
+
+            foreach (var kink in availableKinks)
+            {
+                DiaOption kinkNode = new DiaOption($"(50 Cum) I wish you to appreciate {kink}");
+
+                if (fluidTotal < 50)
+                {
+                    kinkNode.Disable($"Requires {50} Cum. You have {fluidTotal}).");
+                }
+
+                kinkNode.action = () => ConfirmKinkRerollDialogue(pawn, tributeBuilding, kink);
+                rootSelectionNode.options.Add(kinkNode);
+            }
+
+            // Main menu "Go Back" button
+            DiaOption backOption = new DiaOption("Go Back");
+            backOption.action = () => OfferTributeDialogue(pawn, tributeBuilding);
+            rootSelectionNode.options.Add(backOption);
+
+            ShowDialog(rootSelectionNode, "Select a Kink to request");
+        }
+
+        private void ConfirmKinkRerollDialogue(Pawn pawn, Thing tributeBuilding, StorytellerKink kinkChosen)
+        {
+            string flavorTextKey = $"Luxandra_KinkFlavor_{kinkChosen}";
+            string flavorText = flavorTextKey.Translate();
+
+            int cost = kinkChosen == StorytellerKink.None ? 25 : 50;
+            string text = kinkChosen == StorytellerKink.None ?
+                "Do you want to request a new random preference for Luxandra?" :
+                $"A thought forms in your head... \"{flavorText}\"";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            DiaOption confirmOption = new DiaOption($"(Offer {cost} Cum) Yes, this is what I desire.");
+
+            confirmOption.action = () =>
+            {
+                TryConsumeTribute(tributeBuilding, cost);
+                if (kinkChosen == StorytellerKink.None)
+                    LuxandraKinkTracker.TriggerKinkShift();
+                else
+                    LuxandraKinkTracker.TriggerKinkShift(true, kinkChosen);
+                Messages.Message($"Luxandra accepts your offering and alters her preferences for a while.", MessageTypeDefOf.NeutralEvent, false);
+            };
+
+            confirmOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(confirmOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenKinkSelectionDialogue(pawn, tributeBuilding);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Offer Cum to request a kink change");
+        }
+
+        #endregion
+
+        #region Cum for favor
+        private void OpenCumForFavorDialogue(Pawn pawn, Thing tributeBuilding)
+        {
+            int fluidTotalBase100 = (int)(CheckCurrentAvailableCum(tributeBuilding) / 100) * 100;
+            int favorGranted = fluidTotalBase100 / 10;
+            string text = $"Offering {fluidTotalBase100} will grant you {favorGranted} Favor.\n\nYou would have {LuxandraComp.colonyFavorPoints + favorGranted} after the offering.";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            if (fluidTotalBase100 >= 200)
+            {
+                DiaOption offer100CumOption = new DiaOption("Offer 100 Cum for 10 Favor.");
+
+                offer100CumOption.action = () =>
+                {
+                    TryConsumeTribute(tributeBuilding, 100);
+                    LuxandraComp.AddToFavorCounter(10);
+                    Messages.Message($"Luxandra accepts your offering and blesses you with {10} Favor. New total: {LuxandraComp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
+                };
+
+                offer100CumOption.resolveTree = true; // This finishes the interaction entirely
+                confirmNode.options.Add(offer100CumOption);
+            }
+
+            DiaOption allOfItOption = new DiaOption($"Offer all the Cum she will take ({fluidTotalBase100} for {favorGranted} Favor).");
+
+            allOfItOption.action = () =>
+            {
+                TryConsumeTribute(tributeBuilding, favorGranted * 10);
+                LuxandraComp.AddToFavorCounter(favorGranted);
+                Messages.Message($"Luxandra accepts your offering and blesses you with {favorGranted} Favor. New total: {LuxandraComp.colonyFavorPoints}", MessageTypeDefOf.NeutralEvent, false);
+            };
+
+            allOfItOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(allOfItOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OfferTributeDialogue(pawn, tributeBuilding);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Offer Cum for Favor");
+        }
+        #endregion
+
+        #endregion Cum Tribute
+
+        #region Request Blessings
+        private void OpenBlessingSelectionDialogue(Pawn pawn)
+        {
+            DiaNode rootSelectionNode = new DiaNode($"<color=#D4AF37>Luxandra</color>:\n\nYou request my aid? Are you facing dire challenges, or are you just feeling lonely?");
+
+            bool enableHealing = true;
+            HealthUtility.TryGetWorstHealthCondition(pawn, out var hediff, out var bodyPart);
+            if (hediff == null && bodyPart == null)
+                enableHealing = false;
+
+            DiaOption healingOption = new DiaOption("(50 Favor) Request healing.");
+            if (LuxandraComp.colonyFavorPoints < 50)
+            {
+                healingOption.Disable($"Requires {50} Favor (You have {LuxandraComp.colonyFavorPoints}).");
+            }
+            else if (enableHealing == false)
+            {
+                healingOption.Disable($"{pawn.NameShortColored} is not injured.");
+            }
+            healingOption.action = () => OpenHealingConfirmationDialogue(pawn);
+            rootSelectionNode.options.Add(healingOption);
+
+            // Add a back button inside the sub-menu to people request section
+            DiaOption subMenuBack = new DiaOption("No, choose something else.");
+            subMenuBack.action = () => OpenRootDialogue(pawn);
+            rootSelectionNode.options.Add(subMenuBack);
+
+            ShowDialog(rootSelectionNode, "Pray for a blessing");
+        }
+
+        private void OpenHealingConfirmationDialogue(Pawn pawn)
+        {
+            HealthUtility.TryGetWorstHealthCondition(pawn, out var hediff, out var bodyPart);
+            string injuryName = hediff != null ? hediff.Label : bodyPart != null ? bodyPart.Label : "";
+            string text = $"Are you sure you want to spend 50 Favor to request healing {injuryName} for {pawn.NameFullColored}?\n\nYou would have {LuxandraComp.colonyFavorPoints - 50} left after the request.";
+
+            DiaNode confirmNode = new DiaNode(text);
+
+            DiaOption yesOption = new DiaOption("Yes, request it.");
+
+            yesOption.action = () =>
+            {
+                TaggedString taggedString = HealthUtility.FixWorstHealthCondition(pawn);
+
+                // 5. Add a nice thematic feedback message and sound effect
+                SoundDefOf.MechSerumUsed.PlayOneShot(new TargetInfo(pawn.Position, pawn.Map));
+
+                MoteMaker.MakeStaticMote(pawn.Position, pawn.Map, ThingDefOf.Mote_Bestow);
+
+                LuxandraComp.PayForLuxandraServices(50);
+                Messages.Message($"{pawn.NameShortColored} has received Luxandra's healing embrace. Their {injuryName} is cured in exchange for 50 Favor.", pawn, MessageTypeDefOf.PositiveEvent);
+            };
+
+            yesOption.resolveTree = true; // This finishes the interaction entirely
+            confirmNode.options.Add(yesOption);
+
+            DiaOption noOption = new DiaOption("No, choose something else.");
+            noOption.action = () => OpenBlessingSelectionDialogue(pawn);
+            confirmNode.options.Add(noOption);
+
+            ShowDialog(confirmNode, $"Request healing");
         }
         #endregion
 
@@ -99,12 +419,11 @@ namespace LuxandraLust
 
             ShowDialog(rootSelectionNode, "Request more people");
         }
-        #endregion
 
         #region Sex Slave Request
         private void OpenRequestSexSlaveDialogue(Pawn pawn)
         {
-            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou require an obedient thrall? Oh my, you naughty person, I wonder what <i>incredible things</i> you have in store for them...\"");
+            DiaNode rootSelectionNode = new DiaNode("<color=#D4AF37>Luxandra</color>:\n\nYou require an obedient thrall? Oh my, you naughty person, I wonder what <i>incredible things</i> you have in store for them...");
 
             DiaOption maleSlaveOption = new DiaOption("(50 Favor) Yes, I would like a male servant.");
             if (LuxandraComp.colonyFavorPoints < 50)
@@ -129,7 +448,6 @@ namespace LuxandraLust
 
             ShowDialog(rootSelectionNode, "Request a servant");
         }
-
 
         private void OpenSexSlaveConfirmationDialogue(Pawn pawn, Gender gender)
         {
@@ -361,6 +679,8 @@ namespace LuxandraLust
 
         #endregion
 
+        #endregion Request people
+
         #region Request incidents
         private string DetermineSectionFlavorText(LuxandraIncidentType incidentType)
         {
@@ -421,9 +741,9 @@ namespace LuxandraLust
                 // Generate the submenu
                 foreach (var luxIncident in categoryIncidents)
                 {
-                    // Calculation for base event costs: sexual threshold / 50
+                    // Calculation for base event costs: sexual threshold / 25
                     decimal masterThreshold = GameComponent_LuxandraLust.CalculateSexualRerollThreshold();
-                    decimal multiplier = luxIncident.PointBaseCost.Value / 50m;
+                    decimal multiplier = luxIncident.PointBaseCost.Value / 25m;
                     int cost = (int)Math.Ceiling(masterThreshold * multiplier);
 
                     string label = $"({cost} Favor) {luxIncident.IncidentDef.LabelCap}";
@@ -523,16 +843,16 @@ namespace LuxandraLust
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            // 1. Let vanilla components draw their own gizmos first (like deconstruction or minifying)
+            // Let vanilla components draw their own gizmos first (like deconstruction or minifying)
             foreach (Gizmo gizmo in base.CompGetGizmosExtra())
             {
                 yield return gizmo;
             }
 
-            // 2. Make sure our data component actually exists before drawing the button
+            // Make sure component actually exists before drawing the button
             if (LuxandraComp != null)
             {
-                // 3. Create a standard command button
+                // Create a standard command button
                 Command_Action favorGizmo = new Command_Action();
 
                 favorGizmo.defaultLabel = "Check Favor";

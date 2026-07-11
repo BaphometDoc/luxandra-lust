@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-    <!-- <DesignatorDropdownGroupDef> -->
-        <!-- <defName>Luxandra_Altars</defName> -->
-    <!-- </DesignatorDropdownGroupDef> -->
+	<!-- <DesignatorDropdownGroupDef> -->
+	<!-- <defName>Luxandra_Altars</defName> -->
+	<!-- </DesignatorDropdownGroupDef> -->
 
 	<ThingDef ParentName="BuildingBase" Name="Luxandra_SacredMonumentBase" Abstract="True">
 		<description>A grand monument dedicated to Luxandra. Can only be constructed while she guides your colony's fate.</description>
@@ -18,18 +18,29 @@
 		<filthLeaving>Filth_RubbleRock</filthLeaving>
 		<uiIconScale>0.8</uiIconScale>
 		<uiIconOffset>(0, 0.04)</uiIconOffset>
-	
-		<thingCategories>
-			<li>BuildingsMisc</li>
-		</thingCategories>
-		<minifiedDef>MinifiedThing</minifiedDef>
     
 		<stuffCategories>
 			<li>Metallic</li>
 			<li>Stony</li>
 		</stuffCategories>
-
+		<costList>
+			<Luxandra_HeartOfLust>1</Luxandra_HeartOfLust>
+		</costList>
+	
+		<thingCategories>
+			<li>BuildingsMisc</li>
+		</thingCategories>
+		<minifiedDef>MinifiedThing</minifiedDef>
 		<comps>
+			<li Class="CompProperties_AffectedByFacilities">
+				<linkableFacilities>
+					<li>Luxandra_TributePedestal</li>
+				</linkableFacilities>
+			</li>
+			<li Class="CompProperties_Glower">
+				<glowRadius>10</glowRadius>
+				<glowColor>(255, 182, 193, 0)</glowColor>
+			</li>
 			<li Class="LuxandraLust.CompProperties_LuxandraMonument"/>
 			<li Class="CompProperties_MeditationFocus">
 				<statDef>MeditationFocusStrength</statDef>
@@ -39,7 +50,7 @@
 				</focusTypes>
 			</li>
 		</comps>
-        <!-- <designatorDropdown>Luxandra_Altars</designatorDropdown> -->
+		<!-- <designatorDropdown>Luxandra_Altars</designatorDropdown> -->
 	</ThingDef>
 
 	<!-- ========================================== -->

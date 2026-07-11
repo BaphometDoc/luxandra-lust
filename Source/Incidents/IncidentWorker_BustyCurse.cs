@@ -114,7 +114,7 @@ namespace LuxandraLust
                         naturalPart.Severity = newSeverity;
 
                         var comp = part.SexPart.GetPartComp();
-                        comp?.SetSeverity(newSeverity);
+                        comp?.SetSeverity(newSeverity, false);
 
                         LuxandraDebugActions.DebugLogMessage($"Increased {pawn.NameShortColored}'s {naturalPart.def} from {currentSeverity} to {newSeverity}.");
                     }
@@ -148,7 +148,7 @@ namespace LuxandraLust
                         naturalPart.Severity = newSeverity;
 
                         var comp = part.SexPart.GetPartComp();
-                        comp?.SetSeverity(newSeverity);
+                        comp?.SetSeverity(newSeverity, false);
 
                         LuxandraDebugActions.DebugLogMessage($"Restored {pawn.NameShortColored}'s {naturalPart.def} to {newSeverity}.");
                     }

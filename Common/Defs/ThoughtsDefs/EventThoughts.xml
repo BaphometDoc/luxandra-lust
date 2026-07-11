@@ -17,55 +17,74 @@
 	</ThoughtDef>
 	
 	<ThoughtDef>
-		<defName>Luxandra_RoyalLuxuryMoodlet</defName>
-		<thoughtClass>Thought_Memory</thoughtClass>
-		<durationDays>5.0</durationDays>
-		<stackLimit>1</stackLimit>
+		<defName>Luxandra_AdoredSaintOpinion</defName>
+		<thoughtClass>Thought_SituationalSocial</thoughtClass>
+		<workerClass>LuxandraLust.ThoughtWorker_LuxandraStature</workerClass>
+		<validWhileDespawned>true</validWhileDespawned>
 		<stages>
 			<li>
-				<label>Royal luxury</label>
-				<description>The goddess has chosen me as her canvas of desire. I feel fundamentally superior, beautifully elevated, and absolutely immaculate.</description>
-				<baseMoodEffect>15</baseMoodEffect>
+				<label>kissed by the goddess</label>
+				<baseOpinionOffset>50</baseOpinionOffset>
 			</li>
-		</stages>
-	</ThoughtDef>
-
-	<ThoughtDef>
-		<defName>Luxandra_RoyalDepravityMoodlet</defName>
-		<thoughtClass>Thought_Memory</thoughtClass>
-		<durationDays>5.0</durationDays>
-		<stackLimit>1</stackLimit>
-		<stages>
 			<li>
-				<label>Royal depravity</label>
-				<description>My subjects are mocking my status! They will have to pay for this.</description>
-				<baseMoodEffect>-15</baseMoodEffect>
+				<label>hubristic mortal</label>
+				<baseOpinionOffset>-100</baseOpinionOffset>
 			</li>
 		</stages>
 	</ThoughtDef>
 	
 	<ThoughtDef>
-		<defName>Luxandra_IdeologyBlessingMoodlet</defName>
-		<durationDays>5.0</durationDays>
-		<stackLimit>1</stackLimit>
+		<defName>Luxandra_DivineKiss_Mood</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_DivineKiss</hediff>
+		<validWhileDespawned>true</validWhileDespawned>
 		<stages>
 			<li>
-				<label>Blessed spiritual clarity</label>
-				<description>Luxandra's touch has opened my eyes. My sacred role feels empowered, and a wave of pure, absolute pleasure radiates through my thoughts whenever I guide our flock.</description>
+				<label>divinely chosen vessel</label>
+				<description>Luxandra's grace flows through me. I am her chosen instrument, and my people look upon me with pure, holy devotion.</description>
 				<baseMoodEffect>12</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
 	
 	<ThoughtDef>
-		<defName>Luxandra_IdeologyDepravityMoodlet</defName>
+		<defName>Luxandra_HubristicGlow_Mood</defName>
+		<workerClass>ThoughtWorker_Hediff</workerClass>
+		<hediff>Luxandra_HubristicGlow</hediff>
+		<validWhileDespawned>true</validWhileDespawned>
+		<stages>
+			<li>
+				<label>mocked by the divine</label>
+				<description>This flawless visage is a prison. Everyone looks at me with pure disgust and envy, whispering that I think myself a god. The weight of their hatred is suffocating.</description>
+				<baseMoodEffect>-12</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>Luxandra_InsectoidAssaultMood</defName>
+		<thoughtClass>Thought_Memory</thoughtClass>
 		<durationDays>5.0</durationDays>
 		<stackLimit>1</stackLimit>
 		<stages>
 			<li>
-				<label>Corrupted spiritual focus</label>
-				<description>The quiet promptings in my mind are overwhelming. My sacred duties feel hollow compared to the grand, dark desires the goddess has laid out for me...</description>
-				<baseMoodEffect>-12</baseMoodEffect>
+				<label>Insectoid vile assault</label>
+				<description>I got trapped in a sticky cocoon, then they violated me and laid eggs inside me. Gross...</description>
+				<baseMoodEffect>-15</baseMoodEffect>
+			</li>
+		</stages>
+	</ThoughtDef>
+	
+	<ThoughtDef>
+		<defName>Luxandra_InsectoidAssaultMoodMasochist</defName>
+		<thoughtClass>Thought_Memory</thoughtClass>
+		<durationDays>5.0</durationDays>
+		<stackLimit>1</stackLimit>
+		<stages>
+			<li>
+				<label>Insectoid vile assault</label>
+				<description>I got trapped in a sticky cocoon, then they violated me and laid eggs inside me. Hot...</description>
+				<baseMoodEffect>15</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
@@ -134,31 +153,4 @@
 		</stages>
 	</ThoughtDef>
 	
-	<ThoughtDef>
-		<defName>Luxandra_InsectoidAssaultMood</defName>
-		<thoughtClass>Thought_Memory</thoughtClass>
-		<durationDays>5.0</durationDays>
-		<stackLimit>1</stackLimit>
-		<stages>
-			<li>
-				<label>Insectoid vile assault</label>
-				<description>I got trapped in a sticky cocoon, then they violated me and laid eggs inside me. Gross...</description>
-				<baseMoodEffect>-15</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
-	
-	<ThoughtDef>
-		<defName>Luxandra_InsectoidAssaultMoodMasochist</defName>
-		<thoughtClass>Thought_Memory</thoughtClass>
-		<durationDays>5.0</durationDays>
-		<stackLimit>1</stackLimit>
-		<stages>
-			<li>
-				<label>Insectoid vile assault</label>
-				<description>I got trapped in a sticky cocoon, then they violated me and laid eggs inside me. Hot...</description>
-				<baseMoodEffect>15</baseMoodEffect>
-			</li>
-		</stages>
-	</ThoughtDef>
 </Defs>

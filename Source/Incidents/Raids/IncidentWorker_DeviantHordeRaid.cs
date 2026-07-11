@@ -28,7 +28,11 @@ namespace LuxandraLust
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            Map map = (Map)parms.target;
+            Map map = parms.target as Map;
+
+            // Failsafe cause this apparently breaks if it fires via devmode
+            if (map == null)
+                return false;
 
             LuxandraDebugActions.DebugLogMessage("Attempting to generate a Deviant Horde raid.");
             Faction deviantFaction = Find.FactionManager.FirstFactionOfDef(LuxandraFactionDefOf.Luxandra_DeviantHordeFaction);
@@ -56,13 +60,15 @@ namespace LuxandraLust
                 parms.points = StorytellerUtility.DefaultThreatPointsNow(map) * 2 / 3;
             }
 
-            // Changed to Immediate Attack as now the threat comes from the rain instead
-            //var raidStrategy = DefDatabase<RaidStrategyDef>.GetNamed("Luxandra_RapeAndPillageAssault", false);
-            //if (raidStrategy == null)
-            //{
-            //    Log.Warning("[Luxandra Debug] Raid strategy not found, defaulting to immediate attack.");
-            //    raidStrategy = RaidStrategyDefOf.ImmediateAttack;
-            //}
+            int durationTicks = 30000;
+
+            // PERFORMANCE LIMIT - Trying to not make the player's PC explode
+            // Instead amplify the rain duration to be more annoying
+            if (parms.points > 1200f)
+            {
+                parms.points = 1200f;
+                durationTicks = 60000;
+            }
 
             IncidentParms raidParms = new IncidentParms
             {
@@ -82,12 +88,11 @@ namespace LuxandraLust
                 sendLetter = true
             };
 
-            int durationTicks = 30000;
             GameConditionDef whiteRainDef = DefDatabase<GameConditionDef>.GetNamed("Luxandra_WhiteRain", false);
 
             if (whiteRainDef != null)
             {
-                // Cause a 12 hour white rain
+                // Cause a 12-24 hour white rain
                 GameCondition condition = GameConditionMaker.MakeCondition(whiteRainDef, durationTicks);
                 map.gameConditionManager.RegisterCondition(condition);
                 LuxandraDebugActions.DebugLogMessage("Successfully triggered 12-hour White Rain for the horde.");

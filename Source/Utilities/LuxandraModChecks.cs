@@ -58,9 +58,19 @@ namespace LuxandraLust
             return ModsConfig.IsActive("archersaiter.rjw.unleashed.bastard");
         }
 
+        public static bool IsOnaholeActive()
+        {
+            return ModsConfig.IsActive("rim.job.world.onahole.ext");
+        }
+
         public static bool IsForbiddenAnomaliesActive()
         {
             return ModsConfig.IsActive("forbidden.anomalies");
+        }
+
+        public static bool IsDreadbedActive()
+        {
+            return ModsConfig.IsActive("Doop.DreadmeldSeedbed");
         }
 
         public static bool IsRJWInsectsActive()
@@ -73,6 +83,20 @@ namespace LuxandraLust
             return ModsConfig.IsActive("shauaputa.lewdtrader");
         }
 
+        public static bool IsElToroBestialityActive()
+        {
+            return ModsConfig.IsActive("ElToro.BAddon");
+        }
+
+        public static bool IsElToroMechanoidsActive()
+        {
+            return ModsConfig.IsActive("ElToro.MAddon");
+        }
+
+        public static bool IsVEAndroidsActive()
+        {
+            return ModsConfig.IsActive("vanillaracesexpanded.android");
+        }
         #endregion
     }
 }

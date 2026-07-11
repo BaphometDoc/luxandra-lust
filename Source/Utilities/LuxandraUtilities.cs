@@ -50,7 +50,7 @@ namespace LuxandraLust
             var eligiblePawns = map.mapPawns.AllPawnsSpawned.Where(p =>
                 p.RaceProps != null && p.RaceProps.Humanlike && !p.Dead &&
                 (p.IsColonist || p.IsSlave) &&
-                LuxandraUtilities.IsAdult(p)
+                IsAdult(p)
             );
 
             float totalSexNeed = 0f;
@@ -104,10 +104,10 @@ namespace LuxandraLust
                 if (part?.SexPart is Hediff_NaturalSexPart naturalPart)
                 {
                     float currentSeverity = naturalPart.Severity;
-                    float changeAmount = 0.5f;
+                    float changeAmount = 0.25f;
 
                     // Calculates adjustments trying to not exceed the severity limits
-                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + changeAmount, 3.0f);
+                    float newSeverity = UnityEngine.Mathf.Min(currentSeverity + changeAmount, 5.0f);
 
                     if (newSeverity != currentSeverity)
                     {
@@ -347,17 +347,49 @@ namespace LuxandraLust
                     if (GenderHelper.GetSex(actor) == GenderHelper.Sex.Futa || GenderHelper.GetSex(actor) == GenderHelper.Sex.Trap || GenderHelper.GetSex(partner) == GenderHelper.Sex.Futa || GenderHelper.GetSex(partner) == GenderHelper.Sex.Trap)
                         return true;
                     break;
+                // Kink = Mechanophilia: androids, mechs
+                case StorytellerKink.Mechanophilia:
+                    if ((actor.mechanitor?.OverseenPawns.Count > 0 && partner.IsColonyMech) || actor.RaceProps.IsMechanoid || partner.RaceProps.IsMechanoid || IsAndroid(actor) || IsAndroid(partner))
+                        return true;
+                    break;
+                // Kink = Tentacles: Mimics from onahole, anomalies
+                case StorytellerKink.Tentacles:
+                    if (actor.IsEntity || partner.IsEntity || actor.def.defName == "Onahole_Mimic" || partner.def.defName == "Onahole_Mimic")
+                        return true;
+                    break;
             }
 
             return null;
         }
 
         /// <summary>
-        /// Determines if the pawn is adult (or youth if RJW has the check enabled)
+        /// Determines if the pawns are blood related
         /// </summary>
-        public static bool IsAdult(Pawn pawn)
+        public static bool ArePawnsBloodRelated(Pawn pA, Pawn pB)
+        {
+            return pA.relations.FamilyByBlood.Contains(pB);
+        }
+
+        /// <summary>
+        /// Determines if the pawn is a living adult (or youth if RJW has the check enabled)
+        /// </summary>
+        public static bool IsAdult(Pawn pawn, bool countAndroids = true)
         {
             if (pawn == null)
+                return false;
+
+            // Dodge ghouls and similar things too as they break
+            if (pawn.IsGhoul || pawn.IsEntity)
+                return false;
+
+            // Androids always count as adults
+            if (countAndroids && IsAndroid(pawn))
+                return true;
+
+            // TODO: Alien race
+            // This lifestage check fucks up sometimes, so i'm just throwing a hard 16+
+            // regardless of every other setting.
+            if (pawn.ageTracker.AgeBiologicalYears < 16)
                 return false;
 
             var allowYouth = rjw.RJWSettings.AllowYouthSex;
@@ -428,6 +460,21 @@ namespace LuxandraLust
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks if it's an android
+        /// </summary>
+        public static bool IsAndroid(Pawn pawn)
+        {
+            // TODO: Other "android" types
+
+            // If no biotech, this is false regardless
+            if (!ModsConfig.BiotechActive)
+                return false;
+
+            GeneDef androidBodyGene = DefDatabase<GeneDef>.GetNamed("VREA_SyntheticBody", false);
+            return pawn != null && !pawn.Dead && pawn.genes?.HasActiveGene(androidBodyGene) == true;
         }
 
         /// <summary>
@@ -511,6 +558,161 @@ namespace LuxandraLust
             // Use RimWorld's built-in rapid list tracker method to check for the meme
             return playerIdeo.HasMeme(memeDef);
         }
+
+        /// <summary>
+        /// Determines the colony support for Bestiality
+        /// </summary>
+        public static DepravitySupportLevel DetermineBestialitySupport(Map map)
+        {
+            // Ideology - tecnically this would require sexperience-ideology, but those are going to
+            // just be false if it's not loaded anyway. Manages to catch similar mods as well if someone
+            // is degenerate enough
+            if (ModsConfig.IdeologyActive)
+            {
+                MemeDef zoophileMeme = DefDatabase<MemeDef>.GetNamed("Zoophile", false);
+                PreceptDef bestialityAccepted = DefDatabase<PreceptDef>.GetNamed("Bestiality_Acceptable", false);
+                PreceptDef bestialityVenerated = DefDatabase<PreceptDef>.GetNamed("Bestiality_OnlyVenerated", false);
+                PreceptDef bestialityBonded = DefDatabase<PreceptDef>.GetNamed("Bestiality_BondOnly", false);
+                PreceptDef bestialityHonorable = DefDatabase<PreceptDef>.GetNamed("Bestiality_Honorable", false);
+
+                // TODO: special cases for only venerated, only bonded, and the various bestial pregnancy precepts
+                if (PlayerFactionHasPrecept(bestialityHonorable))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasMeme(zoophileMeme) ||
+                   PlayerFactionHasPrecept(bestialityAccepted) ||
+                   PlayerFactionHasPrecept(bestialityVenerated) ||
+                   PlayerFactionHasPrecept(bestialityBonded) ||
+                   PlayerFactionHasPrecept(bestialityHonorable))
+                {
+                    return DepravitySupportLevel.Accepted;
+                }
+            }
+
+            var localColonists = map.mapPawns.FreeColonists;
+
+            // Biotech - same as above but for RJW genes
+            if (ModsConfig.BiotechActive)
+            {
+                GeneDef zoophileGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_zoophile", false);
+                int zoophileGeneColonists = CountColonistsWithGeneOnMap(map, zoophileGene);
+
+                if (zoophileGeneColonists == localColonists.Count)
+                    return DepravitySupportLevel.Required;
+            }
+
+            // Traits
+
+            TraitDef zoophileTrait = DefDatabase<TraitDef>.GetNamed("Zoophile", false);
+            int zoophileColonists = CountColonistsWithTraitOnMap(map, zoophileTrait);
+
+            if (zoophileColonists == localColonists.Count)
+                return DepravitySupportLevel.Required;
+
+            return DepravitySupportLevel.Hated;
+        }
+
+        /// <summary>
+        /// Determines the colony support for Rape
+        /// </summary>
+        public static DepravitySupportLevel DetermineRapistSupport(Map map)
+        {
+            if (ModsConfig.IdeologyActive)
+            {
+                MemeDef rapistMeme = DefDatabase<MemeDef>.GetNamed("Rapist", false);
+                PreceptDef rapeAccepted = DefDatabase<PreceptDef>.GetNamed("Rape_Acceptable", false);
+                PreceptDef rapeHonorable = DefDatabase<PreceptDef>.GetNamed("Rape_Honorable", false);
+
+                if (PlayerFactionHasPrecept(rapeHonorable))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasMeme(rapistMeme) ||
+                   PlayerFactionHasPrecept(rapeAccepted) ||
+                   PlayerFactionHasPrecept(rapeHonorable))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+            }
+
+            var localColonists = map.mapPawns.FreeColonists;
+
+            // Biotech - same as above but for RJW genes
+            if (ModsConfig.BiotechActive)
+            {
+                GeneDef rapistGene = DefDatabase<GeneDef>.GetNamed("rjw_genes_rapist", false);
+                int rapistGeneColonists = CountColonistsWithGeneOnMap(map, rapistGene);
+
+                if (rapistGeneColonists == localColonists.Count)
+                    return DepravitySupportLevel.Required;
+            }
+
+            // Traits
+
+            TraitDef rapistTrait = DefDatabase<TraitDef>.GetNamed("Rapist", false);
+            int rapistColonists = CountColonistsWithTraitOnMap(map, rapistTrait);
+
+            if (rapistColonists == localColonists.Count)
+                return DepravitySupportLevel.Required;
+
+            return DepravitySupportLevel.Hated;
+        }
+
+        /// <summary>
+        /// Determines the colony support for Brothel Colony's Repopulation
+        /// </summary>
+        public static DepravitySupportLevel DetermineRepopulationSupport(Map map)
+        {
+            // Ideology + Brothel Colony
+            if (ModsConfig.IdeologyActive && LuxandraModChecks.IsBrothelColonyActive())
+            {
+                MemeDef repopulationMeme = DefDatabase<MemeDef>.GetNamed("CB_Repopulationist", false);
+                PreceptDef repopulationKindness = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Kindness", false);
+                PreceptDef repopulationGreed = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Greed", false);
+                PreceptDef repopulationDuty = DefDatabase<PreceptDef>.GetNamed("CB_Repopulation_Duty", false);
+
+                if (PlayerFactionHasPrecept(repopulationDuty))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasMeme(repopulationMeme) ||
+                   PlayerFactionHasPrecept(repopulationKindness) ||
+                   PlayerFactionHasPrecept(repopulationGreed) ||
+                   PlayerFactionHasPrecept(repopulationDuty))
+                {
+                    return DepravitySupportLevel.Accepted;
+                }
+            }
+
+            return DepravitySupportLevel.Hated;
+        }
+
+        /// <summary>
+        /// Determines the colony support for incestuous relationships
+        /// </summary>
+        public static DepravitySupportLevel DetermineIncestSupport(Map map)
+        {
+            // Ideology
+            if (ModsConfig.IdeologyActive)
+            {
+                PreceptDef incestRequired = DefDatabase<PreceptDef>.GetNamed("Incestuos_IncestOnly", false);
+                PreceptDef incestFree = DefDatabase<PreceptDef>.GetNamed("Incestuos_Free", false);
+                PreceptDef incestPassable = DefDatabase<PreceptDef>.GetNamed("Incestuos_Disapproved_CloseOnly", false);
+
+                if (PlayerFactionHasPrecept(incestRequired))
+                {
+                    return DepravitySupportLevel.Required;
+                }
+                else if (PlayerFactionHasPrecept(incestFree) ||
+                   PlayerFactionHasPrecept(incestPassable))
+                {
+                    return DepravitySupportLevel.Accepted;
+                }
+            }
+
+            return DepravitySupportLevel.Hated;
+        }
     }
 
     // This class tracks the selected storyteller
@@ -533,10 +735,21 @@ namespace LuxandraLust
         /// </summary>
         public static bool IsEnabled(string defName)
         {
-            // Small failsafe just in case
-            if (defName == null || defName == "" || defName == " ") return false;
+            try
+            {
+                // Small failsafe just in case
+                if (defName == null || defName == "" || defName == " ") return false;
 
-            return !LuxandraEventSettings.disabledEventNames.Contains(defName);
+                // This should cover those weird edge cases where this is null
+                if (LuxandraEventSettings.disabledEventNames == null || LuxandraEventSettings.disabledEventNames.Empty()) return true;
+
+                return !LuxandraEventSettings.disabledEventNames.Contains(defName);
+            }
+            catch
+            {
+                Log.Warning($"[Luxandra Debug] Failed to check if {defName} is enabled. If you see this (expecially more than once) please send a log to the dev.");
+                return false;
+            }
         }
 
         /// <summary>

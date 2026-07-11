@@ -10,6 +10,42 @@ namespace LuxandraLust
         public LuxandraLust() { }
     }
 
+    #region enums
+    /// <summary>
+    /// Support levels for depravities
+    /// </summary>
+    public enum DepravitySupportLevel
+    {
+        Hated = 0,
+        Accepted,
+        Required
+    }
+
+    /// <summary>
+    /// Luxandra's Kinks
+    /// </summary>
+    public enum StorytellerKink
+    {
+        None = 0,
+        Pregnancy,
+        Anal,
+        Oral,
+        Bestiality,
+        Rape,
+        Masturbation,
+        Necrophilia,
+        Gay,
+        Lesbian,
+        Cum,
+        Breasts,
+        Incest,
+        Implantation,
+        Futa,
+        Mechanophilia,
+        Tentacles
+    }
+    #endregion
+
     public class GameComponent_LuxandraLust : GameComponent
     {
         public static GameComponent_LuxandraLust Instance
@@ -71,29 +107,6 @@ namespace LuxandraLust
 
         public int kinkPleasedCounter = 0;
 
-
-        /// <summary>
-        /// Luxandra's Kinks
-        /// </summary>
-        public enum StorytellerKink
-        {
-            None,
-            Pregnancy,
-            Anal,
-            Oral,
-            Bestiality,
-            Rape,
-            Masturbation,
-            Necrophilia,
-            Gay,
-            Lesbian,
-            Cum,
-            Breasts,
-            Incest,
-            Implantation,
-            Futa
-        }
-
         /// <summary>
         /// Current active kink
         /// </summary>
@@ -115,7 +128,6 @@ namespace LuxandraLust
         public void RegisterSexAction(bool satisfiedKink = false)
         {
             sexActionCounter++;
-            colonyFavorPoints++;
             sexActionCounterForCycle++;
 
             if (satisfiedKink)
@@ -145,9 +157,9 @@ namespace LuxandraLust
             necrophiliaSexActionCounterForCycle++;
         }
 
-        public void ResetSexCountersForRerolls()
+        public void ResetSexCounters()
         {
-            colonyFavorPoints = 0;
+            sexActionCounter = 0;
             impureSexActionCounter = 0;
             rapeSexActionCounter = 0;
             bestialitySexActionCounter = 0;

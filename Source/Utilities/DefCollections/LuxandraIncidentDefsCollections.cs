@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
-using static LuxandraLust.GameComponent_LuxandraLust;
 
 namespace LuxandraLust
 {
@@ -163,13 +162,13 @@ namespace LuxandraLust
         /// </summary>
         public static void ReinitializeIncidentPool()
         {
-            // 1. Flip the flag so systems know we are in a mutating state
+            // Flip the flag so systems know we are in a mutating state
             _isInitialized = false;
 
-            // 2. Clear the master list contents (handles the readonly constraint safely)
+            // Clear the master list contents (handles the readonly constraint safely)
             _allIncidents.Clear();
 
-            // 3. Wipe out the cached sub-lists by allocating empty lists
+            // Wipe out the cached sub-lists by allocating empty lists
             _positiveIncidents = new List<LuxandraIncidentDefs>();
             _negativeIncidents = new List<LuxandraIncidentDefs>();
             _negativeIncidentsNoRaids = new List<LuxandraIncidentDefs>();
@@ -210,21 +209,21 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushFemale,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "Causes a surge of speed and libido in female colonists.",
+                description: "Luxandra_Inc_HornyRushFemale_Desc".Translate(),
                 pointBaseCost: 15
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyRushMale,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "Causes a surge of speed and libido in male colonists.",
+                description: "Luxandra_Inc_HornyRushMale_Desc".Translate(),
                 pointBaseCost: 15
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WhiteRain,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "It's warm. It's sticky. You probably shouldn't go outside today.",
+                description: "Luxandra_Inc_WhiteRain_Desc".Translate(),
                 pointBaseCost: 40,
                 kinks: new[] { StorytellerKink.Cum, StorytellerKink.Rape }
             ));
@@ -232,7 +231,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulFertilityPulse,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A somewhat long lasting condition that will massively increase the fertility and libido of every human in the map.",
+                description: "Luxandra_Inc_LustfulFertilityPulse_Desc".Translate(),
                 pointBaseCost: 55,
                 kinks: new[] { StorytellerKink.Pregnancy }
             ));
@@ -240,14 +239,14 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseSite,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "A remote transmitter will cause a Fertility Pulse on your map until you disable it",
+                description: "Luxandra_Inc_FertilityPulseSite_Desc".Translate(),
                 kinks: new[] { StorytellerKink.Pregnancy }
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FertilityPulseMechCluster,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A mech cluster will cause a Fertility Pulse on your map until you destroy it",
+                description: "Luxandra_Inc_FertilityPulseMechCluster_Desc".Translate(),
                 pointBaseCost: 45,
                 kinks: new[] { StorytellerKink.Pregnancy }
             ));
@@ -255,7 +254,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulse,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A average lasting condition that will occasionally wake up your colonists in a pleasurable way.",
+                description: "Luxandra_Inc_WetDreamsPulse_Desc".Translate(),
                 pointBaseCost: 55,
                 kinks: new[] { StorytellerKink.Cum }
             ));
@@ -263,14 +262,14 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulseSite,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "A remote transmitter will cause a Wet Dreams Pulse on your map until you disable it",
+                description: "Luxandra_Inc_WetDreamsPulseSite_Desc".Translate(),
                 kinks: new[] { StorytellerKink.Cum }
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamsPulseMechCluster,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A mech cluster will cause a Wet Dreams Pulse on your map until you destroy it",
+                description: "Luxandra_Inc_WetDreamsPulseMechCluster_Desc".Translate(),
                 pointBaseCost: 55,
                 kinks: new[] { StorytellerKink.Cum }
             ));
@@ -278,14 +277,14 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RapistBreak,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "One or more pawns go on a Random Rape mental break",
+                description: "Luxandra_Inc_RapistBreak_Desc".Translate(),
                 kinks: new[] { StorytellerKink.Rape }
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_HornyTribalRaid,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A tribal raid with increased speed and sex drive",
+                description: "Luxandra_Inc_HornyTribalRaid_Desc".Translate(),
                 pointBaseCost: 35,
                 kinks: new[] { StorytellerKink.Rape }
              ));
@@ -293,7 +292,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHordeRaid,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A Carnal Deviant that will arrive with the support of the white rain to cause havoc",
+                description: "Luxandra_Inc_DeviantHordeRaid_Desc".Translate(),
                 pointBaseCost: 50,
                 kinks: new[] { StorytellerKink.Cum, StorytellerKink.Rape }
             ));
@@ -301,55 +300,55 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DeviantHungerSwarm,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A horde of hungry Deviants is approaching your colony to find food",
+                description: "Luxandra_Inc_DeviantHungerSwarm_Desc".Translate(),
                 pointBaseCost: 35
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AmazonStealthAmbush,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "An elite assassin squad of Amazons attempts to kill your most valuable pawn... or male."
+                description: "Luxandra_Inc_AmazonStealthAmbush_Desc".Translate()
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AmazonBloodTrial,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "Young Amazons are sent on a trial to prove their worth. They'll have your heads or die trying.",
+                description: "Luxandra_Inc_AmazonBloodTrial_Desc".Translate(),
                 pointBaseCost: 35
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_StarvingAmazons,
                 incidentType: LuxandraIncidentType.Raid,
-                description: "A sizeable raid of starving Amazons assaults the colony in search for supply.",
+                description: "Luxandra_Inc_StarvingAmazons_Desc".Translate(),
                 pointBaseCost: 40
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_TheMilkGame,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A gift of milk, but someone will come for the newly fed cattles...",
+                description: "Luxandra_Inc_TheMilkGame_Desc".Translate(),
                 pointBaseCost: 40
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_AphrodisiacFever,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "A disease that heals only via sex.",
+                description: "Luxandra_Inc_AphrodisiacFever_Desc".Translate(),
                 pointBaseCost: 15
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_MaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "Male colonist penises will grow for a while.",
+                description: "Luxandra_Inc_MaleExpansion_Desc".Translate(),
                 pointBaseCost: 25
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleExpansion,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "Female colonist breasts will grow for a while.",
+                description: "Luxandra_Inc_FemaleExpansion_Desc".Translate(),
                 pointBaseCost: 25,
                 kinks: new[] { StorytellerKink.Breasts }
             ));
@@ -357,14 +356,14 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_MaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "Male colonist penises will shrink for a while.",
+                description: "Luxandra_Inc_MaleReduction_Desc".Translate(),
                 pointBaseCost: 15
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_FemaleReduction,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "Female colonist breasts will shrink for a while.",
+                description: "Luxandra_Inc_FemaleReduction_Desc".Translate(),
                 pointBaseCost: 15,
                 kinks: new[] { StorytellerKink.Breasts }
             ));
@@ -372,20 +371,20 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_LustfulSupplies,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "A drop of supplies for your more exotic needs.",
+                description: "Luxandra_Inc_LustfulSupplies_Desc".Translate(),
                 pointBaseCost: 55
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_ThrallPodCrash,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "A submissive slave will crash in your base."
+                description: "Luxandra_Inc_ThrallPodCrash_Desc".Translate()
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BustyCurse,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "One of your pawns wanted to touch tits. The monkey paw's finger curls...",
+                description: "Luxandra_Inc_BustyCurse_Desc".Translate(),
                 pointBaseCost: 15,
                 kinks: new[] { StorytellerKink.Breasts, StorytellerKink.Futa }
             ));
@@ -393,7 +392,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_BreakPrisonersContractQuest,
                 incidentType: LuxandraIncidentType.Quest,
-                description: "A request to 'break' some prisoners.",
+                description: "Luxandra_Inc_BreakPrisonersContractQuest_Desc".Translate(),
                 pointBaseCost: 40,
                 kinks: new[] { StorytellerKink.Rape }
             ));
@@ -401,7 +400,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_ForbiddenLove,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A couple of close relatives developed a forbidden relationship.",
+                description: "Luxandra_Inc_ForbiddenLove_Desc".Translate(),
                 pointBaseCost: 50,
                 kinks: new[] { StorytellerKink.Incest, StorytellerKink.Pregnancy }
             ));
@@ -409,7 +408,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_DivineConception,
                 incidentType: LuxandraIncidentType.Positive,
-                description: "A woman is suddently found pregnant. Who is the father?.",
+                description: "Luxandra_Inc_DivineConception_Desc".Translate(),
                 pointBaseCost: 75,
                 kinks: new[] { StorytellerKink.Pregnancy }
             ));
@@ -417,7 +416,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_ForbiddenConception,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A woman is suddently found pregnant. And the father does not look like being human.",
+                description: "Luxandra_Inc_ForbiddenConception_Desc".Translate(),
                 pointBaseCost: 75,
                 kinks: new[] { StorytellerKink.Pregnancy, StorytellerKink.Bestiality }
             ));
@@ -425,7 +424,7 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_WetDreamIncident,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A pawn will have an amazing dream.",
+                description: "Luxandra_Inc_WetDreamIncident_Desc".Translate(),
                 pointBaseCost: 5,
                 kinks: new[] { StorytellerKink.Cum }
             ));
@@ -433,18 +432,17 @@ namespace LuxandraLust
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_StripQuake,
                 incidentType: LuxandraIncidentType.Neutral,
-                description: "A strong quake will strip every pawn on the map.",
+                description: "Luxandra_Inc_StripQuake_Desc".Translate(),
                 pointBaseCost: 100
             ));
 
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_CumMeteor,
                 incidentType: LuxandraIncidentType.Negative,
-                description: "Literally what it says. They never saw it coming.",
+                description: "Luxandra_Inc_CumMeteor_Desc".Translate(),
                 pointBaseCost: 20,
                 kinks: new[] { StorytellerKink.Cum }
             ));
-
             #endregion
 
             #region Royalty
@@ -453,7 +451,7 @@ namespace LuxandraLust
                 temporaryList.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalLuxury,
                     incidentType: LuxandraIncidentType.Positive,
-                    description: "Your royal colonist will gain several permanent sex related boons.",
+                    description: "Luxandra_Inc_RoyalLuxury_Desc".Translate(),
                     requiresMod: true,
                     modRequired: "Royalty",
                     pointBaseCost: 35
@@ -462,17 +460,16 @@ namespace LuxandraLust
                 temporaryList.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_RoyalDepravity,
                     incidentType: LuxandraIncidentType.Negative,
-                    description: "Your royal colonist will gain several permanent sex related penalties and go on a rapist rage.",
+                    description: "Luxandra_Inc_RoyalDepravity_Desc".Translate(),
                     requiresMod: true,
                     modRequired: "Royalty",
                     kinks: new[] { StorytellerKink.Rape }
                 ));
 
-                // Crusader events require Royalty
                 temporaryList.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_InquisitionPurgeSappers,
                     incidentType: LuxandraIncidentType.Raid,
-                    description: "A group of crusaders took the 'burn the infidels' motto very literally.",
+                    description: "Luxandra_Inc_InquisitionPurgeSappers_Desc".Translate(),
                     requiresMod: true,
                     modRequired: "Royalty"
                 ));
@@ -485,7 +482,7 @@ namespace LuxandraLust
                 temporaryList.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderBlessing,
                     incidentType: LuxandraIncidentType.Positive,
-                    description: "Your ideology leader will gain several permanent sex related boons.",
+                    description: "Luxandra_Inc_IdeoLeaderBlessing_Desc".Translate(),
                     requiresMod: true,
                     modRequired: "Ideology",
                     pointBaseCost: 35
@@ -494,7 +491,7 @@ namespace LuxandraLust
                 temporaryList.Add(new LuxandraIncidentDefs(
                     incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IdeoLeaderDepravity,
                     incidentType: LuxandraIncidentType.Negative,
-                    description: "Your ideology leader will gain several permanent sex related penalties and go on a rapist rage.",
+                    description: "Luxandra_Inc_IdeoLeaderDepravity_Desc".Translate(),
                     requiresMod: true,
                     modRequired: "Ideology",
                     kinks: new[] { StorytellerKink.Rape }
@@ -503,7 +500,6 @@ namespace LuxandraLust
             #endregion
 
             #region RimJobWorld
-            // This is a hard dependancy. If this breaks there's a valid reason for it to.
             IncidentDef nymphJoins = DefDatabase<IncidentDef>.GetNamed("NymphJoins", false);
             temporaryList.Add(new LuxandraIncidentDefs(
                 incidentDef: nymphJoins,
@@ -585,13 +581,13 @@ namespace LuxandraLust
             if (LuxandraModChecks.IsRJWInsectsActive())
             {
                 temporaryList.Add(new LuxandraIncidentDefs(
-                   incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IntimateInfestation,
-                   incidentType: LuxandraIncidentType.Negative,
-                   description: "Insectoids will assault a pawn and attempted to use them as seedbed.",
-                   requiresMod: true,
-                   pointBaseCost: 35,
-                   kinks: new[] { StorytellerKink.Implantation, StorytellerKink.Bestiality }
-               ));
+                    incidentDef: LuxandraIncidentDefOf.Luxandra_Inc_IntimateInfestation,
+                    incidentType: LuxandraIncidentType.Negative,
+                    description: "Luxandra_Inc_IntimateInfestation_Desc".Translate(),
+                    requiresMod: true,
+                    pointBaseCost: 35,
+                    kinks: new[] { StorytellerKink.Implantation, StorytellerKink.Bestiality }
+                ));
             }
             #endregion
 
@@ -600,17 +596,16 @@ namespace LuxandraLust
             {
                 IncidentDef unleashedBastardsRaid = DefDatabase<IncidentDef>.GetNamed("Luxandra_Inc_UnleashedBastardsRaid", false);
                 temporaryList.Add(new LuxandraIncidentDefs(
-                   incidentDef: unleashedBastardsRaid,
-                   incidentType: LuxandraIncidentType.Raid,
-                   description: "A stronger raid which will more easily try to rape your colonists.",
-                   requiresMod: true,
-                   kinks: new[] { StorytellerKink.Rape }
-               ));
+                    incidentDef: unleashedBastardsRaid,
+                    incidentType: LuxandraIncidentType.Raid,
+                    description: "Luxandra_Inc_UnleashedBastardsRaid_Desc".Translate(),
+                    requiresMod: true,
+                    kinks: new[] { StorytellerKink.Rape }
+                ));
             }
             #endregion
 
             #region Anomaly
-
             if (ModsConfig.AnomalyActive)
             {
                 #region Forbidden Anomalies
@@ -622,7 +617,7 @@ namespace LuxandraLust
                        incidentType: LuxandraIncidentType.Negative,
                        requiresMod: true,
                        modRequired: "Forbidden Anomalies"
-                   ));
+                    ));
 
                     IncidentDef graspBloom = DefDatabase<IncidentDef>.GetNamed("FA_GraspbloomSpawn", false);
                     temporaryList.Add(new LuxandraIncidentDefs(
@@ -631,14 +626,13 @@ namespace LuxandraLust
                        requiresMod: true,
                        modRequired: "Forbidden Anomalies",
                        pointBaseCost: 35
-                   ));
+                    ));
                 }
                 #endregion
             }
             #endregion
 
             LuxandraDebugActions.DebugLogMessage($"{temporaryList.Count} parsed. Checking kinks...");
-            // A final cleanup, just in case any def was wrong or corrupted
             var incidentWithMissingDefs = temporaryList.Where(i => i.IncidentDef == null || i.IncidentDef.defName == "");
             if (incidentWithMissingDefs.Any())
             {
@@ -647,13 +641,19 @@ namespace LuxandraLust
             }
 
             int incidentsDisabledCauseKinks = 0;
-            // Finally, remove all incidents with tags incompatible with the enabled kinks
+            if (LuxandraModSettings.enableLogging)
+            {
+                var enabledKinks = LuxandraKinkTracker.GetEnabledKinks();
+                var listOfEnabledKinks = string.Join(" - ", enabledKinks);
+
+                LuxandraDebugActions.DebugLogMessage($"{enabledKinks.Count} kinks enabled: {listOfEnabledKinks}");
+            }
+
             foreach (var incident in temporaryList)
             {
                 bool shouldBeEnabled = AreRelatedKinksEnabled(incident);
                 if (shouldBeEnabled)
                 {
-                    // LuxandraDebugActions.DebugLogMessage($"Enabling {incident.IncidentDef.defName} to active incident list.");
                     _allIncidents.Add(incident);
                 }
                 else
@@ -699,6 +699,12 @@ namespace LuxandraLust
                 return false;
 
             if (tags.Contains(StorytellerKink.Futa) && !LuxandraKinkTracker.IsFutaEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Mechanophilia) && !LuxandraKinkTracker.IsMechanophiliaEnabled())
+                return false;
+
+            if (tags.Contains(StorytellerKink.Tentacles) && !LuxandraKinkTracker.IsTentaclePornEnabled())
                 return false;
 
             return true;

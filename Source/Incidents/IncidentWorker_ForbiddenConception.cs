@@ -15,10 +15,6 @@ namespace LuxandraLust
             if (!LuxandraEventCheck.IsEnabled(LuxandraIncidentDefOf.Luxandra_Inc_ForbiddenConception.defName))
                 return false;
 
-            // Can only really make this work with RJW pregnancy, Biotech pregnancy almost guaranteed to break something
-            if (RJWPregnancySettings.UseVanillaPregnancy)
-                return false;
-
             // Only triggers for anti-bestiality colonies. That's the whole point
             if (DoesColonyIdeologySupportBestiality())
                 return false;
@@ -67,13 +63,20 @@ namespace LuxandraLust
             {
                 LuxandraDebugActions.DebugLogMessage("Pawn not pregnant, creating hediff...");
 
-                LuxandraDebugActions.DebugLogMessage("Attempting to create RJW pregnancy.");
-                PregnancyHelper.AddPregnancyHediff(femalePawn, chosenAnimal);
-
-                if (LuxandraUtilities.IsPregnant(femalePawn))
+                LuxandraDebugActions.DebugLogMessage("Attempting to create bestial pregnancy.");
+                try
                 {
-                    isPregnant = true;
-                    LuxandraDebugActions.DebugLogMessage("RJW pregnancy created successfully.");
+                    PregnancyHelper.AddPregnancyHediff(femalePawn, chosenAnimal);
+
+                    if (LuxandraUtilities.IsPregnant(femalePawn))
+                    {
+                        isPregnant = true;
+                        LuxandraDebugActions.DebugLogMessage("Bestial pregnancy created successfully.");
+                    }
+                }
+                catch
+                {
+                    LuxandraDebugActions.DebugLogMessage($"Error creating bestial pregnancy between {femalePawn.NameShortColored} and {chosenAnimal.NameShortColored}.");
                 }
             }
 

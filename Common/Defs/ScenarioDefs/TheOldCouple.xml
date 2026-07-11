@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ScenarioDef>
+		<defName>Luxandra_TheOldCoupleStart</defName>
+		<label>Cult of Fertility</label>
+		<scenario>
+			<name>The Old Couple</name>
+			<summary>Two old scientists were determined to have the child they never got.</summary>
+			<description>The old couple resented the fate's decision to not grant them children. They tried and tried with all methods, but nothing. Pregnancy was not going to be theirs.
+
+In desperation, they resorted to the ancient arcotech technology. There must have been something, somewhere, that could help them.
+
+They searched and searched, until one day they found a transmitter. Some remnant of an old cult, something about a goddess of fertility who could grant unlimited reproductive powers.
+In their desperation, they activated it. Somewhere in the distance, something stirred. An ancient transmitter activated, and suddently they felt its calling. They boarded the first pod launcher they could find, and launched toward it.
+
+They knew not what they awakened, but they were sure it would help them...
+
+Note: for the intended experience, it's recommended to use Character editor or similar mods to make sure the starting pawns are in a relationship and at least one of them is a woman.</description>
+			<playerFaction>
+				<def>PlayerFaction</def>
+				<factionDef>PlayerColony</factionDef>
+			</playerFaction>
+			<surfaceLayer>
+				<def>SurfaceLayerFixed</def>
+				<layer>Surface</layer>
+				<settingsDef>Surface</settingsDef>
+				<hide>True</hide>
+				<tag>Surface</tag>
+				<connections>
+					<li>
+						<tag>Orbit</tag>
+						<zoomMode>ZoomOut</zoomMode>
+					</li>
+				</connections>
+			</surfaceLayer>
+			<parts>
+				<li Class="ScenPart_PlanetLayer">
+					<def>PlanetLayer</def>
+					<layer>Orbit</layer>
+					<settingsDef>Orbit</settingsDef>
+					<hide>True</hide>
+					<tag>Orbit</tag>
+					<connections>
+						<li>
+							<tag>Surface</tag>
+							<zoomMode>ZoomIn</zoomMode>
+						</li>
+					</connections>
+				</li>
+				<li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
+					<def>ConfigPage_ConfigureStartingPawns</def>
+					<pawnChoiceCount>2</pawnChoiceCount>
+					<pawnCount>2</pawnCount>
+				</li>
+				<li Class="ScenPart_PlayerPawnsArriveMethod">
+					<def>PlayerPawnsArriveMethod</def>
+					<method>DropPods</method>
+				</li>
+				<li Class="ScenPart_GameStartDialog">
+					<def>GameStartDialog</def>
+					<text>You were desperate to have the children you never got.
+
+You meddled with forbidden technology and awakened something.
+
+You have got what you wanted, but what will you do with it?</text>
+					<closeSound>GameStartSting</closeSound>
+				</li>
+				<li Class="ScenPart_StartingThing_Defined">
+				<def>StartingThing_Defined</def>
+				<thingDef>MealSurvivalPack</thingDef>
+				<count>50</count>
+			</li>
+			<li Class="ScenPart_StartingThing_Defined">
+				<def>StartingThing_Defined</def>
+				<thingDef>MedicineIndustrial</thingDef>
+				<count>50</count>
+			</li>
+			<li Class="ScenPart_StartingThing_Defined">
+				<def>StartingThing_Defined</def>
+				<thingDef>Kibble</thingDef>
+				<count>200</count>
+			</li>
+			<li Class="ScenPart_StartingThing_Defined">
+				<def>StartingThing_Defined</def>
+				<thingDef>Milk</thingDef>
+				<count>50</count>
+			</li>
+			<li Class="ScenPart_StartingThing_Defined">
+				<def>StartingThing_Defined</def>
+				<thingDef>Luxandra_HeartOfLust</thingDef>
+				<count>2</count>
+			</li>
+			<li Class="ScenPart_StartingAnimal">
+				<def>StartingAnimal</def>
+				<animalKind>Chicken</animalKind>
+				<count>5</count>
+				<bondToRandomPlayerPawnChance>1</bondToRandomPlayerPawnChance>
+			</li>
+			<li Class="ScenPart_ScatterThingsNearPlayerStart">
+				<def>ScatterThingsNearPlayerStart</def>
+				<thingDef>WoodLog</thingDef>
+				<count>700</count>
+				<allowRoofed>True</allowRoofed>
+			</li>
+			<li Class="ScenPart_ScatterThingsNearPlayerStart">
+				<def>ScatterThingsNearPlayerStart</def>
+				<thingDef>Steel</thingDef>
+				<count>700</count>
+				<allowRoofed>True</allowRoofed>
+			</li>
+			<li Class="ScenPart_StartingThing_Defined">
+				<def>StartingThing_Defined</def>
+				<thingDef>Gun_Revolver</thingDef>
+				<count>2</count>
+				<quality>Good</quality>
+			</li>
+			<li Class="ScenPart_ForcedTrait">
+				<def>ForcedTrait</def>
+				<chance>1</chance>
+				<context>PlayerStarter</context>
+				<trait>FastLearner</trait>
+			</li>
+			<li Class="ScenPart_ForcedTrait">
+				<def>ForcedTrait</def>
+				<chance>1</chance>
+				<context>PlayerStarter</context>
+				<trait>TooSmart</trait>
+			</li>
+			<li Class="ScenPart_CreateIncident">
+				<def>CreateIncident</def>
+				<incident>Luxandra_Inc_FertilityPulseSite</incident>
+				<intervalDays>18.7495003</intervalDays>
+				<minDays>0</minDays>
+			</li>
+			<li Class="ScenPart_CreateIncident">
+				<def>CreateIncident</def>
+				<incident>Luxandra_Inc_FertilityPulseSite</incident>
+				<intervalDays>18.7495003</intervalDays>
+				<minDays>20</minDays>
+				<maxDays>23</maxDays>
+			</li>
+			<li Class="ScenPart_PawnFilter_Age">
+				<def>PawnFilter_Age</def>
+				<allowedAgeRange>70~85</allowedAgeRange>
+			</li>
+			<li Class="ScenPart_CreateIncident">
+				<def>CreateIncident</def>
+				<incident>Luxandra_Inc_DivineConception</incident>
+				<intervalDays>23.6075039</intervalDays>
+				<minDays>1</minDays>
+				<maxDays>1</maxDays>
+			</li>
+			<li Class="ScenPart_StartingResearch">
+				<def>StartingResearch</def>
+				<project>SolarPanels</project>
+			</li>
+			<li Class="ScenPart_StartingResearch">
+				<def>StartingResearch</def>
+				<project>Batteries</project>
+			</li>
+			<li Class="ScenPart_StartingResearch">
+				<def>StartingResearch</def>
+				<project>PackagedSurvivalMeal</project>
+			</li>
+			<li Class="ScenPart_StartingResearch">
+				<def>StartingResearch</def>
+				<project>DrugProduction</project>
+			</li>
+		</parts>
+
+		</scenario>
+	</ScenarioDef>
+</Defs>

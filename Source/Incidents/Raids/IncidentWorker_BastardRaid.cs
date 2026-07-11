@@ -11,7 +11,7 @@ namespace LuxandraLust
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            // 1. Always call the base game rules first (checks population minimums, etc.)
+            // Always call the base game rules first (checks population minimums, etc.)
             if (!base.CanFireNowSub(parms)) return false;
 
             if (!LuxandraEventCheck.IsEnabled("Luxandra_Inc_UnleashedBastardsRaid"))
