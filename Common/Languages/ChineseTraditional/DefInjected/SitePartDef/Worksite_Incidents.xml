@@ -9,4 +9,8 @@
   <Luxandra_WetDreamsPulseSitePart.label>春夢誘發器</Luxandra_WetDreamsPulseSitePart.label>
   <Luxandra_WetDreamsPulseSitePart.description>一處包含局部靈能發射器的地點，正向整片區域發出特定頻率。</Luxandra_WetDreamsPulseSitePart.description>
 
+  <!-- Frustration Wave site part -->
+  <Luxandra_FrustrationWaveSitePart.label>挫折波發射器</Luxandra_FrustrationWaveSitePart.label>
+  <Luxandra_FrustrationWaveSitePart.description>一處設有局部靈能發射器的地點，正持續向整片區域放射特定頻率。</Luxandra_FrustrationWaveSitePart.description>
+
 </LanguageData>

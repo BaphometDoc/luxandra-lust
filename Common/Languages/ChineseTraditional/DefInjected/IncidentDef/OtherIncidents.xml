@@ -19,7 +19,9 @@
   <Luxandra_Inc_LustfulSupplies.letterText>一批軌道貨艙穿透大氣層墜落了！露珊卓拉審視了你殖民地的具體慾望，並認為應該賜福給殖民者一份特化資源箱，以滿足他們目前的……娛樂需求。</Luxandra_Inc_LustfulSupplies.letterText>
 
   <!-- The Milk Game -->
-  <Luxandra_Inc_TheMilkGame.label>乳糖災變</Luxandra_Inc_TheMilkGame.label>
+  <Luxandra_Inc_TheMilkGame.label>牛奶遊戲</Luxandra_Inc_TheMilkGame.label>
+  <Luxandra_Inc_TheMilkGame.letterLabel>牛奶遊戲</Luxandra_Inc_TheMilkGame.letterLabel>
+  <Luxandra_Inc_TheMilkGame.letterText>露珊卓拉決定和你的殖民地玩一場遊戲！眾人的肚子都被填飽了，女性們也突然開始泌乳，部分糧倉更被轉化成了新鮮牛奶。\n\n但要小心，她還邀請了一群飢腸轆轆的客人前來赴宴……</Luxandra_Inc_TheMilkGame.letterText>
 
   <!-- Wet Dream -->
   <Luxandra_Inc_WetDreamIncident.label>鮮明春夢</Luxandra_Inc_WetDreamIncident.label>
@@ -46,5 +48,20 @@
   <!-- Conception -->
   <Luxandra_Inc_DivineConception.label>神聖受孕</Luxandra_Inc_DivineConception.label>
   <Luxandra_Inc_ForbiddenConception.label>禁忌受孕</Luxandra_Inc_ForbiddenConception.label>
+
+  <!-- Psychic Pleasure Wave -->
+  <Luxandra_Inc_PleasureWave.label>心靈愉悅波</Luxandra_Inc_PleasureWave.label>
+  <Luxandra_Inc_PleasureWave.letterLabel>心靈愉悅波</Luxandra_Inc_PleasureWave.letterLabel>
+  <Luxandra_Inc_PleasureWave.letterText>一道舒緩而具有催情作用的頻率正席捲整個區域。所有人類都突然感受到強烈提升的身體敏感度與情感溫度。</Luxandra_Inc_PleasureWave.letterText>
+
+  <!-- Psychic Frustration Wave -->
+  <Luxandra_Inc_FrustrationWave.label>心靈挫折波</Luxandra_Inc_FrustrationWave.label>
+  <Luxandra_Inc_FrustrationWave.letterLabel>心靈挫折波</Luxandra_Inc_FrustrationWave.letterLabel>
+  <Luxandra_Inc_FrustrationWave.letterText>一道刺耳的心靈嗡鳴正迴盪於整個區域。人們感到身體麻木、煩躁，並突然難以從親密行為中獲得滿足。</Luxandra_Inc_FrustrationWave.letterText>
+
+  <!-- Lactose Cataclysm -->
+  <Luxandra_Inc_LactoseCataclysm.label>乳糖大災變</Luxandra_Inc_LactoseCataclysm.label>
+  <Luxandra_Inc_LactoseCataclysm.letterLabel>乳糖大災變</Luxandra_Inc_LactoseCataclysm.letterLabel>
+  <Luxandra_Inc_LactoseCataclysm.letterText>一股詭異的能量波席捲了整個區域，使當地的生物組織陷入失控的過度活化。\n\n所有成年男性的胸部都明顯腫脹，所有乳房組織也開始自發性大量泌乳，儲藏區中的乳製品更是以驚人的速度增殖。\n\n更糟的是，濃烈的氣味讓附近大批乳牛徹底陷入瘋狂！牠們正越過地圖邊界，準備大開殺戒。</Luxandra_Inc_LactoseCataclysm.letterText>
 
 </LanguageData>

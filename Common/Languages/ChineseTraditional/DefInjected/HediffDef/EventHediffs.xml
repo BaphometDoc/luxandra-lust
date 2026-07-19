@@ -29,4 +29,12 @@
   <Luxandra_HubristicGlow.label>傲慢光輝</Luxandra_HubristicGlow.label>
   <Luxandra_HubristicGlow.description>露珊卓拉強加於此人的一種嘲弄而膚淺的美貌。在他人眼中，這副無瑕外貌像是對神性的傲慢冒犯，滋生出苦澀的怨恨。</Luxandra_HubristicGlow.description>
 
+  <!-- Sexual satisfaction shifted -->
+  <Luxandra_SexSatisfactionShifted.label>親密感官干擾</Luxandra_SexSatisfactionShifted.label>
+  <Luxandra_SexSatisfactionShifted.description>一股行星級氣場正在改變親密行為中的感官反應。</Luxandra_SexSatisfactionShifted.description>
+
+  <Luxandra_SexSatisfactionShifted.stages.0.label>感官遲鈍</Luxandra_SexSatisfactionShifted.stages.0.label>
+  <Luxandra_SexSatisfactionShifted.stages.1.label>未受影響</Luxandra_SexSatisfactionShifted.stages.1.label>
+  <Luxandra_SexSatisfactionShifted.stages.2.label>感官增強</Luxandra_SexSatisfactionShifted.stages.2.label>
+
 </LanguageData>

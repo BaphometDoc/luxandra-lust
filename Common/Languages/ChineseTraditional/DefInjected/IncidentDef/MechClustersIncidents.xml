@@ -5,4 +5,15 @@
   <Luxandra_Inc_FertilityPulseMechCluster.label>機械族繁殖脈衝發射器集群</Luxandra_Inc_FertilityPulseMechCluster.label>
   <Luxandra_Inc_WetDreamsPulseMechCluster.label>機械族春夢誘發器集群</Luxandra_Inc_WetDreamsPulseMechCluster.label>
 
+  <!-- Frustration Wave mech cluster -->
+  <Luxandra_Inc_FrustrationWaveMechCluster.label>機械族挫折波發射器集群</Luxandra_Inc_FrustrationWaveMechCluster.label>
+  <Luxandra_Inc_FrustrationWaveMechCluster.letterLabel>挫折波發射器墜落</Luxandra_Inc_FrustrationWaveMechCluster.letterLabel>
+  <Luxandra_Inc_FrustrationWaveMechCluster.letterText>一座機械族集群墜落在殖民地附近！其核心是一座持續嗡鳴的發射器，專門用來干擾人類的性反應系統。趕在整個社群因長期無法獲得滿足而崩潰前摧毀它。</Luxandra_Inc_FrustrationWaveMechCluster.letterText>
+
+  <Luxandra_Inc_FertilityPulseMechCluster.letterLabel>機械族繁殖過載器墜落</Luxandra_Inc_FertilityPulseMechCluster.letterLabel>
+  <Luxandra_Inc_FertilityPulseMechCluster.letterText>一座機械族集群墜落在殖民地附近！其核心是一座嗡嗡作響的發信器，專門用來使人類的生殖系統過度活化。趕在整個社群陷入失控而混亂的群交前摧毀它。</Luxandra_Inc_FertilityPulseMechCluster.letterText>
+
+  <Luxandra_Inc_WetDreamsPulseMechCluster.letterLabel>春夢誘發器墜落</Luxandra_Inc_WetDreamsPulseMechCluster.letterLabel>
+  <Luxandra_Inc_WetDreamsPulseMechCluster.letterText>一座機械族集群墜落在殖民地附近！其核心是一座嗡嗡作響的發信器，會以極度愉悅的夢境干擾人類的睡眠作息。趕在整個社群因滿地狼藉與睡眠不足而崩潰前摧毀它。</Luxandra_Inc_WetDreamsPulseMechCluster.letterText>
+
 </LanguageData>
